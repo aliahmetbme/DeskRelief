@@ -1,30 +1,30 @@
 // This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
 
 import 'package:deskrelief/main.dart';
+import 'package:deskrelief/core/theme/theme_provider.dart';
+import 'package:deskrelief/features/auth/presentation/viewmodels/auth_view_model.dart';
+import 'package:deskrelief/features/assessment/presentation/viewmodels/red_flags_view_model.dart';
+import 'package:deskrelief/features/assessment/presentation/viewmodels/body_map_view_model.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('DeskReliefApp smoke test', (WidgetTester tester) async {
+    // Tüm gerekli provider'lar ile uygulamamızı ayağa kaldırıp test ediyoruz
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => ThemeProvider()),
+          ChangeNotifierProvider(create: (_) => AuthViewModel()),
+          ChangeNotifierProvider(create: (_) => RedFlagsViewModel()),
+          ChangeNotifierProvider(create: (_) => BodyMapViewModel()),
+        ],
+        child: const DeskReliefApp(hasSeenOnboarding: false),
+      ),
+    );
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Uygulamanın sorunsuz bir şekilde yüklendiğini teyit edelim
+    expect(find.byType(MaterialApp), findsOneWidget);
   });
 }

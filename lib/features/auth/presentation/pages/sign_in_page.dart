@@ -5,44 +5,38 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../viewmodels/auth_view_model.dart';
 import '../../../../core/widgets/custom_primary_button.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+class SignInPage extends StatefulWidget {
+  const SignInPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<SignInPage> createState() => _SignInPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignInPageState extends State<SignInPage> {
   final _formKey = GlobalKey<FormState>();
-  
-  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
   bool _obscurePassword = true;
-  bool _termsAccepted = false;
 
   @override
   void dispose() {
-    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
-    _confirmPasswordController.dispose();
     super.dispose();
   }
 
-  Future<void> _onSignUp() async {
+  Future<void> _onSignIn() async {
     FocusScope.of(context).unfocus();
-    
     if (_formKey.currentState!.validate()) {
-      final name = _nameController.text.trim();
       final email = _emailController.text.trim();
       final password = _passwordController.text;
       
-      await context.read<AuthViewModel>().signUp(name, email, password);
+      await context.read<AuthViewModel>().signIn(email, password);
       
       if (mounted) {
-        context.go('/welcome-profile');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Sign In Successful!')),
+        );
       }
     }
   }
@@ -128,25 +122,6 @@ class _SignUpPageState extends State<SignUpPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                _buildFieldLabel('FULL NAME', theme),
-                                const SizedBox(height: 8),
-                                TextFormField(
-                                  controller: _nameController,
-                                  textInputAction: TextInputAction.next,
-                                  decoration: InputDecoration(
-                                    hintText: 'John Doe',
-                                    prefixIcon: const Icon(Icons.badge_outlined),
-                                    filled: true,
-                                    fillColor: theme.colorScheme.onSurface.withOpacity(0.04),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(16),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                  ),
-                                  validator: (value) => value != null && value.trim().isNotEmpty ? null : 'Enter your name',
-                                ),
-                                const SizedBox(height: 20),
-
                                 _buildFieldLabel('EMAIL ADDRESS', theme),
                                 const SizedBox(height: 8),
                                 TextFormField(
@@ -172,7 +147,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                 TextFormField(
                                   controller: _passwordController,
                                   obscureText: _obscurePassword,
-                                  textInputAction: TextInputAction.next,
+                                  textInputAction: TextInputAction.done,
+                                  onFieldSubmitted: (_) => _onSignIn(),
                                   decoration: InputDecoration(
                                     hintText: '••••••••',
                                     prefixIcon: const Icon(Icons.lock_outline),
@@ -189,83 +165,21 @@ class _SignUpPageState extends State<SignUpPage> {
                                   ),
                                   validator: (value) => value != null && value.length >= 6 ? null : 'Minimum 6 characters',
                                 ),
-                                const SizedBox(height: 20),
                                 
-                                _buildFieldLabel('CONFIRM PASSWORD', theme),
-                                const SizedBox(height: 8),
-                                TextFormField(
-                                  controller: _confirmPasswordController,
-                                  obscureText: _obscurePassword,
-                                  textInputAction: TextInputAction.done,
-                                  onFieldSubmitted: (_) => _onSignUp(),
-                                  decoration: InputDecoration(
-                                    hintText: '••••••••',
-                                    prefixIcon: const Icon(Icons.lock_outline),
-                                    filled: true,
-                                    fillColor: theme.colorScheme.onSurface.withOpacity(0.04),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(16),
-                                      borderSide: BorderSide.none,
-                                    ),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: TextButton(
+                                    onPressed: () {},
+                                    child: const Text('Forgot Password?'),
                                   ),
-                                  validator: (value) {
-                                    if (value != _passwordController.text) {
-                                      return 'Passwords do not match';
-                                    }
-                                    return null;
-                                  },
                                 ),
-                                
-                                const SizedBox(height: 20),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      width: 24,
-                                      height: 24,
-                                      child: Checkbox(
-                                        value: _termsAccepted,
-                                        onChanged: (val) => setState(() => _termsAccepted = val ?? false),
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-                                        activeColor: theme.colorScheme.primary,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      child: Text.rich(
-                                        TextSpan(
-                                          text: 'I agree to the ',
-                                          style: theme.textTheme.bodyMedium?.copyWith(
-                                            color: theme.colorScheme.onSurface.withOpacity(0.8),
-                                            fontSize: 14,
-                                          ),
-                                          children: [
-                                            TextSpan(text: 'Terms of Service', style: TextStyle(color: theme.colorScheme.primary, fontWeight: FontWeight.bold)),
-                                            const TextSpan(text: ', '),
-                                            TextSpan(text: 'EULA', style: TextStyle(color: theme.colorScheme.primary, fontWeight: FontWeight.bold)),
-                                            const TextSpan(text: ', and '),
-                                            TextSpan(text: 'Privacy Policy', style: TextStyle(color: theme.colorScheme.primary, fontWeight: FontWeight.bold)),
-                                            const TextSpan(text: '.'),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                
-                                const SizedBox(height: 24),
+                                const SizedBox(height: 8),
                                 
                                 CustomPrimaryButton(
-                                  text: 'Sign Up',
-                                  icon: Icons.arrow_forward,
+                                  text: 'Sign In',
+                                  icon: Icons.login,
                                   isLoading: authViewModel.isLoading,
-                                  onPressed: () {
-                                    if (!_termsAccepted) {
-                                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please accept terms to continue.')));
-                                      return;
-                                    }
-                                    _onSignUp();
-                                  },
+                                  onPressed: _onSignIn,
                                 ),
                                 
                                 const SizedBox(height: 24),
@@ -315,22 +229,16 @@ class _SignUpPageState extends State<SignUpPage> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24),
                           child: GestureDetector(
-                            onTap: () {
-                              if (context.canPop()) {
-                                context.pop();
-                              } else {
-                                context.go('/signin');
-                              }
-                            },
+                            onTap: () => context.push('/signup'),
                             child: Text.rich(
                               TextSpan(
-                                text: "Already have an account? ",
+                                text: "Don't have an account? ",
                                 style: theme.textTheme.bodyMedium?.copyWith(
                                   color: theme.colorScheme.onBackground.withOpacity(0.8),
                                 ),
                                 children: [
                                   TextSpan(
-                                    text: 'Sign In',
+                                    text: 'Sign Up',
                                     style: theme.textTheme.bodyLarge?.copyWith(
                                       color: theme.colorScheme.primary,
                                       fontWeight: FontWeight.bold,

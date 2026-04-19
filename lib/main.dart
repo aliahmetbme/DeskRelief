@@ -5,6 +5,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'core/theme/theme_provider.dart';
 import 'core/theme/app_theme.dart';
 import 'core/routing/app_router.dart';
+import 'features/auth/presentation/viewmodels/auth_view_model.dart';
+import 'features/assessment/presentation/viewmodels/red_flags_view_model.dart';
+import 'features/assessment/presentation/viewmodels/body_map_view_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,8 +16,13 @@ void main() async {
   final bool hasSeenOnboarding = prefs.getBool('seenOnboarding') ?? false;
 
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => ThemeProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => AuthViewModel()),
+        ChangeNotifierProvider(create: (_) => RedFlagsViewModel()),
+        ChangeNotifierProvider(create: (_) => BodyMapViewModel()),
+      ],
       child: DeskReliefApp(hasSeenOnboarding: hasSeenOnboarding),
     ),
   );

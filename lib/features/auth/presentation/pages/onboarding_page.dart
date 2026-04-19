@@ -47,7 +47,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('seenOnboarding', true);
     if (!mounted) return;
-    context.go('/signup');
+    context.go('/signin');
   }
 
   void _onNextPressed() {

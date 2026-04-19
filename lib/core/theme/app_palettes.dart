@@ -13,7 +13,7 @@ abstract class AppPalette {
 
 class DeskReliefPalette implements AppPalette {
   @override
-  Color get primary => const Color(0xFF0058BC);
+  Color get primary => const Color(0xFF007AFF);
   
   @override
   Color get secondary => const Color(0xFFE2E2E7);
