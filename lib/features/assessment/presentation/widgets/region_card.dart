@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class RegionCard extends StatelessWidget {
@@ -16,23 +17,26 @@ class RegionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        HapticFeedback.lightImpact();
+        onTap();
+      },
       child: Container(
         decoration: BoxDecoration(
           color: isSelected ? AppColors.secondary : Colors.white,
-          borderRadius: BorderRadius.circular(24.0),
+          borderRadius: BorderRadius.circular(20.0),
           border: isSelected ? null : Border.all(color: Colors.black.withOpacity(0.05)),
           boxShadow: [
             if (isSelected)
               BoxShadow(
-                color: AppColors.secondary.withOpacity(0.3),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
+                color: AppColors.secondary.withOpacity(0.4),
+                blurRadius: 15,
+                offset: const Offset(0, 6),
               )
             else
               BoxShadow(
-                color: Colors.black.withOpacity(0.02),
-                blurRadius: 10,
+                color: Colors.black.withOpacity(0.04),
+                blurRadius: 12,
                 offset: const Offset(0, 4),
               ),
           ],

@@ -7,6 +7,7 @@ class AppColors {
 
   // Backgrounds
   static const Color backgroundLight = Color(0xFFF8FAFC); // Slate 50
+  static const Color background = Color(0xFFF1F5F9); // Slate 100
   
   // Status colors
   static const Color error = Color(0xFFEF4444); // Red

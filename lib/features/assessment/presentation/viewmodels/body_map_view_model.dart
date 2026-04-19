@@ -7,9 +7,8 @@ class BodyMapViewModel extends ChangeNotifier {
   final List<String> _selectedRegions = [];
   List<String> get selectedRegions => _selectedRegions;
 
-  // Tüm bölgelerin listesi (Görünüm fark etmeksizin ekrandaki grid için kullanılır)
   final List<String> _allRegions = [
-    'Boyun', 'Omuz', 'Bel', 'Kalça',
+    'Boyun', 'Sağ Omuz', 'Sol Omuz', 'Bel', 'Kalça',
     'Sağ El/Dirsek/Bilek', 'Sol El/Dirsek/Bilek',
     'Sağ Diz', 'Sol Diz',
     'Sağ Ayak Bileği', 'Sol Ayak Bileği'
