@@ -3,14 +3,14 @@ import 'app_palettes.dart';
 import 'app_typography.dart';
 
 class AppTheme {
-  static ThemeData buildTheme(AppPalette palette, {bool isDark = false}) {
+  static ThemeData buildTheme(BuildContext context, AppPalette palette, {bool isDark = false}) {
     final Brightness brightness = isDark ? Brightness.dark : Brightness.light;
     
     // Basit bir Dark/Light ayrımı yapıyoruz, palette renkleri üzerine ezilebilir:
     final Color backgroundColor = isDark ? const Color(0xFF000000) : palette.background;
     final Color surfaceColor = isDark ? const Color(0xFF1C1C1E) : palette.surface;
     final Color textColorPrimary = isDark ? Colors.white : palette.textPrimary;
-    final Color textColorSecondary = isDark ? const Color(0xFFEBEBF5).withOpacity(0.6) : palette.textSecondary;
+    final Color textColorSecondary = isDark ? const Color(0xFFEBEBF5).withValues(alpha: 0.6) : palette.textSecondary;
 
     return ThemeData(
       brightness: brightness,
@@ -43,7 +43,7 @@ class AppTheme {
         style: ElevatedButton.styleFrom(
           backgroundColor: palette.primary,
           foregroundColor: Colors.white,
-          textStyle: AppTypography.labelLarge,
+          textStyle: AppTypography.labelLarge(context),
           elevation: 0, // Flat iOS görünümü
           splashFactory: NoSplash.splashFactory, // Ripple kapalı
           shape: RoundedRectangleBorder(
@@ -71,14 +71,14 @@ class AppTheme {
         ),
       ),
       
-      textTheme: TextTheme(
-        displayLarge: AppTypography.displayLarge.copyWith(color: palette.primary),
-        headlineLarge: AppTypography.headlineLarge.copyWith(color: textColorPrimary),
-        headlineMedium: AppTypography.headlineMedium.copyWith(color: textColorPrimary),
-        bodyLarge: AppTypography.bodyLarge.copyWith(color: textColorSecondary),
-        bodyMedium: AppTypography.bodyMedium.copyWith(color: textColorSecondary),
-        labelLarge: AppTypography.labelLarge.copyWith(color: palette.primary),
-        labelSmall: AppTypography.labelSmall.copyWith(color: palette.primary),
+      textTheme: AppTypography.buildTextTheme(context).copyWith(
+        displayLarge: AppTypography.displayLarge(context).copyWith(color: palette.primary),
+        headlineLarge: AppTypography.headlineLarge(context).copyWith(color: textColorPrimary),
+        headlineMedium: AppTypography.headlineMedium(context).copyWith(color: textColorPrimary),
+        bodyLarge: AppTypography.bodyLarge(context).copyWith(color: textColorSecondary),
+        bodyMedium: AppTypography.bodyMedium(context).copyWith(color: textColorSecondary),
+        labelLarge: AppTypography.labelLarge(context).copyWith(color: palette.primary),
+        labelSmall: AppTypography.labelSmall(context).copyWith(color: palette.primary),
       ),
     );
   }

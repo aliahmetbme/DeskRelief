@@ -8,6 +8,7 @@ import 'core/routing/app_router.dart';
 import 'features/auth/presentation/viewmodels/auth_view_model.dart';
 import 'features/assessment/presentation/viewmodels/red_flags_view_model.dart';
 import 'features/assessment/presentation/viewmodels/body_map_view_model.dart';
+import 'features/scheduling/presentation/viewmodels/scheduling_view_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +23,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
         ChangeNotifierProvider(create: (_) => RedFlagsViewModel()),
         ChangeNotifierProvider(create: (_) => BodyMapViewModel()),
+        ChangeNotifierProvider(create: (_) => SchedulingViewModel()),
       ],
       child: DeskReliefApp(hasSeenOnboarding: hasSeenOnboarding),
     ),
@@ -42,8 +44,8 @@ class DeskReliefApp extends StatelessWidget {
           title: 'DeskRelief',
           debugShowCheckedModeBanner: false,
           themeMode: themeProvider.themeMode,
-          theme: AppTheme.buildTheme(themeProvider.palette, isDark: false),
-          darkTheme: AppTheme.buildTheme(themeProvider.palette, isDark: true),
+          theme: AppTheme.buildTheme(context, themeProvider.palette, isDark: false),
+          darkTheme: AppTheme.buildTheme(context, themeProvider.palette, isDark: true),
           routerConfig: AppRouter.createRouter(hasSeenOnboarding: hasSeenOnboarding),
         );
       },

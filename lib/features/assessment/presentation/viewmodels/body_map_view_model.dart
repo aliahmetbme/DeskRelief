@@ -29,11 +29,9 @@ class BodyMapViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void nextStep() {
-    // Tüm bölgeler tek bir aşamada seçildiği için direkt tamamlıyoruz
+  void nextStep(List<String> selection) {
     if (kDebugMode) {
-      print('Seçilen Bölgeler: $_selectedRegions');
+      print('Ağrı Şiddeti Belirleme Sayfasına Geçiliyor: $selection');
     }
-    // İleride buraya sayfalar arası geçiş eklenecek.
   }
 }

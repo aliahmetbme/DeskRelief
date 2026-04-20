@@ -19,7 +19,7 @@ class DeskReliefPalette implements AppPalette {
   Color get secondary => const Color(0xFFE2E2E7);
   
   @override
-  Color get background => const Color(0xFFF9F9FE);
+  Color get background => const Color(0xFFF2F2F7);
   
   @override
   Color get surface => const Color(0xFFFFFFFF);

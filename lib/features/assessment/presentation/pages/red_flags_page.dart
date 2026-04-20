@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/app_back_button.dart';
 import '../../../../core/widgets/custom_primary_button.dart';
 import '../viewmodels/red_flags_view_model.dart';
 import '../widgets/question_card.dart';
@@ -118,7 +119,7 @@ class RedFlagsPage extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              GestureDetector(
+                              AppBackButton(
                                 onTap: () {
                                   if (viewModel.currentStep > 1) {
                                     viewModel.previousStep();
@@ -130,21 +131,6 @@ class RedFlagsPage extends StatelessWidget {
                                     }
                                   }
                                 },
-                                child: Container(
-                                  padding: const EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    color: theme.colorScheme.onSurface
-                                        .withOpacity(0.05),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Icon(
-                                    viewModel.currentStep > 1
-                                        ? Icons.arrow_back
-                                        : Icons.close,
-                                    size: 20,
-                                    color: theme.colorScheme.onSurface,
-                                  ),
-                                ),
                               ),
                               Text(
                                 'Tıbbi Tarama',
