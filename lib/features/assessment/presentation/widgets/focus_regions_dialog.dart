@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../../../../core/widgets/custom_primary_button.dart';
+import 'package:deskrelief/l10n/app_localizations.dart';
 
 class FocusRegionsDialog extends StatelessWidget {
   final List<String> topRegions;
@@ -15,11 +16,12 @@ class FocusRegionsDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = AppLocalizations.of(context)!;
 
-    // "Boyun ve Alt Sırt" gibi virgülle / "ve" ile birleştir
-    final regionText = topRegions.length == 1
-        ? topRegions.first
-        : '${topRegions.sublist(0, topRegions.length - 1).join(', ')} ve ${topRegions.last}';
+    final translatedRegions = topRegions.map((id) => _getRegionDisplayName(context, id)).toList();
+    final regionText = translatedRegions.length == 1
+        ? translatedRegions.first
+        : '${translatedRegions.sublist(0, translatedRegions.length - 1).join(', ')} ${loc.localeName == 'tr' ? 've' : 'and'} ${translatedRegions.last}';
 
     return Stack(
       children: [
@@ -78,7 +80,7 @@ class FocusRegionsDialog extends StatelessWidget {
 
                     // ── Başlık ─────────────────────────────────────────────
                     Text(
-                      'Odak Bölgeler\nBelirlendi',
+                      loc.focusRegionsTitle,
                       textAlign: TextAlign.center,
                       style: theme.textTheme.headlineSmall?.copyWith(
                         fontWeight: FontWeight.w800,
@@ -98,9 +100,8 @@ class FocusRegionsDialog extends StatelessWidget {
                           height: 1.6,
                         ),
                         children: [
-                          const TextSpan(
-                            text:
-                                'Algoritmamız en yüksek ağrı skoruna sahip bölgelere öncelik vermiştir: ',
+                          TextSpan(
+                            text: loc.focusRegionsDescP1,
                           ),
                           TextSpan(
                             text: regionText,
@@ -109,9 +110,8 @@ class FocusRegionsDialog extends StatelessWidget {
                               color: theme.colorScheme.onSurface,
                             ),
                           ),
-                          const TextSpan(
-                            text:
-                                '.\n\nDiğer bölgeleriniz için, mevcut programı tamamladıktan sonra yeni bir değerlendirme yapabilirsiniz.',
+                          TextSpan(
+                            text: loc.focusRegionsDescP2,
                           ),
                         ],
                       ),
@@ -120,7 +120,7 @@ class FocusRegionsDialog extends StatelessWidget {
 
                     // ── Tamam butonu ──────────────────────────────────────
                     CustomPrimaryButton(
-                      text: 'Tamam, Devam Et',
+                      text: loc.focusRegionsBtn,
                       onPressed: onConfirm,
                     ),
                   ],
@@ -131,5 +131,35 @@ class FocusRegionsDialog extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String _getRegionDisplayName(BuildContext context, String id) {
+    final loc = AppLocalizations.of(context)!;
+    switch (id) {
+      case 'region_neck':
+        return loc.regionNeck;
+      case 'region_shoulder_right':
+        return loc.regionShoulderRight;
+      case 'region_shoulder_left':
+        return loc.regionShoulderLeft;
+      case 'region_lower_back':
+        return loc.regionLowerBack;
+      case 'region_hip_pelvis':
+        return loc.regionHipPelvis;
+      case 'region_arm_right':
+        return loc.regionArmRight;
+      case 'region_arm_left':
+        return loc.regionArmLeft;
+      case 'region_knee_right':
+        return loc.regionKneeRight;
+      case 'region_knee_left':
+        return loc.regionKneeLeft;
+      case 'region_ankle_right':
+        return loc.regionAnkleRight;
+      case 'region_ankle_left':
+        return loc.regionAnkleLeft;
+      default:
+        return id;
+    }
   }
 }

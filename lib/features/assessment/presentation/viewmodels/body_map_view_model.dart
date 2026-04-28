@@ -8,10 +8,17 @@ class BodyMapViewModel extends ChangeNotifier {
   List<String> get selectedRegions => _selectedRegions;
 
   final List<String> _allRegions = [
-    'Boyun', 'Sağ Omuz', 'Sol Omuz', 'Bel', 'Kalça',
-    'Sağ El/Dirsek/Bilek', 'Sol El/Dirsek/Bilek',
-    'Sağ Diz', 'Sol Diz',
-    'Sağ Ayak Bileği', 'Sol Ayak Bileği'
+    'region_neck',
+    'region_shoulder_right',
+    'region_shoulder_left',
+    'region_lower_back',
+    'region_hip_pelvis',
+    'region_arm_right',
+    'region_arm_left',
+    'region_knee_right',
+    'region_knee_left',
+    'region_ankle_right',
+    'region_ankle_left',
   ];
   List<String> get allRegions => _allRegions;
 

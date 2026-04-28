@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:deskrelief/l10n/app_localizations.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // CustomBottomNavBar — M-Tech Rectangle Edition
@@ -27,6 +28,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final loc = AppLocalizations.of(context)!;
     final screenWidth = MediaQuery.of(context).size.width;
     final bottomPadding = MediaQuery.of(context).padding.bottom;
 
@@ -93,7 +95,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                     currentIndex: widget.currentIndex,
                     icon: Icons.grid_view_rounded,
                     activeIcon: Icons.grid_view_rounded,
-                    label: 'Ana Sayfa',
+                    label: loc.navHome,
                     onTap: widget.onTap,
                   ),
                   _NavItem(
@@ -101,7 +103,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                     currentIndex: widget.currentIndex,
                     icon: Icons.event_note_rounded,
                     activeIcon: Icons.event_note_rounded,
-                    label: 'Takvim',
+                    label: loc.navCalendar,
                     onTap: widget.onTap,
                   ),
                   _NavItem(
@@ -109,7 +111,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                     currentIndex: widget.currentIndex,
                     icon: Icons.person_pin_rounded,
                     activeIcon: Icons.person_pin_rounded,
-                    label: 'Profil',
+                    label: loc.navProfile,
                     onTap: widget.onTap,
                   ),
                 ],
@@ -227,22 +229,7 @@ class _MTechRectIndicator extends StatelessWidget {
                       width: 1,
                     ),
                   ),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        top: 5,
-                        left: 10,
-                        child: Container(
-                          width: 20,
-                          height: 8,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white.withValues(alpha: 0.3),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+
                 ),
               ),
             ),

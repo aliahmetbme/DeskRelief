@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../core/theme/app_colors.dart';
+import 'package:deskrelief/l10n/app_localizations.dart';
 
 class QuestionCard extends StatelessWidget {
   final String number;
@@ -70,7 +70,7 @@ class QuestionCard extends StatelessWidget {
               Expanded(
                 child: _buildAnswerButton(
                   context: context,
-                  text: 'Hayır',
+                  text: AppLocalizations.of(context)!.no,
                   isTargetValue: false,
                 ),
               ),
@@ -78,7 +78,7 @@ class QuestionCard extends StatelessWidget {
               Expanded(
                 child: _buildAnswerButton(
                   context: context,
-                  text: 'Evet',
+                  text: AppLocalizations.of(context)!.yes,
                   isTargetValue: true,
                 ),
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:deskrelief/l10n/app_localizations.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // CalendarPage — High-fidelity Exercise Tracker (Real Logic + Selection)
@@ -44,7 +45,7 @@ class _CalendarPageState extends State<CalendarPage> {
     final theme = Theme.of(context);
 
     // Format for display
-    final selectedLabel = '${_selectedDate.day} ${_CalendarSection._getMonthName(_selectedDate.month, true)}'.toUpperCase();
+    final selectedLabel = '${_selectedDate.day} ${_CalendarSection._getMonthName(context, _selectedDate.month, true)}'.toUpperCase();
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -91,6 +92,7 @@ class _TitleSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -106,7 +108,7 @@ class _TitleSection extends StatelessWidget {
               Icon(Icons.verified_rounded, size: 14, color: theme.colorScheme.primary),
               const SizedBox(width: 6),
               Text(
-                'KLİNİK PROGRAM',
+                loc.calendarClinicalProgram,
                 style: theme.textTheme.labelSmall?.copyWith(
                   fontSize: 10,
                   fontWeight: FontWeight.w900,
@@ -119,7 +121,7 @@ class _TitleSection extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Text(
-          'Egzersiz Takvimi',
+          loc.calendarExerciseSchedule,
           style: theme.textTheme.headlineMedium?.copyWith(
             fontWeight: FontWeight.w900,
             letterSpacing: -0.5,
@@ -128,7 +130,7 @@ class _TitleSection extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          'Fizyoterapi ilkelerine göre hazırlanan programınız sabittir. Maksimum verim için planlanan saatlere uyunuz.',
+          loc.calendarDesc,
           style: theme.textTheme.bodyMedium?.copyWith(
             color: theme.colorScheme.onSurfaceVariant,
             height: 1.5,
@@ -156,12 +158,23 @@ class _CalendarSection extends StatelessWidget {
     required this.onDateSelected,
   });
 
-  static String _getMonthName(int month, [bool full = false]) {
-    const names = [
-      '', 'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
-      'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'
-    ];
-    return names[month];
+  static String _getMonthName(BuildContext context, int month, [bool full = false]) {
+    final loc = AppLocalizations.of(context)!;
+    switch (month) {
+      case 1: return loc.month1;
+      case 2: return loc.month2;
+      case 3: return loc.month3;
+      case 4: return loc.month4;
+      case 5: return loc.month5;
+      case 6: return loc.month6;
+      case 7: return loc.month7;
+      case 8: return loc.month8;
+      case 9: return loc.month9;
+      case 10: return loc.month10;
+      case 11: return loc.month11;
+      case 12: return loc.month12;
+      default: return '';
+    }
   }
 
   List<List<DateTime>> _generateCalendarWeeks() {
@@ -187,6 +200,7 @@ class _CalendarSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final weeks = _generateCalendarWeeks();
+    final loc = AppLocalizations.of(context)!;
 
     return Column(
       children: [
@@ -194,7 +208,7 @@ class _CalendarSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '${_getMonthName(focusedDate.month)} ${focusedDate.year}',
+              '${_getMonthName(context, focusedDate.month)} ${focusedDate.year}',
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w800,
               ),
@@ -225,7 +239,7 @@ class _CalendarSection extends StatelessWidget {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: ['PT', 'SA', 'ÇA', 'PE', 'CU', 'CT', 'PA']
+                children: [loc.day1, loc.day2, loc.day3, loc.day4, loc.day5, loc.day6, loc.day7]
                     .map((d) => Text(
                           d,
                           style: theme.textTheme.labelSmall?.copyWith(
@@ -378,6 +392,7 @@ class _PhysioNoteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -401,12 +416,12 @@ class _PhysioNoteCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Fizyoterapist Notu',
+                  loc.physioNoteTitle,
                   style: const TextStyle(fontWeight: FontWeight.w800, color: Color(0xFF166534)),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Belirlenen saatlerdeki egzersizler omurga adaptasyonu için kritiktir. Mon-Wed-Fri döngüsü idealdir.',
+                  loc.physioNoteDesc,
                   style: TextStyle(
                     color: const Color(0xFF14532D).withValues(alpha: 0.7),
                     height: 1.4,
@@ -429,6 +444,7 @@ class _DayDetailSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -436,7 +452,7 @@ class _DayDetailSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Gün Detayı',
+              loc.dayDetailTitle,
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w900,
                 letterSpacing: -0.5,
@@ -480,7 +496,7 @@ class _DayDetailSection extends StatelessWidget {
               Row(
                 children: [
                   _TimeDetailBox(
-                    label: 'BAŞLANGIÇ',
+                    label: loc.startTime,
                     value: '19:00',
                     icon: Icons.schedule_rounded,
                     color: theme.colorScheme.primary,
@@ -489,7 +505,7 @@ class _DayDetailSection extends StatelessWidget {
                   Container(width: 1, height: 40, color: theme.colorScheme.onSurface.withValues(alpha: 0.05)),
                   const Spacer(),
                   _TimeDetailBox(
-                    label: 'TOPLAM SÜRE',
+                    label: loc.totalDuration,
                     value: '25 dk',
                     icon: Icons.timer_rounded,
                     color: Colors.green,
@@ -499,7 +515,7 @@ class _DayDetailSection extends StatelessWidget {
               ),
               const SizedBox(height: 32),
               Text(
-                'ODAK BÖLGELERİ',
+                loc.focusRegions,
                 style: theme.textTheme.labelSmall?.copyWith(
                   fontSize: 10,
                   fontWeight: FontWeight.w900,
@@ -508,13 +524,13 @@ class _DayDetailSection extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 12),
-              const Wrap(
+              Wrap(
                 spacing: 8,
                 runSpacing: 8,
                 children: [
-                  _FocusChip(label: 'Servikal Omurga', color: Colors.blue),
-                  _FocusChip(label: 'Trapez Kasları', color: Color(0xFF10B981)),
-                  _FocusChip(label: 'Skapular Stabilite', color: Colors.orange),
+                  _FocusChip(label: loc.regionCervicalSpine, color: Colors.blue),
+                  _FocusChip(label: loc.regionTrapezius, color: const Color(0xFF10B981)),
+                  _FocusChip(label: loc.regionScapularStability, color: Colors.orange),
                 ],
               ),
               const SizedBox(height: 32),
@@ -522,11 +538,11 @@ class _DayDetailSection extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Program İçeriği',
+                    loc.programContent,
                     style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w900),
                   ),
                   Text(
-                    '6 HAREKET',
+                    loc.exerciseCount(6),
                     style: theme.textTheme.labelSmall?.copyWith(
                       fontSize: 10,
                       color: theme.colorScheme.onSurfaceVariant,
@@ -535,9 +551,9 @@ class _DayDetailSection extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 16),
-              const _ExerciseItem(number: '01', title: 'Boyun İzometrik Güçlendirme', isCompleted: true),
+              _ExerciseItem(number: '01', title: loc.exerciseNeckIsometric, isCompleted: true),
               const SizedBox(height: 12),
-              const _ExerciseItem(number: '02', title: 'Skapular Retraksiyon', isCompleted: false),
+              _ExerciseItem(number: '02', title: loc.exerciseScapularRetraction, isCompleted: false),
             ],
           ),
         ),

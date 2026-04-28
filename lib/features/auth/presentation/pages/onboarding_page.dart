@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../../core/widgets/app_back_button.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -14,29 +15,29 @@ class _OnboardingPageState extends State<OnboardingPage> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  final List<Map<String, dynamic>> _pages = [
-    {
-      'title': 'Is Sitting Causing You Pain?',
-      'description':
-          'The modern office lifestyle often leads to prolonged sitting, which can cause significant neck, back, and shoulder pain.',
-      'image': 'assets/images/onboarding1.png',
-      'textAlign': TextAlign.center,
-    },
-    {
-      'title': 'Meet DeskRelief, Your Digital Solution',
-      'description':
-          'DeskRelief offers expert-curated, personalized exercise protocols designed to interrupt sitting intervals and minimize pain.',
-      'image': 'assets/images/onboarding2.png',
-      'textAlign': TextAlign.center,
-    },
-    {
-      'title': 'Take Control of Your Musculoskeletal Health',
-      'description':
-          'Start your personalized journey towards a pain-free life. It\'s easy and clinically-based.',
-      'image': 'assets/images/onboarding3.png',
-      'textAlign': TextAlign.center,
-    },
-  ];
+  List<Map<String, dynamic>> _getPages(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return [
+      {
+        'title': l10n.onboardingTitle1,
+        'description': l10n.onboardingDesc1,
+        'image': 'assets/images/onboarding1.png',
+        'textAlign': TextAlign.center,
+      },
+      {
+        'title': l10n.onboardingTitle2,
+        'description': l10n.onboardingDesc2,
+        'image': 'assets/images/onboarding2.png',
+        'textAlign': TextAlign.center,
+      },
+      {
+        'title': l10n.onboardingTitle3,
+        'description': l10n.onboardingDesc3,
+        'image': 'assets/images/onboarding3.png',
+        'textAlign': TextAlign.center,
+      },
+    ];
+  }
 
   @override
   void dispose() {
@@ -51,8 +52,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
     context.go('/signin');
   }
 
-  void _onNextPressed() {
-    if (_currentPage == _pages.length - 1) {
+  void _onNextPressed(int pageCount) {
+    if (_currentPage == pageCount - 1) {
       _completeOnboarding();
     } else {
       _pageController.nextPage(
@@ -74,7 +75,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    bool isLastPage = _currentPage == _pages.length - 1;
+    final l10n = AppLocalizations.of(context)!;
+    final pages = _getPages(context);
+    bool isLastPage = _currentPage == pages.length - 1;
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -86,7 +89,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             onPageChanged: (index) {
               setState(() => _currentPage = index);
             },
-            itemCount: _pages.length,
+            itemCount: pages.length,
             itemBuilder: (context, index) {
               return Stack(
                 children: [
@@ -99,7 +102,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     child: Stack(
                       fit: StackFit.expand,
                       children: [
-                        Image.asset(_pages[index]['image'], fit: BoxFit.cover),
+                        Image.asset(pages[index]['image'], fit: BoxFit.cover),
                         // Tonal Overlay (Back/Skip butonlarının görünürlüğü için)
                         Container(
                           decoration: const BoxDecoration(
@@ -153,19 +156,19 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               ),
                               child: Column(
                                 crossAxisAlignment:
-                                    _pages[index]['textAlign'] == TextAlign.center
+                                    pages[index]['textAlign'] == TextAlign.center
                                     ? CrossAxisAlignment.center
                                     : CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    _pages[index]['title'],
-                                    textAlign: _pages[index]['textAlign'],
+                                    pages[index]['title'],
+                                    textAlign: pages[index]['textAlign'],
                                     style: theme.textTheme.displayLarge,
                                   ),
                                   const SizedBox(height: 24),
                                   Text(
-                                    _pages[index]['description'],
-                                    textAlign: _pages[index]['textAlign'],
+                                    pages[index]['description'],
+                                    textAlign: pages[index]['textAlign'],
                                     style: theme.textTheme.bodyLarge,
                                   ),
                                 ],
@@ -181,23 +184,23 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               bottom: MediaQuery.of(context).padding.bottom + 24,
                               top: 12,
                             ),
-                            child: index == _pages.length - 1
+                            child: index == pages.length - 1
                                 ? // Page 3: Get Started Button
                                   SizedBox(
                                     width: double.infinity,
                                     height: 56,
                                     child: ElevatedButton(
-                                      onPressed: _onNextPressed,
+                                      onPressed: () => _onNextPressed(pages.length),
                                       style: ElevatedButton.styleFrom(
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(28),
                                         ),
                                         elevation: 0,
                                       ),
-                                      child: const Row(
+                                      child: Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          const Text('Get Started'),
+                                          Text(l10n.getStarted),
                                           const SizedBox(width: 8),
                                           const Icon(
                                             Icons.chevron_right,
@@ -220,7 +223,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                           child: Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: List.generate(
-                                              _pages.length,
+                                              pages.length,
                                               (dotIndex) => AnimatedContainer(
                                                 duration: const Duration(
                                                     milliseconds: 300),
@@ -239,12 +242,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                             ),
                                           ),
                                         ),
-
                                         // Next Button
                                         Align(
                                           alignment: Alignment.centerRight,
                                           child: GestureDetector(
-                                            onTap: _onNextPressed,
+                                            onTap: () => _onNextPressed(pages.length),
                                             child: Container(
                                               color: Colors.transparent,
                                               padding: const EdgeInsets.symmetric(
@@ -253,7 +255,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
                                                   Text(
-                                                    'Next',
+                                                    l10n.next,
                                                     style: theme
                                                         .textTheme.labelLarge,
                                                   ),
@@ -301,7 +303,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         child: Container(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            'Skip',
+                            l10n.skip,
                             style: theme.textTheme.labelSmall,
                           ),
                         ),

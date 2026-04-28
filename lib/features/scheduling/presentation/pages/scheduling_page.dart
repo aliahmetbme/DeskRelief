@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
+import 'package:deskrelief/l10n/app_localizations.dart';
 import '../../../../core/widgets/app_back_button.dart';
 import '../viewmodels/scheduling_view_model.dart';
 import '../widgets/day_chip.dart';
@@ -44,7 +45,7 @@ class SchedulingPage extends StatelessWidget {
                   AppBackButton(onTap: () => context.pop()),
                   const SizedBox(width: 14),
                   Text(
-                    'Program Planlaması',
+                    AppLocalizations.of(context)!.schedulingTitle,
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w800,
                       color: theme.colorScheme.onSurface,
@@ -117,8 +118,10 @@ class _StartButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primary = theme.colorScheme.primary;
+    final isEnabled = viewModel.canProceed && !viewModel.isLoading;
+
     return GestureDetector(
-      onTap: viewModel.isLoading ? null : () => viewModel.completeScheduling(),
+      onTap: isEnabled ? () => viewModel.completeScheduling() : null,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         height: 56,
@@ -151,12 +154,16 @@ class _StartButton extends StatelessWidget {
         child: Center(
           child: viewModel.isLoading
               ? const CupertinoActivityIndicator(color: Colors.white)
-              : Text(
-                  'Programımı Başlat',
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: -0.2,
+              : AnimatedOpacity(
+                  duration: const Duration(milliseconds: 200),
+                  opacity: isEnabled ? 1.0 : 0.5,
+                  child: Text(
+                    AppLocalizations.of(context)!.schedulingStart,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: -0.2,
+                    ),
                   ),
                 ),
         ),
@@ -212,7 +219,7 @@ class _ClinicalAdviceCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Klinik Tavsiye',
+                  AppLocalizations.of(context)!.clinicalAdviceTitle,
                   style: theme.textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w700,
                     color: theme.colorScheme.onSurface,
@@ -221,9 +228,7 @@ class _ClinicalAdviceCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Kas liflerinizin kendini onarması ve postür gelişiminin '
-                  'kalıcı olması için antrenmanlar arasında en az 24 saat '
-                  'dinlenme bırakılması önerilir.',
+                  AppLocalizations.of(context)!.clinicalAdviceDesc,
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                     height: 1.6,
@@ -250,7 +255,7 @@ class _DaySelectionSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final selectedCount = viewModel.selectedDays.length;
-    final maxDays = SchedulingViewModel.maxDays;
+    final maxDays = viewModel.maxDays;
     final limitReached = viewModel.maxDaysReached;
 
     return Column(
@@ -261,7 +266,7 @@ class _DaySelectionSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Gün Seçimi',
+              AppLocalizations.of(context)!.daySelectionTitle,
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w800,
                 color: theme.colorScheme.onSurface,
@@ -310,9 +315,9 @@ class _DaySelectionSection extends StatelessWidget {
                 if (!ok) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: const Text(
-                        'En fazla 3 gün seçebilirsiniz.',
-                        style: TextStyle(fontWeight: FontWeight.w600),
+                      content: Text(
+                        AppLocalizations.of(context)!.maxDaysError(viewModel.maxDays),
+                        style: const TextStyle(fontWeight: FontWeight.w600),
                       ),
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(
@@ -329,21 +334,29 @@ class _DaySelectionSection extends StatelessWidget {
         ),
         const SizedBox(height: 12),
 
-        // Öneri notu
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Icon(
-              Icons.lightbulb_outline_rounded,
-              size: 14,
-              color: theme.colorScheme.onSurfaceVariant,
+              viewModel.canProceed 
+                  ? Icons.check_circle_rounded 
+                  : Icons.info_outline_rounded,
+              size: 16,
+              color: viewModel.canProceed 
+                  ? Colors.green.shade600 
+                  : theme.colorScheme.error,
             ),
-            const SizedBox(width: 6),
+            const SizedBox(width: 8),
             Flexible(
               child: Text(
-                'En fazla 3 gün · Gün aşırı antrenman önerilir.',
+                viewModel.instructionText,
                 style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                  fontSize: 12,
+                  color: viewModel.canProceed 
+                      ? Colors.green.shade700 
+                      : theme.colorScheme.error,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  height: 1.4,
                 ),
               ),
             ),
@@ -430,7 +443,7 @@ class _ScheduleDetailsSectionState extends State<_ScheduleDetailsSection> {
                       ),
                       onPressed: () => Navigator.of(ctx).pop(),
                       child: Text(
-                        'İptal',
+                        AppLocalizations.of(context)!.cancel,
                         style: TextStyle(
                           fontSize: 16,
                           color: isDark
@@ -441,7 +454,7 @@ class _ScheduleDetailsSectionState extends State<_ScheduleDetailsSection> {
                     ),
                     Expanded(
                       child: Text(
-                        'Antrenman Saati',
+                        AppLocalizations.of(context)!.workoutTimeTitle,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 16,
@@ -457,7 +470,7 @@ class _ScheduleDetailsSectionState extends State<_ScheduleDetailsSection> {
                       ),
                       onPressed: () => Navigator.of(ctx).pop(),
                       child: Text(
-                        'Bitti',
+                        AppLocalizations.of(context)!.done,
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -504,7 +517,7 @@ class _ScheduleDetailsSectionState extends State<_ScheduleDetailsSection> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Zamanlama Detayları',
+          AppLocalizations.of(context)!.timingDetailsTitle,
           style: theme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.w800,
             color: theme.colorScheme.onSurface,
@@ -584,12 +597,12 @@ class _HeroImage extends StatelessWidget {
                 ),
               ),
             ),
-            const Positioned(
+            Positioned(
               bottom: 18,
               left: 20,
               child: Text(
-                'Hazır olduğunda başlayalım.',
-                style: TextStyle(
+                AppLocalizations.of(context)!.readyToStart,
+                style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 16,
                   color: Colors.white,

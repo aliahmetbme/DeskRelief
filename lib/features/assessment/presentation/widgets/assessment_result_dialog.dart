@@ -1,6 +1,6 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../../../../core/widgets/custom_primary_button.dart';
+import 'package:deskrelief/l10n/app_localizations.dart';
 
 class AssessmentResultDialog extends StatelessWidget {
   final bool hasRedFlags;
@@ -17,12 +17,21 @@ class AssessmentResultDialog extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    final iconData = hasRedFlags ? Icons.warning_amber_rounded : Icons.check_circle_outline_rounded;
-    final iconColor = hasRedFlags ? Colors.orange.shade700 : Colors.green.shade600;
-    final iconBgColor = hasRedFlags ? Colors.orange.shade100 : Colors.green.shade100;
-    
-    final title = hasRedFlags ? 'Tıbbi Uyarı' : 'Tarama Tamamlandı';
-    
+    final iconData = hasRedFlags
+        ? Icons.warning_amber_rounded
+        : Icons.check_circle_outline_rounded;
+    final iconColor = hasRedFlags
+        ? Colors.orange.shade700
+        : Colors.green.shade600;
+    final iconBgColor = hasRedFlags
+        ? Colors.orange.shade100
+        : Colors.green.shade100;
+
+    final loc = AppLocalizations.of(context)!;
+    final title = hasRedFlags
+        ? loc.medicalWarningTitle
+        : loc.screeningCompletedTitle;
+
     return Center(
       child: Material(
         color: Colors.transparent,
@@ -48,7 +57,10 @@ class AssessmentResultDialog extends StatelessWidget {
             children: [
               // Header
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 20,
+                ),
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
@@ -63,13 +75,15 @@ class AssessmentResultDialog extends StatelessWidget {
                       title,
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: theme.colorScheme.primary, // Matches top header in HTML
+                        color: theme
+                            .colorScheme
+                            .primary, // Matches top header in HTML
                       ),
                     ),
                   ],
                 ),
               ),
-              
+
               // Content
               Padding(
                 padding: const EdgeInsets.fromLTRB(32, 32, 32, 32),
@@ -84,15 +98,11 @@ class AssessmentResultDialog extends StatelessWidget {
                         shape: BoxShape.circle,
                       ),
                       child: Center(
-                        child: Icon(
-                          iconData,
-                          color: iconColor,
-                          size: 40,
-                        ),
+                        child: Icon(iconData, color: iconColor, size: 40),
                       ),
                     ),
                     const SizedBox(height: 24),
-                    
+
                     // Title
                     Text(
                       title,
@@ -103,39 +113,46 @@ class AssessmentResultDialog extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    
+
                     // Body Text
-                    hasRedFlags 
-                      ? RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(
+                    hasRedFlags
+                        ? RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: theme.colorScheme.onSurface.withOpacity(
+                                  0.7,
+                                ),
+                                height: 1.6,
+                              ),
+                              children: [
+                                TextSpan(text: loc.medicalWarningDescP1),
+                                TextSpan(
+                                  text: loc.deskRelief,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: theme.colorScheme.onSurface,
+                                  ),
+                                ),
+                                TextSpan(text: loc.medicalWarningDescP2),
+                              ],
+                            ),
+                          )
+                        : Text(
+                            loc.screeningSuccessDesc,
+                            textAlign: TextAlign.center,
                             style: theme.textTheme.bodyMedium?.copyWith(
-                              color: theme.colorScheme.onSurface.withOpacity(0.7),
+                              color: theme.colorScheme.onSurface.withOpacity(
+                                0.7,
+                              ),
                               height: 1.6,
                             ),
-                            children: [
-                              const TextSpan(text: 'Güvenliğiniz bizim için önemli. Verdiğiniz yanıtlara göre, bu egzersiz programına başlamadan önce bir sağlık profesyoneline danışmanız gerekmektedir. '),
-                              TextSpan(
-                                text: 'DeskRelief',
-                                style: TextStyle(fontWeight: FontWeight.bold, color: theme.colorScheme.onSurface),
-                              ),
-                              const TextSpan(text: ', tıbbi bir tanı veya tedavi aracı değildir.'),
-                            ],
                           ),
-                        )
-                      : Text(
-                          'Harika! Egzersiz programına başlamak için herhangi bir tıbbi engeliniz bulunmuyor. Şimdi ağrı bölgelerinizi seçerek size özel programınızı oluşturabiliriz.',
-                          textAlign: TextAlign.center,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: theme.colorScheme.onSurface.withOpacity(0.7),
-                            height: 1.6,
-                          ),
-                        ),
                     const SizedBox(height: 32),
-                    
+
                     // Action Button
                     CustomPrimaryButton(
-                      text: hasRedFlags ? 'Anladım' : 'Devam Et',
+                      text: hasRedFlags ? loc.understood : loc.continueBtn,
                       onPressed: onActionPressed,
                     ),
                   ],

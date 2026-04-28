@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../viewmodels/auth_view_model.dart';
 import '../../../../core/widgets/custom_primary_button.dart';
 import '../../../../core/widgets/custom_toast.dart';
@@ -55,7 +56,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   void _handleSocialSignIn(VoidCallback signAction) {
     if (!_termsAccepted) {
-      CustomToast.show(context, 'Please accept terms to continue.');
+      CustomToast.show(context, AppLocalizations.of(context)!.acceptTermsError);
       return;
     }
     signAction();
@@ -81,7 +82,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    theme.colorScheme.secondary.withOpacity(0.15),
+                    theme.colorScheme.secondary.withValues(alpha: 0.15),
                     theme.scaffoldBackgroundColor,
                   ],
                 ),
@@ -105,10 +106,10 @@ class _SignUpPageState extends State<SignUpPage> {
                           children: [
                             SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                             Text(
-                              'Welcome to',
+                              AppLocalizations.of(context)!.welcomeTo,
                               style: theme.textTheme.displaySmall?.copyWith(
                                 fontWeight: FontWeight.bold,
-                                color: theme.colorScheme.onBackground,
+                                color: theme.colorScheme.onSurface,
                               ),
                             ),
                             Text(
@@ -120,10 +121,11 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              'Align your posture, breathe deeper, and work better.',
+                              AppLocalizations.of(context)!.signInTagline,
                               textAlign: TextAlign.center,
                               style: theme.textTheme.bodyLarge?.copyWith(
-                                color: theme.colorScheme.onBackground.withOpacity(0.7),
+                                color: theme.colorScheme.onSurface
+                                    .withValues(alpha: 0.7),
                               ),
                             ),
                             const SizedBox(height: 24),
@@ -135,7 +137,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 borderRadius: BorderRadius.circular(24),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.05),
+                                    color: Colors.black.withValues(alpha: 0.05),
                                     blurRadius: 20,
                                     offset: const Offset(0, 10),
                                   ),
@@ -147,28 +149,42 @@ class _SignUpPageState extends State<SignUpPage> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: [
-                                    _buildFieldLabel('FULL NAME', theme),
+                                    _buildFieldLabel(
+                                        AppLocalizations.of(context)!
+                                            .fullNameLabel,
+                                        theme),
                                     const SizedBox(height: 8),
                                     TextFormField(
                                       controller: _nameController,
                                       focusNode: _nameFocus,
                                       textInputAction: TextInputAction.next,
                                       decoration: InputDecoration(
-                                        hintText: 'John Doe',
-                                        prefixIcon: const Icon(Icons.badge_outlined),
+                                        hintText:
+                                            AppLocalizations.of(context)!
+                                                .fullNameHint,
+                                        prefixIcon:
+                                            const Icon(Icons.badge_outlined),
                                         filled: true,
-                                        fillColor: theme.colorScheme.onSurface.withOpacity(0.04),
+                                        fillColor: theme.colorScheme.onSurface
+                                            .withValues(alpha: 0.04),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(16),
                                           borderSide: BorderSide.none,
                                         ),
                                       ),
                                       onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_emailFocus),
-                                      validator: (value) => value != null && value.trim().isNotEmpty ? null : 'Enter your name',
+                                      validator: (value) =>
+                                          value != null && value.trim().isNotEmpty
+                                              ? null
+                                              : AppLocalizations.of(context)!
+                                                  .enterNameError,
                                     ),
                                     const SizedBox(height: 16),
 
-                                    _buildFieldLabel('EMAIL ADDRESS', theme),
+                                    _buildFieldLabel(
+                                        AppLocalizations.of(context)!
+                                            .emailLabel,
+                                        theme),
                                     const SizedBox(height: 8),
                                     TextFormField(
                                       controller: _emailController,
@@ -177,20 +193,29 @@ class _SignUpPageState extends State<SignUpPage> {
                                       textInputAction: TextInputAction.next,
                                       decoration: InputDecoration(
                                         hintText: 'name@company.com',
-                                        prefixIcon: const Icon(Icons.person_outline),
+                                        prefixIcon:
+                                            const Icon(Icons.person_outline),
                                         filled: true,
-                                        fillColor: theme.colorScheme.onSurface.withOpacity(0.04),
+                                        fillColor: theme.colorScheme.onSurface
+                                            .withValues(alpha: 0.04),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(16),
                                           borderSide: BorderSide.none,
                                         ),
                                       ),
                                       onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_passwordFocus),
-                                      validator: (value) => value != null && value.contains('@') ? null : 'Enter a valid email',
+                                      validator: (value) =>
+                                          value != null && value.contains('@')
+                                              ? null
+                                              : AppLocalizations.of(context)!
+                                                  .invalidEmailError,
                                     ),
                                     const SizedBox(height: 16),
                                     
-                                    _buildFieldLabel('PASSWORD', theme),
+                                    _buildFieldLabel(
+                                        AppLocalizations.of(context)!
+                                            .passwordLabel,
+                                        theme),
                                     const SizedBox(height: 8),
                                     TextFormField(
                                       controller: _passwordController,
@@ -205,18 +230,27 @@ class _SignUpPageState extends State<SignUpPage> {
                                           onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
                                         ),
                                         filled: true,
-                                        fillColor: theme.colorScheme.onSurface.withOpacity(0.04),
+                                        fillColor: theme.colorScheme.onSurface
+                                            .withValues(alpha: 0.04),
+
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(16),
                                           borderSide: BorderSide.none,
                                         ),
                                       ),
                                       onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_confirmPasswordFocus),
-                                      validator: (value) => value != null && value.length >= 6 ? null : 'Minimum 6 characters',
+                                      validator: (value) => value != null &&
+                                              value.length >= 6
+                                          ? null
+                                          : AppLocalizations.of(context)!
+                                              .invalidPasswordError,
                                     ),
                                     const SizedBox(height: 16),
                                     
-                                    _buildFieldLabel('CONFIRM PASSWORD', theme),
+                                    _buildFieldLabel(
+                                        AppLocalizations.of(context)!
+                                            .confirmPasswordLabel,
+                                        theme),
                                     const SizedBox(height: 8),
                                     TextFormField(
                                       controller: _confirmPasswordController,
@@ -228,7 +262,9 @@ class _SignUpPageState extends State<SignUpPage> {
                                         hintText: '••••••••',
                                         prefixIcon: const Icon(Icons.lock_outline),
                                         filled: true,
-                                        fillColor: theme.colorScheme.onSurface.withOpacity(0.04),
+                                        fillColor: theme.colorScheme.onSurface
+                                            .withValues(alpha: 0.04),
+
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(16),
                                           borderSide: BorderSide.none,
@@ -236,7 +272,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                       ),
                                       validator: (value) {
                                         if (value != _passwordController.text) {
-                                          return 'Passwords do not match';
+                                          return AppLocalizations.of(context)!
+                                              .passwordsDoNotMatchError;
                                         }
                                         return null;
                                       },
@@ -260,18 +297,55 @@ class _SignUpPageState extends State<SignUpPage> {
                                         Expanded(
                                           child: Text.rich(
                                             TextSpan(
-                                              text: 'I agree to the ',
-                                              style: theme.textTheme.bodyMedium?.copyWith(
-                                                color: theme.colorScheme.onSurface.withOpacity(0.8),
+                                              text: AppLocalizations.of(context)!
+                                                  .agreeTermsP1,
+                                              style: theme.textTheme.bodyMedium
+                                                  ?.copyWith(
+                                                color: theme
+                                                    .colorScheme.onSurface
+                                                    .withValues(alpha: 0.8),
                                                 fontSize: 14,
                                               ),
                                               children: [
-                                                TextSpan(text: 'Terms of Service', style: TextStyle(color: theme.colorScheme.primary, fontWeight: FontWeight.bold)),
-                                                const TextSpan(text: ', '),
-                                                TextSpan(text: 'EULA', style: TextStyle(color: theme.colorScheme.primary, fontWeight: FontWeight.bold)),
-                                                const TextSpan(text: ', and '),
-                                                TextSpan(text: 'Privacy Policy', style: TextStyle(color: theme.colorScheme.primary, fontWeight: FontWeight.bold)),
-                                                const TextSpan(text: '.'),
+                                                TextSpan(
+                                                    text: AppLocalizations.of(
+                                                            context)!
+                                                        .termsOfService,
+                                                    style: TextStyle(
+                                                        color: theme.colorScheme
+                                                            .primary,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                TextSpan(
+                                                    text: AppLocalizations.of(
+                                                            context)!
+                                                        .agreeTermsP2),
+                                                TextSpan(
+                                                    text: AppLocalizations.of(
+                                                            context)!
+                                                        .eula,
+                                                    style: TextStyle(
+                                                        color: theme.colorScheme
+                                                            .primary,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                TextSpan(
+                                                    text: AppLocalizations.of(
+                                                            context)!
+                                                        .agreeTermsP3),
+                                                TextSpan(
+                                                    text: AppLocalizations.of(
+                                                            context)!
+                                                        .privacyPolicy,
+                                                    style: TextStyle(
+                                                        color: theme.colorScheme
+                                                            .primary,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                TextSpan(
+                                                    text: AppLocalizations.of(
+                                                            context)!
+                                                        .agreeTermsP4),
                                               ],
                                             ),
                                           ),
@@ -282,12 +356,15 @@ class _SignUpPageState extends State<SignUpPage> {
                                     const SizedBox(height: 24),
                                     
                                     CustomPrimaryButton(
-                                      text: 'Sign Up',
+                                      text: AppLocalizations.of(context)!
+                                          .signUpButton,
                                       icon: Icons.arrow_forward,
                                       isLoading: authViewModel.isLoading,
                                       onPressed: () {
                                         if (!_termsAccepted) {
-                                          CustomToast.show(context, 'Please accept terms to continue.');
+                                          CustomToast.show(context,
+                                              AppLocalizations.of(context)!
+                                                  .acceptTermsError);
                                           return;
                                         }
                                         _onSignUp();
@@ -297,18 +374,29 @@ class _SignUpPageState extends State<SignUpPage> {
                                     const SizedBox(height: 24),
                                     Row(
                                       children: [
-                                        Expanded(child: Divider(color: theme.colorScheme.onSurface.withOpacity(0.1))),
+                                        Expanded(
+                                            child: Divider(
+                                                color: theme.colorScheme.onSurface
+                                                    .withValues(alpha: 0.1))),
+
                                         Padding(
                                           padding: const EdgeInsets.symmetric(horizontal: 16),
                                           child: Text(
-                                            'OR CONTINUE WITH',
-                                            style: theme.textTheme.labelSmall?.copyWith(
+                                            AppLocalizations.of(context)!
+                                                .orContinueWith,
+                                            style: theme.textTheme.labelSmall
+                                                ?.copyWith(
                                               fontWeight: FontWeight.bold,
-                                              color: theme.colorScheme.onSurface.withOpacity(0.5),
+                                              color: theme.colorScheme.onSurface
+                                                  .withValues(alpha: 0.5),
                                             ),
                                           ),
                                         ),
-                                        Expanded(child: Divider(color: theme.colorScheme.onSurface.withOpacity(0.1))),
+                                        Expanded(
+                                            child: Divider(
+                                                color: theme.colorScheme.onSurface
+                                                    .withValues(alpha: 0.1))),
+
                                       ],
                                     ),
                                     const SizedBox(height: 24),
@@ -317,7 +405,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                       children: [
                                         Expanded(
                                           child: _SocialButton(
-                                            text: 'Google',
+                                            text: AppLocalizations.of(context)!
+                                                .google,
                                             svgAsset: 'assets/Icons/google.svg',
                                             onPressed: () => _handleSocialSignIn(() {
                                               // Handle Google Sign In
@@ -327,7 +416,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                         const SizedBox(width: 16),
                                         Expanded(
                                           child: _SocialButton(
-                                            text: 'Apple',
+                                            text: AppLocalizations.of(context)!
+                                                .apple,
                                             iconData: Icons.apple,
                                             onPressed: () => _handleSocialSignIn(() {
                                               // Handle Apple Sign In
@@ -354,13 +444,16 @@ class _SignUpPageState extends State<SignUpPage> {
                                 },
                                 child: Text.rich(
                                   TextSpan(
-                                    text: "Already have an account? ",
+                                    text: AppLocalizations.of(context)!
+                                        .haveAccount,
                                     style: theme.textTheme.bodyMedium?.copyWith(
-                                      color: theme.colorScheme.onBackground.withOpacity(0.8),
+                                      color: theme.colorScheme.onSurface
+                                          .withValues(alpha: 0.8),
                                     ),
                                     children: [
                                       TextSpan(
-                                        text: 'Sign In',
+                                        text: AppLocalizations.of(context)!
+                                            .signInLink,
                                         style: theme.textTheme.bodyLarge?.copyWith(
                                           color: theme.colorScheme.primary,
                                           fontWeight: FontWeight.bold,
@@ -389,7 +482,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return Text(
       text,
       style: theme.textTheme.labelMedium?.copyWith(
-        color: theme.colorScheme.onBackground.withOpacity(0.8),
+        color: theme.colorScheme.onSurface.withValues(alpha: 0.8),
         fontWeight: FontWeight.w700,
         letterSpacing: 1.0,
       ),
@@ -418,14 +511,17 @@ class _SocialButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         foregroundColor: theme.colorScheme.onSurface,
-        backgroundColor: isDark 
-            ? theme.colorScheme.onSurface.withOpacity(0.08)
+        backgroundColor: isDark
+            ? theme.colorScheme.onSurface.withValues(alpha: 0.08)
             : theme.colorScheme.surface,
         elevation: 0,
         padding: const EdgeInsets.symmetric(vertical: 14),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
-          side: isDark ? BorderSide.none : BorderSide(color: theme.colorScheme.onSurface.withOpacity(0.1)),
+          side: isDark
+              ? BorderSide.none
+              : BorderSide(
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.1)),
         ),
       ),
       onPressed: onPressed,

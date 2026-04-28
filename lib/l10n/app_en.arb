@@ -1,0 +1,346 @@
+{
+  "@@locale": "en",
+  "appTitle": "DeskRelief",
+  "language": "Language",
+  "turkish": "Turkish",
+  "english": "English",
+  "greetingKeepGoing": "Keep Going, {name}",
+  "@greetingKeepGoing": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "feedbackStart": "Great time to start the day! Complete your first session.",
+  "feedbackStep": "Good step for a start! Keep going.",
+  "feedbackHalfway": "You're halfway there, doing great!",
+  "feedbackAlmostDone": "Almost finished! Just a few sessions left.",
+  "feedbackDone": "Congratulations! You successfully completed today's plan.",
+  "planCompleted": "Plan Completed",
+  "feedbackRemainingSessions": "{feedback} {remaining} sessions left for today.",
+  "@feedbackRemainingSessions": {
+    "placeholders": {
+      "feedback": {
+        "type": "String"
+      },
+      "remaining": {
+        "type": "int"
+      }
+    }
+  },
+  "clinicalWarningTitle": "CLINICAL WARNING",
+  "clinicalWarningDesc": "This program is not a medical diagnostic or treatment tool. If you feel pain, stop immediately and consult a doctor.",
+  "clinicalReminderTitle": "Clinical Reminder",
+  "clinicalReminderDesc": "Are you ready for the session today?",
+  "spinalHealthTipsTitle": "Spinal Health Tips",
+  "seeAll": "See All",
+  "tipErgonomicsTitle": "Ergonomics",
+  "tipErgonomicsDesc": "Adjust your desk height according to your elbow angle.",
+  "tipMobilityTitle": "Mobility",
+  "tipMobilityDesc": "Rotate your shoulders in circular motions every 30 minutes.",
+  "tipLowerBackTitle": "Lower Back Health",
+  "tipLowerBackDesc": "Use a cushion that supports your lower back curve.",
+  "dailyProgramTitle": "DAILY PROGRAM",
+  "dailyProgramDesc": "Musculoskeletal focused recovery",
+  "statusActive": "ACTIVE",
+  "statusSuccess": "SUCCESS",
+  "regionNeck": "Neck",
+  "regionLabel1": "REGION 1",
+  "regionLowerBack": "Lower Back",
+  "regionLabel2": "REGION 2",
+  "startWorkout": "Start Workout",
+  "userAge": "{age} Years Old",
+  "@userAge": {
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "sedentaryWorker": "Sedentary Worker",
+  "dailyAverageSitting": "Daily Avg Sitting",
+  "hoursValue": "{hours} Hours",
+  "@hoursValue": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "exerciseStreak": "Exercise Streak",
+  "daysValue": "{days} DAYS",
+  "@daysValue": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "accountSettings": "ACCOUNT SETTINGS",
+  "personalInfo": "Personal Information",
+  "gdprConsent": "GDPR Consent",
+  "eula": "EULA (End User License Agreement)",
+  "privacyPolicy": "Privacy Policy",
+  "exclusionCriteria": "Exclusion Criteria",
+  "darkTheme": "Dark Theme",
+  "logout": "Log Out",
+  "calendarClinicalProgram": "CLINICAL PROGRAM",
+  "calendarExerciseSchedule": "Exercise Schedule",
+  "calendarDesc": "Your program prepared according to physiotherapy principles is fixed. Please follow the scheduled times for maximum efficiency.",
+  "physioNoteTitle": "Physiotherapist Note",
+  "physioNoteDesc": "Exercises at scheduled times are critical for spinal adaptation. Mon-Wed-Fri cycle is ideal.",
+  "dayDetailTitle": "Day Details",
+  "startTime": "START TIME",
+  "totalDuration": "TOTAL DURATION",
+  "focusRegions": "FOCUS REGIONS",
+  "regionCervicalSpine": "Cervical Spine",
+  "regionTrapezius": "Trapezius Muscles",
+  "regionScapularStability": "Scapular Stability",
+  "programContent": "Program Content",
+  "exerciseCount": "{count} EXERCISES",
+  "@exerciseCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "exerciseNeckIsometric": "Neck Isometric Strengthening",
+  "exerciseScapularRetraction": "Scapular Retraction",
+  "schedulingTitle": "Program Scheduling",
+  "schedulingStart": "Start My Program",
+  "clinicalAdviceTitle": "Clinical Advice",
+  "clinicalAdviceDesc": "It is recommended to leave at least 24 hours of rest between workouts for your muscle fibers to repair themselves and for posture development to be permanent.",
+  "daySelectionTitle": "Day Selection",
+  "maxDaysError": "You can select up to {max} days.",
+  "@maxDaysError": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "timingDetailsTitle": "Timing Details",
+  "cancel": "Cancel",
+  "workoutTimeTitle": "Workout Time",
+  "done": "Done",
+  "readyToStart": "Let's start when you're ready.",
+  "month1": "January",
+  "month2": "February",
+  "month3": "March",
+  "month4": "April",
+  "month5": "May",
+  "month6": "June",
+  "month7": "July",
+  "month8": "August",
+  "month9": "September",
+  "month10": "October",
+  "month11": "November",
+  "month12": "December",
+  "day1": "MO",
+  "day2": "TU",
+  "day3": "WE",
+  "day4": "TH",
+  "day5": "FR",
+  "day6": "SA",
+  "day7": "SU",
+  "bodyMapTitle": "Pain Map",
+  "bodyMapDesc": "Identify the regions where you have experienced chronic pain for the last three months on the map.",
+  "front": "Front",
+  "back": "Back",
+  "selectedRegionsTitle": "Selected Regions",
+  "bodyMapEmptyState": "Select the regions where you feel pain by tapping on the map.",
+  "determinePainIntensity": "DETERMINE PAIN INTENSITY",
+  "regionShoulderRight": "Right Shoulder",
+  "regionShoulderLeft": "Left Shoulder",
+  "regionHipPelvis": "Hip",
+  "regionArmRight": "Right Hand/Elbow/Wrist",
+  "regionArmLeft": "Left Hand/Elbow/Wrist",
+  "regionKneeRight": "Right Knee",
+  "regionKneeLeft": "Left Knee",
+  "regionAnkleRight": "Right Ankle",
+  "regionAnkleLeft": "Left Ankle",
+  "noRegionSelected": "No selected region found.",
+  "goBack": "Go Back",
+  "regionLabel": "{region} Region",
+  "@regionLabel": {
+    "placeholders": {
+      "region": {
+        "type": "String"
+      }
+    }
+  },
+  "assessmentPurposeTitle": "Assessment Purpose",
+  "assessmentPurposeDesc": "Pain intensity assessment helps us objectively track your current condition and determine the most appropriate exercise intensity for you.",
+  "painAnalysisTitle": "Pain Analysis",
+  "finishAssessment": "FINISH ASSESSMENT",
+  "nextRegion": "NEXT REGION",
+  "focusRegionsTitle": "Focus Regions\nDetermined",
+  "focusRegionsDescP1": "Our algorithm has prioritized the regions with the highest pain scores: ",
+  "focusRegionsDescP2": ".\n\nFor your other regions, you can make a new assessment after completing the current program.",
+  "focusRegionsBtn": "Okay, Continue",
+  "medicalConsultationTitle": "Medical Consultation\nRecommendation",
+  "medicalConsultationDesc": "We noticed that you reported widespread and severe pain in many different areas of your body.\n\nThis may be a symptom of \"Central Sensitization\" or a similar syndrome. We strongly advise you to consult a physician before starting any exercise program.",
+  "medicalConsultationBtn": "I Understand",
+  "painLevelLight": "Mild",
+  "painLevelMild": "Mild-Moderate",
+  "painLevelModerate": "Moderate",
+  "painLevelSevere": "Severe",
+  "painLevelVerySevere": "Very Severe",
+  "painAnalysisLight": "Level {val} is a mild pain that does not significantly affect daily life. It can improve with mobility.",
+  "@painAnalysisLight": {
+    "placeholders": {
+      "val": {
+        "type": "int"
+      }
+    }
+  },
+  "painAnalysisMild": "Level {val} is a noticeable but tolerable pain. Stretching exercises will be beneficial.",
+  "@painAnalysisMild": {
+    "placeholders": {
+      "val": {
+        "type": "int"
+      }
+    }
+  },
+  "painAnalysisModerate": "Level {val} is a moderate pain that requires attention. Strength and flexibility balance will be targeted.",
+  "@painAnalysisModerate": {
+    "placeholders": {
+      "val": {
+        "type": "int"
+      }
+    }
+  },
+  "painAnalysisSevere": "Level {val} is a severe pain that restricts activities. Controlled and gentle exercises are necessary.",
+  "@painAnalysisSevere": {
+    "placeholders": {
+      "val": {
+        "type": "int"
+      }
+    }
+  },
+  "painAnalysisVerySevere": "Level {val} is a very severe pain. It is important to proceed under expert supervision and rest.",
+  "@painAnalysisVerySevere": {
+    "placeholders": {
+      "val": {
+        "type": "int"
+      }
+    }
+  },
+  "medicalScreeningTitle": "Medical Screening",
+  "medicalScreeningExclusionCriteria": "Exclusion Criteria: This app is for generally healthy individuals. If you answer \"Yes\" to any question, you must consult your doctor before starting an exercise program.",
+  "stepTracker": "Step {step}/3",
+  "@stepTracker": {
+    "placeholders": {
+      "step": {
+        "type": "int"
+      }
+    }
+  },
+  "saveProgress": "Save\nProgress",
+  "completeBtn": "Complete",
+  "continueBtn": "Continue",
+  "pleaseAnswerAllQuestions": "Please answer all questions.",
+  "progressSaved": "Progress saved.",
+  "medicalWarningTitle": "Medical Warning",
+  "screeningCompletedTitle": "Screening Completed",
+  "medicalWarningDescP1": "Your safety is important to us. Based on your answers, you should consult a healthcare professional before starting this exercise program. ",
+  "deskRelief": "DeskRelief",
+  "medicalWarningDescP2": " is not a medical diagnosis or treatment tool.",
+  "screeningSuccessDesc": "Great! You have no medical barriers to starting the exercise program. Now we can create your customized program by selecting your pain regions.",
+  "understood": "I Understand",
+  "qCat1": "Systemic and Heart Health",
+  "qCat2": "Musculoskeletal and Trauma",
+  "qCat3": "Red Flags",
+  "q1": "Do you have a history of a diagnosed stroke (brain hemorrhage/paralysis)?",
+  "q2": "Do you have heart failure, heart attack, arrhythmia, or a serious cardiovascular disease?",
+  "q3": "Has your doctor told you that you should not exercise?",
+  "q4": "Do you experience chest pain, shortness of breath, dizziness, or fainting at rest or during light activity?",
+  "q5": "Do you have a diagnosed serious respiratory disease? (e.g., Asthma, COPD)",
+  "q6": "Do you have a diagnosed neurological disease? (e.g., Parkinson's disease, Multiple sclerosis)",
+  "q7": "Are you currently receiving active cancer treatment?",
+  "q8": "Have you had surgery in the last 6 months?",
+  "q9": "Have you experienced a serious musculoskeletal injury in the last 6 months?",
+  "q10": "Have you recently experienced a health issue that required hospitalization?",
+  "q11": "Do you have diagnosed high blood pressure (Hypertension)?",
+  "q12": "Do you have a doctor-diagnosed herniated disc in your lower back or neck, or a knee problem?",
+  "q13": "Do you have pain that wakes you up from sleep at night?",
+  "q14": "Have you experienced unexplained weight loss?",
+  "q15": "Do you have pain that started after a recent trauma such as a fall or impact?",
+  "q16": "Are you experiencing progressive muscle weakness, numbness, or loss of sensation?",
+  "q17": "Are you pregnant or is there a possibility that you might be pregnant?",
+  "q18": "Have you previously experienced excessive pain or worsening that lasted long (more than 24-48 hours) after exercising?",
+  "yes": "Yes",
+  "no": "No",
+  "profileWelcomeTitle1": "Kinetic",
+  "profileWelcomeTitle2": "Equilibrium",
+  "profileWelcomeSubtitle": "Let's begin your journey toward perfect alignment and effortless movement.",
+  "genderLabel": "GENDER",
+  "genderMale": "Male",
+  "genderFemale": "Female",
+  "professionLabel": "PROFESSION",
+  "professionHint": "e.g. Software Engineer",
+  "heightLabel": "HEIGHT (CM)",
+  "heightHint": "180",
+  "weightLabel": "WEIGHT (KG)",
+  "weightHint": "75",
+  "sedentaryWorkerDesc": "Do you spend more than 6 hours sitting daily?",
+  "medicalDisclaimerTitle": "Medical Disclaimer",
+  "medicalDisclaimerDesc": "This app provides postural guidance and is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician.",
+  "agreePrivacyPolicyP1": "I agree to the ",
+  "agreePrivacyPolicyP2": " and consent to data processing for my health profile.",
+  "confirmMedicalDisclaimer": "I confirm that I have read and understood the Medical Disclaimer provided above.",
+  "getStarted": "Get Started",
+  "dataSecurityLabel": "YOUR DATA IS SECURE • GDPR COMPLIANT",
+  "fillAllFieldsError": "Please fill in all profile fields (including gender and profession).",
+  "acceptAgreementsError": "Please accept all agreements to continue.",
+  "onboardingTitle1": "Is Sitting Causing You Pain?",
+  "onboardingDesc1": "The modern office lifestyle often leads to prolonged sitting, which can cause significant neck, back, and shoulder pain.",
+  "onboardingTitle2": "Meet DeskRelief, Your Digital Solution",
+  "onboardingDesc2": "DeskRelief offers expert-curated, personalized exercise protocols designed to interrupt sitting intervals and minimize pain.",
+  "onboardingTitle3": "Take Control of Your Musculoskeletal Health",
+  "onboardingDesc3": "Start your personalized journey towards a pain-free life. It's easy and clinically-based.",
+  "next": "Next",
+  "skip": "Skip",
+  "signInTitle": "Welcome Back",
+  "signInSubtitle": "Sign in to continue your journey.",
+  "emailLabel": "Email",
+  "emailHint": "name@company.com",
+  "passwordLabel": "Password",
+  "passwordHint": "••••••••",
+  "forgotPassword": "Forgot Password?",
+  "signInButton": "Sign In",
+  "dontHaveAccount": "Don't have an account? ",
+  "signUpLink": "Sign Up",
+  "signUpTitle": "Create Account",
+  "signUpSubtitle": "Join us for a healthier work life.",
+  "fullNameLabel": "Full Name",
+  "fullNameHint": "John Doe",
+  "confirmPasswordLabel": "Confirm Password",
+  "haveAccount": "Already have an account? ",
+  "signInLink": "Sign In",
+  "welcomeTo": "Welcome to",
+  "signInTagline": "Align your posture, breathe deeper, and work better.",
+  "orContinueWith": "OR CONTINUE WITH",
+  "google": "Google",
+  "apple": "Apple",
+  "signUpButton": "Sign Up",
+  "invalidEmailError": "Enter a valid email",
+  "invalidPasswordError": "Minimum 6 characters",
+  "signInSuccess": "Sign In Successful!",
+  "enterNameError": "Enter your name",
+  "passwordsDoNotMatchError": "Passwords do not match",
+  "termsOfService": "Terms of Service",
+  "eula": "EULA",
+  "acceptTermsError": "Please accept terms to continue.",
+  "agreeTermsP1": "I agree to the ",
+  "agreeTermsP2": ", ",
+  "agreeTermsP3": ", and ",
+  "agreeTermsP4": ".",
+  "flareUp": "Flare Up",
+  "navHome": "Home",
+  "navCalendar": "Calendar",
+  "navProfile": "Profile",
+  "exclusionCriteriaHeader": "Your health status is critical for a safe experience. If there have been any changes in your current status, please update below."
+}

@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
+import 'package:deskrelief/l10n/app_localizations.dart';
+import 'package:deskrelief/core/theme/theme_provider.dart';
+import 'package:deskrelief/core/providers/locale_provider.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // ProfilePage — High-fidelity User Profile based on premium mockup
@@ -76,6 +81,7 @@ class _UserHeroSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final primary = theme.colorScheme.primary;
+    final loc = AppLocalizations.of(context)!;
 
     return Center(
       child: Column(
@@ -131,12 +137,12 @@ class _UserHeroSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _UserTag(label: '32 Yaşında'),
-              SizedBox(width: 8),
-              _UserTag(label: 'Sedanter Çalışan', icon: Icons.desktop_windows_rounded),
+              _UserTag(label: loc.userAge('32')),
+              const SizedBox(width: 8),
+              _UserTag(label: loc.sedentaryWorker, icon: Icons.desktop_windows_rounded),
             ],
           ),
         ],
@@ -185,25 +191,26 @@ class _StatsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    final loc = AppLocalizations.of(context)!;
+    return Row(
       children: [
         Expanded(
           child: _StatCard(
             icon: Icons.timer_rounded,
             color: Colors.blue,
-            value: '4.2 Saat',
-            label: 'Günlük Ortalama Oturma',
-            status: 'AKTİF',
+            value: loc.hoursValue('4.2'),
+            label: loc.dailyAverageSitting,
+            status: loc.statusActive,
           ),
         ),
-        SizedBox(width: 16),
+        const SizedBox(width: 16),
         Expanded(
           child: _StatCard(
             icon: Icons.bolt_rounded,
             color: Colors.orange,
-            value: '12 GÜN',
-            label: 'Egzersiz Serisi',
-            status: 'BAŞARI',
+            value: loc.daysValue('12'),
+            label: loc.exerciseStreak,
+            status: loc.statusSuccess,
           ),
         ),
       ],
@@ -286,10 +293,11 @@ class _SettingsHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Text(
-        'HESAP AYARLARI',
+        loc.accountSettings,
         style: theme.textTheme.labelSmall?.copyWith(
           fontSize: 10,
           fontWeight: FontWeight.w900,
@@ -307,6 +315,7 @@ class _SettingsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = AppLocalizations.of(context)!;
     return Container(
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
@@ -320,15 +329,166 @@ class _SettingsList extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _SettingsItem(icon: Icons.person_rounded, title: 'Kişisel Bilgiler', color: theme.colorScheme.primary),
+          _SettingsItem(icon: Icons.person_rounded, title: loc.personalInfo, color: theme.colorScheme.primary),
           _Separator(),
-          const _SettingsItem(icon: Icons.gavel_rounded, title: 'KVKK / GDPR Onayı', color: Color(0xFF10B981)),
+          _SettingsItem(icon: Icons.gavel_rounded, title: loc.gdprConsent, color: const Color(0xFF10B981)),
           _Separator(),
-          const _SettingsItem(icon: Icons.description_rounded, title: 'EULA (Kullanım Sözleşmesi)', color: Colors.orange),
+          _SettingsItem(icon: Icons.description_rounded, title: loc.eula, color: Colors.orange),
           _Separator(),
-          const _SettingsItem(icon: Icons.lock_rounded, title: 'Gizlilik Politikası', color: Colors.grey),
+          _SettingsItem(icon: Icons.lock_rounded, title: loc.privacyPolicy, color: Colors.grey),
           _Separator(),
-          _SettingsItem(icon: Icons.assignment_ind_rounded, title: 'Dışlama Kriterleri', color: theme.colorScheme.primary),
+          _SettingsItem(
+            icon: Icons.assignment_ind_rounded, 
+            title: loc.exclusionCriteria, 
+            color: theme.colorScheme.primary,
+            onTap: () => context.push('/profile/exclusion-criteria'),
+          ),
+          _Separator(),
+          const _ThemeSettingsItem(),
+          _Separator(),
+          const _LanguageSettingsItem(),
+        ],
+      ),
+    );
+  }
+}
+
+
+class _ThemeSettingsItem extends StatelessWidget {
+  const _ThemeSettingsItem();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDark = themeProvider.themeMode == ThemeMode.dark || 
+                  (themeProvider.themeMode == ThemeMode.system && 
+                   MediaQuery.of(context).platformBrightness == Brightness.dark);
+
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Colors.purple.withValues(alpha: 0.08),
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: Icon(
+              isDark ? Icons.dark_mode_rounded : Icons.light_mode_rounded, 
+              color: Colors.purple, 
+              size: 20
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Text(
+              AppLocalizations.of(context)!.darkTheme,
+              style: theme.textTheme.bodyLarge?.copyWith(
+                fontWeight: FontWeight.w700,
+                fontSize: 15,
+                color: theme.colorScheme.onSurface,
+              ),
+            ),
+          ),
+          Switch.adaptive(
+            value: isDark,
+            activeThumbColor: Colors.purple,
+            onChanged: (value) {
+              themeProvider.setThemeMode(value ? ThemeMode.dark : ThemeMode.light);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _LanguageSettingsItem extends StatelessWidget {
+  const _LanguageSettingsItem();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final localeProvider = Provider.of<LocaleProvider>(context);
+    final isTurkish = localeProvider.locale?.languageCode == 'tr' || localeProvider.locale == null;
+
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Colors.blue.withValues(alpha: 0.08),
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: const Icon(
+              Icons.language_rounded, 
+              color: Colors.blue, 
+              size: 20
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Text(
+              AppLocalizations.of(context)?.language ?? 'Dil',
+              style: theme.textTheme.bodyLarge?.copyWith(
+                fontWeight: FontWeight.w700,
+                fontSize: 15,
+                color: theme.colorScheme.onSurface,
+              ),
+            ),
+          ),
+          Container(
+            height: 36,
+            decoration: BoxDecoration(
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.05),
+              borderRadius: BorderRadius.circular(18),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                GestureDetector(
+                  onTap: () => localeProvider.setLocale(const Locale('tr')),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: isTurkish ? theme.colorScheme.primary : Colors.transparent,
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    child: Text(
+                      'TR',
+                      style: TextStyle(
+                        color: isTurkish ? theme.colorScheme.onPrimary : theme.colorScheme.onSurface,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => localeProvider.setLocale(const Locale('en')),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: !isTurkish ? theme.colorScheme.primary : Colors.transparent,
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    child: Text(
+                      'EN',
+                      style: TextStyle(
+                        color: !isTurkish ? theme.colorScheme.onPrimary : theme.colorScheme.onSurface,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -339,18 +499,20 @@ class _SettingsItem extends StatelessWidget {
   final IconData icon;
   final String title;
   final Color color;
+  final VoidCallback? onTap;
 
   const _SettingsItem({
     required this.icon,
     required this.title,
     required this.color,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return InkWell(
-      onTap: () {},
+      onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Row(
@@ -398,6 +560,7 @@ class _LogoutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = AppLocalizations.of(context)!;
     return SizedBox(
       width: double.infinity,
       child: TextButton(
@@ -413,7 +576,7 @@ class _LogoutButton extends StatelessWidget {
             Icon(Icons.logout_rounded, color: theme.colorScheme.error, size: 20),
             const SizedBox(width: 12),
             Text(
-              'Oturumu Kapat',
+              loc.logout,
               style: TextStyle(
                 color: theme.colorScheme.error,
                 fontWeight: FontWeight.w800,

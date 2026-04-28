@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../viewmodels/auth_view_model.dart';
 import '../../../../core/widgets/custom_primary_button.dart';
 import '../../../../core/widgets/custom_toast.dart';
@@ -38,7 +39,8 @@ class _SignInPageState extends State<SignInPage> {
       await context.read<AuthViewModel>().signIn(email, password);
       
       if (mounted) {
-        CustomToast.show(context, 'Sign In Successful!', isError: false);
+        CustomToast.show(context, AppLocalizations.of(context)!.signInSuccess,
+            isError: false);
       }
     }
   }
@@ -63,7 +65,7 @@ class _SignInPageState extends State<SignInPage> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    theme.colorScheme.secondary.withOpacity(0.15),
+                    theme.colorScheme.secondary.withValues(alpha: 0.15),
                     theme.scaffoldBackgroundColor,
                   ],
                 ),
@@ -87,10 +89,10 @@ class _SignInPageState extends State<SignInPage> {
                           children: [
                             SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                             Text(
-                              'Welcome to',
+                              AppLocalizations.of(context)!.welcomeTo,
                               style: theme.textTheme.displaySmall?.copyWith(
                                 fontWeight: FontWeight.bold,
-                                color: theme.colorScheme.onBackground,
+                                color: theme.colorScheme.onSurface,
                               ),
                             ),
                             Text(
@@ -102,10 +104,11 @@ class _SignInPageState extends State<SignInPage> {
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              'Align your posture, breathe deeper, and work better.',
+                              AppLocalizations.of(context)!.signInTagline,
                               textAlign: TextAlign.center,
                               style: theme.textTheme.bodyLarge?.copyWith(
-                                color: theme.colorScheme.onBackground.withOpacity(0.7),
+                                color: theme.colorScheme.onSurface
+                                    .withValues(alpha: 0.7),
                               ),
                             ),
                             const SizedBox(height: 24),
@@ -117,7 +120,7 @@ class _SignInPageState extends State<SignInPage> {
                                 borderRadius: BorderRadius.circular(24),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.05),
+                                    color: Colors.black.withValues(alpha: 0.05),
                                     blurRadius: 20,
                                     offset: const Offset(0, 10),
                                   ),
@@ -129,7 +132,10 @@ class _SignInPageState extends State<SignInPage> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: [
-                                    _buildFieldLabel('EMAIL ADDRESS', theme),
+                                    _buildFieldLabel(
+                                        AppLocalizations.of(context)!
+                                            .emailLabel,
+                                        theme),
                                     const SizedBox(height: 8),
                                     TextFormField(
                                       controller: _emailController,
@@ -138,20 +144,29 @@ class _SignInPageState extends State<SignInPage> {
                                       textInputAction: TextInputAction.next,
                                       decoration: InputDecoration(
                                         hintText: 'name@company.com',
-                                        prefixIcon: const Icon(Icons.person_outline),
+                                        prefixIcon:
+                                            const Icon(Icons.person_outline),
                                         filled: true,
-                                        fillColor: theme.colorScheme.onSurface.withOpacity(0.04),
+                                        fillColor: theme.colorScheme.onSurface
+                                            .withValues(alpha: 0.04),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(16),
                                           borderSide: BorderSide.none,
                                         ),
                                       ),
                                       onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_passwordFocus),
-                                      validator: (value) => value != null && value.contains('@') ? null : 'Enter a valid email',
+                                      validator: (value) =>
+                                          value != null && value.contains('@')
+                                              ? null
+                                              : AppLocalizations.of(context)!
+                                                  .invalidEmailError,
                                     ),
                                     const SizedBox(height: 20),
                                     
-                                    _buildFieldLabel('PASSWORD', theme),
+                                    _buildFieldLabel(
+                                        AppLocalizations.of(context)!
+                                            .passwordLabel,
+                                        theme),
                                     const SizedBox(height: 8),
                                     TextFormField(
                                       controller: _passwordController,
@@ -167,26 +182,33 @@ class _SignInPageState extends State<SignInPage> {
                                           onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
                                         ),
                                         filled: true,
-                                        fillColor: theme.colorScheme.onSurface.withOpacity(0.04),
+                                        fillColor: theme.colorScheme.onSurface
+                                            .withValues(alpha: 0.04),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(16),
                                           borderSide: BorderSide.none,
                                         ),
                                       ),
-                                      validator: (value) => value != null && value.length >= 6 ? null : 'Minimum 6 characters',
+                                      validator: (value) => value != null &&
+                                              value.length >= 6
+                                          ? null
+                                          : AppLocalizations.of(context)!
+                                              .invalidPasswordError,
                                     ),
                                     
                                     Align(
                                       alignment: Alignment.centerRight,
                                       child: TextButton(
                                         onPressed: () {},
-                                        child: const Text('Forgot Password?'),
+                                        child: Text(AppLocalizations.of(context)!
+                                            .forgotPassword),
                                       ),
                                     ),
                                     const SizedBox(height: 8),
                                     
                                     CustomPrimaryButton(
-                                      text: 'Sign In',
+                                      text: AppLocalizations.of(context)!
+                                          .signInButton,
                                       icon: Icons.login,
                                       isLoading: authViewModel.isLoading,
                                       onPressed: _onSignIn,
@@ -195,18 +217,27 @@ class _SignInPageState extends State<SignInPage> {
                                     const SizedBox(height: 24),
                                     Row(
                                       children: [
-                                        Expanded(child: Divider(color: theme.colorScheme.onSurface.withOpacity(0.1))),
+                                        Expanded(
+                                            child: Divider(
+                                                color: theme.colorScheme.onSurface
+                                                    .withValues(alpha: 0.1))),
                                         Padding(
                                           padding: const EdgeInsets.symmetric(horizontal: 16),
                                           child: Text(
-                                            'OR CONTINUE WITH',
-                                            style: theme.textTheme.labelSmall?.copyWith(
+                                            AppLocalizations.of(context)!
+                                                .orContinueWith,
+                                            style: theme.textTheme.labelSmall
+                                                ?.copyWith(
                                               fontWeight: FontWeight.bold,
-                                              color: theme.colorScheme.onSurface.withOpacity(0.5),
+                                              color: theme.colorScheme.onSurface
+                                                  .withValues(alpha: 0.5),
                                             ),
                                           ),
                                         ),
-                                        Expanded(child: Divider(color: theme.colorScheme.onSurface.withOpacity(0.1))),
+                                        Expanded(
+                                            child: Divider(
+                                                color: theme.colorScheme.onSurface
+                                                    .withValues(alpha: 0.1))),
                                       ],
                                     ),
                                     const SizedBox(height: 24),
@@ -215,7 +246,8 @@ class _SignInPageState extends State<SignInPage> {
                                       children: [
                                         Expanded(
                                           child: _SocialButton(
-                                            text: 'Google',
+                                            text: AppLocalizations.of(context)!
+                                                .google,
                                             svgAsset: 'assets/Icons/google.svg',
                                             onPressed: () {},
                                           ),
@@ -223,7 +255,8 @@ class _SignInPageState extends State<SignInPage> {
                                         const SizedBox(width: 16),
                                         Expanded(
                                           child: _SocialButton(
-                                            text: 'Apple',
+                                            text: AppLocalizations.of(context)!
+                                                .apple,
                                             iconData: Icons.apple,
                                             onPressed: () {},
                                           ),
@@ -242,13 +275,16 @@ class _SignInPageState extends State<SignInPage> {
                                 onTap: () => context.push('/signup'),
                                 child: Text.rich(
                                   TextSpan(
-                                    text: "Don't have an account? ",
+                                    text: AppLocalizations.of(context)!
+                                        .dontHaveAccount,
                                     style: theme.textTheme.bodyMedium?.copyWith(
-                                      color: theme.colorScheme.onBackground.withOpacity(0.8),
+                                      color: theme.colorScheme.onSurface
+                                          .withValues(alpha: 0.8),
                                     ),
                                     children: [
                                       TextSpan(
-                                        text: 'Sign Up',
+                                        text: AppLocalizations.of(context)!
+                                            .signUpLink,
                                         style: theme.textTheme.bodyLarge?.copyWith(
                                           color: theme.colorScheme.primary,
                                           fontWeight: FontWeight.bold,
@@ -277,7 +313,7 @@ class _SignInPageState extends State<SignInPage> {
     return Text(
       text,
       style: theme.textTheme.labelMedium?.copyWith(
-        color: theme.colorScheme.onBackground.withOpacity(0.8),
+        color: theme.colorScheme.onSurface.withValues(alpha: 0.8),
         fontWeight: FontWeight.w700,
         letterSpacing: 1.0,
       ),
@@ -306,14 +342,17 @@ class _SocialButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         foregroundColor: theme.colorScheme.onSurface,
-        backgroundColor: isDark 
-            ? theme.colorScheme.onSurface.withOpacity(0.08)
+        backgroundColor: isDark
+            ? theme.colorScheme.onSurface.withValues(alpha: 0.08)
             : theme.colorScheme.surface,
         elevation: 0,
         padding: const EdgeInsets.symmetric(vertical: 14),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
-          side: isDark ? BorderSide.none : BorderSide(color: theme.colorScheme.onSurface.withOpacity(0.1)),
+          side: isDark
+              ? BorderSide.none
+              : BorderSide(
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.1)),
         ),
       ),
       onPressed: onPressed,

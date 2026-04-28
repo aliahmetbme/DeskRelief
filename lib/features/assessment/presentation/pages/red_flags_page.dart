@@ -2,12 +2,14 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/app_back_button.dart';
 import '../../../../core/widgets/custom_primary_button.dart';
 import '../viewmodels/red_flags_view_model.dart';
 import '../widgets/question_card.dart';
 import '../widgets/assessment_result_dialog.dart';
+import 'package:deskrelief/l10n/app_localizations.dart';
 
 class RedFlagsPage extends StatelessWidget {
   const RedFlagsPage({super.key});
@@ -57,7 +59,7 @@ class RedFlagsPage extends StatelessWidget {
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(
-                              'Dışlama Kriterleri: Bu uygulama genel sağlıklı bireyler içindir. Herhangi bir soruyu "Evet" olarak yanıtlarsanız, egzersiz programına başlamadan önce mutlaka doktorunuza danışmalısınız.',
+                              AppLocalizations.of(context)!.medicalScreeningExclusionCriteria,
                               style: theme.textTheme.bodyMedium?.copyWith(
                                 color: isDark
                                     ? Colors.white
@@ -73,7 +75,7 @@ class RedFlagsPage extends StatelessWidget {
                     final question = questions[index];
                     return QuestionCard(
                       number: '${question.id}',
-                      questionText: question.questionText,
+                      questionText: question.getQuestionText(AppLocalizations.of(context)!),
                       selectedAnswer: viewModel.answers[question.id],
                       onAnswered: (value) {
                         viewModel.setAnswer(question.id, value);
@@ -133,7 +135,7 @@ class RedFlagsPage extends StatelessWidget {
                                 },
                               ),
                               Text(
-                                'Tıbbi Tarama',
+                                AppLocalizations.of(context)!.medicalScreeningTitle,
                                 style: theme.textTheme.titleLarge?.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -148,7 +150,7 @@ class RedFlagsPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Text(
-                                'Adım ${viewModel.currentStep}/3',
+                                AppLocalizations.of(context)!.stepTracker(viewModel.currentStep),
                                 style: theme.textTheme.labelMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: theme.colorScheme.onSurface
@@ -215,13 +217,13 @@ class RedFlagsPage extends StatelessWidget {
                           TextButton(
                             onPressed: () {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('İlerleme kaydedildi.'),
+                                SnackBar(
+                                  content: Text(AppLocalizations.of(context)!.progressSaved),
                                 ),
                               );
                             },
                             child: Text(
-                              'İlerlemeyi\nKaydet',
+                              AppLocalizations.of(context)!.saveProgress,
                               textAlign: TextAlign.center,
                               style: theme.textTheme.labelMedium?.copyWith(
                                 color: theme.colorScheme.onSurface.withOpacity(
@@ -234,7 +236,7 @@ class RedFlagsPage extends StatelessWidget {
                           const SizedBox(width: 16),
                           Expanded(
                             child: CustomPrimaryButton(
-                              text: isLastStep ? 'Tamamla' : 'Devam Et',
+                              text: isLastStep ? AppLocalizations.of(context)!.completeBtn : AppLocalizations.of(context)!.continueBtn,
                               icon: isLastStep
                                   ? Icons.check
                                   : Icons.arrow_forward,
@@ -252,9 +254,9 @@ class RedFlagsPage extends StatelessWidget {
 
                                 if (!allAnswered) {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
+                                    SnackBar(
                                       content: Text(
-                                        'Lütfen tüm soruları yanıtlayın.',
+                                        AppLocalizations.of(context)!.pleaseAnswerAllQuestions,
                                       ),
                                     ),
                                   );
@@ -280,14 +282,29 @@ class RedFlagsPage extends StatelessWidget {
                                             child: AssessmentResultDialog(
                                               hasRedFlags:
                                                   viewModel.hasRedFlags,
-                                              onActionPressed: () {
+                                              onActionPressed: () async {
                                                 if (viewModel.hasRedFlags) {
                                                   context.pop();
-                                                  // TODO: Uygulamadan çıkış yapma (logout) işlemini burada gerçekleştir
+                                                  // Force sign out/back if red flags are present
                                                   context.go('/signin');
                                                 } else {
                                                   context.pop();
-                                                  context.go('/body-map');
+                                                  
+                                                  // Check if we should go back to profile or continue to body map
+                                                  final prefs = await SharedPreferences.getInstance();
+                                                  final hasSeenOnboarding = prefs.getBool('seenOnboarding') ?? false;
+                                                  
+                                                  if (hasSeenOnboarding) {
+                                                    // From Profile
+                                                    if (context.canPop()) {
+                                                      context.pop();
+                                                    } else {
+                                                      context.go('/home');
+                                                    }
+                                                  } else {
+                                                    // From Initial Assessment
+                                                    context.go('/body-map');
+                                                  }
                                                 }
                                               },
                                             ),

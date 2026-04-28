@@ -5,34 +5,35 @@ import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/widgets/custom_primary_button.dart';
 import '../viewmodels/body_map_view_model.dart';
+import 'package:deskrelief/l10n/app_localizations.dart';
 
 // Senin Kusursuz Oturan Koordinatların
 final Map<String, List<Offset>> backOffsets = {
-  'Boyun': [const Offset(0.50, 0.12)],
-  'Sol Omuz': [const Offset(0.35, 0.22)],
-  'Sağ Omuz': [const Offset(0.65, 0.22)],
-  'Bel': [const Offset(0.50, 0.36)],
-  'Kalça': [const Offset(0.42, 0.52), const Offset(0.58, 0.52)],
-  'Sağ El/Dirsek/Bilek': [const Offset(0.68, 0.44)],
-  'Sol El/Dirsek/Bilek': [const Offset(0.32, 0.44)],
-  'Sağ Diz': [const Offset(0.59, 0.72)],
-  'Sol Diz': [const Offset(0.41, 0.72)],
-  'Sağ Ayak Bileği': [const Offset(0.58, 0.93)],
-  'Sol Ayak Bileği': [const Offset(0.42, 0.93)],
+  'region_neck': [const Offset(0.50, 0.12)],
+  'region_shoulder_left': [const Offset(0.35, 0.22)],
+  'region_shoulder_right': [const Offset(0.65, 0.22)],
+  'region_lower_back': [const Offset(0.50, 0.36)],
+  'region_hip_pelvis': [const Offset(0.42, 0.52), const Offset(0.58, 0.52)],
+  'region_arm_right': [const Offset(0.68, 0.44)],
+  'region_arm_left': [const Offset(0.32, 0.44)],
+  'region_knee_right': [const Offset(0.59, 0.72)],
+  'region_knee_left': [const Offset(0.41, 0.72)],
+  'region_ankle_right': [const Offset(0.58, 0.93)],
+  'region_ankle_left': [const Offset(0.42, 0.93)],
 };
 
 final Map<String, List<Offset>> frontOffsets = {
-  'Boyun': [const Offset(0.50, 0.12)],
-  'Sağ Omuz': [const Offset(0.35, 0.22)],
-  'Sol Omuz': [const Offset(0.65, 0.22)],
-  'Bel': [const Offset(0.50, 0.40)],
-  'Kalça': [const Offset(0.42, 0.52), const Offset(0.58, 0.52)],
-  'Sağ El/Dirsek/Bilek': [const Offset(0.31, 0.44)],
-  'Sol El/Dirsek/Bilek': [const Offset(0.69, 0.44)],
-  'Sağ Diz': [const Offset(0.41, 0.72)],
-  'Sol Diz': [const Offset(0.59, 0.72)],
-  'Sağ Ayak Bileği': [const Offset(0.42, 0.93)],
-  'Sol Ayak Bileği': [const Offset(0.58, 0.93)],
+  'region_neck': [const Offset(0.50, 0.12)],
+  'region_shoulder_right': [const Offset(0.35, 0.22)],
+  'region_shoulder_left': [const Offset(0.65, 0.22)],
+  'region_lower_back': [const Offset(0.50, 0.40)],
+  'region_hip_pelvis': [const Offset(0.42, 0.52), const Offset(0.58, 0.52)],
+  'region_arm_right': [const Offset(0.31, 0.44)],
+  'region_arm_left': [const Offset(0.69, 0.44)],
+  'region_knee_right': [const Offset(0.41, 0.72)],
+  'region_knee_left': [const Offset(0.59, 0.72)],
+  'region_ankle_right': [const Offset(0.42, 0.93)],
+  'region_ankle_left': [const Offset(0.58, 0.93)],
 };
 
 class BodyMapPage extends StatelessWidget {
@@ -62,7 +63,7 @@ class BodyMapPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Ağrı Haritası",
+                            AppLocalizations.of(context)!.bodyMapTitle,
                             style: theme.textTheme.headlineMedium?.copyWith(
                               fontWeight: FontWeight.w800,
                               color: theme.colorScheme.onSurface,
@@ -71,7 +72,7 @@ class BodyMapPage extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            "Son üç aydır kronik ağrı yaşadığınız bölgeleri haritadan belirleyin.",
+                            AppLocalizations.of(context)!.bodyMapDesc,
                             style: theme.textTheme.bodyMedium?.copyWith(
                               color: theme.colorScheme.onSurfaceVariant
                                   .withValues(alpha: 0.8),
@@ -142,7 +143,7 @@ class BodyMapPage extends StatelessWidget {
                                     },
                                     child: Center(
                                       child: Text(
-                                        'Ön',
+                                        AppLocalizations.of(context)!.front,
                                         style: TextStyle(
                                           fontWeight: viewModel.currentStep == 2
                                               ? FontWeight.bold
@@ -170,7 +171,7 @@ class BodyMapPage extends StatelessWidget {
                                     },
                                     child: Center(
                                       child: Text(
-                                        'Arka',
+                                        AppLocalizations.of(context)!.back,
                                         style: TextStyle(
                                           fontWeight: viewModel.currentStep == 1
                                               ? FontWeight.bold
@@ -351,7 +352,7 @@ class BodyMapPage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Seçilen Bölgeler',
+                                    AppLocalizations.of(context)!.selectedRegionsTitle,
                                     style: theme.textTheme.titleMedium
                                         ?.copyWith(
                                           fontWeight: FontWeight.bold,
@@ -387,7 +388,7 @@ class BodyMapPage extends StatelessWidget {
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Text(
-                                              region,
+                                              _getRegionDisplayName(context, region),
                                               style: TextStyle(
                                                 fontSize: 13.5,
                                                 fontWeight: FontWeight.w600,
@@ -418,7 +419,7 @@ class BodyMapPage extends StatelessWidget {
                               )
                             : Center(
                                 child: Text(
-                                  'Ağrı hissettiğiniz bölgeleri harita üzerinden dokunarak seçiniz.',
+                                  AppLocalizations.of(context)!.bodyMapEmptyState,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 14,
@@ -461,7 +462,7 @@ class BodyMapPage extends StatelessWidget {
                       ),
                     ),
                     child: CustomPrimaryButton(
-                      text: 'AĞRI ŞİDDETİNİ BELİRLE',
+                      text: AppLocalizations.of(context)!.determinePainIntensity,
                       icon: Icons.chevron_right,
                       onPressed: hasSelection
                           ? () {
@@ -481,6 +482,36 @@ class BodyMapPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getRegionDisplayName(BuildContext context, String id) {
+    final loc = AppLocalizations.of(context)!;
+    switch (id) {
+      case 'region_neck':
+        return loc.regionNeck;
+      case 'region_shoulder_right':
+        return loc.regionShoulderRight;
+      case 'region_shoulder_left':
+        return loc.regionShoulderLeft;
+      case 'region_lower_back':
+        return loc.regionLowerBack;
+      case 'region_hip_pelvis':
+        return loc.regionHipPelvis;
+      case 'region_arm_right':
+        return loc.regionArmRight;
+      case 'region_arm_left':
+        return loc.regionArmLeft;
+      case 'region_knee_right':
+        return loc.regionKneeRight;
+      case 'region_knee_left':
+        return loc.regionKneeLeft;
+      case 'region_ankle_right':
+        return loc.regionAnkleRight;
+      case 'region_ankle_left':
+        return loc.regionAnkleLeft;
+      default:
+        return id;
+    }
   }
 }
 

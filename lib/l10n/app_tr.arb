@@ -1,0 +1,346 @@
+{
+  "@@locale": "tr",
+  "appTitle": "DeskRelief",
+  "language": "Dil",
+  "turkish": "Türkçe",
+  "english": "İngilizce",
+  "greetingKeepGoing": "Devam Et, {name}",
+  "@greetingKeepGoing": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "feedbackStart": "Güne başlamak için harika bir an! İlk seansını tamamla.",
+  "feedbackStep": "Başlangıç için güzel bir adım! Devam et.",
+  "feedbackHalfway": "Yolun yarısına geldin, harika gidiyorsun!",
+  "feedbackAlmostDone": "Neredeyse bitmek üzere! Sadece birkaç seans kaldı.",
+  "feedbackDone": "Tebrikler! Bugünkü planını başarıyla tamamladın.",
+  "planCompleted": "Plan Tamamlandı",
+  "feedbackRemainingSessions": "{feedback} Bugünlük {remaining} seans kaldı.",
+  "@feedbackRemainingSessions": {
+    "placeholders": {
+      "feedback": {
+        "type": "String"
+      },
+      "remaining": {
+        "type": "int"
+      }
+    }
+  },
+  "clinicalWarningTitle": "KLİNİK UYARI",
+  "clinicalWarningDesc": "Bu program tıbbi bir tanı veya tedavi aracı değildir. Ağrı hissederseniz hemen durun ve doktora danışın.",
+  "clinicalReminderTitle": "Klinik Hatırlatıcı",
+  "clinicalReminderDesc": "Bugün seansa hazır mısınız?",
+  "spinalHealthTipsTitle": "Omurga Sağlığı Tavsiyeleri",
+  "seeAll": "Tümünü Gör",
+  "tipErgonomicsTitle": "Ergonomi",
+  "tipErgonomicsDesc": "Masa yüksekliğini dirsek açınıza göre ayarlayın.",
+  "tipMobilityTitle": "Hareketlilik",
+  "tipMobilityDesc": "Her 30 dakikada bir omuzlarınızı dairesel hareketlerle çevirin.",
+  "tipLowerBackTitle": "Bel Sağlığı",
+  "tipLowerBackDesc": "Koltuk bel kavisini destekleyen yastık kullanın.",
+  "dailyProgramTitle": "GÜNLÜK PROGRAM",
+  "dailyProgramDesc": "Kas-iskelet odaklı iyileşme",
+  "statusActive": "AKTİF",
+  "statusSuccess": "BAŞARI",
+  "regionNeck": "Boyun",
+  "regionLabel1": "BÖLGE 1",
+  "regionLowerBack": "Alt Sırt",
+  "regionLabel2": "BÖLGE 2",
+  "startWorkout": "Antrenmana Başla",
+  "userAge": "{age} Yaşında",
+  "@userAge": {
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "sedentaryWorker": "Sedanter Çalışan",
+  "dailyAverageSitting": "Günlük Ortalama Oturma",
+  "hoursValue": "{hours} Saat",
+  "@hoursValue": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "exerciseStreak": "Egzersiz Serisi",
+  "daysValue": "{days} GÜN",
+  "@daysValue": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "accountSettings": "HESAP AYARLARI",
+  "personalInfo": "Kişisel Bilgiler",
+  "gdprConsent": "KVKK / GDPR Onayı",
+  "eula": "EULA (Kullanım Sözleşmesi)",
+  "privacyPolicy": "Gizlilik Politikası",
+  "exclusionCriteria": "Dışlama Kriterleri",
+  "darkTheme": "Koyu Tema",
+  "logout": "Oturumu Kapat",
+  "calendarClinicalProgram": "KLİNİK PROGRAM",
+  "calendarExerciseSchedule": "Egzersiz Takvimi",
+  "calendarDesc": "Fizyoterapi ilkelerine göre hazırlanan programınız sabittir. Maksimum verim için planlanan saatlere uyunuz.",
+  "physioNoteTitle": "Fizyoterapist Notu",
+  "physioNoteDesc": "Belirlenen saatlerdeki egzersizler omurga adaptasyonu için kritiktir. Mon-Wed-Fri döngüsü idealdir.",
+  "dayDetailTitle": "Gün Detayı",
+  "startTime": "BAŞLANGIÇ",
+  "totalDuration": "TOPLAM SÜRE",
+  "focusRegions": "ODAK BÖLGELERİ",
+  "regionCervicalSpine": "Servikal Omurga",
+  "regionTrapezius": "Trapez Kasları",
+  "regionScapularStability": "Skapular Stabilite",
+  "programContent": "Program İçeriği",
+  "exerciseCount": "{count} HAREKET",
+  "@exerciseCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "exerciseNeckIsometric": "Boyun İzometrik Güçlendirme",
+  "exerciseScapularRetraction": "Skapular Retraksiyon",
+  "schedulingTitle": "Program Planlaması",
+  "schedulingStart": "Programımı Başlat",
+  "clinicalAdviceTitle": "Klinik Tavsiye",
+  "clinicalAdviceDesc": "Kas liflerinizin kendini onarması ve postür gelişiminin kalıcı olması için antrenmanlar arasında en az 24 saat dinlenme bırakılması önerilir.",
+  "daySelectionTitle": "Gün Seçimi",
+  "maxDaysError": "En fazla {max} gün seçebilirsiniz.",
+  "@maxDaysError": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "timingDetailsTitle": "Zamanlama Detayları",
+  "cancel": "İptal",
+  "workoutTimeTitle": "Antrenman Saati",
+  "done": "Bitti",
+  "readyToStart": "Hazır olduğunda başlayalım.",
+  "month1": "Ocak",
+  "month2": "Şubat",
+  "month3": "Mart",
+  "month4": "Nisan",
+  "month5": "Mayıs",
+  "month6": "Haziran",
+  "month7": "Temmuz",
+  "month8": "Ağustos",
+  "month9": "Eylül",
+  "month10": "Ekim",
+  "month11": "Kasım",
+  "month12": "Aralık",
+  "day1": "PT",
+  "day2": "SA",
+  "day3": "ÇA",
+  "day4": "PE",
+  "day5": "CU",
+  "day6": "CT",
+  "day7": "PA",
+  "bodyMapTitle": "Ağrı Haritası",
+  "bodyMapDesc": "Son üç aydır kronik ağrı yaşadığınız bölgeleri haritadan belirleyin.",
+  "front": "Ön",
+  "back": "Arka",
+  "selectedRegionsTitle": "Seçilen Bölgeler",
+  "bodyMapEmptyState": "Ağrı hissettiğiniz bölgeleri harita üzerinden dokunarak seçiniz.",
+  "determinePainIntensity": "AĞRI ŞİDDETİNİ BELİRLE",
+  "regionShoulderRight": "Sağ Omuz",
+  "regionShoulderLeft": "Sol Omuz",
+  "regionHipPelvis": "Kalça",
+  "regionArmRight": "Sağ El/Dirsek/Bilek",
+  "regionArmLeft": "Sol El/Dirsek/Bilek",
+  "regionKneeRight": "Sağ Diz",
+  "regionKneeLeft": "Sol Diz",
+  "regionAnkleRight": "Sağ Ayak Bileği",
+  "regionAnkleLeft": "Sol Ayak Bileği",
+  "noRegionSelected": "Seçili bölge bulunamadı.",
+  "goBack": "Geri Dön",
+  "regionLabel": "{region} Bölgesi",
+  "@regionLabel": {
+    "placeholders": {
+      "region": {
+        "type": "String"
+      }
+    }
+  },
+  "assessmentPurposeTitle": "Değerlendirme Amacı",
+  "assessmentPurposeDesc": "Ağrı şiddeti değerlendirmesi, mevcut durumunuzu objektif bir şekilde takip etmemize ve size en uygun egzersiz yoğunluğunu belirlememize yardımcı olur.",
+  "painAnalysisTitle": "Ağrı Analizi",
+  "finishAssessment": "DEĞERLENDİRMEYİ BİTİR",
+  "nextRegion": "SONRAKİ BÖLGE",
+  "focusRegionsTitle": "Odak Bölgeler\nBelirlendi",
+  "focusRegionsDescP1": "Algoritmamız en yüksek ağrı skoruna sahip bölgelere öncelik vermiştir: ",
+  "focusRegionsDescP2": ".\n\nDiğer bölgeleriniz için, mevcut programı tamamladıktan sonra yeni bir değerlendirme yapabilirsiniz.",
+  "focusRegionsBtn": "Tamam, Devam Et",
+  "medicalConsultationTitle": "Tıbbi Danışmanlık\nÖnerisi",
+  "medicalConsultationDesc": "Vücudunuzun çok sayıda farklı bölgesinde yaygın ve şiddetli ağrılar belirttiğinizi fark ettik.\n\nBu durum \"Merkezi Duyarlılaşma\" veya benzeri bir sendromun belirtisi olabilir. Herhangi bir egzersiz programına başlamadan önce bir hekime danışmanızı önemle tavsiye ederiz.",
+  "medicalConsultationBtn": "Anladım",
+  "painLevelLight": "Hafif",
+  "painLevelMild": "Hafif-Orta",
+  "painLevelModerate": "Orta Şiddetli",
+  "painLevelSevere": "Şiddetli",
+  "painLevelVerySevere": "Çok Şiddetli",
+  "painAnalysisLight": "Seviye {val}, günlük hayatı pek etkilemeyen hafif bir ağrıdır. Hareketlilikle düzelebilir.",
+  "@painAnalysisLight": {
+    "placeholders": {
+      "val": {
+        "type": "int"
+      }
+    }
+  },
+  "painAnalysisMild": "Seviye {val}, hissedilen ancak katlanılabilir bir ağrıdır. Esneme hareketleri faydalı olacaktır.",
+  "@painAnalysisMild": {
+    "placeholders": {
+      "val": {
+        "type": "int"
+      }
+    }
+  },
+  "painAnalysisModerate": "Seviye {val}, dikkat edilmesi gereken orta şiddetli bir ağrıdır. Kuvvet ve esneklik dengesi hedeflenecektir.",
+  "@painAnalysisModerate": {
+    "placeholders": {
+      "val": {
+        "type": "int"
+      }
+    }
+  },
+  "painAnalysisSevere": "Seviye {val}, aktiviteleri kısıtlayan şiddetli bir ağrıdır. Kontrollü ve nazik egzersizler gereklidir.",
+  "@painAnalysisSevere": {
+    "placeholders": {
+      "val": {
+        "type": "int"
+      }
+    }
+  },
+  "painAnalysisVerySevere": "Seviye {val}, çok şiddetli bir ağrıdır. Uzman kontrolünde ilerlemek ve dinlenmek önemlidir.",
+  "@painAnalysisVerySevere": {
+    "placeholders": {
+      "val": {
+        "type": "int"
+      }
+    }
+  },
+  "medicalScreeningTitle": "Tıbbi Tarama",
+  "medicalScreeningExclusionCriteria": "Dışlama Kriterleri: Bu uygulama genel sağlıklı bireyler içindir. Herhangi bir soruyu \"Evet\" olarak yanıtlarsanız, egzersiz programına başlamadan önce mutlaka doktorunuza danışmalısınız.",
+  "stepTracker": "Adım {step}/3",
+  "@stepTracker": {
+    "placeholders": {
+      "step": {
+        "type": "int"
+      }
+    }
+  },
+  "saveProgress": "İlerlemeyi\nKaydet",
+  "completeBtn": "Tamamla",
+  "continueBtn": "Devam Et",
+  "pleaseAnswerAllQuestions": "Lütfen tüm soruları yanıtlayın.",
+  "progressSaved": "İlerleme kaydedildi.",
+  "medicalWarningTitle": "Tıbbi Uyarı",
+  "screeningCompletedTitle": "Tarama Tamamlandı",
+  "medicalWarningDescP1": "Güvenliğiniz bizim için önemli. Verdiğiniz yanıtlara göre, bu egzersiz programına başlamadan önce bir sağlık profesyoneline danışmanız gerekmektedir. ",
+  "deskRelief": "DeskRelief",
+  "medicalWarningDescP2": ", tıbbi bir tanı veya tedavi aracı değildir.",
+  "screeningSuccessDesc": "Harika! Egzersiz programına başlamak için herhangi bir tıbbi engeliniz bulunmuyor. Şimdi ağrı bölgelerinizi seçerek size özel programınızı oluşturabiliriz.",
+  "understood": "Anladım",
+  "qCat1": "Sistemik ve Kalp Sağlığı",
+  "qCat2": "Kas-İskelet ve Travma",
+  "qCat3": "Kırmızı Bayraklar",
+  "q1": "Daha önce size tanı konmuş inme (beyin kanaması/felç) öykünüz var mı?",
+  "q2": "Kalp yetmezliği, kalp krizi, kalp ritm bozukluğu veya ciddi bir kalp-damar hastalığınız var mı?",
+  "q3": "Doktorunuz size egzersiz yapmamanız gerektiğini söyledi mi?",
+  "q4": "İstirahatte veya hafif aktivite sırasında göğüs ağrısı, nefes darlığı, baş dönmesi ya da bayılma yaşıyor musunuz?",
+  "q5": "Tanı konmuş ciddi bir solunum hastalığınız var mı? (örn: Astım, KOAH)",
+  "q6": "Tanı konmuş bir nörolojik hastalığınız var mı? (örn: Parkinson hastalığı, Multipl skleroz)",
+  "q7": "Aktif kanser tedavisi görüyor musunuz?",
+  "q8": "Son 6 ay içinde ameliyat geçirdiniz mi?",
+  "q9": "Son 6 ayda ciddi bir kas-iskelet sistemi yaralanması yaşadınız mı?",
+  "q10": "Son dönemde hastanede yatış gerektiren bir sağlık sorunu yaşadınız mı?",
+  "q11": "Tanı konmuş yüksek tansiyonunuz var mı (Hipertansiyon)?",
+  "q12": "Doktor tarafından tanı konmuş bel fıtığı, boyun fıtığı veya diz probleminiz var mı?",
+  "q13": "Gece uykudan uyandıran ağrınız var mı?",
+  "q14": "Açıklanamayan kilo kaybınız oldu mu?",
+  "q15": "Yakın zamanda düşme, çarpma gibi bir travma sonrası başlayan ağrınız var mı?",
+  "q16": "İlerleyici kas güçsüzlüğü, uyuşma veya his kaybı yaşıyor musunuz?",
+  "q17": "Hamile misiniz veya hamile olma ihtimaliniz var mı?",
+  "q18": "Daha önce egzersiz yaptıktan sonra uzun süren (24-48 saatten fazla) aşırı ağrı veya kötüleşme yaşadınız mı?",
+  "yes": "Evet",
+  "no": "Hayır",
+  "profileWelcomeTitle1": "Kinetic",
+  "profileWelcomeTitle2": "Equilibrium",
+  "profileWelcomeSubtitle": "Kusursuz duruş ve zahmetsiz hareket yolculuğunuza başlayalım.",
+  "genderLabel": "CİNSİYET",
+  "genderMale": "Erkek",
+  "genderFemale": "Kadın",
+  "professionLabel": "MESLEK",
+  "professionHint": "örn. Yazılım Mühendisi",
+  "heightLabel": "BOY (CM)",
+  "heightHint": "180",
+  "weightLabel": "KİLO (KG)",
+  "weightHint": "75",
+  "sedentaryWorkerDesc": "Günde 6 saatten fazla oturuyor musunuz?",
+  "medicalDisclaimerTitle": "Tıbbi Uyarı",
+  "medicalDisclaimerDesc": "Bu uygulama duruş rehberliği sağlar ve profesyonel tıbbi tavsiye, teşhis veya tedavinin yerini tutmaz. Her zaman doktorunuzun tavsiyesini alın.",
+  "agreePrivacyPolicyP1": "",
+  "agreePrivacyPolicyP2": "Gizlilik Politikası'nı okudum, kabul ediyorum ve sağlık profilim için veri işlenmesine onay veriyorum.",
+  "confirmMedicalDisclaimer": "Yukarıda sunulan Tıbbi Uyarıyı okuduğumu ve anladığımı onaylıyorum.",
+  "getStarted": "Başla",
+  "dataSecurityLabel": "VERİLERİNİZ GÜVENDE • KVKK UYUMLU",
+  "fillAllFieldsError": "Lütfen tüm profil alanlarını doldurun (cinsiyet ve meslek dahil).",
+  "acceptAgreementsError": "Devam etmek için lütfen tüm sözleşmeleri kabul edin.",
+  "onboardingTitle1": "Oturmak Size Ağrı mı Veriyor?",
+  "onboardingDesc1": "Modern ofis yaşam tarzı genellikle uzun süreli oturmaya neden olur, bu da boyun, sırt ve omuz ağrılarına yol açabilir.",
+  "onboardingTitle2": "DeskRelief ile Tanışın, Dijital Çözümünüz",
+  "onboardingDesc2": "DeskRelief, oturma aralarını bölmek ve ağrıyı en aza indirmek için tasarlanmış, uzmanlarca hazırlanmış kişiselleştirilmiş egzersiz protokolleri sunar.",
+  "onboardingTitle3": "Kas-İskelet Sağlığınızın Kontrolünü Elinize Alın",
+  "onboardingDesc3": "Ağrısız bir hayata doğru kişiselleştirilmiş yolculuğunuza başlayın. Kolay ve klinik tabanlıdır.",
+  "next": "İleri",
+  "skip": "Atla",
+  "signInTitle": "Hoş Geldiniz",
+  "signInSubtitle": "Yolculuğunuza devam etmek için giriş yapın.",
+  "emailLabel": "E-posta",
+  "emailHint": "ad@sirket.com",
+  "passwordLabel": "Şifre",
+  "passwordHint": "••••••••",
+  "forgotPassword": "Şifremi Unuttum",
+  "signInButton": "Giriş Yap",
+  "dontHaveAccount": "Hesabınız yok mu? ",
+  "signUpLink": "Kayıt Ol",
+  "signUpTitle": "Hesap Oluştur",
+  "signUpSubtitle": "Daha sağlıklı bir çalışma hayatı için bize katılın.",
+  "fullNameLabel": "Ad Soyad",
+  "fullNameHint": "Ahmet Yılmaz",
+  "confirmPasswordLabel": "Şifreyi Onayla",
+  "haveAccount": "Zaten hesabınız var mı? ",
+  "signInLink": "Giriş Yap",
+  "welcomeTo": "Hoş Geldiniz",
+  "signInTagline": "Duruşunuzu düzeltin, daha derin nefes alın ve daha iyi çalışın.",
+  "orContinueWith": "VEYA ŞUNUNLA DEVAM ET",
+  "google": "Google",
+  "apple": "Apple",
+  "signUpButton": "Kayıt Ol",
+  "invalidEmailError": "Geçerli bir e-posta girin",
+  "invalidPasswordError": "En az 6 karakter",
+  "signInSuccess": "Giriş Başarılı!",
+  "enterNameError": "Adınızı girin",
+  "passwordsDoNotMatchError": "Şifreler eşleşmiyor",
+  "termsOfService": "Hizmet Şartları",
+  "eula": "EULA",
+  "acceptTermsError": "Devam etmek için lütfen şartları kabul edin.",
+  "agreeTermsP1": "",
+  "agreeTermsP2": ", ",
+  "agreeTermsP3": " ve ",
+  "agreeTermsP4": " şartlarını kabul ediyorum.",
+  "flareUp": "Flare Up",
+  "navHome": "Ana Sayfa",
+  "navCalendar": "Takvim",
+  "navProfile": "Profil",
+  "exclusionCriteriaHeader": "Güvenli bir deneyim için sağlık durumunuz kritiktir. Mevcut durumunuzda bir değişiklik olduysa lütfen aşağıyı güncelleyiniz."
+}

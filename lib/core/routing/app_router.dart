@@ -1,4 +1,6 @@
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+
 import '../../features/auth/presentation/pages/onboarding_page.dart';
 import '../../features/auth/presentation/pages/sign_in_page.dart';
 import '../../features/auth/presentation/pages/sign_up_page.dart';
@@ -7,10 +9,12 @@ import '../../features/assessment/presentation/pages/red_flags_page.dart';
 import '../../features/assessment/presentation/pages/body_map_page.dart';
 import '../../features/assessment/presentation/pages/pain_intensity_page.dart';
 import '../../features/scheduling/presentation/pages/scheduling_page.dart';
+import '../../features/scheduling/presentation/viewmodels/scheduling_view_model.dart';
 import '../../features/main/presentation/pages/main_layout_page.dart';
 import '../../features/main/presentation/pages/dashboard_page.dart';
 import '../../features/main/presentation/pages/calendar_page.dart';
 import '../../features/main/presentation/pages/profile_page.dart';
+import '../../features/assessment/presentation/pages/exclusion_criteria_settings_page.dart';
 
 class AppRouter {
   static GoRouter createRouter({required bool hasSeenOnboarding}) {
@@ -50,8 +54,18 @@ class AppRouter {
           },
         ),
         GoRoute(
+          path: '/profile/exclusion-criteria',
+          builder: (context, state) => const ExclusionCriteriaSettingsPage(),
+        ),
+        GoRoute(
           path: '/scheduling',
-          builder: (context, state) => const SchedulingPage(),
+          builder: (context, state) {
+            final regions = state.extra as List<String>? ?? [];
+            return ChangeNotifierProvider(
+              create: (_) => SchedulingViewModel(focusRegions: regions),
+              child: const SchedulingPage(),
+            );
+          },
         ),
 
         // ── Ana İskelet — StatefulShellRoute.indexedStack ───────────────────

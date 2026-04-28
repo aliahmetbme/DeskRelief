@@ -6,6 +6,8 @@ import '../viewmodels/pain_intensity_view_model.dart';
 import '../widgets/circular_pain_indicator.dart';
 import '../widgets/gradient_slider_track.dart';
 import '../widgets/focus_regions_dialog.dart';
+import '../widgets/medical_consultation_dialog.dart';
+import 'package:deskrelief/l10n/app_localizations.dart';
 
 class PainIntensityPage extends StatelessWidget {
   final List<String> selectedRegions;
@@ -35,10 +37,10 @@ class _PainIntensityView extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text('Seçili bölge bulunamadı.'),
+              Text(AppLocalizations.of(context)!.noRegionSelected),
               TextButton(
                 onPressed: () => context.go('/body-map'),
-                child: const Text('Geri Dön'),
+                child: Text(AppLocalizations.of(context)!.goBack),
               ),
             ],
           ),
@@ -74,7 +76,7 @@ class _PainIntensityView extends StatelessWidget {
                       // Dairesel Gösterge
                       CircularPainIndicator(
                         value: viewModel.currentPainValue,
-                        label: viewModel.painLevelDescription,
+                        label: viewModel.getPainLevelDescription(AppLocalizations.of(context)!),
                         activeColor: activeColor,
                       ),
                       const SizedBox(height: 56),
@@ -84,11 +86,11 @@ class _PainIntensityView extends StatelessWidget {
                       const SizedBox(height: 48),
 
                       // Analiz Kartı
-                      _buildAnalysisCard(theme, viewModel, activeColor),
+                      _buildAnalysisCard(context, theme, viewModel, activeColor),
                       const SizedBox(height: 16),
 
                       // Bilgilendirme (Sticky Info)
-                      _buildStickyInfo(theme, activeColor),
+                      _buildStickyInfo(context, theme, activeColor),
                     ],
                   ),
                 ),
@@ -140,7 +142,7 @@ class _PainIntensityView extends StatelessWidget {
                 // Orta: Ana Başlık (White, Bold, Centered)
                 Expanded(
                   child: Text(
-                    '${viewModel.currentRegion} Bölgesi',
+                    AppLocalizations.of(context)!.regionLabel(_getRegionDisplayName(context, viewModel.currentRegion)),
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w700,
                       color: theme.colorScheme.onSurface,
@@ -197,7 +199,7 @@ class _PainIntensityView extends StatelessWidget {
     );
   }
 
-  Widget _buildStickyInfo(ThemeData theme, Color activeColor) {
+  Widget _buildStickyInfo(BuildContext context, ThemeData theme, Color activeColor) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -233,14 +235,14 @@ class _PainIntensityView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Değerlendirme Amacı',
+                  AppLocalizations.of(context)!.assessmentPurposeTitle,
                   style: theme.textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Ağrı şiddeti değerlendirmesi, mevcut durumunuzu objektif bir şekilde takip etmemize ve size en uygun egzersiz yoğunluğunu belirlememize yardımcı olur.',
+                  AppLocalizations.of(context)!.assessmentPurposeDesc,
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                     height: 1.5,
@@ -308,6 +310,7 @@ class _PainIntensityView extends StatelessWidget {
   }
 
   Widget _buildAnalysisCard(
+    BuildContext context,
     ThemeData theme,
     PainIntensityViewModel viewModel,
     Color activeColor,
@@ -343,14 +346,14 @@ class _PainIntensityView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Ağrı Analizi',
+                  AppLocalizations.of(context)!.painAnalysisTitle,
                   style: theme.textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  viewModel.painLevelAnalysis,
+                  viewModel.getPainLevelAnalysis(AppLocalizations.of(context)!),
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                     height: 1.5,
@@ -379,33 +382,68 @@ class _PainIntensityView extends StatelessWidget {
             onPressed: () {
               viewModel.nextRegion((List<String> focusRegions) {
                 // Son bölge tamamlandı — Odak Bölge Dialog'unu göster
-                showGeneralDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  barrierColor: Colors.transparent,
-                  transitionDuration: const Duration(milliseconds: 320),
-                  transitionBuilder: (ctx, anim, _, child) {
-                    return FadeTransition(
-                      opacity: anim,
-                      child: ScaleTransition(
-                        scale: Tween<double>(begin: 0.92, end: 1.0).animate(
-                          CurvedAnimation(
-                            parent: anim,
-                            curve: Curves.easeOutCubic,
+                void showFocusDialog() {
+                  showGeneralDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    barrierColor: Colors.transparent,
+                    transitionDuration: const Duration(milliseconds: 320),
+                    transitionBuilder: (ctx, anim, _, child) {
+                      return FadeTransition(
+                        opacity: anim,
+                        child: ScaleTransition(
+                          scale: Tween<double>(begin: 0.92, end: 1.0).animate(
+                            CurvedAnimation(
+                              parent: anim,
+                              curve: Curves.easeOutCubic,
+                            ),
                           ),
+                          child: child,
                         ),
-                        child: child,
-                      ),
-                    );
-                  },
-                  pageBuilder: (ctx, _, __) => FocusRegionsDialog(
-                    topRegions: focusRegions,
-                    onConfirm: () {
-                      Navigator.of(ctx).pop(); // dialog'u kapat
-                      context.push('/scheduling');
+                      );
                     },
-                  ),
-                );
+                    pageBuilder: (ctx, _, __) => FocusRegionsDialog(
+                      topRegions: focusRegions,
+                      onConfirm: () {
+                        Navigator.of(ctx).pop(); // dialog'u kapat
+                        context.push('/scheduling', extra: focusRegions);
+                      },
+                    ),
+                  );
+                }
+
+                if (viewModel.hasRedFlag) {
+                  showGeneralDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    barrierColor: Colors.transparent,
+                    transitionDuration: const Duration(milliseconds: 320),
+                    transitionBuilder: (ctx, anim, _, child) {
+                      return FadeTransition(
+                        opacity: anim,
+                        child: ScaleTransition(
+                          scale: Tween<double>(begin: 0.92, end: 1.0).animate(
+                            CurvedAnimation(
+                              parent: anim,
+                              curve: Curves.easeOutCubic,
+                            ),
+                          ),
+                          child: child,
+                        ),
+                      );
+                    },
+                    pageBuilder: (ctx, _, __) => MedicalConsultationDialog(
+                      onConfirm: () {
+                        Navigator.of(ctx).pop(); // uyarıyı kapat
+                        // TODO: Kırmızı bayrak durumunda odak bölge ataması (showFocusDialog) YAPILMAMALI.
+                        // Kullanıcı uyarıyı anladıktan sonra sistemden ana sayfaya atılmalı.
+                        context.go('/'); // Kullanıcıyı ana sayfaya at (kick-out)
+                      },
+                    ),
+                  );
+                } else {
+                  showFocusDialog();
+                }
               });
             },
             style: ElevatedButton.styleFrom(
@@ -424,8 +462,8 @@ class _PainIntensityView extends StatelessWidget {
               children: [
                 Text(
                   viewModel.isLastRegion
-                      ? 'DEĞERLENDİRMEYİ BİTİR'
-                      : 'SONRAKİ BÖLGE',
+                      ? AppLocalizations.of(context)!.finishAssessment
+                      : AppLocalizations.of(context)!.nextRegion,
                   style: const TextStyle(
                     fontWeight: FontWeight.w800,
                     fontSize: 13,
@@ -446,6 +484,36 @@ class _PainIntensityView extends StatelessWidget {
     if (val <= 3) return const Color(0xFF006E28); // Yeşil
     if (val <= 6) return const Color(0xFFFBC02D); // Sarı
     return const Color(0xFFBA1A1A); // Kırmızı
+  }
+
+  String _getRegionDisplayName(BuildContext context, String id) {
+    final loc = AppLocalizations.of(context)!;
+    switch (id) {
+      case 'region_neck':
+        return loc.regionNeck;
+      case 'region_shoulder_right':
+        return loc.regionShoulderRight;
+      case 'region_shoulder_left':
+        return loc.regionShoulderLeft;
+      case 'region_lower_back':
+        return loc.regionLowerBack;
+      case 'region_hip_pelvis':
+        return loc.regionHipPelvis;
+      case 'region_arm_right':
+        return loc.regionArmRight;
+      case 'region_arm_left':
+        return loc.regionArmLeft;
+      case 'region_knee_right':
+        return loc.regionKneeRight;
+      case 'region_knee_left':
+        return loc.regionKneeLeft;
+      case 'region_ankle_right':
+        return loc.regionAnkleRight;
+      case 'region_ankle_left':
+        return loc.regionAnkleLeft;
+      default:
+        return id;
+    }
   }
 }
 

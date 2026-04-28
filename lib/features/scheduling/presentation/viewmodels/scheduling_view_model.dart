@@ -8,7 +8,9 @@ class NotificationOffset {
 }
 
 class SchedulingViewModel extends ChangeNotifier {
-  static const int maxDays = 3;
+  final List<String> focusRegions;
+
+  SchedulingViewModel({required this.focusRegions});
 
   /// Sabit preset listesi — kullanıcı bunlar dışında değer giremez.
   static const List<NotificationOffset> notificationOffsets = [
@@ -32,17 +34,43 @@ class SchedulingViewModel extends ChangeNotifier {
     'Pazar',
   ];
 
-  List<String> _selectedDays = [];
-  Map<String, TimeOfDay> _workoutTimes = {};
+  final List<String> _selectedDays = [];
+  final Map<String, TimeOfDay> _workoutTimes = {};
 
   /// Bildirim için "antrenman saatinden kaç dakika önce" bilgisi.
-  Map<String, int> _notificationOffsets = {};
+  final Map<String, int> _notificationOffsets = {};
 
   bool _isLoading = false;
 
   List<String> get selectedDays => List.unmodifiable(_selectedDays);
   bool get isLoading => _isLoading;
+
+  /// Uzman Sistem Kuralı: Bölge sayısına göre maksimum gün limiti
+  int get maxDays => focusRegions.length == 1 ? 3 : 4;
+
   bool get maxDaysReached => _selectedDays.length >= maxDays;
+
+  /// Uzman Sistem Kuralı: Kullanıcının devam edebilmesi için gerekli şartlar:
+  /// 1 Bölge varsa -> 2 veya 3 gün seçilmeli
+  /// 2 Bölge varsa -> tam 4 gün seçilmeli
+  bool get canProceed {
+    if (focusRegions.length == 1) {
+      return _selectedDays.length >= 2 && _selectedDays.length <= 3;
+    } else if (focusRegions.length == 2) {
+      return _selectedDays.length == 4;
+    }
+    return false; // Beklenmeyen durum
+  }
+
+  /// UI'da gösterilecek dinamik klinik talimat metni
+  String get instructionText {
+    if (focusRegions.length == 1) {
+      return 'Odak bölgeniz için haftada 2 veya 3 gün belirleyin.';
+    } else if (focusRegions.length == 2) {
+      return 'Belirlediğiniz 2 bölge için sürdürülebilir bir program adına haftada tam 4 gün belirleyin.';
+    }
+    return 'Lütfen çalışma günlerinizi belirleyin.';
+  }
 
   TimeOfDay timeForDay(String day) =>
       _workoutTimes[day] ?? const TimeOfDay(hour: 19, minute: 0);
