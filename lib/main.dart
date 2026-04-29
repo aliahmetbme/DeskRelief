@@ -5,6 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:deskrelief/l10n/app_localizations.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 import 'core/providers/locale_provider.dart';
 import 'core/theme/theme_provider.dart';
@@ -16,6 +18,7 @@ import 'features/assessment/presentation/viewmodels/body_map_view_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // Initialize Turkish date formatting
   await initializeDateFormatting('tr_TR', null);

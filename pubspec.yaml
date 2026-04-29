@@ -43,6 +43,11 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_gen: ^5.14.0
+  firebase_core: ^4.7.0
+  firebase_auth: ^6.4.0
+  google_sign_in: ^7.2.0
+  cloud_firestore: ^6.3.0
+  sign_in_with_apple: ^7.0.1
 
 dev_dependencies:
   flutter_test:

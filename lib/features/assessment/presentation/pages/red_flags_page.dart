@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/app_back_button.dart';
 import '../../../../core/widgets/custom_primary_button.dart';
@@ -290,21 +289,8 @@ class RedFlagsPage extends StatelessWidget {
                                                 } else {
                                                   context.pop();
                                                   
-                                                  // Check if we should go back to profile or continue to body map
-                                                  final prefs = await SharedPreferences.getInstance();
-                                                  final hasSeenOnboarding = prefs.getBool('seenOnboarding') ?? false;
-                                                  
-                                                  if (hasSeenOnboarding) {
-                                                    // From Profile
-                                                    if (context.canPop()) {
-                                                      context.pop();
-                                                    } else {
-                                                      context.go('/home');
-                                                    }
-                                                  } else {
-                                                    // From Initial Assessment
-                                                    context.go('/body-map');
-                                                  }
+                                                  // Proceed to Body Map assessment
+                                                  context.go('/body-map');
                                                 }
                                               },
                                             ),
