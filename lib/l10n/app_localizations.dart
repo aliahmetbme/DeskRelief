@@ -266,6 +266,48 @@ abstract class AppLocalizations {
   /// **'BAŞARI'**
   String get statusSuccess;
 
+  /// No description provided for @weeklyProgress.
+  ///
+  /// In tr, this message translates to:
+  /// **'4 Haftalık Gelişim'**
+  String get weeklyProgress;
+
+  /// No description provided for @restDayTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün Senin Gününe Ara Ver.'**
+  String get restDayTitle;
+
+  /// No description provided for @restDayClinicalLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'KLİNİK İSTİRAHAT'**
+  String get restDayClinicalLabel;
+
+  /// No description provided for @restDayClinicalNote.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kas liflerinizin onarımı ve postür gelişimi için bugün dinlenme gününüzdür.'**
+  String get restDayClinicalNote;
+
+  /// No description provided for @nextSession.
+  ///
+  /// In tr, this message translates to:
+  /// **'SIRADAKİ SEANS'**
+  String get nextSession;
+
+  /// No description provided for @tomorrow.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yarın'**
+  String get tomorrow;
+
+  /// No description provided for @restDayRemainingSessions.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hedefine ulaşmana {count} seans kaldı.'**
+  String restDayRemainingSessions(int count);
+
   /// No description provided for @regionNeck.
   ///
   /// In tr, this message translates to:
@@ -1543,6 +1585,234 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Güvenli bir deneyim için sağlık durumunuz kritiktir. Mevcut durumunuzda bir değişiklik olduysa lütfen aşağıyı güncelleyiniz.'**
   String get exclusionCriteriaHeader;
+
+  /// No description provided for @errorInvalidEmail.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geçersiz e-posta adresi.'**
+  String get errorInvalidEmail;
+
+  /// No description provided for @errorUserDisabled.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu kullanıcı hesabı devre dışı bırakılmış.'**
+  String get errorUserDisabled;
+
+  /// No description provided for @errorUserNotFound.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu e-posta adresiyle kayıtlı kullanıcı bulunamadı.'**
+  String get errorUserNotFound;
+
+  /// No description provided for @errorWrongPassword.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hatalı şifre.'**
+  String get errorWrongPassword;
+
+  /// No description provided for @errorEmailAlreadyInUse.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu e-posta adresi zaten kullanımda.'**
+  String get errorEmailAlreadyInUse;
+
+  /// No description provided for @errorOperationNotAllowed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu işlem şu an için izinli değil.'**
+  String get errorOperationNotAllowed;
+
+  /// No description provided for @errorWeakPassword.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifre çok zayıf.'**
+  String get errorWeakPassword;
+
+  /// No description provided for @errorNetworkRequestFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ağ bağlantısı hatası oluştu.'**
+  String get errorNetworkRequestFailed;
+
+  /// No description provided for @errorUnknown.
+  ///
+  /// In tr, this message translates to:
+  /// **'Beklenmedik bir hata oluştu. Lütfen tekrar deneyin.'**
+  String get errorUnknown;
+
+  /// No description provided for @routineTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Boyun ve Alt Sırt Rutini'**
+  String get routineTitle;
+
+  /// No description provided for @duration15Min.
+  ///
+  /// In tr, this message translates to:
+  /// **'15 Dakika'**
+  String get duration15Min;
+
+  /// No description provided for @exercises10.
+  ///
+  /// In tr, this message translates to:
+  /// **'10 Hareket'**
+  String get exercises10;
+
+  /// No description provided for @intensityMedium.
+  ///
+  /// In tr, this message translates to:
+  /// **'Orta Yoğunluk'**
+  String get intensityMedium;
+
+  /// No description provided for @motivationTagline.
+  ///
+  /// In tr, this message translates to:
+  /// **'GAZA GETİREN'**
+  String get motivationTagline;
+
+  /// No description provided for @motivationQuote.
+  ///
+  /// In tr, this message translates to:
+  /// **'\"Duruşunu düzelt, hayatını değiştir!\"'**
+  String get motivationQuote;
+
+  /// No description provided for @workoutFlow.
+  ///
+  /// In tr, this message translates to:
+  /// **'Antrenman Akışı'**
+  String get workoutFlow;
+
+  /// No description provided for @remainingExercises.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kalan: {count} Hareket'**
+  String remainingExercises(int count);
+
+  /// No description provided for @phase1.
+  ///
+  /// In tr, this message translates to:
+  /// **'FAZ 1: MOBİLİZASYON (ROM)'**
+  String get phase1;
+
+  /// No description provided for @phase2.
+  ///
+  /// In tr, this message translates to:
+  /// **'FAZ 2: GÜÇLENDİRME'**
+  String get phase2;
+
+  /// No description provided for @phase3.
+  ///
+  /// In tr, this message translates to:
+  /// **'FAZ 3: ESNEME'**
+  String get phase3;
+
+  /// No description provided for @phase4.
+  ///
+  /// In tr, this message translates to:
+  /// **'FAZ 4: SOĞUMA'**
+  String get phase4;
+
+  /// No description provided for @priority.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öncelikli'**
+  String get priority;
+
+  /// No description provided for @mobility.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mobilite'**
+  String get mobility;
+
+  /// No description provided for @warmup.
+  ///
+  /// In tr, this message translates to:
+  /// **'Isınma'**
+  String get warmup;
+
+  /// No description provided for @strength.
+  ///
+  /// In tr, this message translates to:
+  /// **'Güç'**
+  String get strength;
+
+  /// No description provided for @stretching.
+  ///
+  /// In tr, this message translates to:
+  /// **'Esneme'**
+  String get stretching;
+
+  /// No description provided for @cooldown.
+  ///
+  /// In tr, this message translates to:
+  /// **'Soğuma'**
+  String get cooldown;
+
+  /// No description provided for @locked.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kilitli'**
+  String get locked;
+
+  /// No description provided for @waitingWarmup.
+  ///
+  /// In tr, this message translates to:
+  /// **'Isınma bekleniyor'**
+  String get waitingWarmup;
+
+  /// No description provided for @markAsCompleted.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tamamlandı olarak İşaretle'**
+  String get markAsCompleted;
+
+  /// No description provided for @howToDo.
+  ///
+  /// In tr, this message translates to:
+  /// **'Nasıl Yapılır?'**
+  String get howToDo;
+
+  /// No description provided for @importantWarnings.
+  ///
+  /// In tr, this message translates to:
+  /// **'Önemli Uyarılar'**
+  String get importantWarnings;
+
+  /// No description provided for @generalTips.
+  ///
+  /// In tr, this message translates to:
+  /// **'Genel İpuçları'**
+  String get generalTips;
+
+  /// No description provided for @focusArea.
+  ///
+  /// In tr, this message translates to:
+  /// **'Odak Bölgesi'**
+  String get focusArea;
+
+  /// No description provided for @watchVideo.
+  ///
+  /// In tr, this message translates to:
+  /// **'Videoyu İzle'**
+  String get watchVideo;
+
+  /// No description provided for @videoLoading.
+  ///
+  /// In tr, this message translates to:
+  /// **'Video yükleniyor...'**
+  String get videoLoading;
+
+  /// No description provided for @videoError.
+  ///
+  /// In tr, this message translates to:
+  /// **'Video yüklenirken bir hata oluştu.'**
+  String get videoError;
+
+  /// No description provided for @videoRetry.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tekrar Dene'**
+  String get videoRetry;
 }
 
 class _AppLocalizationsDelegate

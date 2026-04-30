@@ -15,13 +15,23 @@ import 'core/routing/app_router.dart';
 import 'features/auth/presentation/viewmodels/auth_view_model.dart';
 import 'features/assessment/presentation/viewmodels/red_flags_view_model.dart';
 import 'features/assessment/presentation/viewmodels/body_map_view_model.dart';
+import 'features/main/presentation/viewmodels/dashboard_view_model.dart';
+import 'core/services/notification_service.dart';
+import 'features/exercise/data/services/video_cache_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
+  // Initialize Notifications
+  final notificationService = NotificationService();
+  await notificationService.initialize();
+
   // Initialize Turkish date formatting
   await initializeDateFormatting('tr_TR', null);
+
+  // Initialize Video Caching
+  await VideoCacheService().init();
 
   final prefs = await SharedPreferences.getInstance();
   final bool hasSeenOnboarding = prefs.getBool('seenOnboarding') ?? false;
@@ -34,6 +44,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
         ChangeNotifierProvider(create: (_) => RedFlagsViewModel()),
         ChangeNotifierProvider(create: (_) => BodyMapViewModel()),
+        ChangeNotifierProvider(create: (_) => DashboardViewModel()),
       ],
       child: DeskReliefApp(hasSeenOnboarding: hasSeenOnboarding),
     ),
@@ -57,7 +68,13 @@ class _DeskReliefAppState extends State<DeskReliefApp> {
     super.initState();
     _router = AppRouter.createRouter(
       hasSeenOnboarding: widget.hasSeenOnboarding,
+      authViewModel: context.read<AuthViewModel>(),
     );
+
+    // İlk yüklemede bildirim izinlerini iste
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      NotificationService().requestPermissions();
+    });
   }
 
   @override

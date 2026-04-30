@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/widgets/app_back_button.dart';
 import '../viewmodels/pain_intensity_view_model.dart';
 import '../widgets/circular_pain_indicator.dart';
+import 'package:deskrelief/features/auth/presentation/viewmodels/auth_view_model.dart';
 import '../widgets/gradient_slider_track.dart';
 import '../widgets/focus_regions_dialog.dart';
 import '../widgets/medical_consultation_dialog.dart';
@@ -380,7 +381,7 @@ class _PainIntensityView extends StatelessWidget {
         children: [
           ElevatedButton(
             onPressed: () {
-              viewModel.nextRegion((List<String> focusRegions) {
+              viewModel.nextRegion((List<String> focusRegions) async {
                 // Son bölge tamamlandı — Odak Bölge Dialog'unu göster
                 void showFocusDialog() {
                   showGeneralDialog(
@@ -404,9 +405,18 @@ class _PainIntensityView extends StatelessWidget {
                     },
                     pageBuilder: (ctx, _, __) => FocusRegionsDialog(
                       topRegions: focusRegions,
-                      onConfirm: () {
-                        Navigator.of(ctx).pop(); // dialog'u kapat
-                        context.push('/scheduling', extra: focusRegions);
+                      onConfirm: () async {
+                        final authVM = context.read<AuthViewModel>();
+                        // Progress'i güncelle ve bekle
+                        await authVM.updateProgress(hasCompletedPainScore: true);
+                        
+                        if (ctx.mounted) {
+                          Navigator.of(ctx).pop(); // dialog'u kapat
+                        }
+                        
+                        if (context.mounted) {
+                          context.push('/scheduling', extra: focusRegions);
+                        }
                       },
                     ),
                   );
@@ -433,15 +443,23 @@ class _PainIntensityView extends StatelessWidget {
                       );
                     },
                     pageBuilder: (ctx, _, __) => MedicalConsultationDialog(
-                      onConfirm: () {
+                      onConfirm: () async {
                         Navigator.of(ctx).pop(); // uyarıyı kapat
-                        // TODO: Kırmızı bayrak durumunda odak bölge ataması (showFocusDialog) YAPILMAMALI.
-                        // Kullanıcı uyarıyı anladıktan sonra sistemden ana sayfaya atılmalı.
-                        context.go('/'); // Kullanıcıyı ana sayfaya at (kick-out)
+                        
+                        // Kırmızı bayrak durumunda kullanıcıyı blokla
+                        await context.read<AuthViewModel>().updateProgress(
+                          isClearedForExercise: false,
+                        );
+                        // Not: Firestore'da isBanned=true ve banReason=extremePain olarak işaretlemek daha sağlıklı olur.
+                        // Şimdilik sadece ana sayfaya atıyoruz, router redirect otomatik devreye girecek.
+                        if (context.mounted) {
+                          context.go('/'); 
+                        }
                       },
                     ),
                   );
                 } else {
+                  // Başarılı geçiş - Önce diyaloğu göster
                   showFocusDialog();
                 }
               });

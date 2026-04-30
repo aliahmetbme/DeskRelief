@@ -45,11 +45,17 @@ class _SignUpPageState extends State<SignUpPage> {
       final name = _nameController.text.trim();
       final email = _emailController.text.trim();
       final password = _passwordController.text;
+      final loc = AppLocalizations.of(context)!;
+      final authVM = context.read<AuthViewModel>();
       
-      await context.read<AuthViewModel>().signUp(name, email, password);
+      final success = await authVM.signUp(name, email, password, loc);
       
       if (mounted) {
-        context.go('/welcome-profile');
+        if (success) {
+          context.go('/welcome-profile');
+        } else {
+          CustomToast.show(context, authVM.errorMessage ?? loc.errorUnknown);
+        }
       }
     }
   }
@@ -408,8 +414,15 @@ class _SignUpPageState extends State<SignUpPage> {
                                             text: AppLocalizations.of(context)!
                                                 .google,
                                             svgAsset: 'assets/Icons/google.svg',
-                                            onPressed: () => _handleSocialSignIn(() {
-                                              // Handle Google Sign In
+                                            onPressed: () => _handleSocialSignIn(() async {
+                                              if (authViewModel.isLoading) return;
+                                              final loc = AppLocalizations.of(context)!;
+                                              final success = await authViewModel.signInWithGoogle(loc, isSignUp: true);
+                                              if (mounted && success) {
+                                                context.go('/welcome-profile');
+                                              } else if (mounted && authViewModel.errorMessage != null) {
+                                                CustomToast.show(context, authViewModel.errorMessage!);
+                                              }
                                             }),
                                           ),
                                         ),
@@ -419,8 +432,15 @@ class _SignUpPageState extends State<SignUpPage> {
                                             text: AppLocalizations.of(context)!
                                                 .apple,
                                             iconData: Icons.apple,
-                                            onPressed: () => _handleSocialSignIn(() {
-                                              // Handle Apple Sign In
+                                            onPressed: () => _handleSocialSignIn(() async {
+                                              if (authViewModel.isLoading) return;
+                                              final loc = AppLocalizations.of(context)!;
+                                              final success = await authViewModel.signInWithApple(loc, isSignUp: true);
+                                              if (mounted && success) {
+                                                context.go('/welcome-profile');
+                                              } else if (mounted && authViewModel.errorMessage != null) {
+                                                CustomToast.show(context, authViewModel.errorMessage!);
+                                              }
                                             }),
                                           ),
                                         ),

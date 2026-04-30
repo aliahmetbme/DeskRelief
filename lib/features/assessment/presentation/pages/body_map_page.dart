@@ -6,34 +6,31 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/widgets/custom_primary_button.dart';
 import '../viewmodels/body_map_view_model.dart';
 import 'package:deskrelief/l10n/app_localizations.dart';
+import 'package:deskrelief/features/auth/presentation/viewmodels/auth_view_model.dart';
+import 'package:deskrelief/features/auth/domain/models/user_model.dart';
 
 // Senin Kusursuz Oturan Koordinatların
 final Map<String, List<Offset>> backOffsets = {
   'region_neck': [const Offset(0.50, 0.12)],
-  'region_shoulder_left': [const Offset(0.35, 0.22)],
-  'region_shoulder_right': [const Offset(0.65, 0.22)],
+  'region_shoulder_left': [const Offset(0.41, 0.23)],
+  'region_shoulder_right': [const Offset(0.59, 0.23)],
   'region_lower_back': [const Offset(0.50, 0.36)],
   'region_hip_pelvis': [const Offset(0.42, 0.52), const Offset(0.58, 0.52)],
   'region_arm_right': [const Offset(0.68, 0.44)],
   'region_arm_left': [const Offset(0.32, 0.44)],
-  'region_knee_right': [const Offset(0.59, 0.72)],
-  'region_knee_left': [const Offset(0.41, 0.72)],
-  'region_ankle_right': [const Offset(0.58, 0.93)],
-  'region_ankle_left': [const Offset(0.42, 0.93)],
+  'region_knee_right': [const Offset(0.56, 0.72)],
+  'region_knee_left': [const Offset(0.44, 0.72)],
+  'region_ankle_right': [const Offset(0.55, 0.93)],
+  'region_ankle_left': [const Offset(0.45, 0.93)],
 };
 
 final Map<String, List<Offset>> frontOffsets = {
-  'region_neck': [const Offset(0.50, 0.12)],
-  'region_shoulder_right': [const Offset(0.35, 0.22)],
-  'region_shoulder_left': [const Offset(0.65, 0.22)],
-  'region_lower_back': [const Offset(0.50, 0.40)],
-  'region_hip_pelvis': [const Offset(0.42, 0.52), const Offset(0.58, 0.52)],
   'region_arm_right': [const Offset(0.31, 0.44)],
   'region_arm_left': [const Offset(0.69, 0.44)],
-  'region_knee_right': [const Offset(0.41, 0.72)],
-  'region_knee_left': [const Offset(0.59, 0.72)],
-  'region_ankle_right': [const Offset(0.42, 0.93)],
-  'region_ankle_left': [const Offset(0.58, 0.93)],
+  'region_knee_right': [const Offset(0.44, 0.72)],
+  'region_knee_left': [const Offset(0.56, 0.72)],
+  'region_ankle_right': [const Offset(0.45, 0.93)],
+  'region_ankle_left': [const Offset(0.55, 0.93)],
 };
 
 class BodyMapPage extends StatelessWidget {
@@ -465,12 +462,27 @@ class BodyMapPage extends StatelessWidget {
                       text: AppLocalizations.of(context)!.determinePainIntensity,
                       icon: Icons.chevron_right,
                       onPressed: hasSelection
-                          ? () {
+                            ? () async {
+                              final authVM = context.read<AuthViewModel>();
                               viewModel.nextStep(viewModel.selectedRegions);
-                              context.push(
-                                '/assessment/pain-intensity',
-                                extra: viewModel.selectedRegions,
+                              
+                              // Seçili bölgeleri RegionDetail formatına çevir
+                              final List<RegionDetail> painRegions = viewModel.selectedRegions.map((id) {
+                                return RegionDetail(regionId: id);
+                              }).toList();
+
+                              // Progress'i ve bölgeleri güncelle ve bekle
+                              await authVM.updateProgress(
+                                hasCompletedBodyMap: true,
+                                painRegions: painRegions,
                               );
+                              
+                              if (context.mounted) {
+                                context.push(
+                                  '/assessment/pain-intensity',
+                                  extra: viewModel.selectedRegions,
+                                );
+                              }
                             }
                           : null,
                     ),

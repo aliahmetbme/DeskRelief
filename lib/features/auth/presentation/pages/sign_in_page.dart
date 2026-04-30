@@ -35,12 +35,18 @@ class _SignInPageState extends State<SignInPage> {
     if (_formKey.currentState!.validate()) {
       final email = _emailController.text.trim();
       final password = _passwordController.text;
+      final loc = AppLocalizations.of(context)!;
+      final authVM = context.read<AuthViewModel>();
       
-      await context.read<AuthViewModel>().signIn(email, password);
+      final success = await authVM.signIn(email, password, loc);
       
       if (mounted) {
-        CustomToast.show(context, AppLocalizations.of(context)!.signInSuccess,
-            isError: false);
+        if (success) {
+          CustomToast.show(context, loc.signInSuccess, isError: false);
+          context.go('/home');
+        } else {
+          CustomToast.show(context, authVM.errorMessage ?? loc.errorUnknown);
+        }
       }
     }
   }
@@ -249,7 +255,17 @@ class _SignInPageState extends State<SignInPage> {
                                             text: AppLocalizations.of(context)!
                                                 .google,
                                             svgAsset: 'assets/Icons/google.svg',
-                                            onPressed: () {},
+                                            onPressed: () async {
+                                              if (authViewModel.isLoading) return;
+                                              final loc = AppLocalizations.of(context)!;
+                                              final success = await authViewModel.signInWithGoogle(loc);
+                                              if (mounted && success) {
+                                                CustomToast.show(context, loc.signInSuccess, isError: false);
+                                                context.go('/home');
+                                              } else if (mounted && authViewModel.errorMessage != null) {
+                                                CustomToast.show(context, authViewModel.errorMessage!);
+                                              }
+                                            },
                                           ),
                                         ),
                                         const SizedBox(width: 16),
@@ -258,7 +274,17 @@ class _SignInPageState extends State<SignInPage> {
                                             text: AppLocalizations.of(context)!
                                                 .apple,
                                             iconData: Icons.apple,
-                                            onPressed: () {},
+                                            onPressed: () async {
+                                              if (authViewModel.isLoading) return;
+                                              final loc = AppLocalizations.of(context)!;
+                                              final success = await authViewModel.signInWithApple(loc);
+                                              if (mounted && success) {
+                                                CustomToast.show(context, loc.signInSuccess, isError: false);
+                                                context.go('/home');
+                                              } else if (mounted && authViewModel.errorMessage != null) {
+                                                CustomToast.show(context, authViewModel.errorMessage!);
+                                              }
+                                            },
                                           ),
                                         ),
                                       ],

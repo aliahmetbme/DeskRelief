@@ -21,7 +21,7 @@ class QuestionCard extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: isDark ? theme.colorScheme.surface : Colors.white,

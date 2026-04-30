@@ -103,6 +103,30 @@ class AppLocalizationsTr extends AppLocalizations {
   String get statusSuccess => 'BAŞARI';
 
   @override
+  String get weeklyProgress => '4 Haftalık Gelişim';
+
+  @override
+  String get restDayTitle => 'Bugün Senin Gününe Ara Ver.';
+
+  @override
+  String get restDayClinicalLabel => 'KLİNİK İSTİRAHAT';
+
+  @override
+  String get restDayClinicalNote =>
+      'Kas liflerinizin onarımı ve postür gelişimi için bugün dinlenme gününüzdür.';
+
+  @override
+  String get nextSession => 'SIRADAKİ SEANS';
+
+  @override
+  String get tomorrow => 'Yarın';
+
+  @override
+  String restDayRemainingSessions(int count) {
+    return 'Hedefine ulaşmana $count seans kaldı.';
+  }
+
+  @override
   String get regionNeck => 'Boyun';
 
   @override
@@ -802,4 +826,122 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get exclusionCriteriaHeader =>
       'Güvenli bir deneyim için sağlık durumunuz kritiktir. Mevcut durumunuzda bir değişiklik olduysa lütfen aşağıyı güncelleyiniz.';
+
+  @override
+  String get errorInvalidEmail => 'Geçersiz e-posta adresi.';
+
+  @override
+  String get errorUserDisabled => 'Bu kullanıcı hesabı devre dışı bırakılmış.';
+
+  @override
+  String get errorUserNotFound =>
+      'Bu e-posta adresiyle kayıtlı kullanıcı bulunamadı.';
+
+  @override
+  String get errorWrongPassword => 'Hatalı şifre.';
+
+  @override
+  String get errorEmailAlreadyInUse => 'Bu e-posta adresi zaten kullanımda.';
+
+  @override
+  String get errorOperationNotAllowed => 'Bu işlem şu an için izinli değil.';
+
+  @override
+  String get errorWeakPassword => 'Şifre çok zayıf.';
+
+  @override
+  String get errorNetworkRequestFailed => 'Ağ bağlantısı hatası oluştu.';
+
+  @override
+  String get errorUnknown =>
+      'Beklenmedik bir hata oluştu. Lütfen tekrar deneyin.';
+
+  @override
+  String get routineTitle => 'Boyun ve Alt Sırt Rutini';
+
+  @override
+  String get duration15Min => '15 Dakika';
+
+  @override
+  String get exercises10 => '10 Hareket';
+
+  @override
+  String get intensityMedium => 'Orta Yoğunluk';
+
+  @override
+  String get motivationTagline => 'GAZA GETİREN';
+
+  @override
+  String get motivationQuote => '\"Duruşunu düzelt, hayatını değiştir!\"';
+
+  @override
+  String get workoutFlow => 'Antrenman Akışı';
+
+  @override
+  String remainingExercises(int count) {
+    return 'Kalan: $count Hareket';
+  }
+
+  @override
+  String get phase1 => 'FAZ 1: MOBİLİZASYON (ROM)';
+
+  @override
+  String get phase2 => 'FAZ 2: GÜÇLENDİRME';
+
+  @override
+  String get phase3 => 'FAZ 3: ESNEME';
+
+  @override
+  String get phase4 => 'FAZ 4: SOĞUMA';
+
+  @override
+  String get priority => 'Öncelikli';
+
+  @override
+  String get mobility => 'Mobilite';
+
+  @override
+  String get warmup => 'Isınma';
+
+  @override
+  String get strength => 'Güç';
+
+  @override
+  String get stretching => 'Esneme';
+
+  @override
+  String get cooldown => 'Soğuma';
+
+  @override
+  String get locked => 'Kilitli';
+
+  @override
+  String get waitingWarmup => 'Isınma bekleniyor';
+
+  @override
+  String get markAsCompleted => 'Tamamlandı olarak İşaretle';
+
+  @override
+  String get howToDo => 'Nasıl Yapılır?';
+
+  @override
+  String get importantWarnings => 'Önemli Uyarılar';
+
+  @override
+  String get generalTips => 'Genel İpuçları';
+
+  @override
+  String get focusArea => 'Odak Bölgesi';
+
+  @override
+  String get watchVideo => 'Videoyu İzle';
+
+  @override
+  String get videoLoading => 'Video yükleniyor...';
+
+  @override
+  String get videoError => 'Video yüklenirken bir hata oluştu.';
+
+  @override
+  String get videoRetry => 'Tekrar Dene';
 }

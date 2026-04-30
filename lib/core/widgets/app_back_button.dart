@@ -2,10 +2,32 @@ import 'package:flutter/material.dart';
 
 /// Uygulamanın standart geri butonu.
 /// Koyu yuvarlak arka plan üzerinde primary renkli chevron ikonu.
-class AppBackButton extends StatelessWidget {
+class AppBackButton extends StatefulWidget {
   final VoidCallback? onTap;
 
   const AppBackButton({super.key, this.onTap});
+
+  @override
+  State<AppBackButton> createState() => _AppBackButtonState();
+}
+
+class _AppBackButtonState extends State<AppBackButton> {
+  bool _isProcessing = false;
+
+  void _handleTap() async {
+    if (_isProcessing) return;
+    setState(() => _isProcessing = true);
+    
+    if (widget.onTap != null) {
+      widget.onTap!();
+    } else {
+      Navigator.of(context).maybePop();
+    }
+    
+    // Sayfa geçişi tamamlanana kadar (veya kısa bir süre) butonu kilitli tutuyoruz
+    await Future.delayed(const Duration(milliseconds: 500));
+    if (mounted) setState(() => _isProcessing = false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +35,7 @@ class AppBackButton extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
 
     return GestureDetector(
-      onTap: onTap ?? () => Navigator.of(context).maybePop(),
+      onTap: _handleTap,
       child: Container(
         width: 40,
         height: 40,

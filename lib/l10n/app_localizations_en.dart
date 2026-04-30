@@ -103,6 +103,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get statusSuccess => 'SUCCESS';
 
   @override
+  String get weeklyProgress => '4-Week Progress';
+
+  @override
+  String get restDayTitle => 'Today, Take a Break from Your Routine.';
+
+  @override
+  String get restDayClinicalLabel => 'CLINICAL REST';
+
+  @override
+  String get restDayClinicalNote =>
+      'Today is your rest day for muscle fiber repair and posture development.';
+
+  @override
+  String get nextSession => 'NEXT SESSION';
+
+  @override
+  String get tomorrow => 'Tomorrow';
+
+  @override
+  String restDayRemainingSessions(int count) {
+    return '$count sessions left to reach your goal.';
+  }
+
+  @override
   String get regionNeck => 'Neck';
 
   @override
@@ -801,4 +825,121 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get exclusionCriteriaHeader =>
       'Your health status is critical for a safe experience. If there have been any changes in your current status, please update below.';
+
+  @override
+  String get errorInvalidEmail => 'Invalid email address.';
+
+  @override
+  String get errorUserDisabled => 'This user account has been disabled.';
+
+  @override
+  String get errorUserNotFound => 'No user found with this email.';
+
+  @override
+  String get errorWrongPassword => 'Incorrect password.';
+
+  @override
+  String get errorEmailAlreadyInUse => 'This email address is already in use.';
+
+  @override
+  String get errorOperationNotAllowed =>
+      'This operation is not allowed at this time.';
+
+  @override
+  String get errorWeakPassword => 'Password is too weak.';
+
+  @override
+  String get errorNetworkRequestFailed => 'A network error occurred.';
+
+  @override
+  String get errorUnknown => 'An unexpected error occurred. Please try again.';
+
+  @override
+  String get routineTitle => 'Neck and Lower Back Routine';
+
+  @override
+  String get duration15Min => '15 Minutes';
+
+  @override
+  String get exercises10 => '10 Exercises';
+
+  @override
+  String get intensityMedium => 'Medium Intensity';
+
+  @override
+  String get motivationTagline => 'MOTIVATIONAL';
+
+  @override
+  String get motivationQuote => '\"Correct your posture, change your life!\"';
+
+  @override
+  String get workoutFlow => 'Workout Flow';
+
+  @override
+  String remainingExercises(int count) {
+    return 'Remaining: $count Exercises';
+  }
+
+  @override
+  String get phase1 => 'PHASE 1: MOBILIZATION (ROM)';
+
+  @override
+  String get phase2 => 'PHASE 2: STRENGTHENING';
+
+  @override
+  String get phase3 => 'PHASE 3: STRETCHING';
+
+  @override
+  String get phase4 => 'PHASE 4: COOL-DOWN';
+
+  @override
+  String get priority => 'Priority';
+
+  @override
+  String get mobility => 'Mobility';
+
+  @override
+  String get warmup => 'Warm-up';
+
+  @override
+  String get strength => 'Strength';
+
+  @override
+  String get stretching => 'Stretching';
+
+  @override
+  String get cooldown => 'Cool-down';
+
+  @override
+  String get locked => 'Locked';
+
+  @override
+  String get waitingWarmup => 'Waiting for warm-up';
+
+  @override
+  String get markAsCompleted => 'Mark as Completed';
+
+  @override
+  String get howToDo => 'How to Do?';
+
+  @override
+  String get importantWarnings => 'Important Warnings';
+
+  @override
+  String get generalTips => 'General Tips';
+
+  @override
+  String get focusArea => 'Focus Area';
+
+  @override
+  String get watchVideo => 'Watch Video';
+
+  @override
+  String get videoLoading => 'Video loading...';
+
+  @override
+  String get videoError => 'An error occurred while loading the video.';
+
+  @override
+  String get videoRetry => 'Retry';
 }

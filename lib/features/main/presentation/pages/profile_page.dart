@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:deskrelief/l10n/app_localizations.dart';
 import 'package:deskrelief/core/theme/theme_provider.dart';
 import 'package:deskrelief/core/providers/locale_provider.dart';
+import 'package:deskrelief/features/auth/presentation/viewmodels/auth_view_model.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // ProfilePage — High-fidelity User Profile based on premium mockup
@@ -564,7 +565,7 @@ class _LogoutButton extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: TextButton(
-        onPressed: () {},
+        onPressed: () => context.read<AuthViewModel>().signOut(),
         style: TextButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 20),
           backgroundColor: theme.colorScheme.surface,

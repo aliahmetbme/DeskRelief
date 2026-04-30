@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/widgets/custom_primary_button.dart';
+import '../viewmodels/auth_view_model.dart';
+import 'package:provider/provider.dart';
 
 class WelcomeProfilePage extends StatefulWidget {
   const WelcomeProfilePage({super.key});
@@ -31,7 +33,7 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
     super.dispose();
   }
 
-  void _onGetStarted() {
+  Future<void> _onGetStarted() async {
     FocusScope.of(context).unfocus();
 
     if (_heightController.text.isEmpty ||
@@ -56,8 +58,13 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
       return;
     }
 
-    // Profil kaydedildi, Tıbbi Tarama modülüne geç
-    context.go('/red-flags');
+    // Profil kaydedildi, AuthViewModel üzerinden ilerlemeyi işaretle
+    await context.read<AuthViewModel>().updateProgress(hasCompletedWelcome: true);
+    
+    // Tıbbi Tarama modülüne geç
+    if (mounted) {
+      context.go('/red-flags');
+    }
   }
 
   @override

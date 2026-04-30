@@ -15,4 +15,9 @@ class AppColors {
   // Text colors
   static const Color textPrimaryLight = Color(0xFF0F172A); // Slate 900
   static const Color textSecondary = Color(0xFF64748B); // Slate 500
+
+  // Alert/Warning colors
+  static const Color alertBackground = Color(0xFFFFF1F1);
+  static const Color alertText = Color(0xFF991B1B);
+  static const Color alertBorder = Color(0x19EF4444); // Red with opacity 0.1
 }

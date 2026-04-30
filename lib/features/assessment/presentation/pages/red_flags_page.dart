@@ -9,6 +9,7 @@ import '../viewmodels/red_flags_view_model.dart';
 import '../widgets/question_card.dart';
 import '../widgets/assessment_result_dialog.dart';
 import 'package:deskrelief/l10n/app_localizations.dart';
+import 'package:deskrelief/features/auth/presentation/viewmodels/auth_view_model.dart';
 
 class RedFlagsPage extends StatelessWidget {
   const RedFlagsPage({super.key});
@@ -37,15 +38,15 @@ class RedFlagsPage extends StatelessWidget {
                 children: [
                   if (viewModel.currentStep == 1)
                     Container(
-                      margin: const EdgeInsets.fromLTRB(24, 0, 24, 16),
+                      margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: theme.colorScheme.error.withOpacity(
-                          isDark ? 0.2 : 0.1,
+                        color: theme.colorScheme.error.withValues(
+                          alpha: isDark ? 0.2 : 0.1,
                         ),
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: theme.colorScheme.error.withOpacity(0.3),
+                          color: theme.colorScheme.error.withValues(alpha: 0.3),
                         ),
                       ),
                       child: Row(
@@ -104,10 +105,10 @@ class RedFlagsPage extends StatelessWidget {
                   decoration: BoxDecoration(
                     color:
                         (isDark ? theme.scaffoldBackgroundColor : Colors.white)
-                            .withOpacity(0.7),
+                            .withValues(alpha: 0.7),
                     border: Border(
                       bottom: BorderSide(
-                        color: theme.colorScheme.onSurface.withOpacity(0.05),
+                        color: theme.colorScheme.onSurface.withValues(alpha: 0.05),
                       ),
                     ),
                   ),
@@ -153,7 +154,7 @@ class RedFlagsPage extends StatelessWidget {
                                 style: theme.textTheme.labelMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: theme.colorScheme.onSurface
-                                      .withOpacity(0.5),
+                                      .withValues(alpha: 0.5),
                                 ),
                               ),
                             ],
@@ -164,7 +165,7 @@ class RedFlagsPage extends StatelessWidget {
                             child: LinearProgressIndicator(
                               value: progress,
                               backgroundColor: theme.colorScheme.onSurface
-                                  .withOpacity(0.1),
+                                  .withValues(alpha: 0.1),
                               valueColor: AlwaysStoppedAnimation<Color>(
                                 AppColors.primary,
                               ),
@@ -194,16 +195,16 @@ class RedFlagsPage extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.only(
                     top: 20,
-                    left: 24,
-                    right: 24,
+                    left: 16,
+                    right: 16,
                     bottom: MediaQuery.of(context).padding.bottom + 20,
                   ),
                   decoration: BoxDecoration(
                     color: (isDark ? theme.colorScheme.surface : Colors.white)
-                        .withOpacity(0.8),
+                        .withValues(alpha: 0.8),
                     border: Border(
                       top: BorderSide(
-                        color: theme.colorScheme.onSurface.withOpacity(0.05),
+                        color: theme.colorScheme.onSurface.withValues(alpha: 0.05),
                       ),
                     ),
                   ),
@@ -225,8 +226,8 @@ class RedFlagsPage extends StatelessWidget {
                               AppLocalizations.of(context)!.saveProgress,
                               textAlign: TextAlign.center,
                               style: theme.textTheme.labelMedium?.copyWith(
-                                color: theme.colorScheme.onSurface.withOpacity(
-                                  0.6,
+                                color: theme.colorScheme.onSurface.withValues(
+                                  alpha: 0.6,
                                 ),
                                 fontWeight: FontWeight.bold,
                               ),
@@ -266,7 +267,7 @@ class RedFlagsPage extends StatelessWidget {
                                   showGeneralDialog(
                                     context: context,
                                     barrierDismissible: false,
-                                    barrierColor: Colors.black.withOpacity(0.3),
+                                    barrierColor: Colors.black.withValues(alpha: 0.3),
                                     pageBuilder:
                                         (
                                           context,
@@ -289,8 +290,13 @@ class RedFlagsPage extends StatelessWidget {
                                                 } else {
                                                   context.pop();
                                                   
+                                                  // Progress'i güncelle ve bekle
+                                                  await context.read<AuthViewModel>().updateProgress(hasCompletedRedFlags: true);
+                                                  
                                                   // Proceed to Body Map assessment
-                                                  context.go('/body-map');
+                                                  if (context.mounted) {
+                                                    context.go('/body-map');
+                                                  }
                                                 }
                                               },
                                             ),

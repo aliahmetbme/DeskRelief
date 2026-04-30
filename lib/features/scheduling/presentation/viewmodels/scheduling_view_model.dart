@@ -54,22 +54,25 @@ class SchedulingViewModel extends ChangeNotifier {
   /// 1 Bölge varsa -> 2 veya 3 gün seçilmeli
   /// 2 Bölge varsa -> tam 4 gün seçilmeli
   bool get canProceed {
+    if (focusRegions.isEmpty) return false;
+    
     if (focusRegions.length == 1) {
       return _selectedDays.length >= 2 && _selectedDays.length <= 3;
-    } else if (focusRegions.length == 2) {
+    } else {
+      // 2 veya daha fazla bölge için her zaman 4 gün kuralı
       return _selectedDays.length == 4;
     }
-    return false; // Beklenmeyen durum
   }
 
   /// UI'da gösterilecek dinamik klinik talimat metni
   String get instructionText {
+    if (focusRegions.isEmpty) return 'Lütfen çalışma günlerinizi belirleyin.';
+    
     if (focusRegions.length == 1) {
       return 'Odak bölgeniz için haftada 2 veya 3 gün belirleyin.';
-    } else if (focusRegions.length == 2) {
-      return 'Belirlediğiniz 2 bölge için sürdürülebilir bir program adına haftada tam 4 gün belirleyin.';
+    } else {
+      return 'Belirlediğiniz ${focusRegions.length} bölge için sürdürülebilir bir program adına haftada tam 4 gün belirleyin.';
     }
-    return 'Lütfen çalışma günlerinizi belirleyin.';
   }
 
   TimeOfDay timeForDay(String day) =>

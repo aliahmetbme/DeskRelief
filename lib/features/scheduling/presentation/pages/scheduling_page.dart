@@ -7,6 +7,7 @@ import '../../../../core/widgets/app_back_button.dart';
 import '../viewmodels/scheduling_view_model.dart';
 import '../widgets/day_chip.dart';
 import '../widgets/schedule_detail_card.dart';
+import 'package:deskrelief/features/auth/presentation/viewmodels/auth_view_model.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Scheduling Page
@@ -121,7 +122,16 @@ class _StartButton extends StatelessWidget {
     final isEnabled = viewModel.canProceed && !viewModel.isLoading;
 
     return GestureDetector(
-      onTap: isEnabled ? () => viewModel.completeScheduling() : null,
+      onTap: isEnabled ? () async {
+        await viewModel.completeScheduling();
+        if (context.mounted) {
+          await context.read<AuthViewModel>().updateProgress(
+            hasCompletedScheduling: true,
+            isClearedForExercise: true,
+          );
+          // Router redirect automatically takes them to /home
+        }
+      } : null,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         height: 56,

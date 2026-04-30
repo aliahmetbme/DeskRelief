@@ -36,7 +36,7 @@ class ExclusionCriteriaSettingsPage extends StatelessWidget {
               return ListView(
                 padding: EdgeInsets.only(
                   top: MediaQuery.of(context).padding.top + 100,
-                  bottom: 140,
+                  bottom: 40,
                   left: 24,
                   right: 24,
                 ),
@@ -87,13 +87,7 @@ class ExclusionCriteriaSettingsPage extends StatelessWidget {
             child: _Header(isDark: isDark),
           ),
 
-          // Footer
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: _Footer(isDark: isDark),
-          ),
+
         ],
       ),
     );
@@ -150,65 +144,27 @@ class _Header extends StatelessWidget {
     final theme = Theme.of(context);
     final loc = AppLocalizations.of(context)!;
 
-    return ClipRRect(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-        child: Container(
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top + 10,
-            bottom: 16,
-            left: 20,
-            right: 20,
-          ),
-          decoration: BoxDecoration(
-            color: (isDark ? theme.scaffoldBackgroundColor : Colors.white).withValues(alpha: 0.7),
-            border: Border(bottom: BorderSide(color: theme.colorScheme.onSurface.withValues(alpha: 0.05))),
-          ),
-          child: Row(
-            children: [
-              const AppBackButton(),
-              const SizedBox(width: 16),
-              Text(
-                loc.exclusionCriteria,
-                style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-        ),
+    return Container(
+      padding: EdgeInsets.only(
+        top: MediaQuery.of(context).padding.top + 10,
+        bottom: 16,
+        left: 20,
+        right: 20,
       ),
-    );
-  }
-}
-
-class _Footer extends StatelessWidget {
-  final bool isDark;
-  const _Footer({required this.isDark});
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final loc = AppLocalizations.of(context)!;
-
-    return ClipRRect(
-      borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-        child: Container(
-          padding: EdgeInsets.only(
-            top: 20,
-            left: 24,
-            right: 24,
-            bottom: MediaQuery.of(context).padding.bottom + 20,
+      color: isDark ? theme.scaffoldBackgroundColor : AppColors.backgroundLight,
+      child: Row(
+        children: [
+          const AppBackButton(),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Text(
+              loc.exclusionCriteria,
+              style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+            ),
           ),
-          decoration: BoxDecoration(
-            color: (isDark ? theme.colorScheme.surface : Colors.white).withValues(alpha: 0.8),
-            border: Border(top: BorderSide(color: theme.colorScheme.onSurface.withValues(alpha: 0.05))),
-          ),
-          child: Consumer<RedFlagsViewModel>(
+          Consumer<RedFlagsViewModel>(
             builder: (context, viewModel, child) {
-              return CustomPrimaryButton(
-                text: loc.done,
-                icon: Icons.check_circle_rounded,
+              return TextButton(
                 onPressed: () {
                   showGeneralDialog(
                     context: context,
@@ -233,11 +189,21 @@ class _Footer extends StatelessWidget {
                     },
                   );
                 },
+                child: Text(
+                  loc.done,
+                  style: TextStyle(
+                    color: theme.colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
               );
             },
           ),
-        ),
+        ],
       ),
     );
   }
 }
+
+

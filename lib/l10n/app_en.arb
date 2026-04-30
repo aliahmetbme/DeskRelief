@@ -45,6 +45,20 @@
   "dailyProgramDesc": "Musculoskeletal focused recovery",
   "statusActive": "ACTIVE",
   "statusSuccess": "SUCCESS",
+  "weeklyProgress": "4-Week Progress",
+  "restDayTitle": "Today, Take a Break from Your Routine.",
+  "restDayClinicalLabel": "CLINICAL REST",
+  "restDayClinicalNote": "Today is your rest day for muscle fiber repair and posture development.",
+  "nextSession": "NEXT SESSION",
+  "tomorrow": "Tomorrow",
+  "restDayRemainingSessions": "{count} sessions left to reach your goal.",
+  "@restDayRemainingSessions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "regionNeck": "Neck",
   "regionLabel1": "REGION 1",
   "regionLowerBack": "Lower Back",
@@ -342,5 +356,50 @@
   "navHome": "Home",
   "navCalendar": "Calendar",
   "navProfile": "Profile",
-  "exclusionCriteriaHeader": "Your health status is critical for a safe experience. If there have been any changes in your current status, please update below."
+  "exclusionCriteriaHeader": "Your health status is critical for a safe experience. If there have been any changes in your current status, please update below.",
+  "errorInvalidEmail": "Invalid email address.",
+  "errorUserDisabled": "This user account has been disabled.",
+  "errorUserNotFound": "No user found with this email.",
+  "errorWrongPassword": "Incorrect password.",
+  "errorEmailAlreadyInUse": "This email address is already in use.",
+  "errorOperationNotAllowed": "This operation is not allowed at this time.",
+  "errorWeakPassword": "Password is too weak.",
+  "errorNetworkRequestFailed": "A network error occurred.",
+  "errorUnknown": "An unexpected error occurred. Please try again.",
+  "routineTitle": "Neck and Lower Back Routine",
+  "duration15Min": "15 Minutes",
+  "exercises10": "10 Exercises",
+  "intensityMedium": "Medium Intensity",
+  "motivationTagline": "MOTIVATIONAL",
+  "motivationQuote": "\"Correct your posture, change your life!\"",
+  "workoutFlow": "Workout Flow",
+  "remainingExercises": "Remaining: {count} Exercises",
+  "@remainingExercises": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "phase1": "PHASE 1: MOBILIZATION (ROM)",
+  "phase2": "PHASE 2: STRENGTHENING",
+  "phase3": "PHASE 3: STRETCHING",
+  "phase4": "PHASE 4: COOL-DOWN",
+  "priority": "Priority",
+  "mobility": "Mobility",
+  "warmup": "Warm-up",
+  "strength": "Strength",
+  "stretching": "Stretching",
+  "cooldown": "Cool-down",
+  "locked": "Locked",
+  "waitingWarmup": "Waiting for warm-up",
+  "markAsCompleted": "Mark as Completed",
+  "howToDo": "How to Do?",
+  "importantWarnings": "Important Warnings",
+  "generalTips": "General Tips",
+  "focusArea": "Focus Area",
+  "watchVideo": "Watch Video",
+  "videoLoading": "Video loading...",
+  "videoError": "An error occurred while loading the video.",
+  "videoRetry": "Retry"
 }

@@ -45,6 +45,20 @@
   "dailyProgramDesc": "Kas-iskelet odaklı iyileşme",
   "statusActive": "AKTİF",
   "statusSuccess": "BAŞARI",
+  "weeklyProgress": "4 Haftalık Gelişim",
+  "restDayTitle": "Bugün Senin Gününe Ara Ver.",
+  "restDayClinicalLabel": "KLİNİK İSTİRAHAT",
+  "restDayClinicalNote": "Kas liflerinizin onarımı ve postür gelişimi için bugün dinlenme gününüzdür.",
+  "nextSession": "SIRADAKİ SEANS",
+  "tomorrow": "Yarın",
+  "restDayRemainingSessions": "Hedefine ulaşmana {count} seans kaldı.",
+  "@restDayRemainingSessions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "regionNeck": "Boyun",
   "regionLabel1": "BÖLGE 1",
   "regionLowerBack": "Alt Sırt",
@@ -342,5 +356,50 @@
   "navHome": "Ana Sayfa",
   "navCalendar": "Takvim",
   "navProfile": "Profil",
-  "exclusionCriteriaHeader": "Güvenli bir deneyim için sağlık durumunuz kritiktir. Mevcut durumunuzda bir değişiklik olduysa lütfen aşağıyı güncelleyiniz."
+  "exclusionCriteriaHeader": "Güvenli bir deneyim için sağlık durumunuz kritiktir. Mevcut durumunuzda bir değişiklik olduysa lütfen aşağıyı güncelleyiniz.",
+  "errorInvalidEmail": "Geçersiz e-posta adresi.",
+  "errorUserDisabled": "Bu kullanıcı hesabı devre dışı bırakılmış.",
+  "errorUserNotFound": "Bu e-posta adresiyle kayıtlı kullanıcı bulunamadı.",
+  "errorWrongPassword": "Hatalı şifre.",
+  "errorEmailAlreadyInUse": "Bu e-posta adresi zaten kullanımda.",
+  "errorOperationNotAllowed": "Bu işlem şu an için izinli değil.",
+  "errorWeakPassword": "Şifre çok zayıf.",
+  "errorNetworkRequestFailed": "Ağ bağlantısı hatası oluştu.",
+  "errorUnknown": "Beklenmedik bir hata oluştu. Lütfen tekrar deneyin.",
+  "routineTitle": "Boyun ve Alt Sırt Rutini",
+  "duration15Min": "15 Dakika",
+  "exercises10": "10 Hareket",
+  "intensityMedium": "Orta Yoğunluk",
+  "motivationTagline": "GAZA GETİREN",
+  "motivationQuote": "\"Duruşunu düzelt, hayatını değiştir!\"",
+  "workoutFlow": "Antrenman Akışı",
+  "remainingExercises": "Kalan: {count} Hareket",
+  "@remainingExercises": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "phase1": "FAZ 1: MOBİLİZASYON (ROM)",
+  "phase2": "FAZ 2: GÜÇLENDİRME",
+  "phase3": "FAZ 3: ESNEME",
+  "phase4": "FAZ 4: SOĞUMA",
+  "priority": "Öncelikli",
+  "mobility": "Mobilite",
+  "warmup": "Isınma",
+  "strength": "Güç",
+  "stretching": "Esneme",
+  "cooldown": "Soğuma",
+  "locked": "Kilitli",
+  "waitingWarmup": "Isınma bekleniyor",
+  "markAsCompleted": "Tamamlandı olarak İşaretle",
+  "howToDo": "Nasıl Yapılır?",
+  "importantWarnings": "Önemli Uyarılar",
+  "generalTips": "Genel İpuçları",
+  "focusArea": "Odak Bölgesi",
+  "watchVideo": "Videoyu İzle",
+  "videoLoading": "Video yükleniyor...",
+  "videoError": "Video yüklenirken bir hata oluştu.",
+  "videoRetry": "Tekrar Dene"
 }

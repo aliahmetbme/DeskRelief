@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CustomPrimaryButton extends StatelessWidget {
+class CustomPrimaryButton extends StatefulWidget {
   final VoidCallback? onPressed;
   final String text;
   final bool isLoading;
@@ -16,6 +16,24 @@ class CustomPrimaryButton extends StatelessWidget {
   });
 
   @override
+  State<CustomPrimaryButton> createState() => _CustomPrimaryButtonState();
+}
+
+class _CustomPrimaryButtonState extends State<CustomPrimaryButton> {
+  bool _isNavigating = false;
+
+  void _handlePress() async {
+    if (widget.onPressed == null || widget.isLoading || _isNavigating) return;
+
+    setState(() => _isNavigating = true);
+    widget.onPressed!();
+
+    // Sayfa geçişi için yeterli süre butonu kilitliyoruz
+    await Future.delayed(const Duration(milliseconds: 600));
+    if (mounted) setState(() => _isNavigating = false);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final primary = theme.colorScheme.primary;
@@ -26,26 +44,20 @@ class CustomPrimaryButton extends StatelessWidget {
       height: 56,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(28), // rounded-full (h/2)
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           colors: [
-            primary,
-            HSLColor.fromColor(primary)
-                .withLightness(
-                  (HSLColor.fromColor(primary).lightness + 0.08).clamp(
-                    0.0,
-                    1.0,
-                  ),
-                )
-                .toColor(),
+            Color(0xFF1D4ED8), // blue-700
+            Color(0xFF3B82F6), // blue-500
           ],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
         ),
         boxShadow: [
           BoxShadow(
-            color: primary.withOpacity(0.3),
-            blurRadius: 15,
-            offset: const Offset(0, 8),
+            color: const Color(0xFF3B82F6).withValues(alpha: 0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+            spreadRadius: -2,
           ),
         ],
       ),
@@ -53,23 +65,23 @@ class CustomPrimaryButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(28),
-          onTap: isLoading ? null : onPressed,
+          onTap: (widget.isLoading || _isNavigating) ? null : _handlePress,
           child: Center(
-            child: isLoading
+            child: (widget.isLoading || _isNavigating)
                 ? const CupertinoActivityIndicator(color: Colors.white)
                 : Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        text,
+                        widget.text,
                         style: theme.textTheme.titleMedium?.copyWith(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      if (icon != null) ...[
+                      if (widget.icon != null) ...[
                         const SizedBox(width: 8),
-                        Icon(icon, color: Colors.white, size: 22),
+                        Icon(widget.icon, color: Colors.white, size: 22),
                       ],
                     ],
                   ),

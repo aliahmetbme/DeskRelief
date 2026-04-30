@@ -1,0 +1,123 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'user_model.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_RegistrationProgress _$RegistrationProgressFromJson(
+  Map<String, dynamic> json,
+) => _RegistrationProgress(
+  hasCompletedWelcome: json['hasCompletedWelcome'] as bool? ?? false,
+  hasCompletedRedFlags: json['hasCompletedRedFlags'] as bool? ?? false,
+  hasCompletedBodyMap: json['hasCompletedBodyMap'] as bool? ?? false,
+  hasCompletedPainScore: json['hasCompletedPainScore'] as bool? ?? false,
+  hasCompletedScheduling: json['hasCompletedScheduling'] as bool? ?? false,
+  isClearedForExercise: json['isClearedForExercise'] as bool? ?? false,
+);
+
+Map<String, dynamic> _$RegistrationProgressToJson(
+  _RegistrationProgress instance,
+) => <String, dynamic>{
+  'hasCompletedWelcome': instance.hasCompletedWelcome,
+  'hasCompletedRedFlags': instance.hasCompletedRedFlags,
+  'hasCompletedBodyMap': instance.hasCompletedBodyMap,
+  'hasCompletedPainScore': instance.hasCompletedPainScore,
+  'hasCompletedScheduling': instance.hasCompletedScheduling,
+  'isClearedForExercise': instance.isClearedForExercise,
+};
+
+_RegionDetail _$RegionDetailFromJson(Map<String, dynamic> json) =>
+    _RegionDetail(
+      regionId: json['regionId'] as String,
+      nprsScore: (json['nprsScore'] as num?)?.toInt() ?? 0,
+      flareUpCount: (json['flareUpCount'] as num?)?.toInt() ?? 0,
+      lastFlareUpDate: const TimestampConverter().fromJson(
+        json['lastFlareUpDate'],
+      ),
+      isAkut: json['isAkut'] as bool? ?? false,
+      scoreHistory:
+          (json['scoreHistory'] as List<dynamic>?)
+              ?.map((e) => (e as num).toInt())
+              .toList() ??
+          const [],
+    );
+
+Map<String, dynamic> _$RegionDetailToJson(_RegionDetail instance) =>
+    <String, dynamic>{
+      'regionId': instance.regionId,
+      'nprsScore': instance.nprsScore,
+      'flareUpCount': instance.flareUpCount,
+      'lastFlareUpDate': const TimestampConverter().toJson(
+        instance.lastFlareUpDate,
+      ),
+      'isAkut': instance.isAkut,
+      'scoreHistory': instance.scoreHistory,
+    };
+
+_UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
+  id: json['id'] as String,
+  name: json['name'] as String,
+  email: json['email'] as String,
+  sex: json['sex'] as String?,
+  profession: json['profession'] as String?,
+  dailySittingHours: (json['dailySittingHours'] as num?)?.toInt(),
+  isBanned: json['isBanned'] as bool? ?? false,
+  banReason: $enumDecodeNullable(_$BanReasonEnumMap, json['banReason']),
+  banNote: json['banNote'] as String?,
+  progress: json['progress'] == null
+      ? const RegistrationProgress()
+      : RegistrationProgress.fromJson(json['progress'] as Map<String, dynamic>),
+  painRegions:
+      (json['painRegions'] as List<dynamic>?)
+          ?.map((e) => RegionDetail.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
+  backlogRegions:
+      (json['backlogRegions'] as List<dynamic>?)
+          ?.map((e) => RegionDetail.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
+  completedExerciseIds:
+      (json['completedExerciseIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList() ??
+      const [],
+  currentProgram: json['currentProgram'] as Map<String, dynamic>?,
+  currentStreak: (json['currentStreak'] as num?)?.toInt() ?? 0,
+  totalWorkouts: (json['totalWorkouts'] as num?)?.toInt() ?? 0,
+  metadata: json['metadata'] as Map<String, dynamic>?,
+  createdAt: const TimestampConverter().fromJson(json['createdAt']),
+  lastActiveAt: const TimestampConverter().fromJson(json['lastActiveAt']),
+);
+
+Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'email': instance.email,
+      'sex': instance.sex,
+      'profession': instance.profession,
+      'dailySittingHours': instance.dailySittingHours,
+      'isBanned': instance.isBanned,
+      'banReason': _$BanReasonEnumMap[instance.banReason],
+      'banNote': instance.banNote,
+      'progress': instance.progress.toJson(),
+      'painRegions': instance.painRegions.map((e) => e.toJson()).toList(),
+      'backlogRegions': instance.backlogRegions.map((e) => e.toJson()).toList(),
+      'completedExerciseIds': instance.completedExerciseIds,
+      'currentProgram': instance.currentProgram,
+      'currentStreak': instance.currentStreak,
+      'totalWorkouts': instance.totalWorkouts,
+      'metadata': instance.metadata,
+      'createdAt': const TimestampConverter().toJson(instance.createdAt),
+      'lastActiveAt': const TimestampConverter().toJson(instance.lastActiveAt),
+    };
+
+const _$BanReasonEnumMap = {
+  BanReason.redFlag: 'redFlag',
+  BanReason.extremePain: 'extremePain',
+  BanReason.persistentFlareUp: 'persistentFlareUp',
+  BanReason.medicalReview: 'medicalReview',
+};

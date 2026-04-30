@@ -1,7 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:go_router/go_router.dart';
 import 'package:deskrelief/l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import '../viewmodels/dashboard_view_model.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // DashboardPage — High-fidelity Dashboard based on premium mockup
@@ -19,44 +23,58 @@ class DashboardPage extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         slivers: [
           // ─── Header Spacing ──────────────────────────────────────────────
-          // Fine-tuned: +16 padding ensures greeting isn't cut off by safe area
           SliverToBoxAdapter(
             child: SizedBox(height: MediaQuery.of(context).padding.top + 16),
           ),
-
           // ─── Content ──────────────────────────────────────────────────────
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-            sliver: SliverList(
-              delegate: SliverChildListDelegate([
-                // 1. Welcome Section
-                const _WelcomeSection(),
-                const SizedBox(height: 28),
+            sliver: Consumer<DashboardViewModel>(
+              builder: (context, viewModel, child) {
+                final isRestDay = false; //viewModel.isRestDay;
 
-                // 2. Progress Section
-                const _ProgressSection(),
-                const SizedBox(height: 24),
+                return SliverList(
+                  delegate: SliverChildListDelegate([
+                    // 1. Welcome Section
+                    _WelcomeSection(isRestDay: isRestDay),
+                    const SizedBox(height: 28),
 
-                // 3. Clinical Warning
-                const _ClinicalWarningSection(),
-                const SizedBox(height: 24),
+                    // 2. Progress Section
+                    _ProgressSection(isRestDay: isRestDay),
+                    const SizedBox(height: 24),
 
-                const _DailyProgramHero(),
-                const SizedBox(height: 24),
+                    if (isRestDay) ...[
+                      // 3. Rest Day Clinical Card
+                      const _RestDayClinicalCard(),
+                      const SizedBox(height: 20),
 
-                // 4. Clinical Info Card
-                const _ClinicalInfoCard(),
-                const SizedBox(height: 32),
+                      // 4. Next Session Card
+                      const _NextSessionCard(),
+                      const SizedBox(height: 32),
 
-                // 5. Spinal Health Tips
-                const _SpinalHealthTipsHeader(),
-                const SizedBox(height: 16),
-                const _TipsGrid(),
-                const SizedBox(height: 32),
+                      // 5. Spinal Health Tips (Bento Grid)
+                      const _SpinalHealthTipsHeader(),
+                      const SizedBox(height: 16),
+                      const _BentoTipsGrid(),
+                    ] else ...[
+                      // 3. Clinical Warning
+                      const _ClinicalWarningSection(),
+                      const SizedBox(height: 24),
 
-                // Footer spacing for Bottom Nav Bar
-                const SizedBox(height: 120),
-              ]),
+                      const _DailyProgramHero(),
+                      const SizedBox(height: 24),
+
+                      // 4. Clinical Info Card
+                      const _ClinicalInfoCard(),
+                    ],
+
+                    const SizedBox(height: 32),
+
+                    // Footer spacing for Bottom Nav Bar
+                    const SizedBox(height: 120),
+                  ]),
+                );
+              },
             ),
           ),
         ],
@@ -70,7 +88,8 @@ class DashboardPage extends StatelessWidget {
 // ─────────────────────────────────────────────────────────────────────────────
 
 class _WelcomeSection extends StatelessWidget {
-  const _WelcomeSection();
+  final bool isRestDay;
+  const _WelcomeSection({required this.isRestDay});
 
   @override
   Widget build(BuildContext context) {
@@ -103,9 +122,11 @@ class _WelcomeSection extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              loc.greetingKeepGoing('Can Yılmaz'),
+              isRestDay
+                  ? loc.restDayTitle
+                  : loc.greetingKeepGoing('Can Yılmaz'),
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: GoogleFonts.manrope(
                 fontSize: 34,
                 fontWeight: FontWeight.w800,
                 letterSpacing: -1.0,
@@ -115,7 +136,8 @@ class _WelcomeSection extends StatelessWidget {
             ),
           ],
         ),
-        Positioned(right: -8, top: -20, child: _FlareUpButton()),
+        if (!isRestDay)
+          Positioned(right: -8, top: -20, child: _FlareUpButton()),
       ],
     );
   }
@@ -187,7 +209,8 @@ class _FlareUpButtonState extends State<_FlareUpButton> {
 }
 
 class _ProgressSection extends StatelessWidget {
-  const _ProgressSection();
+  final bool isRestDay;
+  const _ProgressSection({required this.isRestDay});
 
   // Logic to determine feedback message based on progress
   String _getFeedbackMessage(BuildContext context, double progress) {
@@ -283,55 +306,58 @@ class _ProgressSection extends StatelessWidget {
                     color: isDark ? Colors.white70 : Colors.grey.shade700,
                   ),
                 ),
+                const SizedBox(height: 8),
+                /* Seans mesajı kullanıcı isteği üzerine kaldırıldı */
               ],
             ),
           ],
         ),
         const SizedBox(height: 20),
 
-        // 2. Status Banner (Adaptive Dynamic Pill)
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-          decoration: BoxDecoration(
-            color: softGreen,
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(
-              color: darkGreen.withValues(alpha: isDark ? 0.3 : 0.1),
-            ),
-          ),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  color: darkGreen,
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  remainingSessions == 0 ? Icons.celebration : Icons.check,
-                  color: isDark ? Colors.black : Colors.white,
-                  size: 14,
-                ),
+        // 2. Status Banner (Adaptive Dynamic Pill) - Hidden in Rest Day mode
+        if (!isRestDay)
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            decoration: BoxDecoration(
+              color: softGreen,
+              borderRadius: BorderRadius.circular(24),
+              border: Border.all(
+                color: darkGreen.withValues(alpha: isDark ? 0.3 : 0.1),
               ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  remainingSessions == 0
-                      ? _getFeedbackMessage(context, progressValue)
-                      : loc.feedbackRemainingSessions(
-                          _getFeedbackMessage(context, progressValue),
-                          remainingSessions,
-                        ),
-                  style: TextStyle(
+            ),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
                     color: darkGreen,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    remainingSessions == 0 ? Icons.celebration : Icons.check,
+                    color: isDark ? Colors.black : Colors.white,
+                    size: 14,
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    remainingSessions == 0
+                        ? _getFeedbackMessage(context, progressValue)
+                        : loc.feedbackRemainingSessions(
+                            _getFeedbackMessage(context, progressValue),
+                            remainingSessions,
+                          ),
+                    style: TextStyle(
+                      color: darkGreen,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
       ],
     );
   }
@@ -531,109 +557,12 @@ class _SpinalHealthTipsHeader extends StatelessWidget {
   }
 }
 
-class _TipsGrid extends StatelessWidget {
-  const _TipsGrid();
-
-  @override
-  Widget build(BuildContext context) {
-    final loc = AppLocalizations.of(context)!;
-    return Column(
-      children: [
-        _TipItem(
-          icon: Icons.chair_rounded,
-          color: Colors.blue,
-          title: loc.tipErgonomicsTitle,
-          subtitle: loc.tipErgonomicsDesc,
-        ),
-        const SizedBox(height: 12),
-        _TipItem(
-          icon: Icons.rebase_edit,
-          color: Colors.green,
-          title: loc.tipMobilityTitle,
-          subtitle: loc.tipMobilityDesc,
-        ),
-        const SizedBox(height: 12),
-        _TipItem(
-          icon: Icons.self_improvement_rounded,
-          color: Colors.purple,
-          title: loc.tipLowerBackTitle,
-          subtitle: loc.tipLowerBackDesc,
-        ),
-      ],
-    );
-  }
-}
-
-class _TipItem extends StatelessWidget {
-  final IconData icon;
-  final Color color;
-  final String title;
-  final String subtitle;
-
-  const _TipItem({
-    required this.icon,
-    required this.color,
-    required this.title,
-    required this.subtitle,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: theme.colorScheme.onSurface.withValues(alpha: 0.05),
-          width: 1,
-        ),
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.1),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(icon, color: color, size: 20),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: theme.textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                Text(
-                  subtitle,
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: theme.colorScheme.onSurfaceVariant,
-                    height: 1.3,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _DailyProgramHero extends StatelessWidget {
   const _DailyProgramHero();
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final primary = theme.colorScheme.primary;
     final loc = AppLocalizations.of(context)!;
 
     return Container(
@@ -720,44 +649,7 @@ class _DailyProgramHero extends StatelessWidget {
           const SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: GestureDetector(
-              onTap: () {},
-              child: Container(
-                height: 64,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [primary, primary.withValues(alpha: 0.8)],
-                  ),
-                  borderRadius: BorderRadius.circular(32),
-                  boxShadow: [
-                    BoxShadow(
-                      color: primary.withValues(alpha: 0.3),
-                      blurRadius: 20,
-                      offset: const Offset(0, 10),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      loc.startWorkout,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 18,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    const Icon(
-                      Icons.play_circle_fill_rounded,
-                      color: Colors.white,
-                      size: 28,
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            child: const _StartWorkoutButton(),
           ),
           const SizedBox(height: 16),
         ],
@@ -800,17 +692,395 @@ class _AnatomicalCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            subtitle,
-            style: TextStyle(
-              color: theme.colorScheme.primary,
-              fontWeight: FontWeight.bold,
-              fontSize: 10,
-              letterSpacing: 1.0,
+            title,
+            style: theme.textTheme.titleSmall?.copyWith(
+              fontWeight: FontWeight.w800,
             ),
           ),
           Text(
-            title,
-            style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 16),
+            subtitle,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _StartWorkoutButton extends StatefulWidget {
+  const _StartWorkoutButton();
+
+  @override
+  State<_StartWorkoutButton> createState() => _StartWorkoutButtonState();
+}
+
+class _StartWorkoutButtonState extends State<_StartWorkoutButton> {
+  bool _isPressed = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final primary = theme.colorScheme.primary;
+    final loc = AppLocalizations.of(context)!;
+
+    final baseColor = primary;
+    final darkerColor = Color.lerp(primary, Colors.black, 0.2) ?? primary;
+
+    return GestureDetector(
+      onTapDown: (_) => setState(() => _isPressed = true),
+      onTapUp: (_) => setState(() => _isPressed = false),
+      onTapCancel: () => setState(() => _isPressed = false),
+      onTap: () => context.push('/exercise/daily-routine'),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 100),
+        height: 64,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: _isPressed
+                ? [darkerColor, darkerColor.withValues(alpha: 0.9)]
+                : [baseColor, baseColor.withValues(alpha: 0.8)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(32),
+          boxShadow: _isPressed
+              ? []
+              : [
+                  BoxShadow(
+                    color: primary.withValues(alpha: 0.3),
+                    blurRadius: 20,
+                    offset: const Offset(0, 10),
+                  ),
+                ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              loc.startWorkout,
+              style: GoogleFonts.manrope(
+                color: Colors.white,
+                fontWeight: FontWeight.w800,
+                fontSize: 18,
+              ),
+            ),
+            const SizedBox(width: 12),
+            const Icon(
+              Icons.play_circle_fill_rounded,
+              color: Colors.white,
+              size: 28,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _RestDayClinicalCard extends StatelessWidget {
+  const _RestDayClinicalCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final primary = theme.colorScheme.primary;
+    final loc = AppLocalizations.of(context)!;
+
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: primary.withValues(alpha: 0.12), // Even stronger blue
+        borderRadius: BorderRadius.circular(28),
+        border: Border.all(color: primary.withValues(alpha: 0.2)),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: primary.withValues(alpha: 0.2),
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: Icon(Icons.info_rounded, color: primary, size: 24),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  loc.restDayClinicalLabel,
+                  style: GoogleFonts.manrope(
+                    fontWeight: FontWeight.w900, // Extra bold
+                    fontSize: 12,
+                    letterSpacing: 1.2,
+                    color: primary,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  loc.restDayClinicalNote,
+                  style: GoogleFonts.inter(
+                    fontSize: 15, // Slightly larger
+                    height: 1.5,
+                    fontWeight: FontWeight.w700, // Bolder
+                    color: theme.colorScheme.onSurface,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ─── 4. Sıradaki Seans Kartı ──────────────────────────────────────────
+class _NextSessionCard extends StatelessWidget {
+  const _NextSessionCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final loc = AppLocalizations.of(context)!;
+    final isDark = theme.brightness == Brightness.dark;
+    final softGreen = isDark
+        ? const Color(0xFF1B3B2B)
+        : const Color(0xFFE8F5E9);
+    final darkGreen = isDark
+        ? const Color(0xFF4ADE80)
+        : const Color(0xFF1B5E20);
+
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: softGreen,
+        borderRadius: BorderRadius.circular(28),
+        border: Border.all(
+          color: darkGreen.withValues(alpha: isDark ? 0.2 : 0.1),
+        ),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: isDark ? darkGreen.withValues(alpha: 0.2) : Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                if (!isDark)
+                  BoxShadow(
+                    color: darkGreen.withValues(alpha: 0.1),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+              ],
+            ),
+            child: Icon(
+              Icons.calendar_today_rounded,
+              color: darkGreen,
+              size: 24,
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  loc.nextSession,
+                  style: GoogleFonts.manrope(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 11,
+                    letterSpacing: 1.0,
+                    color: theme.colorScheme.onSurface.withValues(
+                      alpha: 0.8,
+                    ), // Darker label
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  '${loc.tomorrow} 19:00',
+                  style: GoogleFonts.manrope(
+                    fontSize: 22, // Larger
+                    fontWeight: FontWeight.w800,
+                    color: theme.colorScheme.onSurface,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Icon(
+            Icons.chevron_right_rounded,
+            color: theme.colorScheme.onSurface.withValues(
+              alpha: 0.4,
+            ), // More prominent chevron
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _BentoTipsGrid extends StatelessWidget {
+  const _BentoTipsGrid();
+
+  @override
+  Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+
+    return Column(
+      children: [
+        // 1. Büyük Resimli Kart (Ergonomics)
+        Container(
+          height: 190,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(32),
+            image: const DecorationImage(
+              image: NetworkImage(
+                'https://lh3.googleusercontent.com/aida-public/AB6AXuCzQWxMFfUgW9SVEuKg7PIsCbHl7u93Ov_mc69txVnFaw45MIKcJO_Czpg3-iFKP1Z8C4R5c8pSNTvBWXHSekRTZLv46COa25eaj3kGBD1vGpdLNPYAQng0vXc3rMxzaXJ_dYQiBsnhh5i_6N5-NGNMtzhIZn0kE5UxFq9qr6ojuf5fLFpTcWqy44UWW8flzVTtofLYtEvHVnWVlRDutVPiueTuIkKGRSAqrcxTT5xc6ErQoBePiw6QqHxLrC8DuCkRFmA_DusTPrs',
+              ),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(32),
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.transparent,
+                  Colors.black.withValues(alpha: 0.85),
+                ],
+              ),
+            ),
+            padding: const EdgeInsets.all(24),
+            alignment: Alignment.bottomLeft,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white24,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Text(
+                    'REHBER',
+                    style: GoogleFonts.inter(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  loc.tipErgonomicsTitle,
+                  style: GoogleFonts.manrope(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        // 2. Yan Yana Küçük Kartlar
+        Row(
+          children: [
+            Expanded(
+              child: _SmallBentoCard(
+                icon: Icons.accessibility_new_rounded,
+                title: loc.tipMobilityTitle,
+                subtitle: loc.tipMobilityDesc,
+                iconColor: Colors.blue,
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: _SmallBentoCard(
+                icon: Icons.healing_rounded,
+                title: loc.tipLowerBackTitle,
+                subtitle: loc.tipLowerBackDesc,
+                iconColor: Colors.orange,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _SmallBentoCard extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final Color iconColor;
+
+  const _SmallBentoCard({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.iconColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Container(
+      height: 140, // Biraz daha yükseltildi
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surfaceContainerHigh,
+        borderRadius: BorderRadius.circular(28),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(icon, color: iconColor, size: 22),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: GoogleFonts.manrope(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              Text(
+                subtitle,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.inter(
+                  fontSize: 11,
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ],
           ),
         ],
       ),
