@@ -1,31 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:deskrelief/l10n/app_localizations.dart';
 import '../../data/models/red_flag_question.dart';
+import 'package:deskrelief/features/auth/presentation/viewmodels/auth_view_model.dart';
+import 'package:deskrelief/features/auth/domain/models/user_model.dart';
 
 class RedFlagsViewModel extends ChangeNotifier {
-  RedFlagsViewModel() {
-    _loadAnswers();
+  final AuthViewModel _authViewModel;
+
+  RedFlagsViewModel({required AuthViewModel authViewModel}) : _authViewModel = authViewModel {
+    loadInitialAnswers();
   }
 
-  Future<void> _loadAnswers() async {
-    final prefs = await SharedPreferences.getInstance();
-    for (var q in _questions) {
-      final key = 'red_flag_${q.id}';
-      if (prefs.containsKey(key)) {
-        _answers[q.id] = prefs.getBool(key);
-      } else {
-        // Initial defaults if never set
+  void loadInitialAnswers() {
+    final user = _authViewModel.currentUser;
+    _answers.clear();
+    if (user != null && user.flaggedRedFlagIds.isNotEmpty) {
+      for (var q in _questions) {
+        if (user.flaggedRedFlagIds.contains(q.id.toString())) {
+          _answers[q.id] = true;
+        } else {
+          _answers[q.id] = false;
+        }
+      }
+    } else {
+      // Initialize with false if no previous flags
+      for (var q in _questions) {
         _answers[q.id] = false;
       }
     }
     notifyListeners();
   }
 
-  Future<void> _saveAnswer(int id, bool val) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('red_flag_$id', val);
-  }
   int _currentStep = 1;
   int get currentStep => _currentStep;
 
@@ -52,7 +57,6 @@ class RedFlagsViewModel extends ChangeNotifier {
 
   void setAnswer(int questionId, bool answer) {
     _answers[questionId] = answer;
-    _saveAnswer(questionId, answer);
     notifyListeners();
   }
 
@@ -72,8 +76,28 @@ class RedFlagsViewModel extends ChangeNotifier {
     }
   }
 
-  void submit(VoidCallback onCompleted) {
-    // Burada sunucuya gönderme veya hesaplama yapılabilir.
+  Future<void> submit(VoidCallback onCompleted) async {
+    final flaggedIds = _answers.entries
+        .where((e) => e.value == true)
+        .map((e) => e.key.toString())
+        .toList();
+
+    if (flaggedIds.isNotEmpty) {
+      // Kırmızı bayrak yakalandı: Banla
+      await _authViewModel.updateUser(
+        isBanned: true,
+        banReason: BanReason.redFlag,
+        flaggedRedFlagIds: flaggedIds,
+      );
+    } else {
+      // Risk yok: Temizle ve ilerle
+      await _authViewModel.updateUser(
+        isBanned: false,
+        banReason: null,
+        flaggedRedFlagIds: [],
+      );
+    }
+
     onCompleted();
   }
 }

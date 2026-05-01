@@ -66,6 +66,11 @@ _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
   isBanned: json['isBanned'] as bool? ?? false,
   banReason: $enumDecodeNullable(_$BanReasonEnumMap, json['banReason']),
   banNote: json['banNote'] as String?,
+  flaggedRedFlagIds:
+      (json['flaggedRedFlagIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList() ??
+      const [],
   progress: json['progress'] == null
       ? const RegistrationProgress()
       : RegistrationProgress.fromJson(json['progress'] as Map<String, dynamic>),
@@ -103,6 +108,7 @@ Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
       'isBanned': instance.isBanned,
       'banReason': _$BanReasonEnumMap[instance.banReason],
       'banNote': instance.banNote,
+      'flaggedRedFlagIds': instance.flaggedRedFlagIds,
       'progress': instance.progress.toJson(),
       'painRegions': instance.painRegions.map((e) => e.toJson()).toList(),
       'backlogRegions': instance.backlogRegions.map((e) => e.toJson()).toList(),
@@ -117,7 +123,10 @@ Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
 
 const _$BanReasonEnumMap = {
   BanReason.redFlag: 'redFlag',
+  BanReason.centralSensitization: 'centralSensitization',
   BanReason.extremePain: 'extremePain',
+  BanReason.maxFlareUpStrike: 'maxFlareUpStrike',
   BanReason.persistentFlareUp: 'persistentFlareUp',
-  BanReason.medicalReview: 'medicalReview',
+  BanReason.therapeuticResistance: 'therapeuticResistance',
+  BanReason.chronicLimit: 'chronicLimit',
 };

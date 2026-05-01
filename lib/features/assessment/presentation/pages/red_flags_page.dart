@@ -11,8 +11,24 @@ import '../widgets/assessment_result_dialog.dart';
 import 'package:deskrelief/l10n/app_localizations.dart';
 import 'package:deskrelief/features/auth/presentation/viewmodels/auth_view_model.dart';
 
-class RedFlagsPage extends StatelessWidget {
+class RedFlagsPage extends StatefulWidget {
   const RedFlagsPage({super.key});
+
+  @override
+  State<RedFlagsPage> createState() => _RedFlagsPageState();
+}
+
+class _RedFlagsPageState extends State<RedFlagsPage> {
+  @override
+  void initState() {
+    super.initState();
+    // Sayfa her açıldığında mevcut kullanıcı hafızasındaki verileri yükle
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        context.read<RedFlagsViewModel>().loadInitialAnswers();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

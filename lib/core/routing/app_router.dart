@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../features/auth/presentation/viewmodels/auth_view_model.dart';
@@ -8,6 +7,9 @@ import '../../features/auth/presentation/pages/sign_in_page.dart';
 import '../../features/auth/presentation/pages/sign_up_page.dart';
 import '../../features/auth/presentation/pages/welcome_profile_page.dart';
 import '../../features/auth/presentation/pages/splash_page.dart';
+import '../../features/auth/presentation/pages/email_verification_page.dart';
+import '../../features/auth/presentation/pages/forgot_password_page.dart';
+import '../../features/auth/presentation/pages/clinical_block_page.dart';
 import '../../features/assessment/presentation/pages/red_flags_page.dart';
 import '../../features/assessment/presentation/pages/body_map_page.dart';
 import '../../features/assessment/presentation/pages/pain_intensity_page.dart';
@@ -25,17 +27,14 @@ import '../../features/exercise/presentation/viewmodels/daily_routine_view_model
 import '../../features/exercise/domain/models/exercise_model.dart';
 
 class AppRouter {
-  static GoRouter createRouter({
-    required AuthViewModel authViewModel,
-  }) {
+  static GoRouter createRouter({required AuthViewModel authViewModel}) {
     return GoRouter(
-      initialLocation: '/splash',
+      initialLocation: '/body-map',
       refreshListenable: authViewModel,
       redirect: (context, state) {
         final location = state.matchedLocation;
-        
+
         // DURUM 1: Başlatma Kontrolü (Splash State)
-        // Firebase Auth ve Local SharedPreferences verileri gelene kadar Splash'te kal.
         if (!authViewModel.isInitialized) {
           return '/splash';
         }
@@ -43,43 +42,54 @@ class AppRouter {
         // DURUM 2: Kullanıcı Giriş Yapmamışsa
         final user = authViewModel.currentUser;
         if (user == null) {
-          // Önce Intro (Onboarding) kontrolü
+          // 2.1. Onboarding Kontrolü (Sadece bir kez gösterilmesi için)
           if (!authViewModel.hasSeenOnboarding) {
             if (location == '/onboarding') return null;
             return '/onboarding';
           }
-          
-          // Intro görüldüyse giriş sayfasına yönlendir
-          final bool isOnAuthPages = 
-              location == '/signin' || 
-              location == '/signup' || 
-              location == '/onboarding';
-              
-          if (isOnAuthPages) return null;
+
+          // 2.2. Onboarding'i görmüş ama giriş yapmamışsa
+          if (location == '/onboarding') {
+            return '/signin';
+          }
+
+          // 2.3. Giriş yapmamış kullanıcının gidebileceği sayfalar (Whitelist)
+          if (location == '/signin' ||
+              location == '/signup' ||
+              location == '/forgot-password') {
+            return null;
+          }
+
           return '/signin';
         }
 
-        // DURUM 3: Giriş Yapılmışsa (Progress Kontrolü)
+        // DURUM 2.5: E-posta Doğrulama Kontrolü (Verification Gate)
+        // Eğer kullanıcı e-posta ile kayıt olduysa ve henüz doğrulamadıysa
+        if (!authViewModel.isEmailVerified) {
+          if (location == '/verification') return null;
+          return '/verification';
+        }
+
+        // DURUM 3: Giriş Yapılmışsa ve Doğrulanmışsa (Progress Kontrolü)
         final target = authViewModel.checkUserProgress(user);
-        
-        // Eğer hedef ana sayfa ise ve kullanıcı hala kayıt/auth sayfalarındaysa /home'a çek
+
         if (target == '/home') {
-          final bool isOnRestrictedPages = 
-              location == '/signin' || 
-              location == '/signup' || 
+          final bool isOnRestrictedPages =
+              location == '/signin' ||
+              location == '/signup' ||
               location == '/onboarding' ||
               location == '/splash' ||
-              location == '/welcome-profile' || 
-              location == '/red-flags' || 
-              location == '/body-map' || 
-              location == '/assessment/pain-intensity' || 
+              location == '/verification' ||
+              location == '/welcome-profile' ||
+              location == '/red-flags' ||
+              location == '/body-map' ||
+              location == '/assessment/pain-intensity' ||
               location == '/scheduling';
-              
+
           if (isOnRestrictedPages) return '/home';
           return null;
         }
 
-        // Kayıt akışı tamamlanmamışsa hedef sayfaya zorla gönder
         if (location != target) {
           return target;
         }
@@ -90,7 +100,14 @@ class AppRouter {
         // ── Splash Screen ──────────────────────────────────────────────────
         GoRoute(
           path: '/splash',
-          builder: (context, state) => const SplashPage(),
+          pageBuilder: (context, state) =>
+              const NoTransitionPage(child: SplashPage()),
+        ),
+        // ── Verification Screen ─────────────────────────────────────────────
+        GoRoute(
+          path: '/verification',
+          pageBuilder: (context, state) =>
+              const NoTransitionPage(child: EmailVerificationPage()),
         ),
         // ── Auth & Assessment akışı (top-level rotalar) ─────────────────────
         GoRoute(
@@ -104,6 +121,14 @@ class AppRouter {
         GoRoute(
           path: '/signup',
           builder: (context, state) => const SignUpPage(),
+        ),
+        GoRoute(
+          path: '/forgot-password',
+          builder: (context, state) => const ForgotPasswordPage(),
+        ),
+        GoRoute(
+          path: '/clinical-block',
+          builder: (context, state) => const ClinicalBlockPage(),
         ),
         GoRoute(
           path: '/welcome-profile',

@@ -308,6 +308,96 @@ abstract class AppLocalizations {
   /// **'Hedefine ulaşmana {count} seans kaldı.'**
   String restDayRemainingSessions(int count);
 
+  /// No description provided for @didntReceiveEmail.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mail gelmedi mi?'**
+  String get didntReceiveEmail;
+
+  /// No description provided for @resendLink.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tekrar Gönder'**
+  String get resendLink;
+
+  /// No description provided for @cancelAndExit.
+  ///
+  /// In tr, this message translates to:
+  /// **'İptal ve Çıkış'**
+  String get cancelAndExit;
+
+  /// No description provided for @verificationTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Doğrulama'**
+  String get verificationTitle;
+
+  /// No description provided for @verificationLinkSent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Doğrulama Linki Gönderildi!'**
+  String get verificationLinkSent;
+
+  /// No description provided for @verificationBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'adresine bir link gönderdik. Lütfen gelen kutunuzu kontrol edip linke tıklayın. Doğruladığınızda bu ekran otomatik olarak kapanacaktır.'**
+  String get verificationBody;
+
+  /// No description provided for @waitingForVerification.
+  ///
+  /// In tr, this message translates to:
+  /// **'Doğrulama Bekleniyor'**
+  String get waitingForVerification;
+
+  /// No description provided for @verificationEmailSent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Doğrulama e-postası tekrar gönderildi.'**
+  String get verificationEmailSent;
+
+  /// No description provided for @forgotPasswordTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifrenizi mi Unuttunuz?'**
+  String get forgotPasswordTitle;
+
+  /// No description provided for @forgotPasswordSubtitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Endişelenmeyin! Kayıtlı e-posta adresinizi girin, size şifrenizi sıfırlamanız için bir bağlantı göndereceğiz.'**
+  String get forgotPasswordSubtitle;
+
+  /// No description provided for @sendResetLink.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sıfırlama Linki Gönder'**
+  String get sendResetLink;
+
+  /// No description provided for @backToSignIn.
+  ///
+  /// In tr, this message translates to:
+  /// **'Giriş sayfasına dönmek mi istiyorsunuz? '**
+  String get backToSignIn;
+
+  /// No description provided for @secureDataInfra.
+  ///
+  /// In tr, this message translates to:
+  /// **'Güvenli Veri Altyapısı'**
+  String get secureDataInfra;
+
+  /// No description provided for @supportTeam247.
+  ///
+  /// In tr, this message translates to:
+  /// **'7/24 Destek Ekibi'**
+  String get supportTeam247;
+
+  /// No description provided for @passwordResetEmailSent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifre sıfırlama bağlantısı e-postanıza gönderildi. Lütfen spam kutunuzu da kontrol edin.'**
+  String get passwordResetEmailSent;
+
   /// No description provided for @regionNeck.
   ///
   /// In tr, this message translates to:
@@ -409,6 +499,120 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Dışlama Kriterleri'**
   String get exclusionCriteria;
+
+  /// No description provided for @clinicalBlockTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tıbbi Yönlendirme'**
+  String get clinicalBlockTitle;
+
+  /// No description provided for @clinicalBlockSubtitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Güvenliğiniz bizim için her şeyden önemli.'**
+  String get clinicalBlockSubtitle;
+
+  /// No description provided for @clinicalBlockDescription.
+  ///
+  /// In tr, this message translates to:
+  /// **'Girdiğiniz veriler algoritmamız tarafından analiz edildi ve devam etmeden önce bir uzmana danışmanızın daha sağlıklı olacağı belirlendi.'**
+  String get clinicalBlockDescription;
+
+  /// No description provided for @reasonRedFlag.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kritik Klinik Bulgular'**
+  String get reasonRedFlag;
+
+  /// No description provided for @descRedFlag.
+  ///
+  /// In tr, this message translates to:
+  /// **'Girdiğiniz yanıtlarda acil tıbbi değerlendirme gerektirebilecek belirtiler saptandı. Lütfen bir fizik tedavi uzmanına veya hekime danışın.'**
+  String get descRedFlag;
+
+  /// No description provided for @reasonCentralSensitization.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yaygın Hassasiyet Bulguları'**
+  String get reasonCentralSensitization;
+
+  /// No description provided for @descCentralSensitization.
+  ///
+  /// In tr, this message translates to:
+  /// **'Vücudunuzun çok sayıda bölgesinde yüksek hassasiyet saptandı. Bu durum \'Merkezi Duyarlılaşma\' şüphesi uyandırabilir ve egzersiz öncesi tıbbi muayene gerektirir.'**
+  String get descCentralSensitization;
+
+  /// No description provided for @reasonExtremePain.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şiddetli Ağrı Sınırı'**
+  String get reasonExtremePain;
+
+  /// No description provided for @descExtremePain.
+  ///
+  /// In tr, this message translates to:
+  /// **'Belirttiğiniz ağrı seviyesi (NPRS 10/10), egzersiz toleransınızın çok üzerindedir. Akut durumunuzun kontrolü için bir uzmana başvurmalısınız.'**
+  String get descExtremePain;
+
+  /// No description provided for @reasonMaxFlareUpStrike.
+  ///
+  /// In tr, this message translates to:
+  /// **'Dirençli Krizler (Flare-Up)'**
+  String get reasonMaxFlareUpStrike;
+
+  /// No description provided for @descMaxFlareUpStrike.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aynı bölgede tekrarlayan krizler yaşanması, durumun sadece egzersizle çözülemeyecek bir doku hasarı veya inflamasyon olabileceğini gösterir.'**
+  String get descMaxFlareUpStrike;
+
+  /// No description provided for @reasonTherapeuticResistance.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tedaviye Direnç'**
+  String get reasonTherapeuticResistance;
+
+  /// No description provided for @descTherapeuticResistance.
+  ///
+  /// In tr, this message translates to:
+  /// **'Süreç boyunca ağrı seviyenizin düşmek yerine artması, altta yatan yapısal bir patoloji olabileceğini gösterir. Klinik değerlendirme önerilir.'**
+  String get descTherapeuticResistance;
+
+  /// No description provided for @reasonChronicLimit.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mekanik Limit'**
+  String get reasonChronicLimit;
+
+  /// No description provided for @descChronicLimit.
+  ///
+  /// In tr, this message translates to:
+  /// **'56 günlük süreç sonunda ağrınızda anlamlı bir düşüş saptanmadı. Bu durum mekanik müdahalenin (egzersiz) şu aşamada yetersiz kaldığını gösterir.'**
+  String get descChronicLimit;
+
+  /// No description provided for @reasonPersistentFlareUp.
+  ///
+  /// In tr, this message translates to:
+  /// **'İnatçı Akutluk'**
+  String get reasonPersistentFlareUp;
+
+  /// No description provided for @descPersistentFlareUp.
+  ///
+  /// In tr, this message translates to:
+  /// **'Uzun süreli dinlenme ve modifikasyonlara rağmen bölgedeki akut tablo iyileşmedi. Lütfen tıbbi destek alın.'**
+  String get descPersistentFlareUp;
+
+  /// No description provided for @clinicalBlockContactBtn.
+  ///
+  /// In tr, this message translates to:
+  /// **'Raporumu Hazırla (PDF)'**
+  String get clinicalBlockContactBtn;
+
+  /// No description provided for @clinicalBlockLogoutBtn.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oturumu Kapat'**
+  String get clinicalBlockLogoutBtn;
 
   /// No description provided for @darkTheme.
   ///
@@ -545,7 +749,7 @@ abstract class AppLocalizations {
   /// No description provided for @daySelectionTitle.
   ///
   /// In tr, this message translates to:
-  /// **'Gün Seçimi'**
+  /// **'Day Selection'**
   String get daySelectionTitle;
 
   /// No description provided for @maxDaysError.
@@ -1319,7 +1523,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingTitle2.
   ///
   /// In tr, this message translates to:
-  /// **'DeskRelief ile Tanışın, Dijital Çözümünüz'**
+  /// **'Meet DeskRelief, Dijital Çözümünüz'**
   String get onboardingTitle2;
 
   /// No description provided for @onboardingDesc2.
@@ -1589,7 +1793,7 @@ abstract class AppLocalizations {
   /// No description provided for @errorInvalidEmail.
   ///
   /// In tr, this message translates to:
-  /// **'Geçersiz e-posta adresi.'**
+  /// **'Geçersiz e-postası adresi.'**
   String get errorInvalidEmail;
 
   /// No description provided for @errorUserDisabled.
@@ -1813,6 +2017,54 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Tekrar Dene'**
   String get videoRetry;
+
+  /// No description provided for @dialogClinicalAlertTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Klinik Güvenlik Uyarısı'**
+  String get dialogClinicalAlertTitle;
+
+  /// No description provided for @dialogRedFlagMessage.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tıbbi risk (Red Flag) bulguları nedeniyle sisteminiz kilitlenmişti. Semptomlarınızda hekim gözetiminde bir değişim olduysa, güvenlik taramasını yeniden çözmek ister misiniz?'**
+  String get dialogRedFlagMessage;
+
+  /// No description provided for @dialogGeneralVetoMessage.
+  ///
+  /// In tr, this message translates to:
+  /// **'Uygulama, klinik protokoller gereği programınızı durdurmuştu. Tamamen iyileştiniz mi ve bir fizyoterapist/hekimden bu uygulamayı kullanmaya devam etmek için onay aldınız mı?'**
+  String get dialogGeneralVetoMessage;
+
+  /// No description provided for @btnUpdateSymptoms.
+  ///
+  /// In tr, this message translates to:
+  /// **'Semptomları Güncelle'**
+  String get btnUpdateSymptoms;
+
+  /// No description provided for @btnDoctorApproved.
+  ///
+  /// In tr, this message translates to:
+  /// **'Doktor Onaylı'**
+  String get btnDoctorApproved;
+
+  /// No description provided for @btnCancel.
+  ///
+  /// In tr, this message translates to:
+  /// **'İptal'**
+  String get btnCancel;
+
+  /// No description provided for @btnReevaluate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Durumumu Tekrar Değerlendir'**
+  String get btnReevaluate;
+
+  /// No description provided for @toastSafetyWarning.
+  ///
+  /// In tr, this message translates to:
+  /// **'Güvenliğiniz bizim için önemli. Lütfen hekim onayı olmadan egzersiz yapmayınız.'**
+  String get toastSafetyWarning;
 }
 
 class _AppLocalizationsDelegate

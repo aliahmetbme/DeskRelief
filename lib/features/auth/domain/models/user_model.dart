@@ -5,11 +5,28 @@ part 'user_model.freezed.dart';
 part 'user_model.g.dart';
 
 /// Klinik Güvenlik Blokaj Nedenleri
-enum BanReason { 
-  @JsonValue('redFlag') redFlag,
-  @JsonValue('extremePain') extremePain,
-  @JsonValue('persistentFlareUp') persistentFlareUp,
-  @JsonValue('medicalReview') medicalReview 
+/// Klinik Güvenlik: CDSS (Klinik Karar Destek Sistemi) tarafından atılan blokaj nedenleri.
+enum BanReason {
+  @JsonValue('redFlag')
+  redFlag, // 1. Kırmızı Bayrak (Tıbbi kontrendikasyon)
+
+  @JsonValue('centralSensitization')
+  centralSensitization, // 2. Yaygın Ağrı Şüphesi (N>=4 bölgenin 3'ü 8+ skorlu)
+
+  @JsonValue('extremePain')
+  extremePain, // 3. Dayanılmaz Ağrı (NPRS skoru 10 girildi)
+
+  @JsonValue('maxFlareUpStrike')
+  maxFlareUpStrike, // 4. Kronik Kriz (Aynı bölgede 3 kez Flare-Up yaşandı)
+
+  @JsonValue('persistentFlareUp')
+  persistentFlareUp, // 5. İnatçı Akutluk (14+14 gün veya rötar sonrası iyileşmeme)
+
+  @JsonValue('therapeuticResistance')
+  therapeuticResistance, // 6. Tedaviye Direnç (28. veya 56. makro değerlendirmede skor arttı)
+
+  @JsonValue('chronicLimit')
+  chronicLimit // 7. Mekanik Yetersizlik (56. gün sonunda iyileşme olmadı)
 }
 
 class TimestampConverter implements JsonConverter<DateTime?, dynamic> {
@@ -70,10 +87,11 @@ abstract class UserModel with _$UserModel {
     String? profession,
     int? dailySittingHours,
 
-    // Ban Durumu
+    // Ban Durumu ve Hafızası
     @Default(false) bool isBanned,
     BanReason? banReason,
     String? banNote,
+    @Default([]) List<String> flaggedRedFlagIds, // Red yediği soruların ID'leri
 
     // Progresyon ve Bölgeler
     @Default(RegistrationProgress()) RegistrationProgress progress,

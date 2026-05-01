@@ -17,14 +17,19 @@ import 'features/auth/presentation/viewmodels/auth_view_model.dart';
 import 'features/assessment/presentation/viewmodels/red_flags_view_model.dart';
 import 'features/assessment/presentation/viewmodels/body_map_view_model.dart';
 import 'features/main/presentation/viewmodels/dashboard_view_model.dart';
-import 'core/services/notification_service.dart';
+import 'features/scheduling/data/services/notification_service.dart';
 import 'features/exercise/data/services/video_cache_service.dart';
-
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Ekran yönünü dikey (portrait) olarak kitle
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // Initialize Notifications
@@ -47,7 +52,13 @@ void main() async {
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => LocaleProvider()),
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
-        ChangeNotifierProvider(create: (_) => RedFlagsViewModel()),
+        ChangeNotifierProxyProvider<AuthViewModel, RedFlagsViewModel>(
+          create: (context) => RedFlagsViewModel(
+            authViewModel: Provider.of<AuthViewModel>(context, listen: false),
+          ),
+          update: (context, auth, previous) =>
+              previous ?? RedFlagsViewModel(authViewModel: auth),
+        ),
         ChangeNotifierProvider(create: (_) => BodyMapViewModel()),
         ChangeNotifierProvider(create: (_) => DashboardViewModel()),
       ],

@@ -17,7 +17,13 @@ void main() {
         providers: [
           ChangeNotifierProvider(create: (_) => ThemeProvider()),
           ChangeNotifierProvider(create: (_) => AuthViewModel()),
-          ChangeNotifierProvider(create: (_) => RedFlagsViewModel()),
+          ChangeNotifierProxyProvider<AuthViewModel, RedFlagsViewModel>(
+            create: (context) => RedFlagsViewModel(
+              authViewModel: context.read<AuthViewModel>(),
+            ),
+            update: (context, auth, previous) =>
+                previous ?? RedFlagsViewModel(authViewModel: auth),
+          ),
           ChangeNotifierProvider(create: (_) => BodyMapViewModel()),
         ],
         child: const DeskReliefApp(),

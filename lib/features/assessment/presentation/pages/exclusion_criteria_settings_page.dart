@@ -9,6 +9,8 @@ import '../../../../core/widgets/custom_primary_button.dart';
 import '../viewmodels/red_flags_view_model.dart';
 import '../widgets/question_card.dart';
 import '../widgets/assessment_result_dialog.dart';
+import '../../../auth/presentation/viewmodels/auth_view_model.dart';
+import '../../../auth/domain/models/user_model.dart';
 
 class ExclusionCriteriaSettingsPage extends StatelessWidget {
   const ExclusionCriteriaSettingsPage({super.key});
@@ -175,10 +177,14 @@ class _Header extends StatelessWidget {
                         filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
                         child: AssessmentResultDialog(
                           hasRedFlags: viewModel.hasRedFlags,
-                          onActionPressed: () {
+                          onActionPressed: () async {
                             if (viewModel.hasRedFlags) {
-                              context.pop(); // Pop Dialog
-                              context.go('/signin'); // Logout
+                              // DB'den banla
+                              await context.read<AuthViewModel>().applyManualBan(BanReason.redFlag);
+                              if (context.mounted) {
+                                context.pop(); // Pop Dialog
+                                // Router zaten isBanned'i görünce otomatik /clinical-block'a atacak
+                              }
                             } else {
                               context.pop(); // Pop Dialog
                               context.pop(); // Pop Page back to Profile

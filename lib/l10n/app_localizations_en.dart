@@ -127,6 +127,54 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get didntReceiveEmail => 'Didn\'t receive email?';
+
+  @override
+  String get resendLink => 'Resend';
+
+  @override
+  String get cancelAndExit => 'Cancel & Exit';
+
+  @override
+  String get verificationTitle => 'Verification';
+
+  @override
+  String get verificationLinkSent => 'Verification Link Sent!';
+
+  @override
+  String get verificationBody =>
+      'we\'ve sent a link to the address above. Please check your inbox and click the link. This screen will close automatically once verified.';
+
+  @override
+  String get waitingForVerification => 'Waiting for Verification';
+
+  @override
+  String get verificationEmailSent => 'Verification email has been resent.';
+
+  @override
+  String get forgotPasswordTitle => 'Forgot Password?';
+
+  @override
+  String get forgotPasswordSubtitle =>
+      'Don\'t worry! Enter your registered email address and we\'ll send you a link to reset your password.';
+
+  @override
+  String get sendResetLink => 'Send Reset Link';
+
+  @override
+  String get backToSignIn => 'Want to go back to the sign in page? ';
+
+  @override
+  String get secureDataInfra => 'Secure Data Infrastructure';
+
+  @override
+  String get supportTeam247 => '24/7 Support Team';
+
+  @override
+  String get passwordResetEmailSent =>
+      'A password reset link has been sent to your email. Please check your spam folder as well.';
+
+  @override
   String get regionNeck => 'Neck';
 
   @override
@@ -182,6 +230,71 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get exclusionCriteria => 'Exclusion Criteria';
+
+  @override
+  String get clinicalBlockTitle => 'Medical Referral';
+
+  @override
+  String get clinicalBlockSubtitle => 'Your safety is our top priority.';
+
+  @override
+  String get clinicalBlockDescription =>
+      'The data you entered has been analyzed by our algorithm, and it has been determined that it is healthier for you to consult a specialist before continuing.';
+
+  @override
+  String get reasonRedFlag => 'Critical Clinical Findings';
+
+  @override
+  String get descRedFlag =>
+      'Symptoms were detected in your responses that may require urgent medical evaluation. Please consult a physical therapy specialist or physician.';
+
+  @override
+  String get reasonCentralSensitization => 'Widespread Sensitivity Findings';
+
+  @override
+  String get descCentralSensitization =>
+      'High sensitivity was detected in many areas of your body. This may suggest \'Central Sensitization\' and requires a medical examination before exercise.';
+
+  @override
+  String get reasonExtremePain => 'Severe Pain Limit';
+
+  @override
+  String get descExtremePain =>
+      'The pain level you specified (NPRS 10/10) is well above your exercise tolerance. You should consult a specialist to control your acute condition.';
+
+  @override
+  String get reasonMaxFlareUpStrike => 'Persistent Flare-Ups';
+
+  @override
+  String get descMaxFlareUpStrike =>
+      'Recurring flare-ups in the same area indicate that the condition may be tissue damage or inflammation that cannot be solved by exercise alone.';
+
+  @override
+  String get reasonTherapeuticResistance => 'Therapeutic Resistance';
+
+  @override
+  String get descTherapeuticResistance =>
+      'Your pain level increasing instead of decreasing throughout the process indicates that there may be an underlying structural pathology. Clinical evaluation is recommended.';
+
+  @override
+  String get reasonChronicLimit => 'Mechanical Limit';
+
+  @override
+  String get descChronicLimit =>
+      'No significant decrease in your pain was detected at the end of the 56-day process. This indicates that mechanical intervention (exercise) is insufficient at this stage.';
+
+  @override
+  String get reasonPersistentFlareUp => 'Persistent Acuteness';
+
+  @override
+  String get descPersistentFlareUp =>
+      'Despite long-term rest and modifications, the acute condition in the area has not improved. Please seek medical support.';
+
+  @override
+  String get clinicalBlockContactBtn => 'Prepare My Report (PDF)';
+
+  @override
+  String get clinicalBlockLogoutBtn => 'Log Out';
 
   @override
   String get darkTheme => 'Dark Theme';
@@ -717,7 +830,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get emailLabel => 'Email';
 
   @override
-  String get emailHint => 'name@company.com';
+  String get emailHint => 'jondoe@mail.com';
 
   @override
   String get passwordLabel => 'Password';
@@ -942,4 +1055,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get videoRetry => 'Retry';
+
+  @override
+  String get dialogClinicalAlertTitle => 'Clinical Safety Warning';
+
+  @override
+  String get dialogRedFlagMessage =>
+      'Your system was locked due to medical risk (Red Flag) findings. If there has been a change in your symptoms under a physician\'s supervision, would you like to retake the safety screening?';
+
+  @override
+  String get dialogGeneralVetoMessage =>
+      'The application had stopped your program due to clinical protocols. Have you fully recovered and received approval from a physiotherapist/physician to continue using this application?';
+
+  @override
+  String get btnUpdateSymptoms => 'Update Symptoms';
+
+  @override
+  String get btnDoctorApproved => 'Doctor Approved';
+
+  @override
+  String get btnCancel => 'Cancel';
+
+  @override
+  String get btnReevaluate => 'Re-evaluate My Status';
+
+  @override
+  String get toastSafetyWarning =>
+      'Your safety is important to us. Please do not exercise without physician approval.';
 }

@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../assessment/data/services/cdss_service.dart';
 import '../../data/services/auth_service.dart';
 import '../../domain/models/user_model.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../core/widgets/clinical_alert_dialog.dart';
+import '../../../../core/widgets/custom_toast.dart';
+import '../../../../core/theme/app_colors.dart';
+import 'package:go_router/go_router.dart';
 
 class AuthViewModel extends ChangeNotifier {
   final AuthService _authService = AuthService();
-  
+
   bool _isLoading = false;
   String? _errorMessage;
 
@@ -22,32 +27,49 @@ class AuthViewModel extends ChangeNotifier {
   bool _isInitialized = false;
   bool get isInitialized => _isInitialized;
 
+  bool get isEmailVerified => _authService.currentUser?.emailVerified ?? false;
+  String? get userEmail => _authService.currentUser?.email;
+
   AuthViewModel() {
     _init();
-    // Auth state changes dinleyici
+  }
+
+  Future<void> _init() async {
+    // 1. SharedPreferences verilerini çek
+    final prefs = await SharedPreferences.getInstance();
+    _hasSeenOnboarding = prefs.getBool('seenOnboarding') ?? false;
+    notifyListeners();
+
+    // 2. Yapay Bekleme Süresi (Splash kalıcılığı için)
+    // Yeni animasyonun süresine (2.5 sn) uygun olarak ayarlandı
+    await Future.delayed(const Duration(milliseconds: 2500));
+
+    // 3. Auth Listener'ı kur
+    _setupAuthListener();
+  }
+
+  void _setupAuthListener() {
     _authService.authStateChanges.listen((user) async {
       if (user != null) {
-        // Kullanıcı var, verilerini çekmeye başla (ama akışı kilitleme)
-        refreshCurrentUser().catchError((e) => debugPrint("Refresh error: $e"));
+        // DÜZELTME: Kullanıcı dökümanı Firestore'dan inene kadar Splash'te BEKLE
+        try {
+          await refreshCurrentUser();
+        } catch (e) {
+          debugPrint("Refresh error: $e");
+        }
       } else {
         _currentUser = null;
       }
-      
-      // İlk sinyal geldiğinde veya kullanıcı yoksa direkt başlatıldı say
+
+      // İlk sinyal geldiğinde ve veri çekme işlemi (yukarıdaki await) bittiğinde başlat
       if (!_isInitialized) {
         _isInitialized = true;
         notifyListeners();
       }
     });
-  }
 
-  Future<void> _init() async {
-    final prefs = await SharedPreferences.getInstance();
-    _hasSeenOnboarding = prefs.getBool('seenOnboarding') ?? false;
-    notifyListeners();
-    
-    // Emniyet Mekanizması: Eğer 3 saniye içinde kimseden ses çıkmazsa splash'i zorla geç
-    Future.delayed(const Duration(seconds: 3), () {
+    // Emniyet Mekanizması: Eğer internet çok kötüyse ve yukarıdaki await takılırsa zorla geç
+    Future.delayed(const Duration(seconds: 4), () {
       if (!_isInitialized) {
         debugPrint("⏳ Splash timeout: Forcing initialization...");
         _isInitialized = true;
@@ -73,7 +95,6 @@ class AuthViewModel extends ChangeNotifier {
     } else if (!progress.hasCompletedRedFlags) {
       return '/red-flags';
     } else if (!progress.hasCompletedBodyMap || user.painRegions.isEmpty) {
-      // Not: hasCompletedBodyMap true olsa bile painRegions boşsa body-map'e geri gönder
       return '/body-map';
     } else if (!progress.hasCompletedPainScore) {
       return '/assessment/pain-intensity';
@@ -84,12 +105,120 @@ class AuthViewModel extends ChangeNotifier {
     return '/home';
   }
 
+  void checkClinicalStatus(BuildContext context, UserModel user) {
+    if (!user.isBanned) {
+      // Normal akışa devam et
+      final route = checkUserProgress(user);
+      GoRouter.of(context).go(route);
+      return;
+    }
+
+    final loc = AppLocalizations.of(context)!;
+
+    if (user.banReason == BanReason.redFlag) {
+      // Senaryo A: Red Flag
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => ClinicalAlertDialog(
+          title: loc.dialogClinicalAlertTitle,
+          message: loc.dialogRedFlagMessage,
+          primaryButtonText: loc.btnUpdateSymptoms,
+          secondaryButtonText: loc.btnCancel,
+          isRedFlag: true,
+          onPrimaryPressed: () {
+            Navigator.pop(context);
+            GoRouter.of(context).push('/red-flags');
+          },
+          onSecondaryPressed: () async {
+            await signOut();
+            if (context.mounted) {
+              Navigator.pop(context);
+              GoRouter.of(context).go('/signin');
+            }
+          },
+        ),
+      );
+    } else {
+      // Senaryo B: Genel Klinik Veto
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => ClinicalAlertDialog(
+          title: loc.dialogClinicalAlertTitle,
+          message: loc.dialogGeneralVetoMessage,
+          primaryButtonText: loc.btnDoctorApproved,
+          secondaryButtonText: loc.btnCancel,
+          isRedFlag: false,
+          onPrimaryPressed: () async {
+            // Süreci Sıfırla
+            final updatedProgress = user.progress.copyWith(
+              hasCompletedWelcome: false,
+              hasCompletedRedFlags: false,
+              hasCompletedBodyMap: false,
+              hasCompletedPainScore: false,
+              hasCompletedScheduling: false,
+              isClearedForExercise: false,
+            );
+
+            final updatedUser = user.copyWith(
+              isBanned: false,
+              banReason: null,
+              banNote: null,
+              progress: updatedProgress,
+            );
+
+            await _authService.updateUser(updatedUser);
+            await refreshCurrentUser();
+
+            if (context.mounted) {
+              Navigator.pop(context);
+              GoRouter.of(context).go('/welcome-profile');
+            }
+          },
+          onSecondaryPressed: () async {
+            CustomToast.show(context, loc.toastSafetyWarning, isError: true);
+            await signOut();
+            if (context.mounted) {
+              Navigator.pop(context);
+              GoRouter.of(context).go('/signin');
+            }
+          },
+        ),
+      );
+    }
+  }
+
   Future<void> refreshCurrentUser() async {
     final uid = _authService.currentUserId;
     if (uid != null) {
       _currentUser = await _authService.getUserModel(uid);
       notifyListeners();
     }
+  }
+
+  /// Kullanıcı modelini genel olarak günceller ve Firestore'a yansıtır
+  Future<void> updateUser({
+    bool? isBanned,
+    BanReason? banReason,
+    List<String>? flaggedRedFlagIds,
+    RegistrationProgress? progress,
+    List<RegionDetail>? painRegions,
+    String? sex,
+  }) async {
+    if (_currentUser == null) return;
+
+    final newUser = _currentUser!.copyWith(
+      isBanned: isBanned ?? _currentUser!.isBanned,
+      banReason: banReason ?? _currentUser!.banReason,
+      flaggedRedFlagIds: flaggedRedFlagIds ?? _currentUser!.flaggedRedFlagIds,
+      progress: progress ?? _currentUser!.progress,
+      painRegions: painRegions ?? _currentUser!.painRegions,
+      sex: sex ?? _currentUser!.sex,
+    );
+
+    await _authService.updateUser(newUser);
+    await refreshCurrentUser();
   }
 
   Future<void> updateProgress({
@@ -100,26 +229,97 @@ class AuthViewModel extends ChangeNotifier {
     bool? hasCompletedScheduling,
     bool? isClearedForExercise,
     List<RegionDetail>? painRegions,
+    String? sex,
   }) async {
     if (_currentUser == null) return;
 
     final currentProgress = _currentUser!.progress;
     final newProgress = currentProgress.copyWith(
-      hasCompletedWelcome: hasCompletedWelcome ?? currentProgress.hasCompletedWelcome,
-      hasCompletedRedFlags: hasCompletedRedFlags ?? currentProgress.hasCompletedRedFlags,
-      hasCompletedBodyMap: hasCompletedBodyMap ?? currentProgress.hasCompletedBodyMap,
-      hasCompletedPainScore: hasCompletedPainScore ?? currentProgress.hasCompletedPainScore,
-      hasCompletedScheduling: hasCompletedScheduling ?? currentProgress.hasCompletedScheduling,
-      isClearedForExercise: isClearedForExercise ?? currentProgress.isClearedForExercise,
+      hasCompletedWelcome:
+          hasCompletedWelcome ?? currentProgress.hasCompletedWelcome,
+      hasCompletedRedFlags:
+          hasCompletedRedFlags ?? currentProgress.hasCompletedRedFlags,
+      hasCompletedBodyMap:
+          hasCompletedBodyMap ?? currentProgress.hasCompletedBodyMap,
+      hasCompletedPainScore:
+          hasCompletedPainScore ?? currentProgress.hasCompletedPainScore,
+      hasCompletedScheduling:
+          hasCompletedScheduling ?? currentProgress.hasCompletedScheduling,
+      isClearedForExercise:
+          isClearedForExercise ?? currentProgress.isClearedForExercise,
     );
 
     final newUser = _currentUser!.copyWith(
       progress: newProgress,
       painRegions: painRegions ?? _currentUser!.painRegions,
+      sex: sex ?? _currentUser!.sex,
     );
-    
+
     await _authService.updateUser(newUser);
     await refreshCurrentUser();
+    
+    // YENİ: Klinik Güvenlik Kontrolü (CDSS)
+    await performClinicalCheck();
+  }
+
+  /// Belirli bir nedenle kullanıcıyı manuel olarak banlar (Örn: Profildeki Red Flag değişikliği)
+  Future<void> applyManualBan(BanReason reason) async {
+    if (_currentUser == null) return;
+    
+    final bannedUser = _currentUser!.copyWith(
+      isBanned: true,
+      banReason: reason,
+      banNote: "Kullanıcı profil ayarlarında Red Flag saptandı.",
+    );
+
+    await _authService.updateUser(bannedUser);
+    await refreshCurrentUser();
+  }
+
+  /// CDSS Algoritmasını çalıştırır ve gerekirse kullanıcıyı banlar
+  Future<void> performClinicalCheck() async {
+    if (_currentUser == null || _currentUser!.isBanned) return;
+
+    final reason = CDSSService.checkForClinicalBlock(_currentUser!);
+    
+    if (reason != null) {
+      final bannedUser = _currentUser!.copyWith(
+        isBanned: true,
+        banReason: reason,
+        banNote: "CDSS tarafından otomatik olarak atanmıştır.",
+      );
+      
+      await _authService.updateUser(bannedUser);
+      await refreshCurrentUser();
+    }
+  }
+
+  Future<void> reloadUser() async {
+    await _authService.reloadUser();
+    notifyListeners();
+  }
+
+  Future<void> sendEmailVerification() async {
+    await _authService.sendEmailVerification();
+  }
+
+  Future<bool> resetPassword(String email, AppLocalizations loc) async {
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
+      await _authService.sendPasswordResetEmail(email);
+      _isLoading = false;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      _isLoading = false;
+      // Firebase özel hataları için mapleme yapılabilir, şimdilik direkt mesajı alıyoruz
+      _errorMessage = e.toString();
+      notifyListeners();
+      return false;
+    }
   }
 
   Future<void> signOut() async {
@@ -136,7 +336,11 @@ class AuthViewModel extends ChangeNotifier {
     }
   }
 
-  Future<bool> signIn(String email, String password, AppLocalizations loc) async {
+  Future<bool> signIn(
+    String email,
+    String password,
+    AppLocalizations loc,
+  ) async {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
@@ -160,21 +364,17 @@ class AuthViewModel extends ChangeNotifier {
     }
 
     await refreshCurrentUser();
-    
-    // Ban Kontrolü
-    if (_currentUser != null && _currentUser!.isBanned) {
-      await _authService.signOut();
-      _currentUser = null;
-      _errorMessage = loc.errorUserDisabled;
-      notifyListeners();
-      return false;
-    }
 
     notifyListeners();
     return true;
   }
 
-  Future<bool> signUp(String name, String email, String password, AppLocalizations loc) async {
+  Future<bool> signUp(
+    String name,
+    String email,
+    String password,
+    AppLocalizations loc,
+  ) async {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
@@ -199,16 +399,26 @@ class AuthViewModel extends ChangeNotifier {
     }
 
     await refreshCurrentUser();
+
+    // E-posta doğrulama linki gönder
+    await _authService.sendEmailVerification();
+
     notifyListeners();
     return true;
   }
 
-  Future<bool> signInWithGoogle(AppLocalizations loc, {bool isSignUp = false}) async {
+  Future<bool> signInWithGoogle(
+    AppLocalizations loc, {
+    bool isSignUp = false,
+  }) async {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
 
-    final error = await _authService.signInWithGoogle(loc: loc, isSignUp: isSignUp);
+    final error = await _authService.signInWithGoogle(
+      loc: loc,
+      isSignUp: isSignUp,
+    );
 
     _isLoading = false;
     if (error != null) {
@@ -224,26 +434,23 @@ class AuthViewModel extends ChangeNotifier {
     }
 
     await refreshCurrentUser();
-    
-    // Ban Kontrolü
-    if (_currentUser != null && _currentUser!.isBanned) {
-      await _authService.signOut();
-      _currentUser = null;
-      _errorMessage = loc.errorUserDisabled;
-      notifyListeners();
-      return false;
-    }
 
     notifyListeners();
     return true;
   }
 
-  Future<bool> signInWithApple(AppLocalizations loc, {bool isSignUp = false}) async {
+  Future<bool> signInWithApple(
+    AppLocalizations loc, {
+    bool isSignUp = false,
+  }) async {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
 
-    final error = await _authService.signInWithApple(loc: loc, isSignUp: isSignUp);
+    final error = await _authService.signInWithApple(
+      loc: loc,
+      isSignUp: isSignUp,
+    );
 
     _isLoading = false;
     if (error != null) {
@@ -259,15 +466,6 @@ class AuthViewModel extends ChangeNotifier {
     }
 
     await refreshCurrentUser();
-    
-    // Ban Kontrolü
-    if (_currentUser != null && _currentUser!.isBanned) {
-      await _authService.signOut();
-      _currentUser = null;
-      _errorMessage = loc.errorUserDisabled;
-      notifyListeners();
-      return false;
-    }
 
     notifyListeners();
     return true;

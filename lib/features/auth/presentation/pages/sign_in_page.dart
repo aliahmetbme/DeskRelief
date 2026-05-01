@@ -37,13 +37,13 @@ class _SignInPageState extends State<SignInPage> {
       final password = _passwordController.text;
       final loc = AppLocalizations.of(context)!;
       final authVM = context.read<AuthViewModel>();
-      
+
       final success = await authVM.signIn(email, password, loc);
-      
+
       if (mounted) {
         if (success) {
           CustomToast.show(context, loc.signInSuccess, isError: false);
-          context.go('/home');
+          authVM.checkClinicalStatus(context, authVM.currentUser!);
         } else {
           CustomToast.show(context, authVM.errorMessage ?? loc.errorUnknown);
         }
@@ -78,7 +78,7 @@ class _SignInPageState extends State<SignInPage> {
               ),
             ),
           ),
-          
+
           SafeArea(
             child: LayoutBuilder(
               builder: (context, constraints) {
@@ -93,7 +93,9 @@ class _SignInPageState extends State<SignInPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 24.0),
                         child: Column(
                           children: [
-                            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.05,
+                            ),
                             Text(
                               AppLocalizations.of(context)!.welcomeTo,
                               style: theme.textTheme.displaySmall?.copyWith(
@@ -113,12 +115,13 @@ class _SignInPageState extends State<SignInPage> {
                               AppLocalizations.of(context)!.signInTagline,
                               textAlign: TextAlign.center,
                               style: theme.textTheme.bodyLarge?.copyWith(
-                                color: theme.colorScheme.onSurface
-                                    .withValues(alpha: 0.7),
+                                color: theme.colorScheme.onSurface.withValues(
+                                  alpha: 0.7,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 24),
-                            
+
                             // Content Card
                             Container(
                               decoration: BoxDecoration(
@@ -136,12 +139,13 @@ class _SignInPageState extends State<SignInPage> {
                               child: Form(
                                 key: _formKey,
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
                                   children: [
                                     _buildFieldLabel(
-                                        AppLocalizations.of(context)!
-                                            .emailLabel,
-                                        theme),
+                                      AppLocalizations.of(context)!.emailLabel,
+                                      theme,
+                                    ),
                                     const SizedBox(height: 8),
                                     TextFormField(
                                       controller: _emailController,
@@ -149,30 +153,38 @@ class _SignInPageState extends State<SignInPage> {
                                       keyboardType: TextInputType.emailAddress,
                                       textInputAction: TextInputAction.next,
                                       decoration: InputDecoration(
-                                        hintText: 'name@company.com',
-                                        prefixIcon:
-                                            const Icon(Icons.person_outline),
+                                        hintText: 'jondoe@mail.com',
+                                        prefixIcon: const Icon(
+                                          Icons.person_outline,
+                                        ),
                                         filled: true,
                                         fillColor: theme.colorScheme.onSurface
                                             .withValues(alpha: 0.04),
                                         border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(16),
+                                          borderRadius: BorderRadius.circular(
+                                            16,
+                                          ),
                                           borderSide: BorderSide.none,
                                         ),
                                       ),
-                                      onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_passwordFocus),
+                                      onFieldSubmitted: (_) => FocusScope.of(
+                                        context,
+                                      ).requestFocus(_passwordFocus),
                                       validator: (value) =>
                                           value != null && value.contains('@')
-                                              ? null
-                                              : AppLocalizations.of(context)!
-                                                  .invalidEmailError,
+                                          ? null
+                                          : AppLocalizations.of(
+                                              context,
+                                            )!.invalidEmailError,
                                     ),
                                     const SizedBox(height: 20),
-                                    
+
                                     _buildFieldLabel(
-                                        AppLocalizations.of(context)!
-                                            .passwordLabel,
-                                        theme),
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.passwordLabel,
+                                      theme,
+                                    ),
                                     const SizedBox(height: 8),
                                     TextFormField(
                                       controller: _passwordController,
@@ -182,88 +194,128 @@ class _SignInPageState extends State<SignInPage> {
                                       onFieldSubmitted: (_) => _onSignIn(),
                                       decoration: InputDecoration(
                                         hintText: '••••••••',
-                                        prefixIcon: const Icon(Icons.lock_outline),
+                                        prefixIcon: const Icon(
+                                          Icons.lock_outline,
+                                        ),
                                         suffixIcon: IconButton(
-                                          icon: Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility),
-                                          onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                                          icon: Icon(
+                                            _obscurePassword
+                                                ? Icons.visibility_off
+                                                : Icons.visibility,
+                                          ),
+                                          onPressed: () => setState(
+                                            () => _obscurePassword =
+                                                !_obscurePassword,
+                                          ),
                                         ),
                                         filled: true,
                                         fillColor: theme.colorScheme.onSurface
                                             .withValues(alpha: 0.04),
                                         border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(16),
+                                          borderRadius: BorderRadius.circular(
+                                            16,
+                                          ),
                                           borderSide: BorderSide.none,
                                         ),
                                       ),
-                                      validator: (value) => value != null &&
-                                              value.length >= 6
+                                      validator: (value) =>
+                                          value != null && value.length >= 6
                                           ? null
-                                          : AppLocalizations.of(context)!
-                                              .invalidPasswordError,
+                                          : AppLocalizations.of(
+                                              context,
+                                            )!.invalidPasswordError,
                                     ),
-                                    
-                                    Align(
-                                      alignment: Alignment.centerRight,
-                                      child: TextButton(
-                                        onPressed: () {},
-                                        child: Text(AppLocalizations.of(context)!
-                                            .forgotPassword),
+
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: TextButton(
+                                          onPressed: () => context.push('/forgot-password'),
+                                          child: Text(
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.forgotPassword,
+                                          ),
+                                        ),
                                       ),
-                                    ),
                                     const SizedBox(height: 8),
-                                    
+
                                     CustomPrimaryButton(
-                                      text: AppLocalizations.of(context)!
-                                          .signInButton,
+                                      text: AppLocalizations.of(
+                                        context,
+                                      )!.signInButton,
                                       icon: Icons.login,
                                       isLoading: authViewModel.isLoading,
                                       onPressed: _onSignIn,
                                     ),
-                                    
+
                                     const SizedBox(height: 24),
                                     Row(
                                       children: [
                                         Expanded(
-                                            child: Divider(
-                                                color: theme.colorScheme.onSurface
-                                                    .withValues(alpha: 0.1))),
+                                          child: Divider(
+                                            color: theme.colorScheme.onSurface
+                                                .withValues(alpha: 0.1),
+                                          ),
+                                        ),
                                         Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 16,
+                                          ),
                                           child: Text(
-                                            AppLocalizations.of(context)!
-                                                .orContinueWith,
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.orContinueWith,
                                             style: theme.textTheme.labelSmall
                                                 ?.copyWith(
-                                              fontWeight: FontWeight.bold,
-                                              color: theme.colorScheme.onSurface
-                                                  .withValues(alpha: 0.5),
-                                            ),
+                                                  fontWeight: FontWeight.bold,
+                                                  color: theme
+                                                      .colorScheme
+                                                      .onSurface
+                                                      .withValues(alpha: 0.5),
+                                                ),
                                           ),
                                         ),
                                         Expanded(
-                                            child: Divider(
-                                                color: theme.colorScheme.onSurface
-                                                    .withValues(alpha: 0.1))),
+                                          child: Divider(
+                                            color: theme.colorScheme.onSurface
+                                                .withValues(alpha: 0.1),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                     const SizedBox(height: 24),
-                                    
+
                                     Row(
                                       children: [
                                         Expanded(
                                           child: _SocialButton(
-                                            text: AppLocalizations.of(context)!
-                                                .google,
+                                            text: AppLocalizations.of(
+                                              context,
+                                            )!.google,
                                             svgAsset: 'assets/Icons/google.svg',
                                             onPressed: () async {
-                                              if (authViewModel.isLoading) return;
-                                              final loc = AppLocalizations.of(context)!;
-                                              final success = await authViewModel.signInWithGoogle(loc);
+                                              if (authViewModel.isLoading)
+                                                return;
+                                              final loc = AppLocalizations.of(
+                                                context,
+                                              )!;
+                                              final success =
+                                                  await authViewModel
+                                                      .signInWithGoogle(loc);
                                               if (mounted && success) {
-                                                CustomToast.show(context, loc.signInSuccess, isError: false);
-                                                context.go('/home');
-                                              } else if (mounted && authViewModel.errorMessage != null) {
-                                                CustomToast.show(context, authViewModel.errorMessage!);
+                                                CustomToast.show(
+                                                  context,
+                                                  loc.signInSuccess,
+                                                  isError: false,
+                                                );
+                                                authViewModel.checkClinicalStatus(context, authViewModel.currentUser!);
+                                              } else if (mounted &&
+                                                  authViewModel.errorMessage !=
+                                                      null) {
+                                                CustomToast.show(
+                                                  context,
+                                                  authViewModel.errorMessage!,
+                                                );
                                               }
                                             },
                                           ),
@@ -271,18 +323,33 @@ class _SignInPageState extends State<SignInPage> {
                                         const SizedBox(width: 16),
                                         Expanded(
                                           child: _SocialButton(
-                                            text: AppLocalizations.of(context)!
-                                                .apple,
+                                            text: AppLocalizations.of(
+                                              context,
+                                            )!.apple,
                                             iconData: Icons.apple,
                                             onPressed: () async {
-                                              if (authViewModel.isLoading) return;
-                                              final loc = AppLocalizations.of(context)!;
-                                              final success = await authViewModel.signInWithApple(loc);
+                                              if (authViewModel.isLoading)
+                                                return;
+                                              final loc = AppLocalizations.of(
+                                                context,
+                                              )!;
+                                              final success =
+                                                  await authViewModel
+                                                      .signInWithApple(loc);
                                               if (mounted && success) {
-                                                CustomToast.show(context, loc.signInSuccess, isError: false);
-                                                context.go('/home');
-                                              } else if (mounted && authViewModel.errorMessage != null) {
-                                                CustomToast.show(context, authViewModel.errorMessage!);
+                                                CustomToast.show(
+                                                  context,
+                                                  loc.signInSuccess,
+                                                  isError: false,
+                                                );
+                                                authViewModel.checkClinicalStatus(context, authViewModel.currentUser!);
+                                              } else if (mounted &&
+                                                  authViewModel.errorMessage !=
+                                                      null) {
+                                                CustomToast.show(
+                                                  context,
+                                                  authViewModel.errorMessage!,
+                                                );
                                               }
                                             },
                                           ),
@@ -293,7 +360,7 @@ class _SignInPageState extends State<SignInPage> {
                                 ),
                               ),
                             ),
-                            
+
                             const Spacer(),
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 24),
@@ -301,20 +368,23 @@ class _SignInPageState extends State<SignInPage> {
                                 onTap: () => context.push('/signup'),
                                 child: Text.rich(
                                   TextSpan(
-                                    text: AppLocalizations.of(context)!
-                                        .dontHaveAccount,
+                                    text: AppLocalizations.of(
+                                      context,
+                                    )!.dontHaveAccount,
                                     style: theme.textTheme.bodyMedium?.copyWith(
                                       color: theme.colorScheme.onSurface
                                           .withValues(alpha: 0.8),
                                     ),
                                     children: [
                                       TextSpan(
-                                        text: AppLocalizations.of(context)!
-                                            .signUpLink,
-                                        style: theme.textTheme.bodyLarge?.copyWith(
-                                          color: theme.colorScheme.primary,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                        text: AppLocalizations.of(
+                                          context,
+                                        )!.signUpLink,
+                                        style: theme.textTheme.bodyLarge
+                                            ?.copyWith(
+                                              color: theme.colorScheme.primary,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                       ),
                                     ],
                                   ),
@@ -364,7 +434,7 @@ class _SocialButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    
+
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         foregroundColor: theme.colorScheme.onSurface,
@@ -378,7 +448,8 @@ class _SocialButton extends StatelessWidget {
           side: isDark
               ? BorderSide.none
               : BorderSide(
-                  color: theme.colorScheme.onSurface.withValues(alpha: 0.1)),
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.1),
+                ),
         ),
       ),
       onPressed: onPressed,
@@ -386,11 +457,7 @@ class _SocialButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (svgAsset != null)
-            SvgPicture.asset(
-              svgAsset!,
-              width: 20,
-              height: 20,
-            )
+            SvgPicture.asset(svgAsset!, width: 20, height: 20)
           else if (iconData != null)
             Icon(iconData, size: 24),
           const SizedBox(width: 10),

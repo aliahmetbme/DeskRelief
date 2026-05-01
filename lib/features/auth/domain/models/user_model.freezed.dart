@@ -590,8 +590,9 @@ as List<int>,
 mixin _$UserModel {
 
  String get id;// Firebase UID
- String get name; String get email; String? get sex; String? get profession; int? get dailySittingHours;// Ban Durumu
- bool get isBanned; BanReason? get banReason; String? get banNote;// Progresyon ve Bölgeler
+ String get name; String get email; String? get sex; String? get profession; int? get dailySittingHours;// Ban Durumu ve Hafızası
+ bool get isBanned; BanReason? get banReason; String? get banNote; List<String> get flaggedRedFlagIds;// Red yediği soruların ID'leri
+// Progresyon ve Bölgeler
  RegistrationProgress get progress; List<RegionDetail> get painRegions; List<RegionDetail> get backlogRegions;// İstatistikler
  List<String> get completedExerciseIds; Map<String, dynamic>? get currentProgram; int get currentStreak; int get totalWorkouts; Map<String, dynamic>? get metadata;@TimestampConverter() DateTime? get createdAt;@TimestampConverter() DateTime? get lastActiveAt;
 /// Create a copy of UserModel
@@ -606,16 +607,16 @@ $UserModelCopyWith<UserModel> get copyWith => _$UserModelCopyWithImpl<UserModel>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.sex, sex) || other.sex == sex)&&(identical(other.profession, profession) || other.profession == profession)&&(identical(other.dailySittingHours, dailySittingHours) || other.dailySittingHours == dailySittingHours)&&(identical(other.isBanned, isBanned) || other.isBanned == isBanned)&&(identical(other.banReason, banReason) || other.banReason == banReason)&&(identical(other.banNote, banNote) || other.banNote == banNote)&&(identical(other.progress, progress) || other.progress == progress)&&const DeepCollectionEquality().equals(other.painRegions, painRegions)&&const DeepCollectionEquality().equals(other.backlogRegions, backlogRegions)&&const DeepCollectionEquality().equals(other.completedExerciseIds, completedExerciseIds)&&const DeepCollectionEquality().equals(other.currentProgram, currentProgram)&&(identical(other.currentStreak, currentStreak) || other.currentStreak == currentStreak)&&(identical(other.totalWorkouts, totalWorkouts) || other.totalWorkouts == totalWorkouts)&&const DeepCollectionEquality().equals(other.metadata, metadata)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.lastActiveAt, lastActiveAt) || other.lastActiveAt == lastActiveAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.sex, sex) || other.sex == sex)&&(identical(other.profession, profession) || other.profession == profession)&&(identical(other.dailySittingHours, dailySittingHours) || other.dailySittingHours == dailySittingHours)&&(identical(other.isBanned, isBanned) || other.isBanned == isBanned)&&(identical(other.banReason, banReason) || other.banReason == banReason)&&(identical(other.banNote, banNote) || other.banNote == banNote)&&const DeepCollectionEquality().equals(other.flaggedRedFlagIds, flaggedRedFlagIds)&&(identical(other.progress, progress) || other.progress == progress)&&const DeepCollectionEquality().equals(other.painRegions, painRegions)&&const DeepCollectionEquality().equals(other.backlogRegions, backlogRegions)&&const DeepCollectionEquality().equals(other.completedExerciseIds, completedExerciseIds)&&const DeepCollectionEquality().equals(other.currentProgram, currentProgram)&&(identical(other.currentStreak, currentStreak) || other.currentStreak == currentStreak)&&(identical(other.totalWorkouts, totalWorkouts) || other.totalWorkouts == totalWorkouts)&&const DeepCollectionEquality().equals(other.metadata, metadata)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.lastActiveAt, lastActiveAt) || other.lastActiveAt == lastActiveAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,id,name,email,sex,profession,dailySittingHours,isBanned,banReason,banNote,progress,const DeepCollectionEquality().hash(painRegions),const DeepCollectionEquality().hash(backlogRegions),const DeepCollectionEquality().hash(completedExerciseIds),const DeepCollectionEquality().hash(currentProgram),currentStreak,totalWorkouts,const DeepCollectionEquality().hash(metadata),createdAt,lastActiveAt]);
+int get hashCode => Object.hashAll([runtimeType,id,name,email,sex,profession,dailySittingHours,isBanned,banReason,banNote,const DeepCollectionEquality().hash(flaggedRedFlagIds),progress,const DeepCollectionEquality().hash(painRegions),const DeepCollectionEquality().hash(backlogRegions),const DeepCollectionEquality().hash(completedExerciseIds),const DeepCollectionEquality().hash(currentProgram),currentStreak,totalWorkouts,const DeepCollectionEquality().hash(metadata),createdAt,lastActiveAt]);
 
 @override
 String toString() {
-  return 'UserModel(id: $id, name: $name, email: $email, sex: $sex, profession: $profession, dailySittingHours: $dailySittingHours, isBanned: $isBanned, banReason: $banReason, banNote: $banNote, progress: $progress, painRegions: $painRegions, backlogRegions: $backlogRegions, completedExerciseIds: $completedExerciseIds, currentProgram: $currentProgram, currentStreak: $currentStreak, totalWorkouts: $totalWorkouts, metadata: $metadata, createdAt: $createdAt, lastActiveAt: $lastActiveAt)';
+  return 'UserModel(id: $id, name: $name, email: $email, sex: $sex, profession: $profession, dailySittingHours: $dailySittingHours, isBanned: $isBanned, banReason: $banReason, banNote: $banNote, flaggedRedFlagIds: $flaggedRedFlagIds, progress: $progress, painRegions: $painRegions, backlogRegions: $backlogRegions, completedExerciseIds: $completedExerciseIds, currentProgram: $currentProgram, currentStreak: $currentStreak, totalWorkouts: $totalWorkouts, metadata: $metadata, createdAt: $createdAt, lastActiveAt: $lastActiveAt)';
 }
 
 
@@ -626,7 +627,7 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String email, String? sex, String? profession, int? dailySittingHours, bool isBanned, BanReason? banReason, String? banNote, RegistrationProgress progress, List<RegionDetail> painRegions, List<RegionDetail> backlogRegions, List<String> completedExerciseIds, Map<String, dynamic>? currentProgram, int currentStreak, int totalWorkouts, Map<String, dynamic>? metadata,@TimestampConverter() DateTime? createdAt,@TimestampConverter() DateTime? lastActiveAt
+ String id, String name, String email, String? sex, String? profession, int? dailySittingHours, bool isBanned, BanReason? banReason, String? banNote, List<String> flaggedRedFlagIds, RegistrationProgress progress, List<RegionDetail> painRegions, List<RegionDetail> backlogRegions, List<String> completedExerciseIds, Map<String, dynamic>? currentProgram, int currentStreak, int totalWorkouts, Map<String, dynamic>? metadata,@TimestampConverter() DateTime? createdAt,@TimestampConverter() DateTime? lastActiveAt
 });
 
 
@@ -643,7 +644,7 @@ class _$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? email = null,Object? sex = freezed,Object? profession = freezed,Object? dailySittingHours = freezed,Object? isBanned = null,Object? banReason = freezed,Object? banNote = freezed,Object? progress = null,Object? painRegions = null,Object? backlogRegions = null,Object? completedExerciseIds = null,Object? currentProgram = freezed,Object? currentStreak = null,Object? totalWorkouts = null,Object? metadata = freezed,Object? createdAt = freezed,Object? lastActiveAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? email = null,Object? sex = freezed,Object? profession = freezed,Object? dailySittingHours = freezed,Object? isBanned = null,Object? banReason = freezed,Object? banNote = freezed,Object? flaggedRedFlagIds = null,Object? progress = null,Object? painRegions = null,Object? backlogRegions = null,Object? completedExerciseIds = null,Object? currentProgram = freezed,Object? currentStreak = null,Object? totalWorkouts = null,Object? metadata = freezed,Object? createdAt = freezed,Object? lastActiveAt = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -654,7 +655,8 @@ as String?,dailySittingHours: freezed == dailySittingHours ? _self.dailySittingH
 as int?,isBanned: null == isBanned ? _self.isBanned : isBanned // ignore: cast_nullable_to_non_nullable
 as bool,banReason: freezed == banReason ? _self.banReason : banReason // ignore: cast_nullable_to_non_nullable
 as BanReason?,banNote: freezed == banNote ? _self.banNote : banNote // ignore: cast_nullable_to_non_nullable
-as String?,progress: null == progress ? _self.progress : progress // ignore: cast_nullable_to_non_nullable
+as String?,flaggedRedFlagIds: null == flaggedRedFlagIds ? _self.flaggedRedFlagIds : flaggedRedFlagIds // ignore: cast_nullable_to_non_nullable
+as List<String>,progress: null == progress ? _self.progress : progress // ignore: cast_nullable_to_non_nullable
 as RegistrationProgress,painRegions: null == painRegions ? _self.painRegions : painRegions // ignore: cast_nullable_to_non_nullable
 as List<RegionDetail>,backlogRegions: null == backlogRegions ? _self.backlogRegions : backlogRegions // ignore: cast_nullable_to_non_nullable
 as List<RegionDetail>,completedExerciseIds: null == completedExerciseIds ? _self.completedExerciseIds : completedExerciseIds // ignore: cast_nullable_to_non_nullable
@@ -758,10 +760,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String email,  String? sex,  String? profession,  int? dailySittingHours,  bool isBanned,  BanReason? banReason,  String? banNote,  RegistrationProgress progress,  List<RegionDetail> painRegions,  List<RegionDetail> backlogRegions,  List<String> completedExerciseIds,  Map<String, dynamic>? currentProgram,  int currentStreak,  int totalWorkouts,  Map<String, dynamic>? metadata, @TimestampConverter()  DateTime? createdAt, @TimestampConverter()  DateTime? lastActiveAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String email,  String? sex,  String? profession,  int? dailySittingHours,  bool isBanned,  BanReason? banReason,  String? banNote,  List<String> flaggedRedFlagIds,  RegistrationProgress progress,  List<RegionDetail> painRegions,  List<RegionDetail> backlogRegions,  List<String> completedExerciseIds,  Map<String, dynamic>? currentProgram,  int currentStreak,  int totalWorkouts,  Map<String, dynamic>? metadata, @TimestampConverter()  DateTime? createdAt, @TimestampConverter()  DateTime? lastActiveAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.id,_that.name,_that.email,_that.sex,_that.profession,_that.dailySittingHours,_that.isBanned,_that.banReason,_that.banNote,_that.progress,_that.painRegions,_that.backlogRegions,_that.completedExerciseIds,_that.currentProgram,_that.currentStreak,_that.totalWorkouts,_that.metadata,_that.createdAt,_that.lastActiveAt);case _:
+return $default(_that.id,_that.name,_that.email,_that.sex,_that.profession,_that.dailySittingHours,_that.isBanned,_that.banReason,_that.banNote,_that.flaggedRedFlagIds,_that.progress,_that.painRegions,_that.backlogRegions,_that.completedExerciseIds,_that.currentProgram,_that.currentStreak,_that.totalWorkouts,_that.metadata,_that.createdAt,_that.lastActiveAt);case _:
   return orElse();
 
 }
@@ -779,10 +781,10 @@ return $default(_that.id,_that.name,_that.email,_that.sex,_that.profession,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String email,  String? sex,  String? profession,  int? dailySittingHours,  bool isBanned,  BanReason? banReason,  String? banNote,  RegistrationProgress progress,  List<RegionDetail> painRegions,  List<RegionDetail> backlogRegions,  List<String> completedExerciseIds,  Map<String, dynamic>? currentProgram,  int currentStreak,  int totalWorkouts,  Map<String, dynamic>? metadata, @TimestampConverter()  DateTime? createdAt, @TimestampConverter()  DateTime? lastActiveAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String email,  String? sex,  String? profession,  int? dailySittingHours,  bool isBanned,  BanReason? banReason,  String? banNote,  List<String> flaggedRedFlagIds,  RegistrationProgress progress,  List<RegionDetail> painRegions,  List<RegionDetail> backlogRegions,  List<String> completedExerciseIds,  Map<String, dynamic>? currentProgram,  int currentStreak,  int totalWorkouts,  Map<String, dynamic>? metadata, @TimestampConverter()  DateTime? createdAt, @TimestampConverter()  DateTime? lastActiveAt)  $default,) {final _that = this;
 switch (_that) {
 case _UserModel():
-return $default(_that.id,_that.name,_that.email,_that.sex,_that.profession,_that.dailySittingHours,_that.isBanned,_that.banReason,_that.banNote,_that.progress,_that.painRegions,_that.backlogRegions,_that.completedExerciseIds,_that.currentProgram,_that.currentStreak,_that.totalWorkouts,_that.metadata,_that.createdAt,_that.lastActiveAt);case _:
+return $default(_that.id,_that.name,_that.email,_that.sex,_that.profession,_that.dailySittingHours,_that.isBanned,_that.banReason,_that.banNote,_that.flaggedRedFlagIds,_that.progress,_that.painRegions,_that.backlogRegions,_that.completedExerciseIds,_that.currentProgram,_that.currentStreak,_that.totalWorkouts,_that.metadata,_that.createdAt,_that.lastActiveAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -799,10 +801,10 @@ return $default(_that.id,_that.name,_that.email,_that.sex,_that.profession,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String email,  String? sex,  String? profession,  int? dailySittingHours,  bool isBanned,  BanReason? banReason,  String? banNote,  RegistrationProgress progress,  List<RegionDetail> painRegions,  List<RegionDetail> backlogRegions,  List<String> completedExerciseIds,  Map<String, dynamic>? currentProgram,  int currentStreak,  int totalWorkouts,  Map<String, dynamic>? metadata, @TimestampConverter()  DateTime? createdAt, @TimestampConverter()  DateTime? lastActiveAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String email,  String? sex,  String? profession,  int? dailySittingHours,  bool isBanned,  BanReason? banReason,  String? banNote,  List<String> flaggedRedFlagIds,  RegistrationProgress progress,  List<RegionDetail> painRegions,  List<RegionDetail> backlogRegions,  List<String> completedExerciseIds,  Map<String, dynamic>? currentProgram,  int currentStreak,  int totalWorkouts,  Map<String, dynamic>? metadata, @TimestampConverter()  DateTime? createdAt, @TimestampConverter()  DateTime? lastActiveAt)?  $default,) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.id,_that.name,_that.email,_that.sex,_that.profession,_that.dailySittingHours,_that.isBanned,_that.banReason,_that.banNote,_that.progress,_that.painRegions,_that.backlogRegions,_that.completedExerciseIds,_that.currentProgram,_that.currentStreak,_that.totalWorkouts,_that.metadata,_that.createdAt,_that.lastActiveAt);case _:
+return $default(_that.id,_that.name,_that.email,_that.sex,_that.profession,_that.dailySittingHours,_that.isBanned,_that.banReason,_that.banNote,_that.flaggedRedFlagIds,_that.progress,_that.painRegions,_that.backlogRegions,_that.completedExerciseIds,_that.currentProgram,_that.currentStreak,_that.totalWorkouts,_that.metadata,_that.createdAt,_that.lastActiveAt);case _:
   return null;
 
 }
@@ -814,7 +816,7 @@ return $default(_that.id,_that.name,_that.email,_that.sex,_that.profession,_that
 
 @JsonSerializable(explicitToJson: true)
 class _UserModel implements UserModel {
-  const _UserModel({required this.id, required this.name, required this.email, this.sex, this.profession, this.dailySittingHours, this.isBanned = false, this.banReason, this.banNote, this.progress = const RegistrationProgress(), final  List<RegionDetail> painRegions = const [], final  List<RegionDetail> backlogRegions = const [], final  List<String> completedExerciseIds = const [], final  Map<String, dynamic>? currentProgram, this.currentStreak = 0, this.totalWorkouts = 0, final  Map<String, dynamic>? metadata, @TimestampConverter() this.createdAt, @TimestampConverter() this.lastActiveAt}): _painRegions = painRegions,_backlogRegions = backlogRegions,_completedExerciseIds = completedExerciseIds,_currentProgram = currentProgram,_metadata = metadata;
+  const _UserModel({required this.id, required this.name, required this.email, this.sex, this.profession, this.dailySittingHours, this.isBanned = false, this.banReason, this.banNote, final  List<String> flaggedRedFlagIds = const [], this.progress = const RegistrationProgress(), final  List<RegionDetail> painRegions = const [], final  List<RegionDetail> backlogRegions = const [], final  List<String> completedExerciseIds = const [], final  Map<String, dynamic>? currentProgram, this.currentStreak = 0, this.totalWorkouts = 0, final  Map<String, dynamic>? metadata, @TimestampConverter() this.createdAt, @TimestampConverter() this.lastActiveAt}): _flaggedRedFlagIds = flaggedRedFlagIds,_painRegions = painRegions,_backlogRegions = backlogRegions,_completedExerciseIds = completedExerciseIds,_currentProgram = currentProgram,_metadata = metadata;
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
 @override final  String id;
@@ -824,10 +826,18 @@ class _UserModel implements UserModel {
 @override final  String? sex;
 @override final  String? profession;
 @override final  int? dailySittingHours;
-// Ban Durumu
+// Ban Durumu ve Hafızası
 @override@JsonKey() final  bool isBanned;
 @override final  BanReason? banReason;
 @override final  String? banNote;
+ final  List<String> _flaggedRedFlagIds;
+@override@JsonKey() List<String> get flaggedRedFlagIds {
+  if (_flaggedRedFlagIds is EqualUnmodifiableListView) return _flaggedRedFlagIds;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_flaggedRedFlagIds);
+}
+
+// Red yediği soruların ID'leri
 // Progresyon ve Bölgeler
 @override@JsonKey() final  RegistrationProgress progress;
  final  List<RegionDetail> _painRegions;
@@ -889,16 +899,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.sex, sex) || other.sex == sex)&&(identical(other.profession, profession) || other.profession == profession)&&(identical(other.dailySittingHours, dailySittingHours) || other.dailySittingHours == dailySittingHours)&&(identical(other.isBanned, isBanned) || other.isBanned == isBanned)&&(identical(other.banReason, banReason) || other.banReason == banReason)&&(identical(other.banNote, banNote) || other.banNote == banNote)&&(identical(other.progress, progress) || other.progress == progress)&&const DeepCollectionEquality().equals(other._painRegions, _painRegions)&&const DeepCollectionEquality().equals(other._backlogRegions, _backlogRegions)&&const DeepCollectionEquality().equals(other._completedExerciseIds, _completedExerciseIds)&&const DeepCollectionEquality().equals(other._currentProgram, _currentProgram)&&(identical(other.currentStreak, currentStreak) || other.currentStreak == currentStreak)&&(identical(other.totalWorkouts, totalWorkouts) || other.totalWorkouts == totalWorkouts)&&const DeepCollectionEquality().equals(other._metadata, _metadata)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.lastActiveAt, lastActiveAt) || other.lastActiveAt == lastActiveAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.sex, sex) || other.sex == sex)&&(identical(other.profession, profession) || other.profession == profession)&&(identical(other.dailySittingHours, dailySittingHours) || other.dailySittingHours == dailySittingHours)&&(identical(other.isBanned, isBanned) || other.isBanned == isBanned)&&(identical(other.banReason, banReason) || other.banReason == banReason)&&(identical(other.banNote, banNote) || other.banNote == banNote)&&const DeepCollectionEquality().equals(other._flaggedRedFlagIds, _flaggedRedFlagIds)&&(identical(other.progress, progress) || other.progress == progress)&&const DeepCollectionEquality().equals(other._painRegions, _painRegions)&&const DeepCollectionEquality().equals(other._backlogRegions, _backlogRegions)&&const DeepCollectionEquality().equals(other._completedExerciseIds, _completedExerciseIds)&&const DeepCollectionEquality().equals(other._currentProgram, _currentProgram)&&(identical(other.currentStreak, currentStreak) || other.currentStreak == currentStreak)&&(identical(other.totalWorkouts, totalWorkouts) || other.totalWorkouts == totalWorkouts)&&const DeepCollectionEquality().equals(other._metadata, _metadata)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.lastActiveAt, lastActiveAt) || other.lastActiveAt == lastActiveAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,id,name,email,sex,profession,dailySittingHours,isBanned,banReason,banNote,progress,const DeepCollectionEquality().hash(_painRegions),const DeepCollectionEquality().hash(_backlogRegions),const DeepCollectionEquality().hash(_completedExerciseIds),const DeepCollectionEquality().hash(_currentProgram),currentStreak,totalWorkouts,const DeepCollectionEquality().hash(_metadata),createdAt,lastActiveAt]);
+int get hashCode => Object.hashAll([runtimeType,id,name,email,sex,profession,dailySittingHours,isBanned,banReason,banNote,const DeepCollectionEquality().hash(_flaggedRedFlagIds),progress,const DeepCollectionEquality().hash(_painRegions),const DeepCollectionEquality().hash(_backlogRegions),const DeepCollectionEquality().hash(_completedExerciseIds),const DeepCollectionEquality().hash(_currentProgram),currentStreak,totalWorkouts,const DeepCollectionEquality().hash(_metadata),createdAt,lastActiveAt]);
 
 @override
 String toString() {
-  return 'UserModel(id: $id, name: $name, email: $email, sex: $sex, profession: $profession, dailySittingHours: $dailySittingHours, isBanned: $isBanned, banReason: $banReason, banNote: $banNote, progress: $progress, painRegions: $painRegions, backlogRegions: $backlogRegions, completedExerciseIds: $completedExerciseIds, currentProgram: $currentProgram, currentStreak: $currentStreak, totalWorkouts: $totalWorkouts, metadata: $metadata, createdAt: $createdAt, lastActiveAt: $lastActiveAt)';
+  return 'UserModel(id: $id, name: $name, email: $email, sex: $sex, profession: $profession, dailySittingHours: $dailySittingHours, isBanned: $isBanned, banReason: $banReason, banNote: $banNote, flaggedRedFlagIds: $flaggedRedFlagIds, progress: $progress, painRegions: $painRegions, backlogRegions: $backlogRegions, completedExerciseIds: $completedExerciseIds, currentProgram: $currentProgram, currentStreak: $currentStreak, totalWorkouts: $totalWorkouts, metadata: $metadata, createdAt: $createdAt, lastActiveAt: $lastActiveAt)';
 }
 
 
@@ -909,7 +919,7 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String email, String? sex, String? profession, int? dailySittingHours, bool isBanned, BanReason? banReason, String? banNote, RegistrationProgress progress, List<RegionDetail> painRegions, List<RegionDetail> backlogRegions, List<String> completedExerciseIds, Map<String, dynamic>? currentProgram, int currentStreak, int totalWorkouts, Map<String, dynamic>? metadata,@TimestampConverter() DateTime? createdAt,@TimestampConverter() DateTime? lastActiveAt
+ String id, String name, String email, String? sex, String? profession, int? dailySittingHours, bool isBanned, BanReason? banReason, String? banNote, List<String> flaggedRedFlagIds, RegistrationProgress progress, List<RegionDetail> painRegions, List<RegionDetail> backlogRegions, List<String> completedExerciseIds, Map<String, dynamic>? currentProgram, int currentStreak, int totalWorkouts, Map<String, dynamic>? metadata,@TimestampConverter() DateTime? createdAt,@TimestampConverter() DateTime? lastActiveAt
 });
 
 
@@ -926,7 +936,7 @@ class __$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? email = null,Object? sex = freezed,Object? profession = freezed,Object? dailySittingHours = freezed,Object? isBanned = null,Object? banReason = freezed,Object? banNote = freezed,Object? progress = null,Object? painRegions = null,Object? backlogRegions = null,Object? completedExerciseIds = null,Object? currentProgram = freezed,Object? currentStreak = null,Object? totalWorkouts = null,Object? metadata = freezed,Object? createdAt = freezed,Object? lastActiveAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? email = null,Object? sex = freezed,Object? profession = freezed,Object? dailySittingHours = freezed,Object? isBanned = null,Object? banReason = freezed,Object? banNote = freezed,Object? flaggedRedFlagIds = null,Object? progress = null,Object? painRegions = null,Object? backlogRegions = null,Object? completedExerciseIds = null,Object? currentProgram = freezed,Object? currentStreak = null,Object? totalWorkouts = null,Object? metadata = freezed,Object? createdAt = freezed,Object? lastActiveAt = freezed,}) {
   return _then(_UserModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -937,7 +947,8 @@ as String?,dailySittingHours: freezed == dailySittingHours ? _self.dailySittingH
 as int?,isBanned: null == isBanned ? _self.isBanned : isBanned // ignore: cast_nullable_to_non_nullable
 as bool,banReason: freezed == banReason ? _self.banReason : banReason // ignore: cast_nullable_to_non_nullable
 as BanReason?,banNote: freezed == banNote ? _self.banNote : banNote // ignore: cast_nullable_to_non_nullable
-as String?,progress: null == progress ? _self.progress : progress // ignore: cast_nullable_to_non_nullable
+as String?,flaggedRedFlagIds: null == flaggedRedFlagIds ? _self._flaggedRedFlagIds : flaggedRedFlagIds // ignore: cast_nullable_to_non_nullable
+as List<String>,progress: null == progress ? _self.progress : progress // ignore: cast_nullable_to_non_nullable
 as RegistrationProgress,painRegions: null == painRegions ? _self._painRegions : painRegions // ignore: cast_nullable_to_non_nullable
 as List<RegionDetail>,backlogRegions: null == backlogRegions ? _self._backlogRegions : backlogRegions // ignore: cast_nullable_to_non_nullable
 as List<RegionDetail>,completedExerciseIds: null == completedExerciseIds ? _self._completedExerciseIds : completedExerciseIds // ignore: cast_nullable_to_non_nullable

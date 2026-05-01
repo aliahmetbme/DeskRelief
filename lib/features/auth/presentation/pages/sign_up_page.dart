@@ -16,7 +16,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
-  
+
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -40,19 +40,19 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Future<void> _onSignUp() async {
     FocusScope.of(context).unfocus();
-    
+
     if (_formKey.currentState!.validate()) {
       final name = _nameController.text.trim();
       final email = _emailController.text.trim();
       final password = _passwordController.text;
       final loc = AppLocalizations.of(context)!;
       final authVM = context.read<AuthViewModel>();
-      
+
       final success = await authVM.signUp(name, email, password, loc);
-      
+
       if (mounted) {
         if (success) {
-          context.go('/welcome-profile');
+          authVM.checkClinicalStatus(context, authVM.currentUser!);
         } else {
           CustomToast.show(context, authVM.errorMessage ?? loc.errorUnknown);
         }
@@ -95,7 +95,7 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
             ),
           ),
-          
+
           SafeArea(
             child: LayoutBuilder(
               builder: (context, constraints) {
@@ -110,7 +110,9 @@ class _SignUpPageState extends State<SignUpPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 24.0),
                         child: Column(
                           children: [
-                            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.05,
+                            ),
                             Text(
                               AppLocalizations.of(context)!.welcomeTo,
                               style: theme.textTheme.displaySmall?.copyWith(
@@ -130,12 +132,13 @@ class _SignUpPageState extends State<SignUpPage> {
                               AppLocalizations.of(context)!.signInTagline,
                               textAlign: TextAlign.center,
                               style: theme.textTheme.bodyLarge?.copyWith(
-                                color: theme.colorScheme.onSurface
-                                    .withValues(alpha: 0.7),
+                                color: theme.colorScheme.onSurface.withValues(
+                                  alpha: 0.7,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 24),
-                            
+
                             // Content Card
                             Container(
                               decoration: BoxDecoration(
@@ -153,44 +156,54 @@ class _SignUpPageState extends State<SignUpPage> {
                               child: Form(
                                 key: _formKey,
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
                                   children: [
                                     _buildFieldLabel(
-                                        AppLocalizations.of(context)!
-                                            .fullNameLabel,
-                                        theme),
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.fullNameLabel,
+                                      theme,
+                                    ),
                                     const SizedBox(height: 8),
                                     TextFormField(
                                       controller: _nameController,
                                       focusNode: _nameFocus,
                                       textInputAction: TextInputAction.next,
                                       decoration: InputDecoration(
-                                        hintText:
-                                            AppLocalizations.of(context)!
-                                                .fullNameHint,
-                                        prefixIcon:
-                                            const Icon(Icons.badge_outlined),
+                                        hintText: AppLocalizations.of(
+                                          context,
+                                        )!.fullNameHint,
+                                        prefixIcon: const Icon(
+                                          Icons.badge_outlined,
+                                        ),
                                         filled: true,
                                         fillColor: theme.colorScheme.onSurface
                                             .withValues(alpha: 0.04),
                                         border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(16),
+                                          borderRadius: BorderRadius.circular(
+                                            16,
+                                          ),
                                           borderSide: BorderSide.none,
                                         ),
                                       ),
-                                      onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_emailFocus),
+                                      onFieldSubmitted: (_) => FocusScope.of(
+                                        context,
+                                      ).requestFocus(_emailFocus),
                                       validator: (value) =>
-                                          value != null && value.trim().isNotEmpty
-                                              ? null
-                                              : AppLocalizations.of(context)!
-                                                  .enterNameError,
+                                          value != null &&
+                                              value.trim().isNotEmpty
+                                          ? null
+                                          : AppLocalizations.of(
+                                              context,
+                                            )!.enterNameError,
                                     ),
                                     const SizedBox(height: 16),
 
                                     _buildFieldLabel(
-                                        AppLocalizations.of(context)!
-                                            .emailLabel,
-                                        theme),
+                                      AppLocalizations.of(context)!.emailLabel,
+                                      theme,
+                                    ),
                                     const SizedBox(height: 8),
                                     TextFormField(
                                       controller: _emailController,
@@ -198,30 +211,38 @@ class _SignUpPageState extends State<SignUpPage> {
                                       keyboardType: TextInputType.emailAddress,
                                       textInputAction: TextInputAction.next,
                                       decoration: InputDecoration(
-                                        hintText: 'name@company.com',
-                                        prefixIcon:
-                                            const Icon(Icons.person_outline),
+                                        hintText: 'jondoe@mail.com',
+                                        prefixIcon: const Icon(
+                                          Icons.person_outline,
+                                        ),
                                         filled: true,
                                         fillColor: theme.colorScheme.onSurface
                                             .withValues(alpha: 0.04),
                                         border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(16),
+                                          borderRadius: BorderRadius.circular(
+                                            16,
+                                          ),
                                           borderSide: BorderSide.none,
                                         ),
                                       ),
-                                      onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_passwordFocus),
+                                      onFieldSubmitted: (_) => FocusScope.of(
+                                        context,
+                                      ).requestFocus(_passwordFocus),
                                       validator: (value) =>
                                           value != null && value.contains('@')
-                                              ? null
-                                              : AppLocalizations.of(context)!
-                                                  .invalidEmailError,
+                                          ? null
+                                          : AppLocalizations.of(
+                                              context,
+                                            )!.invalidEmailError,
                                     ),
                                     const SizedBox(height: 16),
-                                    
+
                                     _buildFieldLabel(
-                                        AppLocalizations.of(context)!
-                                            .passwordLabel,
-                                        theme),
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.passwordLabel,
+                                      theme,
+                                    ),
                                     const SizedBox(height: 8),
                                     TextFormField(
                                       controller: _passwordController,
@@ -230,33 +251,49 @@ class _SignUpPageState extends State<SignUpPage> {
                                       textInputAction: TextInputAction.next,
                                       decoration: InputDecoration(
                                         hintText: '••••••••',
-                                        prefixIcon: const Icon(Icons.lock_outline),
+                                        prefixIcon: const Icon(
+                                          Icons.lock_outline,
+                                        ),
                                         suffixIcon: IconButton(
-                                          icon: Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility),
-                                          onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                                          icon: Icon(
+                                            _obscurePassword
+                                                ? Icons.visibility_off
+                                                : Icons.visibility,
+                                          ),
+                                          onPressed: () => setState(
+                                            () => _obscurePassword =
+                                                !_obscurePassword,
+                                          ),
                                         ),
                                         filled: true,
                                         fillColor: theme.colorScheme.onSurface
                                             .withValues(alpha: 0.04),
 
                                         border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(16),
+                                          borderRadius: BorderRadius.circular(
+                                            16,
+                                          ),
                                           borderSide: BorderSide.none,
                                         ),
                                       ),
-                                      onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_confirmPasswordFocus),
-                                      validator: (value) => value != null &&
-                                              value.length >= 6
+                                      onFieldSubmitted: (_) => FocusScope.of(
+                                        context,
+                                      ).requestFocus(_confirmPasswordFocus),
+                                      validator: (value) =>
+                                          value != null && value.length >= 6
                                           ? null
-                                          : AppLocalizations.of(context)!
-                                              .invalidPasswordError,
+                                          : AppLocalizations.of(
+                                              context,
+                                            )!.invalidPasswordError,
                                     ),
                                     const SizedBox(height: 16),
-                                    
+
                                     _buildFieldLabel(
-                                        AppLocalizations.of(context)!
-                                            .confirmPasswordLabel,
-                                        theme),
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.confirmPasswordLabel,
+                                      theme,
+                                    ),
                                     const SizedBox(height: 8),
                                     TextFormField(
                                       controller: _confirmPasswordController,
@@ -266,182 +303,254 @@ class _SignUpPageState extends State<SignUpPage> {
                                       onFieldSubmitted: (_) => _onSignUp(),
                                       decoration: InputDecoration(
                                         hintText: '••••••••',
-                                        prefixIcon: const Icon(Icons.lock_outline),
+                                        prefixIcon: const Icon(
+                                          Icons.lock_outline,
+                                        ),
                                         filled: true,
                                         fillColor: theme.colorScheme.onSurface
                                             .withValues(alpha: 0.04),
 
                                         border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(16),
+                                          borderRadius: BorderRadius.circular(
+                                            16,
+                                          ),
                                           borderSide: BorderSide.none,
                                         ),
                                       ),
                                       validator: (value) {
                                         if (value != _passwordController.text) {
-                                          return AppLocalizations.of(context)!
-                                              .passwordsDoNotMatchError;
+                                          return AppLocalizations.of(
+                                            context,
+                                          )!.passwordsDoNotMatchError;
                                         }
                                         return null;
                                       },
                                     ),
-                                    
+
                                     const SizedBox(height: 16),
                                     Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(
                                           width: 24,
                                           height: 24,
                                           child: Checkbox(
                                             value: _termsAccepted,
-                                            onChanged: (val) => setState(() => _termsAccepted = val ?? false),
-                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-                                            activeColor: theme.colorScheme.primary,
+                                            onChanged: (val) => setState(
+                                              () =>
+                                                  _termsAccepted = val ?? false,
+                                            ),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(6),
+                                            ),
+                                            activeColor:
+                                                theme.colorScheme.primary,
                                           ),
                                         ),
                                         const SizedBox(width: 12),
                                         Expanded(
                                           child: Text.rich(
                                             TextSpan(
-                                              text: AppLocalizations.of(context)!
-                                                  .agreeTermsP1,
+                                              text: AppLocalizations.of(
+                                                context,
+                                              )!.agreeTermsP1,
                                               style: theme.textTheme.bodyMedium
                                                   ?.copyWith(
-                                                color: theme
-                                                    .colorScheme.onSurface
-                                                    .withValues(alpha: 0.8),
-                                                fontSize: 14,
-                                              ),
+                                                    color: theme
+                                                        .colorScheme
+                                                        .onSurface
+                                                        .withValues(alpha: 0.8),
+                                                    fontSize: 14,
+                                                  ),
                                               children: [
                                                 TextSpan(
-                                                    text: AppLocalizations.of(
-                                                            context)!
-                                                        .termsOfService,
-                                                    style: TextStyle(
-                                                        color: theme.colorScheme
-                                                            .primary,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
+                                                  text: AppLocalizations.of(
+                                                    context,
+                                                  )!.termsOfService,
+                                                  style: TextStyle(
+                                                    color: theme
+                                                        .colorScheme
+                                                        .primary,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
                                                 TextSpan(
-                                                    text: AppLocalizations.of(
-                                                            context)!
-                                                        .agreeTermsP2),
+                                                  text: AppLocalizations.of(
+                                                    context,
+                                                  )!.agreeTermsP2,
+                                                ),
                                                 TextSpan(
-                                                    text: AppLocalizations.of(
-                                                            context)!
-                                                        .eula,
-                                                    style: TextStyle(
-                                                        color: theme.colorScheme
-                                                            .primary,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
+                                                  text: AppLocalizations.of(
+                                                    context,
+                                                  )!.eula,
+                                                  style: TextStyle(
+                                                    color: theme
+                                                        .colorScheme
+                                                        .primary,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
                                                 TextSpan(
-                                                    text: AppLocalizations.of(
-                                                            context)!
-                                                        .agreeTermsP3),
+                                                  text: AppLocalizations.of(
+                                                    context,
+                                                  )!.agreeTermsP3,
+                                                ),
                                                 TextSpan(
-                                                    text: AppLocalizations.of(
-                                                            context)!
-                                                        .privacyPolicy,
-                                                    style: TextStyle(
-                                                        color: theme.colorScheme
-                                                            .primary,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
+                                                  text: AppLocalizations.of(
+                                                    context,
+                                                  )!.privacyPolicy,
+                                                  style: TextStyle(
+                                                    color: theme
+                                                        .colorScheme
+                                                        .primary,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
                                                 TextSpan(
-                                                    text: AppLocalizations.of(
-                                                            context)!
-                                                        .agreeTermsP4),
+                                                  text: AppLocalizations.of(
+                                                    context,
+                                                  )!.agreeTermsP4,
+                                                ),
                                               ],
                                             ),
                                           ),
                                         ),
                                       ],
                                     ),
-                                    
+
                                     const SizedBox(height: 24),
-                                    
+
                                     CustomPrimaryButton(
-                                      text: AppLocalizations.of(context)!
-                                          .signUpButton,
+                                      text: AppLocalizations.of(
+                                        context,
+                                      )!.signUpButton,
                                       icon: Icons.arrow_forward,
                                       isLoading: authViewModel.isLoading,
                                       onPressed: () {
                                         if (!_termsAccepted) {
-                                          CustomToast.show(context,
-                                              AppLocalizations.of(context)!
-                                                  .acceptTermsError);
+                                          CustomToast.show(
+                                            context,
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.acceptTermsError,
+                                          );
                                           return;
                                         }
                                         _onSignUp();
                                       },
                                     ),
-                                    
+
                                     const SizedBox(height: 24),
                                     Row(
                                       children: [
                                         Expanded(
-                                            child: Divider(
-                                                color: theme.colorScheme.onSurface
-                                                    .withValues(alpha: 0.1))),
+                                          child: Divider(
+                                            color: theme.colorScheme.onSurface
+                                                .withValues(alpha: 0.1),
+                                          ),
+                                        ),
 
                                         Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 16,
+                                          ),
                                           child: Text(
-                                            AppLocalizations.of(context)!
-                                                .orContinueWith,
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.orContinueWith,
                                             style: theme.textTheme.labelSmall
                                                 ?.copyWith(
-                                              fontWeight: FontWeight.bold,
-                                              color: theme.colorScheme.onSurface
-                                                  .withValues(alpha: 0.5),
-                                            ),
+                                                  fontWeight: FontWeight.bold,
+                                                  color: theme
+                                                      .colorScheme
+                                                      .onSurface
+                                                      .withValues(alpha: 0.5),
+                                                ),
                                           ),
                                         ),
                                         Expanded(
-                                            child: Divider(
-                                                color: theme.colorScheme.onSurface
-                                                    .withValues(alpha: 0.1))),
-
+                                          child: Divider(
+                                            color: theme.colorScheme.onSurface
+                                                .withValues(alpha: 0.1),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                     const SizedBox(height: 24),
-                                    
+
                                     Row(
                                       children: [
                                         Expanded(
                                           child: _SocialButton(
-                                            text: AppLocalizations.of(context)!
-                                                .google,
+                                            text: AppLocalizations.of(
+                                              context,
+                                            )!.google,
                                             svgAsset: 'assets/Icons/google.svg',
-                                            onPressed: () => _handleSocialSignIn(() async {
-                                              if (authViewModel.isLoading) return;
-                                              final loc = AppLocalizations.of(context)!;
-                                              final success = await authViewModel.signInWithGoogle(loc, isSignUp: true);
-                                              if (mounted && success) {
-                                                context.go('/welcome-profile');
-                                              } else if (mounted && authViewModel.errorMessage != null) {
-                                                CustomToast.show(context, authViewModel.errorMessage!);
-                                              }
-                                            }),
+                                            onPressed: () =>
+                                                _handleSocialSignIn(() async {
+                                                  if (authViewModel.isLoading)
+                                                    return;
+                                                  final loc =
+                                                      AppLocalizations.of(
+                                                        context,
+                                                      )!;
+                                                  final success =
+                                                      await authViewModel
+                                                          .signInWithGoogle(
+                                                            loc,
+                                                            isSignUp: true,
+                                                          );
+                                                  if (mounted && success) {
+                                                    authViewModel.checkClinicalStatus(context, authViewModel.currentUser!);
+                                                  } else if (mounted &&
+                                                      authViewModel
+                                                              .errorMessage !=
+                                                          null) {
+                                                    CustomToast.show(
+                                                      context,
+                                                      authViewModel
+                                                          .errorMessage!,
+                                                    );
+                                                  }
+                                                }),
                                           ),
                                         ),
                                         const SizedBox(width: 16),
                                         Expanded(
                                           child: _SocialButton(
-                                            text: AppLocalizations.of(context)!
-                                                .apple,
+                                            text: AppLocalizations.of(
+                                              context,
+                                            )!.apple,
                                             iconData: Icons.apple,
-                                            onPressed: () => _handleSocialSignIn(() async {
-                                              if (authViewModel.isLoading) return;
-                                              final loc = AppLocalizations.of(context)!;
-                                              final success = await authViewModel.signInWithApple(loc, isSignUp: true);
-                                              if (mounted && success) {
-                                                context.go('/welcome-profile');
-                                              } else if (mounted && authViewModel.errorMessage != null) {
-                                                CustomToast.show(context, authViewModel.errorMessage!);
-                                              }
-                                            }),
+                                            onPressed: () =>
+                                                _handleSocialSignIn(() async {
+                                                  if (authViewModel.isLoading)
+                                                    return;
+                                                  final loc =
+                                                      AppLocalizations.of(
+                                                        context,
+                                                      )!;
+                                                  final success =
+                                                      await authViewModel
+                                                          .signInWithApple(
+                                                            loc,
+                                                            isSignUp: true,
+                                                          );
+                                                  if (mounted && success) {
+                                                    authViewModel.checkClinicalStatus(context, authViewModel.currentUser!);
+                                                  } else if (mounted &&
+                                                      authViewModel
+                                                              .errorMessage !=
+                                                          null) {
+                                                    CustomToast.show(
+                                                      context,
+                                                      authViewModel
+                                                          .errorMessage!,
+                                                    );
+                                                  }
+                                                }),
                                           ),
                                         ),
                                       ],
@@ -450,7 +559,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 ),
                               ),
                             ),
-                            
+
                             const Spacer(),
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 24),
@@ -464,20 +573,23 @@ class _SignUpPageState extends State<SignUpPage> {
                                 },
                                 child: Text.rich(
                                   TextSpan(
-                                    text: AppLocalizations.of(context)!
-                                        .haveAccount,
+                                    text: AppLocalizations.of(
+                                      context,
+                                    )!.haveAccount,
                                     style: theme.textTheme.bodyMedium?.copyWith(
                                       color: theme.colorScheme.onSurface
                                           .withValues(alpha: 0.8),
                                     ),
                                     children: [
                                       TextSpan(
-                                        text: AppLocalizations.of(context)!
-                                            .signInLink,
-                                        style: theme.textTheme.bodyLarge?.copyWith(
-                                          color: theme.colorScheme.primary,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                        text: AppLocalizations.of(
+                                          context,
+                                        )!.signInLink,
+                                        style: theme.textTheme.bodyLarge
+                                            ?.copyWith(
+                                              color: theme.colorScheme.primary,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                       ),
                                     ],
                                   ),
@@ -527,7 +639,7 @@ class _SocialButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    
+
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         foregroundColor: theme.colorScheme.onSurface,
@@ -541,7 +653,8 @@ class _SocialButton extends StatelessWidget {
           side: isDark
               ? BorderSide.none
               : BorderSide(
-                  color: theme.colorScheme.onSurface.withValues(alpha: 0.1)),
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.1),
+                ),
         ),
       ),
       onPressed: onPressed,
@@ -549,11 +662,7 @@ class _SocialButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (svgAsset != null)
-            SvgPicture.asset(
-              svgAsset!,
-              width: 20,
-              height: 20,
-            )
+            SvgPicture.asset(svgAsset!, width: 20, height: 20)
           else if (iconData != null)
             Icon(iconData, size: 24),
           const SizedBox(width: 10),

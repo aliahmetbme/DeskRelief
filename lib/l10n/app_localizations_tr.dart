@@ -127,6 +127,54 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String get didntReceiveEmail => 'Mail gelmedi mi?';
+
+  @override
+  String get resendLink => 'Tekrar Gönder';
+
+  @override
+  String get cancelAndExit => 'İptal ve Çıkış';
+
+  @override
+  String get verificationTitle => 'Doğrulama';
+
+  @override
+  String get verificationLinkSent => 'Doğrulama Linki Gönderildi!';
+
+  @override
+  String get verificationBody =>
+      'adresine bir link gönderdik. Lütfen gelen kutunuzu kontrol edip linke tıklayın. Doğruladığınızda bu ekran otomatik olarak kapanacaktır.';
+
+  @override
+  String get waitingForVerification => 'Doğrulama Bekleniyor';
+
+  @override
+  String get verificationEmailSent => 'Doğrulama e-postası tekrar gönderildi.';
+
+  @override
+  String get forgotPasswordTitle => 'Şifrenizi mi Unuttunuz?';
+
+  @override
+  String get forgotPasswordSubtitle =>
+      'Endişelenmeyin! Kayıtlı e-posta adresinizi girin, size şifrenizi sıfırlamanız için bir bağlantı göndereceğiz.';
+
+  @override
+  String get sendResetLink => 'Sıfırlama Linki Gönder';
+
+  @override
+  String get backToSignIn => 'Giriş sayfasına dönmek mi istiyorsunuz? ';
+
+  @override
+  String get secureDataInfra => 'Güvenli Veri Altyapısı';
+
+  @override
+  String get supportTeam247 => '7/24 Destek Ekibi';
+
+  @override
+  String get passwordResetEmailSent =>
+      'Şifre sıfırlama bağlantısı e-postanıza gönderildi. Lütfen spam kutunuzu da kontrol edin.';
+
+  @override
   String get regionNeck => 'Boyun';
 
   @override
@@ -182,6 +230,72 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get exclusionCriteria => 'Dışlama Kriterleri';
+
+  @override
+  String get clinicalBlockTitle => 'Tıbbi Yönlendirme';
+
+  @override
+  String get clinicalBlockSubtitle =>
+      'Güvenliğiniz bizim için her şeyden önemli.';
+
+  @override
+  String get clinicalBlockDescription =>
+      'Girdiğiniz veriler algoritmamız tarafından analiz edildi ve devam etmeden önce bir uzmana danışmanızın daha sağlıklı olacağı belirlendi.';
+
+  @override
+  String get reasonRedFlag => 'Kritik Klinik Bulgular';
+
+  @override
+  String get descRedFlag =>
+      'Girdiğiniz yanıtlarda acil tıbbi değerlendirme gerektirebilecek belirtiler saptandı. Lütfen bir fizik tedavi uzmanına veya hekime danışın.';
+
+  @override
+  String get reasonCentralSensitization => 'Yaygın Hassasiyet Bulguları';
+
+  @override
+  String get descCentralSensitization =>
+      'Vücudunuzun çok sayıda bölgesinde yüksek hassasiyet saptandı. Bu durum \'Merkezi Duyarlılaşma\' şüphesi uyandırabilir ve egzersiz öncesi tıbbi muayene gerektirir.';
+
+  @override
+  String get reasonExtremePain => 'Şiddetli Ağrı Sınırı';
+
+  @override
+  String get descExtremePain =>
+      'Belirttiğiniz ağrı seviyesi (NPRS 10/10), egzersiz toleransınızın çok üzerindedir. Akut durumunuzun kontrolü için bir uzmana başvurmalısınız.';
+
+  @override
+  String get reasonMaxFlareUpStrike => 'Dirençli Krizler (Flare-Up)';
+
+  @override
+  String get descMaxFlareUpStrike =>
+      'Aynı bölgede tekrarlayan krizler yaşanması, durumun sadece egzersizle çözülemeyecek bir doku hasarı veya inflamasyon olabileceğini gösterir.';
+
+  @override
+  String get reasonTherapeuticResistance => 'Tedaviye Direnç';
+
+  @override
+  String get descTherapeuticResistance =>
+      'Süreç boyunca ağrı seviyenizin düşmek yerine artması, altta yatan yapısal bir patoloji olabileceğini gösterir. Klinik değerlendirme önerilir.';
+
+  @override
+  String get reasonChronicLimit => 'Mekanik Limit';
+
+  @override
+  String get descChronicLimit =>
+      '56 günlük süreç sonunda ağrınızda anlamlı bir düşüş saptanmadı. Bu durum mekanik müdahalenin (egzersiz) şu aşamada yetersiz kaldığını gösterir.';
+
+  @override
+  String get reasonPersistentFlareUp => 'İnatçı Akutluk';
+
+  @override
+  String get descPersistentFlareUp =>
+      'Uzun süreli dinlenme ve modifikasyonlara rağmen bölgedeki akut tablo iyileşmedi. Lütfen tıbbi destek alın.';
+
+  @override
+  String get clinicalBlockContactBtn => 'Raporumu Hazırla (PDF)';
+
+  @override
+  String get clinicalBlockLogoutBtn => 'Oturumu Kapat';
 
   @override
   String get darkTheme => 'Koyu Tema';
@@ -255,7 +369,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Kas liflerinizin kendini onarması ve postür gelişiminin kalıcı olması için antrenmanlar arasında en az 24 saat dinlenme bırakılması önerilir.';
 
   @override
-  String get daySelectionTitle => 'Gün Seçimi';
+  String get daySelectionTitle => 'Day Selection';
 
   @override
   String maxDaysError(int max) {
@@ -687,7 +801,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Modern ofis yaşam tarzı genellikle uzun süreli oturmaya neden olur, bu da boyun, sırt ve omuz ağrılarına yol açabilir.';
 
   @override
-  String get onboardingTitle2 => 'DeskRelief ile Tanışın, Dijital Çözümünüz';
+  String get onboardingTitle2 => 'Meet DeskRelief, Dijital Çözümünüz';
 
   @override
   String get onboardingDesc2 =>
@@ -828,7 +942,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Güvenli bir deneyim için sağlık durumunuz kritiktir. Mevcut durumunuzda bir değişiklik olduysa lütfen aşağıyı güncelleyiniz.';
 
   @override
-  String get errorInvalidEmail => 'Geçersiz e-posta adresi.';
+  String get errorInvalidEmail => 'Geçersiz e-postası adresi.';
 
   @override
   String get errorUserDisabled => 'Bu kullanıcı hesabı devre dışı bırakılmış.';
@@ -944,4 +1058,31 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get videoRetry => 'Tekrar Dene';
+
+  @override
+  String get dialogClinicalAlertTitle => 'Klinik Güvenlik Uyarısı';
+
+  @override
+  String get dialogRedFlagMessage =>
+      'Tıbbi risk (Red Flag) bulguları nedeniyle sisteminiz kilitlenmişti. Semptomlarınızda hekim gözetiminde bir değişim olduysa, güvenlik taramasını yeniden çözmek ister misiniz?';
+
+  @override
+  String get dialogGeneralVetoMessage =>
+      'Uygulama, klinik protokoller gereği programınızı durdurmuştu. Tamamen iyileştiniz mi ve bir fizyoterapist/hekimden bu uygulamayı kullanmaya devam etmek için onay aldınız mı?';
+
+  @override
+  String get btnUpdateSymptoms => 'Semptomları Güncelle';
+
+  @override
+  String get btnDoctorApproved => 'Doktor Onaylı';
+
+  @override
+  String get btnCancel => 'İptal';
+
+  @override
+  String get btnReevaluate => 'Durumumu Tekrar Değerlendir';
+
+  @override
+  String get toastSafetyWarning =>
+      'Güvenliğiniz bizim için önemli. Lütfen hekim onayı olmadan egzersiz yapmayınız.';
 }

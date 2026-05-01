@@ -17,19 +17,27 @@ class AuthService {
     required AppLocalizations loc,
   }) async {
     try {
-      final userCredential = await _auth.signInWithEmailAndPassword(email: email, password: password);
-      
+      final userCredential = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
       // Firestore doküman kontrolü
-      final userDoc = await _firestore.collection('users').doc(userCredential.user!.uid).get();
+      final userDoc = await _firestore
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .get();
       if (!userDoc.exists) {
         await _auth.signOut();
         return loc.errorUserNotFound;
       }
-      
+
       return null; // Başarılı
     } on FirebaseAuthException catch (e) {
+      debugPrint("❌ FIREBASE SIGN IN ERROR [${e.code}]: ${e.message}");
       return _mapErrorCode(e.code, loc);
     } catch (e) {
+      debugPrint("❌ UNKNOWN SIGN IN ERROR: $e");
       return loc.errorUnknown;
     }
   }
@@ -51,26 +59,34 @@ class AuthService {
           name: name,
           email: email,
         );
-        
+
         final userMap = newUser.toJson();
         // Firestore nested object serializasyon hatasını önlemek için manuel dönüşüm
         userMap['progress'] = newUser.progress.toJson();
-        
+
         userMap['createdAt'] = FieldValue.serverTimestamp();
         userMap['lastActiveAt'] = FieldValue.serverTimestamp();
-        
-        await _firestore.collection('users').doc(userCredential.user!.uid).set(userMap);
+
+        await _firestore
+            .collection('users')
+            .doc(userCredential.user!.uid)
+            .set(userMap);
       }
 
       return null; // Başarılı
     } on FirebaseAuthException catch (e) {
+      debugPrint("❌ FIREBASE SIGN UP ERROR [${e.code}]: ${e.message}");
       return _mapErrorCode(e.code, loc);
     } catch (e) {
+      debugPrint("❌ UNKNOWN SIGN UP ERROR: $e");
       return loc.errorUnknown;
     }
   }
 
-  Future<String?> signInWithGoogle({required AppLocalizations loc, bool isSignUp = false}) async {
+  Future<String?> signInWithGoogle({
+    required AppLocalizations loc,
+    bool isSignUp = false,
+  }) async {
     try {
       final googleSignIn = gsi.GoogleSignIn.instance;
       await googleSignIn.initialize();
@@ -93,8 +109,11 @@ class AuthService {
       );
 
       // Firestore doküman kontrolü
-      final userDoc = await _firestore.collection('users').doc(userCredential.user!.uid).get();
-      
+      final userDoc = await _firestore
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .get();
+
       if (!userDoc.exists) {
         if (isSignUp) {
           // Yeni kullanıcı oluştur (Sign Up akışında)
@@ -103,15 +122,18 @@ class AuthService {
             name: userCredential.user!.displayName ?? '',
             email: userCredential.user!.email ?? '',
           );
-          
+
           final userMap = newUser.toJson();
           // Firestore nested object serializasyon hatasını önlemek için manuel dönüşüm
           userMap['progress'] = newUser.progress.toJson();
-          
+
           userMap['createdAt'] = FieldValue.serverTimestamp();
           userMap['lastActiveAt'] = FieldValue.serverTimestamp();
-          
-          await _firestore.collection('users').doc(userCredential.user!.uid).set(userMap);
+
+          await _firestore
+              .collection('users')
+              .doc(userCredential.user!.uid)
+              .set(userMap);
         } else {
           // Giriş başarısız (Sign In akışında kayıtlı kullanıcı yok)
           await signOut();
@@ -119,18 +141,19 @@ class AuthService {
         }
       } else {
         // Mevcut kullanıcı - son görülme güncelle
-        await _firestore.collection('users').doc(userCredential.user!.uid).update({
-          'lastActiveAt': FieldValue.serverTimestamp(),
-        });
+        await _firestore
+            .collection('users')
+            .doc(userCredential.user!.uid)
+            .update({'lastActiveAt': FieldValue.serverTimestamp()});
       }
 
       return null;
     } on FirebaseAuthException catch (e) {
       final errorStr = e.toString().toLowerCase();
-      if (errorStr.contains('canceled') || 
-          errorStr.contains('cancelled') || 
-          errorStr.contains('1000') || 
-          errorStr.contains('1001') || 
+      if (errorStr.contains('canceled') ||
+          errorStr.contains('cancelled') ||
+          errorStr.contains('1000') ||
+          errorStr.contains('1001') ||
           errorStr.contains('sign_in_canceled')) {
         return null;
       }
@@ -138,22 +161,22 @@ class AuthService {
       return _mapErrorCode(e.code, loc);
     } on PlatformException catch (e) {
       final errorStr = e.toString().toLowerCase();
-      if (errorStr.contains('canceled') || 
-          errorStr.contains('cancelled') || 
-          errorStr.contains('1000') || 
-          errorStr.contains('1001') || 
+      if (errorStr.contains('canceled') ||
+          errorStr.contains('cancelled') ||
+          errorStr.contains('1000') ||
+          errorStr.contains('1001') ||
           errorStr.contains('sign_in_canceled')) {
         return null;
       }
       return loc.errorUnknown;
     } catch (e, stackTrace) {
       if (e is gsi.GoogleSignInException && e.code == 'canceled') return null;
-      
+
       final errorStr = e.toString().toLowerCase();
-      if (errorStr.contains('canceled') || 
-          errorStr.contains('cancelled') || 
-          errorStr.contains('1000') || 
-          errorStr.contains('1001') || 
+      if (errorStr.contains('canceled') ||
+          errorStr.contains('cancelled') ||
+          errorStr.contains('1000') ||
+          errorStr.contains('1001') ||
           errorStr.contains('sign_in_canceled')) {
         return null;
       }
@@ -163,7 +186,10 @@ class AuthService {
     }
   }
 
-  Future<String?> signInWithApple({required AppLocalizations loc, bool isSignUp = false}) async {
+  Future<String?> signInWithApple({
+    required AppLocalizations loc,
+    bool isSignUp = false,
+  }) async {
     try {
       final credential = await SignInWithApple.getAppleIDCredential(
         scopes: [
@@ -183,8 +209,11 @@ class AuthService {
       );
 
       // Firestore doküman kontrolü
-      final userDoc = await _firestore.collection('users').doc(userCredential.user!.uid).get();
-      
+      final userDoc = await _firestore
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .get();
+
       if (!userDoc.exists) {
         if (isSignUp) {
           // Yeni kullanıcı oluştur (Sign Up akışında)
@@ -193,15 +222,18 @@ class AuthService {
             name: userCredential.user!.displayName ?? '',
             email: userCredential.user!.email ?? '',
           );
-          
+
           final userMap = newUser.toJson();
           // Firestore nested object serializasyon hatasını önlemek için manuel dönüşüm
           userMap['progress'] = newUser.progress.toJson();
-          
+
           userMap['createdAt'] = FieldValue.serverTimestamp();
           userMap['lastActiveAt'] = FieldValue.serverTimestamp();
-          
-          await _firestore.collection('users').doc(userCredential.user!.uid).set(userMap);
+
+          await _firestore
+              .collection('users')
+              .doc(userCredential.user!.uid)
+              .set(userMap);
         } else {
           // Giriş başarısız (Sign In akışında kayıtlı kullanıcı yok)
           await signOut();
@@ -209,18 +241,19 @@ class AuthService {
         }
       } else {
         // Mevcut kullanıcı - son görülme güncelle
-        await _firestore.collection('users').doc(userCredential.user!.uid).update({
-          'lastActiveAt': FieldValue.serverTimestamp(),
-        });
+        await _firestore
+            .collection('users')
+            .doc(userCredential.user!.uid)
+            .update({'lastActiveAt': FieldValue.serverTimestamp()});
       }
 
       return null;
     } on FirebaseAuthException catch (e) {
       final errorStr = e.toString().toLowerCase();
-      if (errorStr.contains('canceled') || 
-          errorStr.contains('cancelled') || 
-          errorStr.contains('1000') || 
-          errorStr.contains('1001') || 
+      if (errorStr.contains('canceled') ||
+          errorStr.contains('cancelled') ||
+          errorStr.contains('1000') ||
+          errorStr.contains('1001') ||
           errorStr.contains('sign_in_canceled')) {
         return null;
       }
@@ -228,37 +261,37 @@ class AuthService {
       return _mapErrorCode(e.code, loc);
     } on SignInWithAppleAuthorizationException catch (e) {
       final errorStr = e.toString().toLowerCase();
-      if (errorStr.contains('canceled') || 
-          errorStr.contains('cancelled') || 
-          errorStr.contains('1000') || 
-          errorStr.contains('1001') || 
+      if (errorStr.contains('canceled') ||
+          errorStr.contains('cancelled') ||
+          errorStr.contains('1000') ||
+          errorStr.contains('1001') ||
           errorStr.contains('sign_in_canceled')) {
         return null;
       }
       return loc.errorUnknown;
     } on PlatformException catch (e) {
       final errorStr = e.toString().toLowerCase();
-      if (errorStr.contains('canceled') || 
-          errorStr.contains('cancelled') || 
-          errorStr.contains('1000') || 
-          errorStr.contains('1001') || 
+      if (errorStr.contains('canceled') ||
+          errorStr.contains('cancelled') ||
+          errorStr.contains('1000') ||
+          errorStr.contains('1001') ||
           errorStr.contains('sign_in_canceled')) {
         return null;
       }
       return loc.errorUnknown;
     } catch (e) {
       final errorStr = e.toString().toLowerCase();
-      if (errorStr.contains('canceled') || 
-          errorStr.contains('cancelled') || 
-          errorStr.contains('1000') || 
-          errorStr.contains('1001') || 
+      if (errorStr.contains('canceled') ||
+          errorStr.contains('cancelled') ||
+          errorStr.contains('1000') ||
+          errorStr.contains('1001') ||
           errorStr.contains('sign_in_canceled')) {
         return null;
       }
       debugPrint("❌ APPLE AUTH ERROR: $e");
+      debugPrint("❌ APPLE AUTH ERROR CODE: ${e.toString()}");
       return loc.errorUnknown;
     }
-
   }
 
   Future<void> signOut() async {
@@ -267,8 +300,20 @@ class AuthService {
     await googleSignIn.signOut();
   }
 
-  Stream<User?> get authStateChanges => _auth.authStateChanges();
+  Future<void> sendEmailVerification() async {
+    await _auth.currentUser?.sendEmailVerification();
+  }
 
+  Future<void> reloadUser() async {
+    await _auth.currentUser?.reload();
+  }
+
+  Future<void> sendPasswordResetEmail(String email) async {
+    await _auth.sendPasswordResetEmail(email: email.trim());
+  }
+
+  Stream<User?> get authStateChanges => _auth.authStateChanges();
+  User? get currentUser => _auth.currentUser;
   String? get currentUserId => _auth.currentUser?.uid;
 
   Future<UserModel?> getUserModel(String uid) async {
@@ -282,12 +327,18 @@ class AuthService {
   Future<void> updateUser(UserModel user) async {
     final userMap = user.toJson();
     // Freezed modellerinin toJson metodu nested objeleri map olarak döndürür
-    // ama FieldValue gibi özel tipleri kaybeder. 
+    // ama FieldValue gibi özel tipleri kaybeder.
     // Ancak burada FieldValue kullanmıyoruz, sadece verileri güncelliyoruz.
-    await _firestore.collection('users').doc(user.id).set(userMap, SetOptions(merge: true));
+    await _firestore
+        .collection('users')
+        .doc(user.id)
+        .set(userMap, SetOptions(merge: true));
   }
 
-  Future<void> updateRegistrationProgress(String uid, Map<String, dynamic> progressUpdate) async {
+  Future<void> updateRegistrationProgress(
+    String uid,
+    Map<String, dynamic> progressUpdate,
+  ) async {
     await _firestore.collection('users').doc(uid).update({
       'progress': progressUpdate,
     });
@@ -302,6 +353,7 @@ class AuthService {
       case 'user-not-found':
         return loc.errorUserNotFound;
       case 'wrong-password':
+      case 'invalid-credential':
         return loc.errorWrongPassword;
       case 'email-already-in-use':
         return loc.errorEmailAlreadyInUse;
@@ -312,6 +364,7 @@ class AuthService {
       case 'network-request-failed':
         return loc.errorNetworkRequestFailed;
       default:
+        debugPrint("⚠️ [UNHANDLED ERROR CODE]: $code");
         return loc.errorUnknown;
     }
   }
