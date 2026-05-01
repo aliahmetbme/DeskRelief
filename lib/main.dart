@@ -1,3 +1,4 @@
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
@@ -19,6 +20,9 @@ import 'features/main/presentation/viewmodels/dashboard_view_model.dart';
 import 'core/services/notification_service.dart';
 import 'features/exercise/data/services/video_cache_service.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -27,14 +31,15 @@ void main() async {
   final notificationService = NotificationService();
   await notificationService.initialize();
 
-  // Initialize Turkish date formatting
-  await initializeDateFormatting('tr_TR', null);
+  // Initialize dynamic date formatting based on system locale
+  final String systemLocale = ui.PlatformDispatcher.instance.locale.toString();
+  await initializeDateFormatting(systemLocale, null);
 
   // Initialize Video Caching
   await VideoCacheService().init();
 
-  final prefs = await SharedPreferences.getInstance();
-  final bool hasSeenOnboarding = prefs.getBool('seenOnboarding') ?? false;
+  // İlk kurulum kontrolü
+  await checkFirstRun();
 
   runApp(
     MultiProvider(
@@ -46,15 +51,23 @@ void main() async {
         ChangeNotifierProvider(create: (_) => BodyMapViewModel()),
         ChangeNotifierProvider(create: (_) => DashboardViewModel()),
       ],
-      child: DeskReliefApp(hasSeenOnboarding: hasSeenOnboarding),
+      child: const DeskReliefApp(),
     ),
   );
 }
 
-class DeskReliefApp extends StatefulWidget {
-  final bool hasSeenOnboarding;
+Future<void> checkFirstRun() async {
+  final prefs = await SharedPreferences.getInstance();
+  final bool isFirstRun = prefs.getBool('is_first_run') ?? true;
 
-  const DeskReliefApp({super.key, required this.hasSeenOnboarding});
+  if (isFirstRun) {
+    await FirebaseAuth.instance.signOut();
+    await prefs.setBool('is_first_run', false);
+  }
+}
+
+class DeskReliefApp extends StatefulWidget {
+  const DeskReliefApp({super.key});
 
   @override
   State<DeskReliefApp> createState() => _DeskReliefAppState();
@@ -67,7 +80,6 @@ class _DeskReliefAppState extends State<DeskReliefApp> {
   void initState() {
     super.initState();
     _router = AppRouter.createRouter(
-      hasSeenOnboarding: widget.hasSeenOnboarding,
       authViewModel: context.read<AuthViewModel>(),
     );
 

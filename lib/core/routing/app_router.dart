@@ -7,6 +7,7 @@ import '../../features/auth/presentation/pages/onboarding_page.dart';
 import '../../features/auth/presentation/pages/sign_in_page.dart';
 import '../../features/auth/presentation/pages/sign_up_page.dart';
 import '../../features/auth/presentation/pages/welcome_profile_page.dart';
+import '../../features/auth/presentation/pages/splash_page.dart';
 import '../../features/assessment/presentation/pages/red_flags_page.dart';
 import '../../features/assessment/presentation/pages/body_map_page.dart';
 import '../../features/assessment/presentation/pages/pain_intensity_page.dart';
@@ -25,7 +26,6 @@ import '../../features/exercise/domain/models/exercise_model.dart';
 
 class AppRouter {
   static GoRouter createRouter({
-    required bool hasSeenOnboarding,
     required AuthViewModel authViewModel,
   }) {
     return GoRouter(
@@ -34,48 +34,52 @@ class AppRouter {
       redirect: (context, state) {
         final location = state.matchedLocation;
         
-        // 0. Başlatma Kontrolü: Firebase session verisi gelene kadar splash'te kal
+        // DURUM 1: Başlatma Kontrolü (Splash State)
+        // Firebase Auth ve Local SharedPreferences verileri gelene kadar Splash'te kal.
         if (!authViewModel.isInitialized) {
           return '/splash';
         }
 
-        // 1. Intro Kontrolü (Hepsinden önce gelir)
-        if (!authViewModel.hasSeenOnboarding) {
-          if (location == '/onboarding') return null;
-          return '/onboarding';
-        }
-
+        // DURUM 2: Kullanıcı Giriş Yapmamışsa
         final user = authViewModel.currentUser;
-        final bool isOnAuthPages =
-            location == '/signin' ||
-            location == '/signup' ||
-            location == '/onboarding';
-
-        // 1. Giriş Yapılmamışsa
         if (user == null) {
+          // Önce Intro (Onboarding) kontrolü
+          if (!authViewModel.hasSeenOnboarding) {
+            if (location == '/onboarding') return null;
+            return '/onboarding';
+          }
+          
+          // Intro görüldüyse giriş sayfasına yönlendir
+          final bool isOnAuthPages = 
+              location == '/signin' || 
+              location == '/signup' || 
+              location == '/onboarding';
+              
           if (isOnAuthPages) return null;
           return '/signin';
         }
 
-        // 2. Giriş Yapılmışsa
+        // DURUM 3: Giriş Yapılmışsa (Progress Kontrolü)
         final target = authViewModel.checkUserProgress(user);
         
-        // Eğer onboarding tamamlanmışsa (target == '/home')
+        // Eğer hedef ana sayfa ise ve kullanıcı hala kayıt/auth sayfalarındaysa /home'a çek
         if (target == '/home') {
-          // Kullanıcı onboarding veya auth sayfalarındaysa ana sayfaya çek
-          final bool isOnAuthOrOnboarding = 
-              isOnAuthPages || 
+          final bool isOnRestrictedPages = 
+              location == '/signin' || 
+              location == '/signup' || 
+              location == '/onboarding' ||
+              location == '/splash' ||
               location == '/welcome-profile' || 
               location == '/red-flags' || 
               location == '/body-map' || 
               location == '/assessment/pain-intensity' || 
               location == '/scheduling';
               
-          if (isOnAuthOrOnboarding) return '/home';
+          if (isOnRestrictedPages) return '/home';
           return null;
         }
 
-        // 3. Kayıt/Değerlendirme Akışı Devam Ediyorsa
+        // Kayıt akışı tamamlanmamışsa hedef sayfaya zorla gönder
         if (location != target) {
           return target;
         }
@@ -83,14 +87,10 @@ class AppRouter {
         return null;
       },
       routes: [
-        // ── Başlangıç ekranı ───────────────────────────────────────────────
+        // ── Splash Screen ──────────────────────────────────────────────────
         GoRoute(
           path: '/splash',
-          builder: (context, state) => const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator.adaptive(),
-            ),
-          ),
+          builder: (context, state) => const SplashPage(),
         ),
         // ── Auth & Assessment akışı (top-level rotalar) ─────────────────────
         GoRoute(

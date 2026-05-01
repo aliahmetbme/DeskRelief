@@ -20,7 +20,7 @@ void main() {
           ChangeNotifierProvider(create: (_) => RedFlagsViewModel()),
           ChangeNotifierProvider(create: (_) => BodyMapViewModel()),
         ],
-        child: const DeskReliefApp(hasSeenOnboarding: false),
+        child: const DeskReliefApp(),
       ),
     );
 
