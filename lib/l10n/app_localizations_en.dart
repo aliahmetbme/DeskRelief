@@ -308,6 +308,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get darkTheme => 'Dark Theme';
 
   @override
+  String get medicalTheme => 'Medical Theme';
+
+  @override
+  String get lightTheme => 'Light Theme';
+
+  @override
+  String get systemTheme => 'System Theme';
+
+  @override
   String get logout => 'Log Out';
 
   @override

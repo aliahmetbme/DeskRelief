@@ -10,6 +10,7 @@ import 'package:deskrelief/features/content/domain/models/content_models.dart';
 import 'package:deskrelief/features/content/presentation/pages/content_detail_page.dart';
 
 import 'dart:async';
+import 'package:deskrelief/core/theme/app_colors.dart';
 import 'package:deskrelief/core/widgets/custom_toast.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -274,15 +275,11 @@ class _ProgressSection extends StatelessWidget {
     final progressValue = viewModel.progressValue;
     final remainingSessions = viewModel.remainingSessions;
 
-    final cobaltBlue = isDark
-        ? const Color(0xFF4D94FF)
-        : const Color(0xFF0052CC);
-    final softGreen = isDark
-        ? const Color(0xFF1B3B2B)
-        : const Color(0xFFDFFFD6);
-    final darkGreen = isDark
-        ? const Color(0xFF4ADE80)
-        : const Color(0xFF1E5631);
+    final drColors = theme.extension<DeskReliefColors>()!;
+    
+    final cobaltBlue = theme.colorScheme.primary;
+    final softGreen = drColors.successBackground ?? Colors.green.withValues(alpha: 0.1);
+    final darkGreen = drColors.successText ?? Colors.green;
 
     return Column(
       children: [
@@ -429,20 +426,15 @@ class _ClinicalWarningSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final loc = AppLocalizations.of(context)!;
-    final isDark = theme.brightness == Brightness.dark;
     final viewModel = context.watch<DashboardViewModel>();
     final regionalTip = viewModel.getRegionalTip();
     final localeCode = Localizations.localeOf(context).languageCode;
 
-    final warningColor = isDark
-        ? const Color(0xFFFFCC00)
-        : const Color(0xFF856404);
-    final warningBg = isDark
-        ? const Color(0xFF2D2400)
-        : const Color(0xFFFFF3CD);
-    final warningBorder = isDark
-        ? const Color(0xFF665200)
-        : const Color(0xFFFFEEB3);
+    final drColors = theme.extension<DeskReliefColors>()!;
+
+    final warningColor = drColors.warningText ?? Colors.orange;
+    final warningBg = drColors.warningBackground ?? Colors.orange.withValues(alpha: 0.1);
+    final warningBorder = (drColors.warningText ?? Colors.orange).withValues(alpha: 0.2);
 
     return Container(
       padding: const EdgeInsets.all(16),

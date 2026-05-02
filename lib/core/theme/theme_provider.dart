@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'app_palettes.dart';
 
+enum AppThemeMode { light, medical, dark, system }
+
 class ThemeProvider extends ChangeNotifier {
   AppPalette _currentPalette = DeskReliefPalette();
-  ThemeMode _themeMode = ThemeMode.system;
+  AppThemeMode _themeMode = AppThemeMode.system;
 
   AppPalette get palette => _currentPalette;
-  ThemeMode get themeMode => _themeMode;
+  AppThemeMode get themeMode => _themeMode;
 
   ThemeProvider() {
     _loadThemeMode();
@@ -15,17 +17,24 @@ class ThemeProvider extends ChangeNotifier {
 
   void _loadThemeMode() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? modeStr = prefs.getString('themeMode');
+    String? modeStr = prefs.getString('themeModeV2'); // New key to avoid conflicts
     if (modeStr != null) {
-      if (modeStr == 'dark') {
-        _themeMode = ThemeMode.dark;
-      } else if (modeStr == 'light') {
-        _themeMode = ThemeMode.light;
+      _themeMode = AppThemeMode.values.firstWhere(
+        (e) => e.name == modeStr,
+        orElse: () => AppThemeMode.system,
+      );
+    } else {
+      // Legacy check
+      String? oldMode = prefs.getString('themeMode');
+      if (oldMode == 'dark') {
+        _themeMode = AppThemeMode.medical;
+      } else if (oldMode == 'light') {
+        _themeMode = AppThemeMode.light;
       } else {
-        _themeMode = ThemeMode.system;
+        _themeMode = AppThemeMode.system;
       }
-      notifyListeners();
     }
+    notifyListeners();
   }
 
   void setTheme(AppPalette newPalette) {
@@ -34,15 +43,12 @@ class ThemeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setThemeMode(ThemeMode mode) async {
+  void setThemeMode(AppThemeMode mode) async {
     if (_themeMode == mode) return;
     _themeMode = mode;
     notifyListeners();
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String modeStr = 'system';
-    if (mode == ThemeMode.dark) modeStr = 'dark';
-    if (mode == ThemeMode.light) modeStr = 'light';
-    await prefs.setString('themeMode', modeStr);
+    await prefs.setString('themeModeV2', mode.name);
   }
 }

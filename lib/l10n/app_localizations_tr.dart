@@ -309,6 +309,15 @@ class AppLocalizationsTr extends AppLocalizations {
   String get darkTheme => 'Koyu Tema';
 
   @override
+  String get medicalTheme => 'Medikal Tema';
+
+  @override
+  String get lightTheme => 'Açık Tema';
+
+  @override
+  String get systemTheme => 'Sistem Teması';
+
+  @override
   String get logout => 'Oturumu Kapat';
 
   @override

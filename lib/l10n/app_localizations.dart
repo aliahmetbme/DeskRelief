@@ -632,6 +632,24 @@ abstract class AppLocalizations {
   /// **'Koyu Tema'**
   String get darkTheme;
 
+  /// No description provided for @medicalTheme.
+  ///
+  /// In tr, this message translates to:
+  /// **'Medikal Tema'**
+  String get medicalTheme;
+
+  /// No description provided for @lightTheme.
+  ///
+  /// In tr, this message translates to:
+  /// **'Açık Tema'**
+  String get lightTheme;
+
+  /// No description provided for @systemTheme.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sistem Teması'**
+  String get systemTheme;
+
   /// No description provided for @logout.
   ///
   /// In tr, this message translates to:

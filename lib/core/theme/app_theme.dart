@@ -4,32 +4,42 @@ import 'app_palettes.dart';
 import 'app_typography.dart';
 
 class AppTheme {
-  static ThemeData buildTheme(BuildContext context, AppPalette palette, {bool isDark = false}) {
-    final Brightness brightness = isDark ? Brightness.dark : Brightness.light;
+  static ThemeData buildTheme(BuildContext context, AppPalette palette, {bool isDark = false, bool isTrueDark = false}) {
+    final Brightness brightness = (isDark || isTrueDark) ? Brightness.dark : Brightness.light;
     
-    // Modern Slate-based background colors for better depth in Dark Mode
-    final Color backgroundColor = isDark ? const Color(0xFF0F172A) : palette.background;
-    final Color surfaceColor = isDark ? const Color(0xFF1E293B) : palette.surface;
-    final Color textColorPrimary = isDark ? Colors.white : palette.textPrimary;
-    final Color textColorSecondary = isDark ? const Color(0xFF94A3B8) : palette.textSecondary;
+    // Background and Surface logic
+    // Medical (isDark): Slate-based depth
+    // Dark (isTrueDark): True Black
+    final Color backgroundColor = isTrueDark 
+        ? Colors.black 
+        : (isDark ? const Color(0xFF0F172A) : palette.background);
+        
+    final Color surfaceColor = isTrueDark 
+        ? const Color(0xFF1C1C1E) 
+        : (isDark ? const Color(0xFF1E293B) : palette.surface);
+        
+    final Color textColorPrimary = (isDark || isTrueDark) ? Colors.white : palette.textPrimary;
+    final Color textColorSecondary = (isDark || isTrueDark) ? const Color(0xFF94A3B8) : palette.textSecondary;
 
     return ThemeData(
       brightness: brightness,
       primaryColor: palette.primary,
       scaffoldBackgroundColor: backgroundColor,
-      shadowColor: isDark ? Colors.black.withValues(alpha: 0.5) : Colors.black.withValues(alpha: 0.08),
+      shadowColor: (isDark || isTrueDark) ? Colors.black.withValues(alpha: 0.5) : Colors.black.withValues(alpha: 0.08),
       
       // Theme Extensions
       extensions: [
-        isDark ? DeskReliefColors.dark : DeskReliefColors.light,
+        isTrueDark 
+            ? DeskReliefColors.dark 
+            : (isDark ? DeskReliefColors.medical : DeskReliefColors.light),
       ],
 
-      // Card Standardizasyonu
+      // Card Standardization
       cardTheme: CardThemeData(
         color: surfaceColor,
-        elevation: isDark ? 2 : 1,
+        elevation: (isDark || isTrueDark) ? 2 : 1,
         surfaceTintColor: Colors.transparent,
-        shadowColor: isDark ? Colors.black.withValues(alpha: 0.4) : Colors.black.withValues(alpha: 0.05),
+        shadowColor: (isDark || isTrueDark) ? Colors.black.withValues(alpha: 0.4) : Colors.black.withValues(alpha: 0.05),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
         ),
@@ -47,8 +57,8 @@ class AppTheme {
         primary: palette.primary,
         secondary: palette.secondary,
         surface: surfaceColor,
-        surfaceContainer: isDark ? const Color(0xFF1E293B) : Colors.white,
-        surfaceContainerHigh: isDark ? const Color(0xFF1E293B) : const Color(0xFFF8FAFC),
+        surfaceContainer: surfaceColor,
+        surfaceContainerHigh: isTrueDark ? const Color(0xFF2C2C2E) : (isDark ? const Color(0xFF334155) : const Color(0xFFF8FAFC)),
         error: palette.error,
         onSurface: textColorPrimary,
       ),
@@ -66,10 +76,10 @@ class AppTheme {
           backgroundColor: palette.primary,
           foregroundColor: Colors.white,
           textStyle: AppTypography.labelLarge(context),
-          elevation: 0, // Flat iOS görünümü
-          splashFactory: NoSplash.splashFactory, // Ripple kapalı
+          elevation: 0, 
+          splashFactory: NoSplash.splashFactory,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(28), // Standardized with buttons
+            borderRadius: BorderRadius.circular(28),
           ),
           minimumSize: const Size(double.infinity, 56),
         ),
@@ -77,7 +87,7 @@ class AppTheme {
 
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: isDark ? const Color(0xFF1E293B) : palette.surface,
+        fillColor: surfaceColor,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
@@ -94,15 +104,14 @@ class AppTheme {
       ),
       
       textTheme: AppTypography.buildTextTheme(context).copyWith(
-        displayLarge: AppTypography.displayLarge(context).copyWith(color: palette.primary),
+        displayLarge: AppTypography.displayLarge(context).copyWith(color: (isDark || isTrueDark) ? Colors.white : palette.primary),
         headlineLarge: AppTypography.headlineLarge(context).copyWith(color: textColorPrimary),
         headlineMedium: AppTypography.headlineMedium(context).copyWith(color: textColorPrimary),
         bodyLarge: AppTypography.bodyLarge(context).copyWith(color: textColorSecondary),
         bodyMedium: AppTypography.bodyMedium(context).copyWith(color: textColorSecondary),
-        labelLarge: AppTypography.labelLarge(context).copyWith(color: palette.primary),
-        labelSmall: AppTypography.labelSmall(context).copyWith(color: palette.primary),
+        labelLarge: AppTypography.labelLarge(context).copyWith(color: (isDark || isTrueDark) ? Colors.white : palette.primary),
+        labelSmall: AppTypography.labelSmall(context).copyWith(color: (isDark || isTrueDark) ? Colors.white : palette.primary),
       ),
     );
   }
 }
-

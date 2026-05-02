@@ -140,16 +140,13 @@ class _DeskReliefAppState extends State<DeskReliefApp> {
         return MaterialApp.router(
           title: 'DeskRelief',
           debugShowCheckedModeBanner: false,
-          themeMode: themeProvider.themeMode,
           theme: AppTheme.buildTheme(
             context,
             themeProvider.palette,
-            isDark: false,
-          ),
-          darkTheme: AppTheme.buildTheme(
-            context,
-            themeProvider.palette,
-            isDark: true,
+            isDark: themeProvider.themeMode == AppThemeMode.medical || 
+                    (themeProvider.themeMode == AppThemeMode.system && 
+                     MediaQuery.of(context).platformBrightness == Brightness.dark),
+            isTrueDark: themeProvider.themeMode == AppThemeMode.dark,
           ),
           locale: localeProvider.locale ?? const Locale('tr'),
           supportedLocales: const [Locale('tr'), Locale('en')],

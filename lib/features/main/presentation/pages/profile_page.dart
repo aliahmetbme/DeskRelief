@@ -362,45 +362,113 @@ class _ThemeSettingsItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final themeProvider = Provider.of<ThemeProvider>(context);
-    final isDark = themeProvider.themeMode == ThemeMode.dark || 
-                  (themeProvider.themeMode == ThemeMode.system && 
-                   MediaQuery.of(context).platformBrightness == Brightness.dark);
+    final loc = AppLocalizations.of(context)!;
 
     return Padding(
       padding: const EdgeInsets.all(20),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Colors.purple.withValues(alpha: 0.08),
-              borderRadius: BorderRadius.circular(14),
-            ),
-            child: Icon(
-              isDark ? Icons.dark_mode_rounded : Icons.light_mode_rounded, 
-              color: Colors.purple, 
-              size: 20
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Text(
-              AppLocalizations.of(context)!.darkTheme,
-              style: theme.textTheme.bodyLarge?.copyWith(
-                fontWeight: FontWeight.w700,
-                fontSize: 15,
-                color: theme.colorScheme.onSurface,
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.purple.withValues(alpha: 0.08),
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: const Icon(
+                  Icons.palette_rounded, 
+                  color: Colors.purple, 
+                  size: 20
+                ),
               ),
-            ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Text(
+                  loc.darkTheme, // Keeping generic title or change to "Theme"
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 15,
+                    color: theme.colorScheme.onSurface,
+                  ),
+                ),
+              ),
+            ],
           ),
-          Switch.adaptive(
-            value: isDark,
-            activeThumbColor: Colors.purple,
-            onChanged: (value) {
-              themeProvider.setThemeMode(value ? ThemeMode.dark : ThemeMode.light);
-            },
+          const SizedBox(height: 20),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                _ThemeOption(
+                  label: loc.systemTheme,
+                  mode: AppThemeMode.system,
+                  isSelected: themeProvider.themeMode == AppThemeMode.system,
+                ),
+                const SizedBox(width: 8),
+                _ThemeOption(
+                  label: loc.lightTheme,
+                  mode: AppThemeMode.light,
+                  isSelected: themeProvider.themeMode == AppThemeMode.light,
+                ),
+                const SizedBox(width: 8),
+                _ThemeOption(
+                  label: loc.medicalTheme,
+                  mode: AppThemeMode.medical,
+                  isSelected: themeProvider.themeMode == AppThemeMode.medical,
+                ),
+                const SizedBox(width: 8),
+                _ThemeOption(
+                  label: loc.darkTheme,
+                  mode: AppThemeMode.dark,
+                  isSelected: themeProvider.themeMode == AppThemeMode.dark,
+                ),
+              ],
+            ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _ThemeOption extends StatelessWidget {
+  final String label;
+  final AppThemeMode mode;
+  final bool isSelected;
+
+  const _ThemeOption({
+    required this.label,
+    required this.mode,
+    required this.isSelected,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+
+    return GestureDetector(
+      onTap: () => themeProvider.setThemeMode(mode),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        decoration: BoxDecoration(
+          color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurface.withValues(alpha: 0.05),
+          borderRadius: BorderRadius.circular(100),
+          border: Border.all(
+            color: isSelected ? theme.colorScheme.primary : Colors.transparent,
+            width: 1,
+          ),
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            color: isSelected ? theme.colorScheme.onPrimary : theme.colorScheme.onSurface,
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+            fontSize: 12,
+          ),
+        ),
       ),
     );
   }
