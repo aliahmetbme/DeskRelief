@@ -70,6 +70,39 @@ class ContentService {
     return filtered[Random().nextInt(filtered.length)];
   }
 
+  ErgoTipModel? getRandomErgoIntervention() {
+    if (_ergoInterventions.isEmpty) return null;
+    return _ergoInterventions[Random().nextInt(_ergoInterventions.length)];
+  }
+
+  ErgoTipModel? getRandomRegionalTip(String regionId) {
+    // Try direct match
+    if (_regionalTips.containsKey(regionId)) {
+      final list = _regionalTips[regionId]!;
+      return list[Random().nextInt(list.length)];
+    }
+
+    // Try legacy mapping
+    final legacyMapping = {
+      'neck': 'neck_cervical',
+      'shoulder': 'shoulder_upper_back',
+      'back': 'lumbar_pelvis',
+      'waist': 'lumbar_pelvis',
+      'hip': 'knee_hip',
+      'knee': 'knee_hip',
+      'wrist': 'wrist_elbow',
+      'elbow': 'wrist_elbow',
+    };
+
+    final mappedId = legacyMapping[regionId];
+    if (mappedId != null && _regionalTips.containsKey(mappedId)) {
+      final list = _regionalTips[mappedId]!;
+      return list[Random().nextInt(list.length)];
+    }
+
+    return null;
+  }
+
   List<ErgoTipModel> getTipsForUser(List<String> regionIds) {
     final List<ErgoTipModel> tips = [];
     

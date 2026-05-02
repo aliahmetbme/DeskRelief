@@ -19,6 +19,7 @@ abstract class MotivationModel with _$MotivationModel {
   const factory MotivationModel({
     required String id,
     @JsonKey(name: 'bct_focus') String? bctFocus,
+    @JsonKey(name: 'bct_focus_tr') String? bctFocusTr,
     required Map<String, String> text,
     @Default('') String category, // Populated during parsing (e.g., 'screen_greetings')
     String? citations,
@@ -33,6 +34,7 @@ abstract class ErgoTipModel with _$ErgoTipModel {
   const factory ErgoTipModel({
     required String id,
     String? rationale,
+    @JsonKey(name: 'rationale_tr') String? rationaleTr,
     Map<String, String>? content, // Used in regional_tips
     Map<String, String>? text,    // Used in ergonomic_micro_interventions
     String? citations,
@@ -61,6 +63,11 @@ abstract class BlogPostModel with _$BlogPostModel {
 
 extension MotivationX on MotivationModel {
   String getLocalizedText(String locale) => text[locale] ?? text['en'] ?? '';
+
+  String getLocalizedFocus(String locale) {
+    if (locale == 'tr') return bctFocusTr ?? bctFocus ?? 'Odak Noktası';
+    return bctFocus ?? 'Focus';
+  }
 }
 
 extension ErgoTipX on ErgoTipModel {
@@ -68,6 +75,11 @@ extension ErgoTipX on ErgoTipModel {
     final data = content ?? text;
     if (data == null) return '';
     return data[locale] ?? data['en'] ?? '';
+  }
+
+  String getLocalizedRationale(String locale) {
+    if (locale == 'tr') return rationaleTr ?? rationale ?? '';
+    return rationale ?? '';
   }
 }
 

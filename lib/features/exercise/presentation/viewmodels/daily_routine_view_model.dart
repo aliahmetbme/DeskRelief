@@ -132,4 +132,12 @@ class DailyRoutineViewModel extends ChangeNotifier {
   MotivationModel? getCompletionMotivation() {
     return _contentService.getRandomMotivation('exercise_continuity');
   }
+
+  MotivationModel? get currentContinuityQuote => _contentService.getRandomMotivation('exercise_continuity');
+
+  ErgoTipModel? getRegionalTip() {
+    if (_currentUser == null || _currentUser!.painRegions.isEmpty) return null;
+    final regionToUse = _currentUser!.painRegions.first;
+    return _contentService.getRandomRegionalTip(regionToUse.regionId);
+  }
 }

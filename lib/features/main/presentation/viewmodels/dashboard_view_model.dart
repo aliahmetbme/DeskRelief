@@ -46,6 +46,20 @@ class DashboardViewModel extends ChangeNotifier {
   // Content Service Data
   MotivationModel? get currentMotivation => _contentService.getRandomMotivation('screen_greetings');
   MotivationModel? get currentBct => _contentService.getRandomMotivation('exercise_continuity');
+  ErgoTipModel? get currentErgoTip => _contentService.getRandomErgoIntervention();
+  MotivationModel? get currentPushCommand => _contentService.getRandomMotivation('push_notifications');
+
+  ErgoTipModel? getRegionalTip() {
+    if (_currentUser == null || _currentUser!.painRegions.isEmpty) return null;
+    
+    // Priority to acute regions for the warning card
+    final acuteRegions = _currentUser!.painRegions.where((r) => r.isAkut).toList();
+    final regionToUse = acuteRegions.isNotEmpty 
+        ? acuteRegions.first 
+        : _currentUser!.painRegions.first;
+        
+    return _contentService.getRandomRegionalTip(regionToUse.regionId);
+  }
 
   
   List<ErgoTipModel> get recommendedTips {

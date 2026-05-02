@@ -377,7 +377,7 @@
   "signInTitle": "Welcome Back",
   "signInSubtitle": "Sign in to continue your journey.",
   "emailLabel": "Email",
-  "emailHint": "jondoe@mail.com",
+  "emailHint": "john.doe@company.com",
   "passwordLabel": "Password",
   "passwordHint": "••••••••",
   "forgotPassword": "Forgot Password?",

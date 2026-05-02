@@ -3,6 +3,7 @@
     {
       "id": "ERG-01",
       "rationale": "Spinal Compression",
+      "rationale_tr": "Omurga Baskısı",
       "text": {
         "en": "Research indicates that standing for 2 minutes every 45 minutes reduces spinal disc pressure by up to 30%. Implement a sit-stand cycle to rehydrate your intervertebral discs safely.",
         "tr": "Araştırmalara göre her 45 dakikada bir 2 dakika ayağa kalkmak omurga disklerindeki baskıyı %30 azaltır. İntervertebral disklerinizi güvenle yeniden nemlendirmek için oturma-kalkma döngüleri uygulayın."
@@ -11,6 +12,7 @@
     {
       "id": "ERG-02",
       "rationale": "Visual Display Unit",
+      "rationale_tr": "Görsel Görüntüleme Ünitesi",
       "text": {
         "en": "The top of your monitor must be positioned at or slightly below eye level at a precise distance of 50–70 cm (arm's length). This prevents excessive cervical flexion and reduces neck tension.",
         "tr": "Monitörün üst kısmı tam göz hizasında veya biraz altında, tam olarak 50-70 cm (bir kol) uzaklıkta olmalıdır. Bu, aşırı boyun bükülmesini önler ve boyun gerginliğini azaltır."
@@ -19,6 +21,7 @@
     {
       "id": "ERG-03",
       "rationale": "Visual Ergonomics",
+      "rationale_tr": "Görsel Ergonomi",
       "text": {
         "en": "Adhere to the 20-20-20 rule to combat Computer Vision Syndrome, which affects up to 75% of users. Every 20 minutes, focus on an object 20 feet away for 20 seconds to relax ocular muscles.",
         "tr": "Kullanıcıların %75'ini etkileyen Bilgisayar Görüş Sendromu ile savaşmak için 20-20-20 kuralına uyun. Göz kaslarınızı rahatlatmak için her 20 dakikada bir, 6 metre (20 feet) uzaklıktaki bir nesneye 20 saniye odaklanın."
@@ -27,6 +30,7 @@
     {
       "id": "ERG-04",
       "rationale": "Anthropometric Setup",
+      "rationale_tr": "Antropometrik Kurulum",
       "text": {
         "en": "Ensure your chair height allows your hips, knees, and elbows to maintain an approximate 90-degree angle. Feet must rest completely flat on the floor to stabilize the lumbar spine.",
         "tr": "Sandalye yüksekliğinizin kalça, diz ve dirseklerinizin yaklaşık 90 derecelik bir açı korumasını sağladığından emin olun. Bel omurgasını stabilize etmek için ayaklar yere tamamen düz basmalıdır."
@@ -35,6 +39,7 @@
     {
       "id": "ERG-05",
       "rationale": "Metabolic Equivalent",
+      "rationale_tr": "Metabolik Eşdeğer",
       "text": {
         "en": "Standing increases energy expenditure to approximately 95 calories per hour compared to 80 calories while sitting. These continuous micro-movements accumulate into significant metabolic and structural benefits.",
         "tr": "Ayakta durmak, otururken harcanan 80 kaloriye kıyasla enerji harcamasını saatte yaklaşık 95 kaloriye çıkarır. Bu sürekli mikro hareketler zamanla belirgin metabolik ve yapısal faydalara dönüşür."
@@ -43,6 +48,7 @@
     {
       "id": "ERG-06",
       "rationale": "Lumbar Support",
+      "rationale_tr": "Bel Desteği",
       "text": {
         "en": "Utilizing structured lumbar support decreases reported low back pain incidence. Ensure the backrest maintains the natural S-curve of your lower back, preventing harmful posterior pelvic tilt.",
         "tr": "Yapısal bel desteği kullanmak, bildirilen bel ağrısı vakalarını azaltır. Sırtlığın, zararlı arka pelvik eğimi önleyerek belinizin doğal S-eğrisini koruduğundan emin olun."
@@ -51,6 +57,7 @@
     {
       "id": "ERG-07",
       "rationale": "Forearm Alignment",
+      "rationale_tr": "Ön Kol Hizalaması",
       "text": {
         "en": "Keyboards and mice must reside on the same horizontal plane. Keep wrists perfectly straight to reduce pathological compression on the median nerve within the carpal tunnel.",
         "tr": "Klavye ve mouse aynı yatay düzlemde bulunmalıdır. Karpal tüneldeki median sinir üzerindeki patolojik baskıyı azaltmak için bileklerinizi tamamen düz tutun."
@@ -59,6 +66,7 @@
     {
       "id": "ERG-08",
       "rationale": "Environmental Illuminance",
+      "rationale_tr": "Ortam Aydınlatması",
       "text": {
         "en": "Optimal ergonomic lighting requires approximately 500 lux on your work surface. Avoid direct screen glare to eliminate unconscious, posture-destroying forward-leaning habits.",
         "tr": "Optimum ergonomik aydınlatma, çalışma yüzeyinizde yaklaşık 500 lüks gerektirir. Postürü bozan bilinçsizce öne eğilme alışkanlıklarını ortadan kaldırmak için doğrudan ekran parlamasından kaçının."
@@ -67,6 +75,7 @@
     {
       "id": "ERG-09",
       "rationale": "Movement Ratios",
+      "rationale_tr": "Hareket Oranları",
       "text": {
         "en": "Implement the OSHA-recommended 20-8-2 rule daily: 20 minutes of sitting, 8 minutes of standing, and 2 minutes of moving. Postural variety is the ultimate ergonomic tool against stiffness.",
         "tr": "OSHA tarafından önerilen 20-8-2 kuralını her gün uygulayın: 20 dakika oturma, 8 dakika ayakta durma ve 2 dakika hareket etme. Postüral çeşitlilik, sertliğe karşı en iyi ergonomik araçtır."
@@ -75,6 +84,7 @@
     {
       "id": "ERG-10",
       "rationale": "Cervical Load",
+      "rationale_tr": "Boyun Yükü",
       "text": {
         "en": "Looking down at a smartphone increases the effective weight of the head up to 60 lbs (27 kg) on the cervical spine. Always elevate your devices to chest or eye level.",
         "tr": "Akıllı telefona bakmak için eğilmek, başın boyun omurgası üzerindeki efektif ağırlığını 27 kg'a (60 lbs) kadar çıkarır. Cihazlarınızı daima göğüs veya göz hizasına kaldırın."
@@ -83,6 +93,7 @@
     {
       "id": "ERG-11",
       "rationale": "Asymmetrical Loading",
+      "rationale_tr": "Asimetrik Yüklenme",
       "text": {
         "en": "Avoid crossing your legs for prolonged periods. This habit induces pelvic torsion and creates highly asymmetrical, damaging loading on the lumbar intervertebral discs.",
         "tr": "Bacak bacak üstüne atmaktan uzun süre kaçının. Bu alışkanlık pelvik torsiyona (dönmeye) neden olur ve lomber intervertebral disklerde oldukça asimetrik, zarar verici bir yüklenme yaratır."
@@ -91,6 +102,7 @@
     {
       "id": "ERG-12",
       "rationale": "Monitor Tilt",
+      "rationale_tr": "Monitör Eğimi",
       "text": {
         "en": "Tilt the top of your monitor backwards by precisely 10 to 20 degrees. This optimal angle reduces visual glare and significantly lessens sub-occipital muscle fatigue at the skull base.",
         "tr": "Monitörünüzün üst kısmını tam olarak 10 ila 20 derece arkaya doğru eğin. Bu optimum açı, görsel parlamayı azaltır ve kafatası tabanındaki sub-oksipital kas yorgunluğunu önemli ölçüde hafifletir."
@@ -99,6 +111,7 @@
     {
       "id": "ERG-13",
       "rationale": "Remote Workstation",
+      "rationale_tr": "Uzak Çalışma Alanı",
       "text": {
         "en": "Laptop trackpads force prolonged wrist deviation. Utilizing an external mouse and keyboard is clinically proven to maintain healthier upper extremity mechanics and prevent tendonitis.",
         "tr": "Dizüstü bilgisayar dokunmatik yüzeyleri (trackpad), bileği uzun süreli sapmaya zorlar. Harici bir mouse ve klavye kullanmanın, üst ekstremite mekaniğini koruduğu ve tendiniti önlediği klinik olarak kanıtlanmıştır."
@@ -107,6 +120,7 @@
     {
       "id": "ERG-14",
       "rationale": "Micro-breaks",
+      "rationale_tr": "Mikro Molalar",
       "text": {
         "en": "Frequent, short interruptions of repetitive tasks are highly effective for tendon health. Small micro-breaks are vastly superior to occasional long rest periods for carpal tunnel prevention.",
         "tr": "Tekrarlayan görevlerin sık ve kısa süreli kesintiye uğratılması tendon sağlığı için oldukça etkilidir. Karpal tüneli önlemek için küçük mikro molalar, nadiren verilen uzun dinlenme sürelerinden çok daha üstündür."
@@ -115,6 +129,7 @@
     {
       "id": "ERG-15",
       "rationale": "Environmental Thermoregulation",
+      "rationale_tr": "Ortam Sıcaklık Kontrolü",
       "text": {
         "en": "Maintain workspace temperature between 18°C and 26°C. Cold environments increase muscle stiffness and exacerbate peripheral nerve compressions like carpal tunnel syndrome.",
         "tr": "Çalışma alanı sıcaklığını 18°C ile 26°C arasında tutun. Soğuk ortamlar kas sertliğini artırır ve karpal tünel sendromu gibi periferik sinir sıkışmalarını şiddetlendirir."
@@ -123,6 +138,7 @@
     {
       "id": "ERG-16",
       "rationale": "Kinetic Friction",
+      "rationale_tr": "Kinetik Sürtünme",
       "text": {
         "en": "Avoid resting your wrists directly on sharp or hard desk edges while typing. Use a \"floating wrist\" technique or padded rests to prevent micro-trauma to the median nerve.",
         "tr": "Yazı yazarken bileklerinizi doğrudan keskin veya sert masa kenarlarına dayamaktan kaçının. Median sinirdeki mikro travmaları önlemek için \"havada süzülen bilek\" tekniğini veya yumuşak destekleri kullanın."
@@ -131,6 +147,7 @@
     {
       "id": "ERG-17",
       "rationale": "Postural Habituation",
+      "rationale_tr": "Postüral Alışkanlık",
       "text": {
         "en": "Over 80% of screen users exhibit unconscious shoulder protraction. Perform a daily postural reset by gently squeezing the shoulder blades together and pulling them downward for 5 seconds.",
         "tr": "Ekran kullanıcılarının %80'inden fazlası bilinçsizce omuzlarını öne yuvarlar. Kürek kemiklerini nazikçe birbirine sıkarak ve aşağı doğru çekerek 5 saniye boyunca günlük postür sıfırlamanızı yapın."
@@ -139,6 +156,7 @@
     {
       "id": "ERG-18",
       "rationale": "Tissue Hydration",
+      "rationale_tr": "Doku Hidrasyonu",
       "text": {
         "en": "Intervertebral discs rely on osmotic pressure, not blood vessels, for nutrition. Gentle movement acts as a pump, pulling vital water and nutrients into the spinal discs.",
         "tr": "İntervertebral diskler beslenme için kan damarlarına değil, ozmotik basınca güvenir. Nazik hareketler bir pompa görevi görerek hayati suyu ve besinleri omurga disklerine çeker."
@@ -246,6 +264,7 @@
       {
         "id": "SCR-01",
         "bct_focus": "Re-framing Rest",
+        "bct_focus_tr": "Dinlenmeyi Yeniden Anlamlandırma",
         "text": {
           "en": "Rest is not a weakness; it is the fundamental biological protocol for muscular and connective tissue repair.",
           "tr": "Dinlenmek zayıflık değil, kas ve bağ dokusu onarımı için temel biyolojik protokoldür."
@@ -254,6 +273,7 @@
       {
         "id": "SCR-02",
         "bct_focus": "Natural Consequences",
+        "bct_focus_tr": "Doğal Sonuçlar",
         "text": {
           "en": "Listen to your body's whispers today, so you won't have to endure its painful screams tomorrow.",
           "tr": "Bugün vücudunun fısıltılarını dinle ki yarın ağrılı çığlıklarına katlanmak zorunda kalmayasın."
@@ -262,6 +282,7 @@
       {
         "id": "SCR-03",
         "bct_focus": "Self-Compassion",
+        "bct_focus_tr": "Öz-Şefkat",
         "text": {
           "en": "You cannot pour from an empty cup. Let your overworked muscles recharge without a trace of guilt.",
           "tr": "Boş bir bardaktan su dolduramazsın. Aşırı çalışan kaslarının zerre kadar suçluluk duymadan yenilenmesine izin ver."
@@ -270,6 +291,7 @@
       {
         "id": "SCR-04",
         "bct_focus": "Tissue Healing",
+        "bct_focus_tr": "Doku İyileşmesi",
         "text": {
           "en": "Microscopic tears heal only when we pause. Today's intentional stillness builds tomorrow's structural resilience.",
           "tr": "Mikroskobik yırtıklar sadece biz durakladığımızda iyileşir. Bugünün bilinçli dinginliği yarının yapısal dayanıklılığını inşa eder."
@@ -278,6 +300,7 @@
       {
         "id": "SCR-05",
         "bct_focus": "System Reset",
+        "bct_focus_tr": "Sistem Sıfırlama",
         "text": {
           "en": "Think of today as a critical physiological system update. Power down your joints to reboot stronger.",
           "tr": "Bugünü kritik bir fizyolojik sistem güncellemesi olarak düşün. Daha güçlü yeniden başlamak için eklemlerinin gücünü azalt."
@@ -286,6 +309,7 @@
       {
         "id": "SCR-06",
         "bct_focus": "Biological Autonomy",
+        "bct_focus_tr": "Biyolojik Otonomi",
         "text": {
           "en": "Your spine supports your entire world every day. Today, it’s your turn to actively support your spine.",
           "tr": "Omurgan her gün tüm dünyanı destekliyor. Bugün, omurganı aktif olarak destekleme sırası sende."
@@ -294,6 +318,7 @@
       {
         "id": "SCR-07",
         "bct_focus": "Feedback Reframing",
+        "bct_focus_tr": "Geri Bildirimi Yeniden Yorumlama",
         "text": {
           "en": "Pain is just data requesting a change. Today we analyze, passively recover, and gently recalibrate.",
           "tr": "Ağrı sadece değişim talep eden bir veridir. Bugün analiz ediyoruz, pasif olarak iyileşiyoruz ve nazikçe yeniden kalibre ediyoruz."
@@ -302,6 +327,7 @@
       {
         "id": "SCR-08",
         "bct_focus": "Mind-Body Connection",
+        "bct_focus_tr": "Zihin-Beden Bağlantısı",
         "text": {
           "en": "True, sustainable productivity includes the courage to stop, rest, and allow cellular repair.",
           "tr": "Gerçek ve sürdürülebilir üretkenlik, durma, dinlenme ve hücresel onarıma izin verme cesaretini de içerir."
@@ -310,6 +336,7 @@
       {
         "id": "SCR-09",
         "bct_focus": "Somatic Awareness",
+        "bct_focus_tr": "Somatik Farkındalık",
         "text": {
           "en": "Send gratitude to the joints that carried you through this week's stress. Give them the day off.",
           "tr": "Bu haftanın stresi boyunca seni taşıyan eklemlerine minnettarlığını gönder. Onlara bugün izin ver."
@@ -318,6 +345,7 @@
       {
         "id": "SCR-10",
         "bct_focus": "Habit Disruption",
+        "bct_focus_tr": "Alışkanlık Kırma",
         "text": {
           "en": "Stepping away from the desk and doing absolutely nothing is the most productive thing you can do right now.",
           "tr": "Masadan uzaklaşmak ve kesinlikle hiçbir şey yapmamak şu an yapabileceğin en üretken şeydir."
@@ -432,6 +460,7 @@
       {
         "id": "PSH-04",
         "bct_focus": "Posture Check",
+        "bct_focus_tr": "Postür Kontrolü",
         "text": {
           "en": "Quick biomechanics check: Are your ears currently stacked directly over your shoulders?",
           "tr": "Kısa biyomekanik kontrolü: Kulakların şu anda tam olarak omuzlarının üzerinde mi?"
@@ -464,6 +493,7 @@
       {
         "id": "PSH-08",
         "bct_focus": "Micro-break",
+        "bct_focus_tr": "Mikro Mola",
         "text": {
           "en": "Stretch your wrists gently! Continuous typing takes a severe toll on your median nerve.",
           "tr": "Bileklerini nazikçe esnet! Sürekli yazı yazmak median sinirine ağır bir bedel ödetir."
@@ -528,6 +558,7 @@
       {
         "id": "PSH-16",
         "bct_focus": "Pain Prevention",
+        "bct_focus_tr": "Ağrı Önleme",
         "text": {
           "en": "Change your physical position right now. Static postures are the absolute enemy of healthy joints.",
           "tr": "Fiziksel pozisyonunu hemen şimdi değiştir. Statik duruşlar sağlıklı eklemlerin kesin düşmanıdır."
@@ -570,6 +601,7 @@
       {
         "id": "CON-01",
         "bct_focus": "Focus on Past Success",
+        "bct_focus_tr": "Geçmiş Başarıya Odaklanma",
         "text": {
           "en": "Think about the relief you felt after your last stretch. Let's recreate that feeling today.",
           "tr": "Son esnemenden sonra hissettiğin rahatlamayı düşün. Bugün o hissi yeniden yaratalım."
@@ -578,6 +610,7 @@
       {
         "id": "CON-02",
         "bct_focus": "Consistency over Perfection",
+        "bct_focus_tr": "Mükemmeliyet Yerine İstikrar",
         "text": {
           "en": "Consistency is key. Short, regular movement sessions are clinically far more effective than occasional intense workouts.",
           "tr": "Devamlılık kilit noktadır. Kısa, düzenli hareket seansları klinik olarak nadir yapılan yoğun antrenmanlardan çok daha etkilidir."
@@ -586,6 +619,7 @@
       {
         "id": "CON-03",
         "bct_focus": "Self-Monitoring",
+        "bct_focus_tr": "Öz-İzleme",
         "text": {
           "en": "Tracking your daily micro-movements builds a powerful habit. You are steadily building a stronger, more resilient spine.",
           "tr": "Günlük mikro hareketlerini takip etmek güçlü bir alışkanlık oluşturur. Adım adım daha güçlü, daha dirençli bir omurga inşa ediyorsun."
@@ -594,6 +628,7 @@
       {
         "id": "CON-04",
         "bct_focus": "Graded Tasks",
+        "bct_focus_tr": "Dereceli Görevler",
         "text": {
           "en": "Start small today. Even 2 minutes of stretching contributes significantly to your long-term postural health.",
           "tr": "Bugün küçük başla. Sadece 2 dakikalık bir esneme bile uzun vadeli postür sağlığına önemli ölçüde katkıda bulunur."
@@ -602,6 +637,7 @@
       {
         "id": "CON-05",
         "bct_focus": "Goal Setting",
+        "bct_focus_tr": "Hedef Belirleme",
         "text": {
           "en": "Every time you choose to stretch, you cast a vote for a pain-free future. Keep showing up for yourself.",
           "tr": "Esnemeyi seçtiğin her an, ağrısız bir gelecek için oy kullanıyorsun. Kendin için orada olmaya devam et."
@@ -610,6 +646,7 @@
       {
         "id": "CON-06",
         "bct_focus": "Feedback & Monitoring",
+        "bct_focus_tr": "Geri Bildirim ve İzleme",
         "text": {
           "en": "Your body adapts to what you do consistently. Let's make healthy movement your new biological baseline.",
           "tr": "Vücudun sürekli yaptığın şeylere uyum sağlar. Hadi sağlıklı hareketi yeni biyolojik temelimiz yapalım."
@@ -618,6 +655,7 @@
       {
         "id": "CON-07",
         "bct_focus": "Cognitive Reframing",
+        "bct_focus_tr": "Bilişsel Yeniden Çerçeveleme",
         "text": {
           "en": "Consistency matters more than perfection. A moderately executed daily stretch beats a perfect stretch done once a month.",
           "tr": "Devamlılık mükemmellikten daha önemlidir. Orta halli yapılan günlük bir esneme, ayda bir kez yapılan kusursuz bir esnemeden daha iyidir."
@@ -626,6 +664,7 @@
       {
         "id": "CON-08",
         "bct_focus": "Social Support",
+        "bct_focus_tr": "Sosyal Destek",
         "text": {
           "en": "You are not alone in this journey. Every regular stretch is a step towards a healthier work-life balance.",
           "tr": "Bu yolculukta yalnız değilsin. Düzenli yapılan her esneme, daha sağlıklı bir iş-yaşam dengesine atılmış bir adımdır."
@@ -634,6 +673,7 @@
       {
         "id": "CON-09",
         "bct_focus": "Behavior Substitution",
+        "bct_focus_tr": "Davranış Değişikliği",
         "text": {
           "en": "Swap 5 minutes of scrolling for 5 minutes of stretching. Small behavioral substitutions lead to massive mechanical relief.",
           "tr": "5 dakikalık ekran kaydırmayı, 5 dakikalık esnemeyle değiştir. Küçük davranışsal değişiklikler büyük mekanik rahatlamalar sağlar."
@@ -642,6 +682,7 @@
       {
         "id": "CON-10",
         "bct_focus": "Progress Tracking",
+        "bct_focus_tr": "İlerleme Takibi",
         "text": {
           "en": "Your plan will evolve as you get stronger. Every session is a building block for your safe and steady improvement.",
           "tr": "Sen güçlendikçe planın da gelişecek. Her seans, güvenli ve istikrarlı gelişimin için bir yapı taşıdır."

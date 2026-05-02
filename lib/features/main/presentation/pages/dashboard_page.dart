@@ -9,8 +9,45 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:deskrelief/features/content/domain/models/content_models.dart';
 import 'package:deskrelief/features/content/presentation/pages/content_detail_page.dart';
 
-class DashboardPage extends StatelessWidget {
+import 'dart:async';
+import 'package:deskrelief/core/widgets/custom_toast.dart';
+
+class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
+
+  @override
+  State<DashboardPage> createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends State<DashboardPage> {
+  Timer? _toastTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    // Schedule a push command toast after 5 seconds on dashboard
+    _toastTimer = Timer(const Duration(seconds: 5), () {
+      if (mounted) {
+        final viewModel = context.read<DashboardViewModel>();
+        final pushCommand = viewModel.currentPushCommand;
+        final localeCode = Localizations.localeOf(context).languageCode;
+
+        if (pushCommand != null) {
+          CustomToast.show(
+            context,
+            pushCommand.getLocalizedText(localeCode),
+            isError: false,
+          );
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _toastTimer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,15 +70,13 @@ class DashboardPage extends StatelessWidget {
                 return SliverList(
                   delegate: SliverChildListDelegate([
                     const _WelcomeSection(),
-                    const SizedBox(height: 28),
+                    const SizedBox(height: 20),
                     _ProgressSection(isRestDay: isRestDay),
+                    const SizedBox(height: 10),
+                    const _MotivationMottoBox(),
                     const SizedBox(height: 24),
 
                     if (isRestDay) ...[
-                      const _RestDayClinicalCard(),
-                      const SizedBox(height: 20),
-                      const _NextSessionCard(),
-                      const SizedBox(height: 32),
                       const _SpinalHealthTipsHeader(),
                       const SizedBox(height: 16),
                       const _BentoContentGrid(),
@@ -72,16 +107,12 @@ class _WelcomeSection extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final loc = AppLocalizations.of(context)!;
-    final viewModel = context.watch<DashboardViewModel>();
-    final isRestDay = viewModel.isRestDay;
-    final localeCode = Localizations.localeOf(context).languageCode;
+    final isRestDay = context.watch<DashboardViewModel>().isRestDay;
 
     final String today = DateFormat(
       'EEEE, d MMMM',
       Localizations.localeOf(context).toString(),
     ).format(DateTime.now()).toUpperCase();
-
-    final motivation = viewModel.currentMotivation;
 
     return Stack(
       alignment: Alignment.topCenter,
@@ -121,27 +152,45 @@ class _WelcomeSection extends StatelessWidget {
                 height: 1.1,
               ),
             ),
-            if (motivation != null) ...[
-              const SizedBox(height: 8),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  motivation.getLocalizedText(localeCode),
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.manrope(
-                    fontSize: 14,
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.w500,
-                    color: theme.colorScheme.primary.withValues(alpha: 0.8),
-                  ),
-                ),
-              ),
-            ],
           ],
         ),
         if (!isRestDay)
           Positioned(right: -8, top: -20, child: _FlareUpButton()),
       ],
+    );
+  }
+}
+
+class _MotivationMottoBox extends StatelessWidget {
+  const _MotivationMottoBox();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final viewModel = context.watch<DashboardViewModel>();
+    final motivation = viewModel.currentMotivation;
+    final localeCode = Localizations.localeOf(context).languageCode;
+
+    if (motivation == null) return const SizedBox.shrink();
+
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        decoration: BoxDecoration(
+          color: theme.colorScheme.primary.withValues(alpha: 0.08),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Text(
+          '"${motivation.getLocalizedText(localeCode)}"',
+          textAlign: TextAlign.center,
+          style: GoogleFonts.manrope(
+            fontSize: 15,
+            fontWeight: FontWeight.w700,
+            color: theme.colorScheme.primary,
+            letterSpacing: -0.2,
+          ),
+        ),
+      ),
     );
   }
 }
@@ -381,6 +430,9 @@ class _ClinicalWarningSection extends StatelessWidget {
     final theme = Theme.of(context);
     final loc = AppLocalizations.of(context)!;
     final isDark = theme.brightness == Brightness.dark;
+    final viewModel = context.watch<DashboardViewModel>();
+    final regionalTip = viewModel.getRegionalTip();
+    final localeCode = Localizations.localeOf(context).languageCode;
 
     final warningColor = isDark
         ? const Color(0xFFFFCC00)
@@ -416,7 +468,7 @@ class _ClinicalWarningSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  loc.clinicalWarningTitle,
+                  regionalTip?.rationale ?? loc.clinicalWarningTitle,
                   style: theme.textTheme.labelSmall?.copyWith(
                     fontWeight: FontWeight.w900,
                     color: warningColor,
@@ -426,7 +478,8 @@ class _ClinicalWarningSection extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  loc.clinicalWarningDesc,
+                  regionalTip?.getLocalizedContent(localeCode) ??
+                      loc.clinicalWarningDesc,
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: warningColor.withValues(alpha: 0.9),
                     fontWeight: FontWeight.w600,
@@ -450,27 +503,15 @@ class _SpinalHealthTipsHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final loc = AppLocalizations.of(context)!;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          loc.spinalHealthTipsTitle,
-          style: theme.textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.w800,
-            letterSpacing: -0.5,
-          ),
+    return Padding(
+      padding: const EdgeInsets.only(left: 4.0),
+      child: Text(
+        loc.spinalHealthTipsTitle,
+        style: theme.textTheme.titleMedium?.copyWith(
+          fontWeight: FontWeight.w800,
+          letterSpacing: -0.5,
         ),
-        TextButton(
-          onPressed: () {},
-          child: Text(
-            loc.seeAll,
-            style: theme.textTheme.labelSmall?.copyWith(
-              color: theme.colorScheme.primary,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
@@ -698,148 +739,6 @@ class _StartWorkoutButtonState extends State<_StartWorkoutButton> {
   }
 }
 
-class _RestDayClinicalCard extends StatelessWidget {
-  const _RestDayClinicalCard();
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final primary = theme.colorScheme.primary;
-    final loc = AppLocalizations.of(context)!;
-
-    return Container(
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: primary.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(28),
-        border: Border.all(color: primary.withValues(alpha: 0.2)),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: primary.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(14),
-            ),
-            child: Icon(Icons.info_rounded, color: primary, size: 24),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  loc.restDayClinicalLabel,
-                  style: GoogleFonts.manrope(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 12,
-                    letterSpacing: 1.2,
-                    color: primary,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  loc.restDayClinicalNote,
-                  style: GoogleFonts.inter(
-                    fontSize: 15,
-                    height: 1.5,
-                    fontWeight: FontWeight.w700,
-                    color: theme.colorScheme.onSurface,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _NextSessionCard extends StatelessWidget {
-  const _NextSessionCard();
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final loc = AppLocalizations.of(context)!;
-    final isDark = theme.brightness == Brightness.dark;
-    final softGreen = isDark
-        ? const Color(0xFF1B3B2B)
-        : const Color(0xFFE8F5E9);
-    final darkGreen = isDark
-        ? const Color(0xFF4ADE80)
-        : const Color(0xFF1B5E20);
-
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: softGreen,
-        borderRadius: BorderRadius.circular(28),
-        border: Border.all(
-          color: darkGreen.withValues(alpha: isDark ? 0.2 : 0.1),
-        ),
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: isDark ? darkGreen.withValues(alpha: 0.2) : Colors.white,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                if (!isDark)
-                  BoxShadow(
-                    color: darkGreen.withValues(alpha: 0.1),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
-                  ),
-              ],
-            ),
-            child: Icon(
-              Icons.calendar_today_rounded,
-              color: darkGreen,
-              size: 24,
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  loc.nextSession,
-                  style: GoogleFonts.manrope(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 11,
-                    letterSpacing: 1.0,
-                    color: theme.colorScheme.onSurface.withValues(alpha: 0.8),
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  '${loc.tomorrow} 19:00',
-                  style: GoogleFonts.manrope(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w800,
-                    color: theme.colorScheme.onSurface,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Icon(
-            Icons.chevron_right_rounded,
-            color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _BentoContentGrid extends StatelessWidget {
   const _BentoContentGrid();
 
@@ -848,7 +747,6 @@ class _BentoContentGrid extends StatelessWidget {
     final theme = Theme.of(context);
     final viewModel = context.watch<DashboardViewModel>();
     final localeCode = Localizations.localeOf(context).languageCode;
-    final tips = viewModel.recommendedTips;
     final blog = viewModel.randomFeaturedBlog;
     final loc = AppLocalizations.of(context)!;
 
@@ -872,7 +770,7 @@ class _BentoContentGrid extends StatelessWidget {
                   borderRadius: BorderRadius.circular(32),
                   image: DecorationImage(
                     image: NetworkImage(blog.imageUrl),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                   ),
                 ),
                 child: Container(
@@ -935,12 +833,16 @@ class _BentoContentGrid extends StatelessWidget {
               Expanded(
                 child: _SmallBentoCard(
                   icon: Icons.lightbulb_outline_rounded,
-                  title: loc.dailyTip,
-                  subtitle: tips.isNotEmpty
-                      ? tips.first.getLocalizedContent(localeCode)
-                      : (localeCode == 'tr'
-                            ? 'Ekranını göz hizasında tut.'
-                            : 'Keep your screen at eye level.'),
+                  title:
+                      viewModel.currentErgoTip?.getLocalizedRationale(
+                        localeCode,
+                      ) ??
+                      loc.dailyTip,
+                  subtitle:
+                      viewModel.currentErgoTip?.getLocalizedContent(
+                        localeCode,
+                      ) ??
+                      loc.tipErgonomicsDesc,
                   iconColor: Colors.amber,
                 ),
               ),
@@ -948,12 +850,12 @@ class _BentoContentGrid extends StatelessWidget {
               Expanded(
                 child: _SmallBentoCard(
                   icon: Icons.auto_graph_rounded,
-                  title: viewModel.currentBct?.bctFocus ?? 'BCT',
+                  title:
+                      viewModel.currentBct?.getLocalizedFocus(localeCode) ??
+                      'BCT',
                   subtitle:
                       viewModel.currentBct?.getLocalizedText(localeCode) ??
-                      (localeCode == 'tr'
-                          ? 'Küçük adımlar, büyük değişimler.'
-                          : 'Small steps, big changes.'),
+                      loc.tipMobilityDesc,
                   iconColor: Colors.blueAccent,
                 ),
               ),
@@ -984,7 +886,6 @@ class _SmallBentoCard extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
 
     return Container(
-      constraints: const BoxConstraints(minHeight: 160),
       decoration: BoxDecoration(
         color: isDark
             ? Color.lerp(theme.colorScheme.surface, iconColor, 0.05)
@@ -1009,62 +910,38 @@ class _SmallBentoCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(24),
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: Stack(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: iconColor.withValues(alpha: 0.12),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(icon, color: iconColor, size: 20),
-                    ),
-                    const SizedBox(height: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.manrope(
-                              fontWeight: FontWeight.w800,
-                              fontSize: 14,
-                              color: theme.colorScheme.onSurface,
-                              letterSpacing: -0.2,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            subtitle,
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.inter(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: theme.colorScheme.onSurfaceVariant,
-                              height: 1.4,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: iconColor.withValues(alpha: 0.12),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(icon, color: iconColor, size: 20),
                 ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: Icon(
-                    Icons.chevron_right_rounded,
-                    size: 14,
-                    color: theme.colorScheme.onSurfaceVariant.withValues(
-                      alpha: 0.4,
-                    ),
+                const SizedBox(height: 12),
+                Text(
+                  title,
+                  maxLines: 2,
+                  style: GoogleFonts.manrope(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 13,
+                    color: theme.colorScheme.onSurface,
+                    letterSpacing: -0.2,
+                    height: 1.2,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  subtitle,
+                  style: GoogleFonts.inter(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 12,
+                    color: theme.colorScheme.onSurfaceVariant,
+                    height: 1.4,
                   ),
                 ),
               ],

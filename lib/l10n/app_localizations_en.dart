@@ -880,7 +880,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get emailLabel => 'Email';
 
   @override
-  String get emailHint => 'jondoe@mail.com';
+  String get emailHint => 'john.doe@company.com';
 
   @override
   String get passwordLabel => 'Password';

@@ -8,6 +8,7 @@ import '../viewmodels/daily_routine_view_model.dart';
 import '../../domain/models/exercise_model.dart';
 import '../../../../core/widgets/shimmer_loading.dart';
 import '../../../../core/widgets/empty_state_widget.dart';
+import '../../../content/domain/models/content_models.dart';
 
 class DailyRoutinePage extends StatelessWidget {
   const DailyRoutinePage({super.key});
@@ -18,6 +19,7 @@ class DailyRoutinePage extends StatelessWidget {
     final loc = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final drColors = theme.extension<DeskReliefColors>()!;
+    final regionalTip = viewModel.getRegionalTip();
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -91,11 +93,17 @@ class DailyRoutinePage extends StatelessWidget {
                     
                     // Motivation Card
                     _MotivationCard(
-                      tagline: loc.motivationTagline,
-                      quote: loc.motivationQuote,
+                      tagline: viewModel.currentContinuityQuote?.bctFocus ?? loc.motivationTagline,
+                      quote: viewModel.currentContinuityQuote?.getLocalizedText(Localizations.localeOf(context).languageCode) ?? loc.motivationQuote,
                     ),
                     
                     const SizedBox(height: 32),
+
+                    // Regional Clinical Tip
+                    if (regionalTip != null) ...[
+                      _RegionalTipCard(tip: regionalTip),
+                      const SizedBox(height: 32),
+                    ],
                     
                     // Exercise List Header
                     Row(
@@ -530,6 +538,71 @@ class _Tag extends StatelessWidget {
           fontWeight: FontWeight.w900,
           color: textColor,
         ),
+      ),
+    );
+  }
+}
+
+class _RegionalTipCard extends StatelessWidget {
+  final ErgoTipModel tip;
+
+  const _RegionalTipCard({required this.tip});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final localeCode = Localizations.localeOf(context).languageCode;
+
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.primary.withValues(alpha: 0.05),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(
+          color: theme.colorScheme.primary.withValues(alpha: 0.1),
+        ),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.primary.withValues(alpha: 0.1),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.info_outline_rounded,
+              color: theme.colorScheme.primary,
+              size: 20,
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  tip.rationale ?? "Clinical Note",
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    fontWeight: FontWeight.w900,
+                    color: theme.colorScheme.primary,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  tip.getLocalizedContent(localeCode),
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: theme.colorScheme.onSurface,
+                    height: 1.4,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

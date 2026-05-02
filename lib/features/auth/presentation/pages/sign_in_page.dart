@@ -129,7 +129,9 @@ class _SignInPageState extends State<SignInPage> {
                                 borderRadius: BorderRadius.circular(24),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: theme.shadowColor.withValues(alpha: 0.05),
+                                    color: theme.shadowColor.withValues(
+                                      alpha: 0.05,
+                                    ),
                                     blurRadius: 20,
                                     offset: const Offset(0, 10),
                                   ),
@@ -151,12 +153,22 @@ class _SignInPageState extends State<SignInPage> {
                                       controller: _emailController,
                                       focusNode: _emailFocus,
                                       keyboardType: TextInputType.emailAddress,
-                                      autofillHints: const [AutofillHints.email],
+                                      autofillHints: const [
+                                        AutofillHints.email,
+                                      ],
                                       textInputAction: TextInputAction.next,
                                       decoration: InputDecoration(
-                                        hintText: 'jondoe@mail.com',
-                                        errorText: authViewModel.errorMessage?.toLowerCase().contains('email') == true || authViewModel.errorMessage?.toLowerCase().contains('user') == true 
-                                            ? authViewModel.errorMessage 
+                                        hintText: 'john.doe@company.com',
+                                        errorText:
+                                            authViewModel.errorMessage
+                                                        ?.toLowerCase()
+                                                        .contains('email') ==
+                                                    true ||
+                                                authViewModel.errorMessage
+                                                        ?.toLowerCase()
+                                                        .contains('user') ==
+                                                    true
+                                            ? authViewModel.errorMessage
                                             : null,
                                         prefixIcon: const Icon(
                                           Icons.person_outline,
@@ -194,13 +206,19 @@ class _SignInPageState extends State<SignInPage> {
                                       controller: _passwordController,
                                       focusNode: _passwordFocus,
                                       obscureText: _obscurePassword,
-                                      autofillHints: const [AutofillHints.password],
+                                      autofillHints: const [
+                                        AutofillHints.password,
+                                      ],
                                       textInputAction: TextInputAction.done,
                                       onFieldSubmitted: (_) => _onSignIn(),
                                       decoration: InputDecoration(
                                         hintText: '••••••••',
-                                        errorText: authViewModel.errorMessage?.toLowerCase().contains('password') == true 
-                                            ? authViewModel.errorMessage 
+                                        errorText:
+                                            authViewModel.errorMessage
+                                                    ?.toLowerCase()
+                                                    .contains('password') ==
+                                                true
+                                            ? authViewModel.errorMessage
                                             : null,
                                         prefixIcon: const Icon(
                                           Icons.lock_outline,
@@ -234,17 +252,18 @@ class _SignInPageState extends State<SignInPage> {
                                             )!.invalidPasswordError,
                                     ),
 
-                                      Align(
-                                        alignment: Alignment.centerRight,
-                                        child: TextButton(
-                                          onPressed: () => context.push('/forgot-password'),
-                                          child: Text(
-                                            AppLocalizations.of(
-                                              context,
-                                            )!.forgotPassword,
-                                          ),
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: TextButton(
+                                        onPressed: () =>
+                                            context.push('/forgot-password'),
+                                        child: Text(
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.forgotPassword,
                                         ),
                                       ),
+                                    ),
                                     const SizedBox(height: 8),
 
                                     CustomPrimaryButton(
@@ -312,16 +331,22 @@ class _SignInPageState extends State<SignInPage> {
                                                   await authViewModel
                                                       .signInWithGoogle(loc);
                                               if (!context.mounted) return;
-                                              
+
                                               if (success) {
                                                 CustomToast.show(
                                                   context,
                                                   loc.signInSuccess,
                                                   isError: false,
                                                 );
-                                                authViewModel.checkClinicalStatus(context, authViewModel.currentUser!);
-                                              } else if (authViewModel.errorMessage !=
-                                                      null) {
+                                                authViewModel
+                                                    .checkClinicalStatus(
+                                                      context,
+                                                      authViewModel
+                                                          .currentUser!,
+                                                    );
+                                              } else if (authViewModel
+                                                      .errorMessage !=
+                                                  null) {
                                                 CustomToast.show(
                                                   context,
                                                   authViewModel.errorMessage!,
@@ -355,9 +380,15 @@ class _SignInPageState extends State<SignInPage> {
                                                   loc.signInSuccess,
                                                   isError: false,
                                                 );
-                                                authViewModel.checkClinicalStatus(context, authViewModel.currentUser!);
-                                              } else if (authViewModel.errorMessage !=
-                                                      null) {
+                                                authViewModel
+                                                    .checkClinicalStatus(
+                                                      context,
+                                                      authViewModel
+                                                          .currentUser!,
+                                                    );
+                                              } else if (authViewModel
+                                                      .errorMessage !=
+                                                  null) {
                                                 CustomToast.show(
                                                   context,
                                                   authViewModel.errorMessage!,

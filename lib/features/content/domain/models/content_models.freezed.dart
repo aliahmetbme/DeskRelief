@@ -281,7 +281,7 @@ as String,
 /// @nodoc
 mixin _$MotivationModel {
 
- String get id;@JsonKey(name: 'bct_focus') String? get bctFocus; Map<String, String> get text; String get category;// Populated during parsing (e.g., 'screen_greetings')
+ String get id;@JsonKey(name: 'bct_focus') String? get bctFocus;@JsonKey(name: 'bct_focus_tr') String? get bctFocusTr; Map<String, String> get text; String get category;// Populated during parsing (e.g., 'screen_greetings')
  String? get citations;
 /// Create a copy of MotivationModel
 /// with the given fields replaced by the non-null parameter values.
@@ -295,16 +295,16 @@ $MotivationModelCopyWith<MotivationModel> get copyWith => _$MotivationModelCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MotivationModel&&(identical(other.id, id) || other.id == id)&&(identical(other.bctFocus, bctFocus) || other.bctFocus == bctFocus)&&const DeepCollectionEquality().equals(other.text, text)&&(identical(other.category, category) || other.category == category)&&(identical(other.citations, citations) || other.citations == citations));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MotivationModel&&(identical(other.id, id) || other.id == id)&&(identical(other.bctFocus, bctFocus) || other.bctFocus == bctFocus)&&(identical(other.bctFocusTr, bctFocusTr) || other.bctFocusTr == bctFocusTr)&&const DeepCollectionEquality().equals(other.text, text)&&(identical(other.category, category) || other.category == category)&&(identical(other.citations, citations) || other.citations == citations));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,bctFocus,const DeepCollectionEquality().hash(text),category,citations);
+int get hashCode => Object.hash(runtimeType,id,bctFocus,bctFocusTr,const DeepCollectionEquality().hash(text),category,citations);
 
 @override
 String toString() {
-  return 'MotivationModel(id: $id, bctFocus: $bctFocus, text: $text, category: $category, citations: $citations)';
+  return 'MotivationModel(id: $id, bctFocus: $bctFocus, bctFocusTr: $bctFocusTr, text: $text, category: $category, citations: $citations)';
 }
 
 
@@ -315,7 +315,7 @@ abstract mixin class $MotivationModelCopyWith<$Res>  {
   factory $MotivationModelCopyWith(MotivationModel value, $Res Function(MotivationModel) _then) = _$MotivationModelCopyWithImpl;
 @useResult
 $Res call({
- String id,@JsonKey(name: 'bct_focus') String? bctFocus, Map<String, String> text, String category, String? citations
+ String id,@JsonKey(name: 'bct_focus') String? bctFocus,@JsonKey(name: 'bct_focus_tr') String? bctFocusTr, Map<String, String> text, String category, String? citations
 });
 
 
@@ -332,10 +332,11 @@ class _$MotivationModelCopyWithImpl<$Res>
 
 /// Create a copy of MotivationModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? bctFocus = freezed,Object? text = null,Object? category = null,Object? citations = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? bctFocus = freezed,Object? bctFocusTr = freezed,Object? text = null,Object? category = null,Object? citations = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,bctFocus: freezed == bctFocus ? _self.bctFocus : bctFocus // ignore: cast_nullable_to_non_nullable
+as String?,bctFocusTr: freezed == bctFocusTr ? _self.bctFocusTr : bctFocusTr // ignore: cast_nullable_to_non_nullable
 as String?,text: null == text ? _self.text : text // ignore: cast_nullable_to_non_nullable
 as Map<String, String>,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as String,citations: freezed == citations ? _self.citations : citations // ignore: cast_nullable_to_non_nullable
@@ -424,10 +425,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'bct_focus')  String? bctFocus,  Map<String, String> text,  String category,  String? citations)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'bct_focus')  String? bctFocus, @JsonKey(name: 'bct_focus_tr')  String? bctFocusTr,  Map<String, String> text,  String category,  String? citations)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MotivationModel() when $default != null:
-return $default(_that.id,_that.bctFocus,_that.text,_that.category,_that.citations);case _:
+return $default(_that.id,_that.bctFocus,_that.bctFocusTr,_that.text,_that.category,_that.citations);case _:
   return orElse();
 
 }
@@ -445,10 +446,10 @@ return $default(_that.id,_that.bctFocus,_that.text,_that.category,_that.citation
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'bct_focus')  String? bctFocus,  Map<String, String> text,  String category,  String? citations)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'bct_focus')  String? bctFocus, @JsonKey(name: 'bct_focus_tr')  String? bctFocusTr,  Map<String, String> text,  String category,  String? citations)  $default,) {final _that = this;
 switch (_that) {
 case _MotivationModel():
-return $default(_that.id,_that.bctFocus,_that.text,_that.category,_that.citations);case _:
+return $default(_that.id,_that.bctFocus,_that.bctFocusTr,_that.text,_that.category,_that.citations);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -465,10 +466,10 @@ return $default(_that.id,_that.bctFocus,_that.text,_that.category,_that.citation
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(name: 'bct_focus')  String? bctFocus,  Map<String, String> text,  String category,  String? citations)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(name: 'bct_focus')  String? bctFocus, @JsonKey(name: 'bct_focus_tr')  String? bctFocusTr,  Map<String, String> text,  String category,  String? citations)?  $default,) {final _that = this;
 switch (_that) {
 case _MotivationModel() when $default != null:
-return $default(_that.id,_that.bctFocus,_that.text,_that.category,_that.citations);case _:
+return $default(_that.id,_that.bctFocus,_that.bctFocusTr,_that.text,_that.category,_that.citations);case _:
   return null;
 
 }
@@ -480,11 +481,12 @@ return $default(_that.id,_that.bctFocus,_that.text,_that.category,_that.citation
 @JsonSerializable()
 
 class _MotivationModel implements MotivationModel {
-  const _MotivationModel({required this.id, @JsonKey(name: 'bct_focus') this.bctFocus, required final  Map<String, String> text, this.category = '', this.citations}): _text = text;
+  const _MotivationModel({required this.id, @JsonKey(name: 'bct_focus') this.bctFocus, @JsonKey(name: 'bct_focus_tr') this.bctFocusTr, required final  Map<String, String> text, this.category = '', this.citations}): _text = text;
   factory _MotivationModel.fromJson(Map<String, dynamic> json) => _$MotivationModelFromJson(json);
 
 @override final  String id;
 @override@JsonKey(name: 'bct_focus') final  String? bctFocus;
+@override@JsonKey(name: 'bct_focus_tr') final  String? bctFocusTr;
  final  Map<String, String> _text;
 @override Map<String, String> get text {
   if (_text is EqualUnmodifiableMapView) return _text;
@@ -509,16 +511,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MotivationModel&&(identical(other.id, id) || other.id == id)&&(identical(other.bctFocus, bctFocus) || other.bctFocus == bctFocus)&&const DeepCollectionEquality().equals(other._text, _text)&&(identical(other.category, category) || other.category == category)&&(identical(other.citations, citations) || other.citations == citations));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MotivationModel&&(identical(other.id, id) || other.id == id)&&(identical(other.bctFocus, bctFocus) || other.bctFocus == bctFocus)&&(identical(other.bctFocusTr, bctFocusTr) || other.bctFocusTr == bctFocusTr)&&const DeepCollectionEquality().equals(other._text, _text)&&(identical(other.category, category) || other.category == category)&&(identical(other.citations, citations) || other.citations == citations));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,bctFocus,const DeepCollectionEquality().hash(_text),category,citations);
+int get hashCode => Object.hash(runtimeType,id,bctFocus,bctFocusTr,const DeepCollectionEquality().hash(_text),category,citations);
 
 @override
 String toString() {
-  return 'MotivationModel(id: $id, bctFocus: $bctFocus, text: $text, category: $category, citations: $citations)';
+  return 'MotivationModel(id: $id, bctFocus: $bctFocus, bctFocusTr: $bctFocusTr, text: $text, category: $category, citations: $citations)';
 }
 
 
@@ -529,7 +531,7 @@ abstract mixin class _$MotivationModelCopyWith<$Res> implements $MotivationModel
   factory _$MotivationModelCopyWith(_MotivationModel value, $Res Function(_MotivationModel) _then) = __$MotivationModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id,@JsonKey(name: 'bct_focus') String? bctFocus, Map<String, String> text, String category, String? citations
+ String id,@JsonKey(name: 'bct_focus') String? bctFocus,@JsonKey(name: 'bct_focus_tr') String? bctFocusTr, Map<String, String> text, String category, String? citations
 });
 
 
@@ -546,10 +548,11 @@ class __$MotivationModelCopyWithImpl<$Res>
 
 /// Create a copy of MotivationModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? bctFocus = freezed,Object? text = null,Object? category = null,Object? citations = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? bctFocus = freezed,Object? bctFocusTr = freezed,Object? text = null,Object? category = null,Object? citations = freezed,}) {
   return _then(_MotivationModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,bctFocus: freezed == bctFocus ? _self.bctFocus : bctFocus // ignore: cast_nullable_to_non_nullable
+as String?,bctFocusTr: freezed == bctFocusTr ? _self.bctFocusTr : bctFocusTr // ignore: cast_nullable_to_non_nullable
 as String?,text: null == text ? _self._text : text // ignore: cast_nullable_to_non_nullable
 as Map<String, String>,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as String,citations: freezed == citations ? _self.citations : citations // ignore: cast_nullable_to_non_nullable
@@ -564,7 +567,7 @@ as String?,
 /// @nodoc
 mixin _$ErgoTipModel {
 
- String get id; String? get rationale; Map<String, String>? get content;// Used in regional_tips
+ String get id; String? get rationale;@JsonKey(name: 'rationale_tr') String? get rationaleTr; Map<String, String>? get content;// Used in regional_tips
  Map<String, String>? get text;// Used in ergonomic_micro_interventions
  String? get citations;
 /// Create a copy of ErgoTipModel
@@ -579,16 +582,16 @@ $ErgoTipModelCopyWith<ErgoTipModel> get copyWith => _$ErgoTipModelCopyWithImpl<E
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ErgoTipModel&&(identical(other.id, id) || other.id == id)&&(identical(other.rationale, rationale) || other.rationale == rationale)&&const DeepCollectionEquality().equals(other.content, content)&&const DeepCollectionEquality().equals(other.text, text)&&(identical(other.citations, citations) || other.citations == citations));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ErgoTipModel&&(identical(other.id, id) || other.id == id)&&(identical(other.rationale, rationale) || other.rationale == rationale)&&(identical(other.rationaleTr, rationaleTr) || other.rationaleTr == rationaleTr)&&const DeepCollectionEquality().equals(other.content, content)&&const DeepCollectionEquality().equals(other.text, text)&&(identical(other.citations, citations) || other.citations == citations));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,rationale,const DeepCollectionEquality().hash(content),const DeepCollectionEquality().hash(text),citations);
+int get hashCode => Object.hash(runtimeType,id,rationale,rationaleTr,const DeepCollectionEquality().hash(content),const DeepCollectionEquality().hash(text),citations);
 
 @override
 String toString() {
-  return 'ErgoTipModel(id: $id, rationale: $rationale, content: $content, text: $text, citations: $citations)';
+  return 'ErgoTipModel(id: $id, rationale: $rationale, rationaleTr: $rationaleTr, content: $content, text: $text, citations: $citations)';
 }
 
 
@@ -599,7 +602,7 @@ abstract mixin class $ErgoTipModelCopyWith<$Res>  {
   factory $ErgoTipModelCopyWith(ErgoTipModel value, $Res Function(ErgoTipModel) _then) = _$ErgoTipModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String? rationale, Map<String, String>? content, Map<String, String>? text, String? citations
+ String id, String? rationale,@JsonKey(name: 'rationale_tr') String? rationaleTr, Map<String, String>? content, Map<String, String>? text, String? citations
 });
 
 
@@ -616,10 +619,11 @@ class _$ErgoTipModelCopyWithImpl<$Res>
 
 /// Create a copy of ErgoTipModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? rationale = freezed,Object? content = freezed,Object? text = freezed,Object? citations = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? rationale = freezed,Object? rationaleTr = freezed,Object? content = freezed,Object? text = freezed,Object? citations = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,rationale: freezed == rationale ? _self.rationale : rationale // ignore: cast_nullable_to_non_nullable
+as String?,rationaleTr: freezed == rationaleTr ? _self.rationaleTr : rationaleTr // ignore: cast_nullable_to_non_nullable
 as String?,content: freezed == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as Map<String, String>?,text: freezed == text ? _self.text : text // ignore: cast_nullable_to_non_nullable
 as Map<String, String>?,citations: freezed == citations ? _self.citations : citations // ignore: cast_nullable_to_non_nullable
@@ -708,10 +712,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? rationale,  Map<String, String>? content,  Map<String, String>? text,  String? citations)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? rationale, @JsonKey(name: 'rationale_tr')  String? rationaleTr,  Map<String, String>? content,  Map<String, String>? text,  String? citations)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ErgoTipModel() when $default != null:
-return $default(_that.id,_that.rationale,_that.content,_that.text,_that.citations);case _:
+return $default(_that.id,_that.rationale,_that.rationaleTr,_that.content,_that.text,_that.citations);case _:
   return orElse();
 
 }
@@ -729,10 +733,10 @@ return $default(_that.id,_that.rationale,_that.content,_that.text,_that.citation
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? rationale,  Map<String, String>? content,  Map<String, String>? text,  String? citations)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? rationale, @JsonKey(name: 'rationale_tr')  String? rationaleTr,  Map<String, String>? content,  Map<String, String>? text,  String? citations)  $default,) {final _that = this;
 switch (_that) {
 case _ErgoTipModel():
-return $default(_that.id,_that.rationale,_that.content,_that.text,_that.citations);case _:
+return $default(_that.id,_that.rationale,_that.rationaleTr,_that.content,_that.text,_that.citations);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -749,10 +753,10 @@ return $default(_that.id,_that.rationale,_that.content,_that.text,_that.citation
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? rationale,  Map<String, String>? content,  Map<String, String>? text,  String? citations)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? rationale, @JsonKey(name: 'rationale_tr')  String? rationaleTr,  Map<String, String>? content,  Map<String, String>? text,  String? citations)?  $default,) {final _that = this;
 switch (_that) {
 case _ErgoTipModel() when $default != null:
-return $default(_that.id,_that.rationale,_that.content,_that.text,_that.citations);case _:
+return $default(_that.id,_that.rationale,_that.rationaleTr,_that.content,_that.text,_that.citations);case _:
   return null;
 
 }
@@ -764,11 +768,12 @@ return $default(_that.id,_that.rationale,_that.content,_that.text,_that.citation
 @JsonSerializable()
 
 class _ErgoTipModel implements ErgoTipModel {
-  const _ErgoTipModel({required this.id, this.rationale, final  Map<String, String>? content, final  Map<String, String>? text, this.citations}): _content = content,_text = text;
+  const _ErgoTipModel({required this.id, this.rationale, @JsonKey(name: 'rationale_tr') this.rationaleTr, final  Map<String, String>? content, final  Map<String, String>? text, this.citations}): _content = content,_text = text;
   factory _ErgoTipModel.fromJson(Map<String, dynamic> json) => _$ErgoTipModelFromJson(json);
 
 @override final  String id;
 @override final  String? rationale;
+@override@JsonKey(name: 'rationale_tr') final  String? rationaleTr;
  final  Map<String, String>? _content;
 @override Map<String, String>? get content {
   final value = _content;
@@ -805,16 +810,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ErgoTipModel&&(identical(other.id, id) || other.id == id)&&(identical(other.rationale, rationale) || other.rationale == rationale)&&const DeepCollectionEquality().equals(other._content, _content)&&const DeepCollectionEquality().equals(other._text, _text)&&(identical(other.citations, citations) || other.citations == citations));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ErgoTipModel&&(identical(other.id, id) || other.id == id)&&(identical(other.rationale, rationale) || other.rationale == rationale)&&(identical(other.rationaleTr, rationaleTr) || other.rationaleTr == rationaleTr)&&const DeepCollectionEquality().equals(other._content, _content)&&const DeepCollectionEquality().equals(other._text, _text)&&(identical(other.citations, citations) || other.citations == citations));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,rationale,const DeepCollectionEquality().hash(_content),const DeepCollectionEquality().hash(_text),citations);
+int get hashCode => Object.hash(runtimeType,id,rationale,rationaleTr,const DeepCollectionEquality().hash(_content),const DeepCollectionEquality().hash(_text),citations);
 
 @override
 String toString() {
-  return 'ErgoTipModel(id: $id, rationale: $rationale, content: $content, text: $text, citations: $citations)';
+  return 'ErgoTipModel(id: $id, rationale: $rationale, rationaleTr: $rationaleTr, content: $content, text: $text, citations: $citations)';
 }
 
 
@@ -825,7 +830,7 @@ abstract mixin class _$ErgoTipModelCopyWith<$Res> implements $ErgoTipModelCopyWi
   factory _$ErgoTipModelCopyWith(_ErgoTipModel value, $Res Function(_ErgoTipModel) _then) = __$ErgoTipModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String? rationale, Map<String, String>? content, Map<String, String>? text, String? citations
+ String id, String? rationale,@JsonKey(name: 'rationale_tr') String? rationaleTr, Map<String, String>? content, Map<String, String>? text, String? citations
 });
 
 
@@ -842,10 +847,11 @@ class __$ErgoTipModelCopyWithImpl<$Res>
 
 /// Create a copy of ErgoTipModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? rationale = freezed,Object? content = freezed,Object? text = freezed,Object? citations = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? rationale = freezed,Object? rationaleTr = freezed,Object? content = freezed,Object? text = freezed,Object? citations = freezed,}) {
   return _then(_ErgoTipModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,rationale: freezed == rationale ? _self.rationale : rationale // ignore: cast_nullable_to_non_nullable
+as String?,rationaleTr: freezed == rationaleTr ? _self.rationaleTr : rationaleTr // ignore: cast_nullable_to_non_nullable
 as String?,content: freezed == content ? _self._content : content // ignore: cast_nullable_to_non_nullable
 as Map<String, String>?,text: freezed == text ? _self._text : text // ignore: cast_nullable_to_non_nullable
 as Map<String, String>?,citations: freezed == citations ? _self.citations : citations // ignore: cast_nullable_to_non_nullable

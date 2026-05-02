@@ -25,7 +25,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   Future<void> _onResetPassword() async {
     if (!_formKey.currentState!.validate()) return;
-    
+
     final email = _emailController.text.trim();
     final authVM = context.read<AuthViewModel>();
     final loc = AppLocalizations.of(context)!;
@@ -78,14 +78,21 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               children: [
                 // Custom App Bar (Minimalist)
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
                   child: Row(
                     children: [
                       IconButton(
                         onPressed: () => context.pop(),
-                        icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
+                        icon: const Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          size: 20,
+                        ),
                         style: IconButton.styleFrom(
-                          backgroundColor: theme.colorScheme.surfaceContainerLow,
+                          backgroundColor:
+                              theme.colorScheme.surfaceContainerLow,
                           foregroundColor: theme.colorScheme.primary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
@@ -104,7 +111,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       child: Column(
                         children: [
                           const SizedBox(height: 40),
-                          
+
                           // Hero Visual: Lock Reset Icon
                           Center(
                             child: Stack(
@@ -114,7 +121,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                   width: 140,
                                   height: 140,
                                   decoration: BoxDecoration(
-                                    color: theme.colorScheme.primary.withValues(alpha: 0.05),
+                                    color: theme.colorScheme.primary.withValues(
+                                      alpha: 0.05,
+                                    ),
                                     shape: BoxShape.circle,
                                   ),
                                 ),
@@ -122,15 +131,22 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                   width: 120,
                                   height: 120,
                                   decoration: BoxDecoration(
-                                    color: theme.colorScheme.surfaceContainerLowest.withValues(alpha: 0.8),
+                                    color: theme
+                                        .colorScheme
+                                        .surfaceContainerLowest
+                                        .withValues(alpha: 0.8),
                                     shape: BoxShape.circle,
                                     border: Border.all(
-                                      color: Colors.white.withValues(alpha: isDark ? 0.1 : 0.5),
+                                      color: Colors.white.withValues(
+                                        alpha: isDark ? 0.1 : 0.5,
+                                      ),
                                       width: 1,
                                     ),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.black.withValues(alpha: 0.05),
+                                        color: Colors.black.withValues(
+                                          alpha: 0.05,
+                                        ),
                                         blurRadius: 20,
                                         offset: const Offset(0, 10),
                                       ),
@@ -179,7 +195,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(left: 4, bottom: 8),
+                                padding: const EdgeInsets.only(
+                                  left: 4,
+                                  bottom: 8,
+                                ),
                                 child: Text(
                                   loc.emailLabel.toUpperCase(),
                                   style: theme.textTheme.labelSmall?.copyWith(
@@ -193,17 +212,22 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                 controller: _emailController,
                                 keyboardType: TextInputType.emailAddress,
                                 decoration: InputDecoration(
-                                  hintText: 'ornek@deskrelief.com',
-                                  prefixIcon: const Icon(Icons.mail_outline_rounded),
+                                  hintText: 'john.doe@company.com',
+                                  prefixIcon: const Icon(
+                                    Icons.mail_outline_rounded,
+                                  ),
                                   filled: true,
-                                  fillColor: theme.colorScheme.surfaceContainerHigh,
+                                  fillColor:
+                                      theme.colorScheme.surfaceContainerHigh,
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(16),
                                     borderSide: BorderSide.none,
                                   ),
                                 ),
                                 validator: (value) {
-                                  if (value == null || value.isEmpty || !value.contains('@')) {
+                                  if (value == null ||
+                                      value.isEmpty ||
+                                      !value.contains('@')) {
                                     return loc.invalidEmailError;
                                   }
                                   return null;
@@ -221,7 +245,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             isLoading: authVM.isLoading,
                             onPressed: _onResetPassword,
                           ),
-                          
+
                           const SizedBox(height: 40),
                         ],
                       ),

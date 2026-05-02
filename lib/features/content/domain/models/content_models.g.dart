@@ -16,6 +16,7 @@ _MotivationModel _$MotivationModelFromJson(Map<String, dynamic> json) =>
     _MotivationModel(
       id: json['id'] as String,
       bctFocus: json['bct_focus'] as String?,
+      bctFocusTr: json['bct_focus_tr'] as String?,
       text: Map<String, String>.from(json['text'] as Map),
       category: json['category'] as String? ?? '',
       citations: json['citations'] as String?,
@@ -25,6 +26,7 @@ Map<String, dynamic> _$MotivationModelToJson(_MotivationModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'bct_focus': instance.bctFocus,
+      'bct_focus_tr': instance.bctFocusTr,
       'text': instance.text,
       'category': instance.category,
       'citations': instance.citations,
@@ -34,6 +36,7 @@ _ErgoTipModel _$ErgoTipModelFromJson(Map<String, dynamic> json) =>
     _ErgoTipModel(
       id: json['id'] as String,
       rationale: json['rationale'] as String?,
+      rationaleTr: json['rationale_tr'] as String?,
       content: (json['content'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(k, e as String),
       ),
@@ -47,6 +50,7 @@ Map<String, dynamic> _$ErgoTipModelToJson(_ErgoTipModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'rationale': instance.rationale,
+      'rationale_tr': instance.rationaleTr,
       'content': instance.content,
       'text': instance.text,
       'citations': instance.citations,
