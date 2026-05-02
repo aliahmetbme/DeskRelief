@@ -70,7 +70,13 @@ class _ExerciseVideoViewState extends State<_ExerciseVideoView> {
 
   @override
   void dispose() {
+    // FlickManager ve VideoPlayerController dinleyicilerini temizle
     flickManager.flickVideoManager?.removeListener(_videoListener);
+    
+    // Eğer controller'a doğrudan bir listener eklendiyse (veya FlickManager'dan sızma ihtimaline karşı)
+    // flickManager.dispose() zaten controller'ı temizler ama removeListener'ı önce yapmak daha güvenlidir.
+    flickManager.flickVideoManager?.videoPlayerController?.removeListener(_videoListener);
+    
     flickManager.dispose();
     super.dispose();
   }

@@ -75,14 +75,30 @@ class AuthViewModel extends ChangeNotifier {
     // Emniyet Mekanizması: Eğer internet çok kötüyse ve yukarıdaki await takılırsa zorla geç
     Future.delayed(const Duration(seconds: 4), () {
       if (!_isInitialized) {
-        debugPrint("⏳ Splash timeout: Forcing initialization...");
+        debugPrint("⏳ Splash timeout: Checking for Firestore data...");
         
-        // YENİ: Eğer auth işlemi var ama db hala gelmediyse isInitialized'i true yapma
+        // Eğer auth işlemi var ama db hala gelmediyse isInitialized'i true yapma (Splash'ta kal)
         if (_authService.currentUserId != null && _currentUser == null) {
           debugPrint("⏳ Ağ yavaş, Firestore bekleniyor. Splash'ta kalmaya devam et...");
           return; 
         }
 
+        _isInitialized = true;
+        notifyListeners();
+      }
+    });
+
+    // KESİN ZAMAN AŞIMI (Absolute Timeout): 15 saniye sonunda hala açılmadıysa pes et
+    Future.delayed(const Duration(seconds: 15), () async {
+      if (!_isInitialized) {
+        debugPrint("🚨 ABSOLUTE TIMEOUT: Firestore data fetch failed after 15s.");
+        
+        // Eğer giriş yapılmış ama veri çekilememişse oturumu kapat ki döngü kırılsın
+        if (_authService.currentUserId != null && _currentUser == null) {
+          await _authService.signOut();
+          _errorMessage = "Bağlantı zaman aşımına uğradı. Lütfen internetinizi kontrol edip tekrar deneyin.";
+        }
+        
         _isInitialized = true;
         notifyListeners();
       }

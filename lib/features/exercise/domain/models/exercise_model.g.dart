@@ -13,7 +13,11 @@ _ExerciseModel _$ExerciseModelFromJson(Map<String, dynamic> json) =>
       targetRegions: json['targetRegions'] == null
           ? const []
           : _safePainRegionList(json['targetRegions']),
-      phase: $enumDecode(_$ExercisePhaseEnumMap, json['phase']),
+      phase: $enumDecode(
+        _$ExercisePhaseEnumMap,
+        json['phase'],
+        unknownValue: ExercisePhase.rom,
+      ),
       description: json['description'] as String,
       steps: json['steps'] == null ? const [] : _safeStringList(json['steps']),
       warnings: json['warnings'] == null

@@ -577,7 +577,7 @@ as List<int>,
 /// @nodoc
 mixin _$UserModel {
 
- String get id; String get name; String get email; String? get gender; String? get job; double? get height; double? get weight; bool get isSedentary; int? get dailySittingHours; bool get isBanned; BanReason? get banReason; String? get banNote;@JsonKey(fromJson: _safeStringList) List<String> get flaggedRedFlagIds; RegistrationProgress get progress; List<RegionDetail> get painRegions; List<RegionDetail> get backlogRegions;@JsonKey(fromJson: _safeStringList) List<String> get completedExerciseIds; Map<String, dynamic>? get currentProgram; int get currentStreak; int get totalWorkouts; Map<String, dynamic>? get metadata;@TimestampConverter() DateTime? get createdAt;@TimestampConverter() DateTime? get lastActiveAt;
+ String get id; String get name; String get email; String? get gender; String? get job; double? get height; double? get weight; bool get isSedentary; int? get dailySittingHours; bool get isBanned;@JsonKey(unknownEnumValue: BanReason.chronicLimit) BanReason? get banReason; String? get banNote;@JsonKey(fromJson: _safeStringList) List<String> get flaggedRedFlagIds; RegistrationProgress get progress; List<RegionDetail> get painRegions; List<RegionDetail> get backlogRegions;@JsonKey(fromJson: _safeStringList) List<String> get completedExerciseIds; Map<String, dynamic>? get currentProgram; int get currentStreak; int get totalWorkouts; Map<String, dynamic>? get metadata;@TimestampConverter() DateTime? get createdAt;@TimestampConverter() DateTime? get lastActiveAt;
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -610,7 +610,7 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String email, String? gender, String? job, double? height, double? weight, bool isSedentary, int? dailySittingHours, bool isBanned, BanReason? banReason, String? banNote,@JsonKey(fromJson: _safeStringList) List<String> flaggedRedFlagIds, RegistrationProgress progress, List<RegionDetail> painRegions, List<RegionDetail> backlogRegions,@JsonKey(fromJson: _safeStringList) List<String> completedExerciseIds, Map<String, dynamic>? currentProgram, int currentStreak, int totalWorkouts, Map<String, dynamic>? metadata,@TimestampConverter() DateTime? createdAt,@TimestampConverter() DateTime? lastActiveAt
+ String id, String name, String email, String? gender, String? job, double? height, double? weight, bool isSedentary, int? dailySittingHours, bool isBanned,@JsonKey(unknownEnumValue: BanReason.chronicLimit) BanReason? banReason, String? banNote,@JsonKey(fromJson: _safeStringList) List<String> flaggedRedFlagIds, RegistrationProgress progress, List<RegionDetail> painRegions, List<RegionDetail> backlogRegions,@JsonKey(fromJson: _safeStringList) List<String> completedExerciseIds, Map<String, dynamic>? currentProgram, int currentStreak, int totalWorkouts, Map<String, dynamic>? metadata,@TimestampConverter() DateTime? createdAt,@TimestampConverter() DateTime? lastActiveAt
 });
 
 
@@ -746,7 +746,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String email,  String? gender,  String? job,  double? height,  double? weight,  bool isSedentary,  int? dailySittingHours,  bool isBanned,  BanReason? banReason,  String? banNote, @JsonKey(fromJson: _safeStringList)  List<String> flaggedRedFlagIds,  RegistrationProgress progress,  List<RegionDetail> painRegions,  List<RegionDetail> backlogRegions, @JsonKey(fromJson: _safeStringList)  List<String> completedExerciseIds,  Map<String, dynamic>? currentProgram,  int currentStreak,  int totalWorkouts,  Map<String, dynamic>? metadata, @TimestampConverter()  DateTime? createdAt, @TimestampConverter()  DateTime? lastActiveAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String email,  String? gender,  String? job,  double? height,  double? weight,  bool isSedentary,  int? dailySittingHours,  bool isBanned, @JsonKey(unknownEnumValue: BanReason.chronicLimit)  BanReason? banReason,  String? banNote, @JsonKey(fromJson: _safeStringList)  List<String> flaggedRedFlagIds,  RegistrationProgress progress,  List<RegionDetail> painRegions,  List<RegionDetail> backlogRegions, @JsonKey(fromJson: _safeStringList)  List<String> completedExerciseIds,  Map<String, dynamic>? currentProgram,  int currentStreak,  int totalWorkouts,  Map<String, dynamic>? metadata, @TimestampConverter()  DateTime? createdAt, @TimestampConverter()  DateTime? lastActiveAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
 return $default(_that.id,_that.name,_that.email,_that.gender,_that.job,_that.height,_that.weight,_that.isSedentary,_that.dailySittingHours,_that.isBanned,_that.banReason,_that.banNote,_that.flaggedRedFlagIds,_that.progress,_that.painRegions,_that.backlogRegions,_that.completedExerciseIds,_that.currentProgram,_that.currentStreak,_that.totalWorkouts,_that.metadata,_that.createdAt,_that.lastActiveAt);case _:
@@ -767,7 +767,7 @@ return $default(_that.id,_that.name,_that.email,_that.gender,_that.job,_that.hei
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String email,  String? gender,  String? job,  double? height,  double? weight,  bool isSedentary,  int? dailySittingHours,  bool isBanned,  BanReason? banReason,  String? banNote, @JsonKey(fromJson: _safeStringList)  List<String> flaggedRedFlagIds,  RegistrationProgress progress,  List<RegionDetail> painRegions,  List<RegionDetail> backlogRegions, @JsonKey(fromJson: _safeStringList)  List<String> completedExerciseIds,  Map<String, dynamic>? currentProgram,  int currentStreak,  int totalWorkouts,  Map<String, dynamic>? metadata, @TimestampConverter()  DateTime? createdAt, @TimestampConverter()  DateTime? lastActiveAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String email,  String? gender,  String? job,  double? height,  double? weight,  bool isSedentary,  int? dailySittingHours,  bool isBanned, @JsonKey(unknownEnumValue: BanReason.chronicLimit)  BanReason? banReason,  String? banNote, @JsonKey(fromJson: _safeStringList)  List<String> flaggedRedFlagIds,  RegistrationProgress progress,  List<RegionDetail> painRegions,  List<RegionDetail> backlogRegions, @JsonKey(fromJson: _safeStringList)  List<String> completedExerciseIds,  Map<String, dynamic>? currentProgram,  int currentStreak,  int totalWorkouts,  Map<String, dynamic>? metadata, @TimestampConverter()  DateTime? createdAt, @TimestampConverter()  DateTime? lastActiveAt)  $default,) {final _that = this;
 switch (_that) {
 case _UserModel():
 return $default(_that.id,_that.name,_that.email,_that.gender,_that.job,_that.height,_that.weight,_that.isSedentary,_that.dailySittingHours,_that.isBanned,_that.banReason,_that.banNote,_that.flaggedRedFlagIds,_that.progress,_that.painRegions,_that.backlogRegions,_that.completedExerciseIds,_that.currentProgram,_that.currentStreak,_that.totalWorkouts,_that.metadata,_that.createdAt,_that.lastActiveAt);case _:
@@ -787,7 +787,7 @@ return $default(_that.id,_that.name,_that.email,_that.gender,_that.job,_that.hei
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String email,  String? gender,  String? job,  double? height,  double? weight,  bool isSedentary,  int? dailySittingHours,  bool isBanned,  BanReason? banReason,  String? banNote, @JsonKey(fromJson: _safeStringList)  List<String> flaggedRedFlagIds,  RegistrationProgress progress,  List<RegionDetail> painRegions,  List<RegionDetail> backlogRegions, @JsonKey(fromJson: _safeStringList)  List<String> completedExerciseIds,  Map<String, dynamic>? currentProgram,  int currentStreak,  int totalWorkouts,  Map<String, dynamic>? metadata, @TimestampConverter()  DateTime? createdAt, @TimestampConverter()  DateTime? lastActiveAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String email,  String? gender,  String? job,  double? height,  double? weight,  bool isSedentary,  int? dailySittingHours,  bool isBanned, @JsonKey(unknownEnumValue: BanReason.chronicLimit)  BanReason? banReason,  String? banNote, @JsonKey(fromJson: _safeStringList)  List<String> flaggedRedFlagIds,  RegistrationProgress progress,  List<RegionDetail> painRegions,  List<RegionDetail> backlogRegions, @JsonKey(fromJson: _safeStringList)  List<String> completedExerciseIds,  Map<String, dynamic>? currentProgram,  int currentStreak,  int totalWorkouts,  Map<String, dynamic>? metadata, @TimestampConverter()  DateTime? createdAt, @TimestampConverter()  DateTime? lastActiveAt)?  $default,) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
 return $default(_that.id,_that.name,_that.email,_that.gender,_that.job,_that.height,_that.weight,_that.isSedentary,_that.dailySittingHours,_that.isBanned,_that.banReason,_that.banNote,_that.flaggedRedFlagIds,_that.progress,_that.painRegions,_that.backlogRegions,_that.completedExerciseIds,_that.currentProgram,_that.currentStreak,_that.totalWorkouts,_that.metadata,_that.createdAt,_that.lastActiveAt);case _:
@@ -802,7 +802,7 @@ return $default(_that.id,_that.name,_that.email,_that.gender,_that.job,_that.hei
 @JsonSerializable()
 
 class _UserModel implements UserModel {
-  const _UserModel({required this.id, required this.name, required this.email, this.gender, this.job, this.height, this.weight, this.isSedentary = true, this.dailySittingHours, this.isBanned = false, this.banReason, this.banNote, @JsonKey(fromJson: _safeStringList) final  List<String> flaggedRedFlagIds = const [], this.progress = const RegistrationProgress(), final  List<RegionDetail> painRegions = const [], final  List<RegionDetail> backlogRegions = const [], @JsonKey(fromJson: _safeStringList) final  List<String> completedExerciseIds = const [], final  Map<String, dynamic>? currentProgram, this.currentStreak = 0, this.totalWorkouts = 0, final  Map<String, dynamic>? metadata, @TimestampConverter() this.createdAt, @TimestampConverter() this.lastActiveAt}): _flaggedRedFlagIds = flaggedRedFlagIds,_painRegions = painRegions,_backlogRegions = backlogRegions,_completedExerciseIds = completedExerciseIds,_currentProgram = currentProgram,_metadata = metadata;
+  const _UserModel({required this.id, required this.name, required this.email, this.gender, this.job, this.height, this.weight, this.isSedentary = true, this.dailySittingHours, this.isBanned = false, @JsonKey(unknownEnumValue: BanReason.chronicLimit) this.banReason, this.banNote, @JsonKey(fromJson: _safeStringList) final  List<String> flaggedRedFlagIds = const [], this.progress = const RegistrationProgress(), final  List<RegionDetail> painRegions = const [], final  List<RegionDetail> backlogRegions = const [], @JsonKey(fromJson: _safeStringList) final  List<String> completedExerciseIds = const [], final  Map<String, dynamic>? currentProgram, this.currentStreak = 0, this.totalWorkouts = 0, final  Map<String, dynamic>? metadata, @TimestampConverter() this.createdAt, @TimestampConverter() this.lastActiveAt}): _flaggedRedFlagIds = flaggedRedFlagIds,_painRegions = painRegions,_backlogRegions = backlogRegions,_completedExerciseIds = completedExerciseIds,_currentProgram = currentProgram,_metadata = metadata;
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
 @override final  String id;
@@ -815,7 +815,7 @@ class _UserModel implements UserModel {
 @override@JsonKey() final  bool isSedentary;
 @override final  int? dailySittingHours;
 @override@JsonKey() final  bool isBanned;
-@override final  BanReason? banReason;
+@override@JsonKey(unknownEnumValue: BanReason.chronicLimit) final  BanReason? banReason;
 @override final  String? banNote;
  final  List<String> _flaggedRedFlagIds;
 @override@JsonKey(fromJson: _safeStringList) List<String> get flaggedRedFlagIds {
@@ -902,7 +902,7 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String email, String? gender, String? job, double? height, double? weight, bool isSedentary, int? dailySittingHours, bool isBanned, BanReason? banReason, String? banNote,@JsonKey(fromJson: _safeStringList) List<String> flaggedRedFlagIds, RegistrationProgress progress, List<RegionDetail> painRegions, List<RegionDetail> backlogRegions,@JsonKey(fromJson: _safeStringList) List<String> completedExerciseIds, Map<String, dynamic>? currentProgram, int currentStreak, int totalWorkouts, Map<String, dynamic>? metadata,@TimestampConverter() DateTime? createdAt,@TimestampConverter() DateTime? lastActiveAt
+ String id, String name, String email, String? gender, String? job, double? height, double? weight, bool isSedentary, int? dailySittingHours, bool isBanned,@JsonKey(unknownEnumValue: BanReason.chronicLimit) BanReason? banReason, String? banNote,@JsonKey(fromJson: _safeStringList) List<String> flaggedRedFlagIds, RegistrationProgress progress, List<RegionDetail> painRegions, List<RegionDetail> backlogRegions,@JsonKey(fromJson: _safeStringList) List<String> completedExerciseIds, Map<String, dynamic>? currentProgram, int currentStreak, int totalWorkouts, Map<String, dynamic>? metadata,@TimestampConverter() DateTime? createdAt,@TimestampConverter() DateTime? lastActiveAt
 });
 
 

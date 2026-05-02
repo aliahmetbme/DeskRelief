@@ -82,7 +82,7 @@ abstract class UserModel with _$UserModel {
     @Default(true) bool isSedentary,
     int? dailySittingHours,
     @Default(false) bool isBanned,
-    BanReason? banReason,
+    @JsonKey(unknownEnumValue: BanReason.chronicLimit) BanReason? banReason,
     String? banNote,
     @Default([]) @JsonKey(fromJson: _safeStringList) List<String> flaggedRedFlagIds,
     @Default(RegistrationProgress()) RegistrationProgress progress,

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ExerciseModel implements DiagnosticableTreeMixin {
 
- String get id; String get name;@JsonKey(fromJson: _safePainRegionList) List<PainRegion> get targetRegions; ExercisePhase get phase; String get description;@JsonKey(fromJson: _safeStringList) List<String> get steps;@JsonKey(fromJson: _safeStringList) List<String> get warnings;@JsonKey(fromJson: _safeStringList) List<String> get tips; int get recommendedSets; int get recommendedReps; String? get videoUrl; String? get imageUrl; bool get isLocked; bool get isJoker; int? get estimatedDurationSeconds;
+ String get id; String get name;@JsonKey(fromJson: _safePainRegionList) List<PainRegion> get targetRegions;@JsonKey(unknownEnumValue: ExercisePhase.rom) ExercisePhase get phase; String get description;@JsonKey(fromJson: _safeStringList) List<String> get steps;@JsonKey(fromJson: _safeStringList) List<String> get warnings;@JsonKey(fromJson: _safeStringList) List<String> get tips; int get recommendedSets; int get recommendedReps; String? get videoUrl; String? get imageUrl; bool get isLocked; bool get isJoker; int? get estimatedDurationSeconds;
 /// Create a copy of ExerciseModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -54,7 +54,7 @@ abstract mixin class $ExerciseModelCopyWith<$Res>  {
   factory $ExerciseModelCopyWith(ExerciseModel value, $Res Function(ExerciseModel) _then) = _$ExerciseModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String name,@JsonKey(fromJson: _safePainRegionList) List<PainRegion> targetRegions, ExercisePhase phase, String description,@JsonKey(fromJson: _safeStringList) List<String> steps,@JsonKey(fromJson: _safeStringList) List<String> warnings,@JsonKey(fromJson: _safeStringList) List<String> tips, int recommendedSets, int recommendedReps, String? videoUrl, String? imageUrl, bool isLocked, bool isJoker, int? estimatedDurationSeconds
+ String id, String name,@JsonKey(fromJson: _safePainRegionList) List<PainRegion> targetRegions,@JsonKey(unknownEnumValue: ExercisePhase.rom) ExercisePhase phase, String description,@JsonKey(fromJson: _safeStringList) List<String> steps,@JsonKey(fromJson: _safeStringList) List<String> warnings,@JsonKey(fromJson: _safeStringList) List<String> tips, int recommendedSets, int recommendedReps, String? videoUrl, String? imageUrl, bool isLocked, bool isJoker, int? estimatedDurationSeconds
 });
 
 
@@ -173,7 +173,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name, @JsonKey(fromJson: _safePainRegionList)  List<PainRegion> targetRegions,  ExercisePhase phase,  String description, @JsonKey(fromJson: _safeStringList)  List<String> steps, @JsonKey(fromJson: _safeStringList)  List<String> warnings, @JsonKey(fromJson: _safeStringList)  List<String> tips,  int recommendedSets,  int recommendedReps,  String? videoUrl,  String? imageUrl,  bool isLocked,  bool isJoker,  int? estimatedDurationSeconds)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name, @JsonKey(fromJson: _safePainRegionList)  List<PainRegion> targetRegions, @JsonKey(unknownEnumValue: ExercisePhase.rom)  ExercisePhase phase,  String description, @JsonKey(fromJson: _safeStringList)  List<String> steps, @JsonKey(fromJson: _safeStringList)  List<String> warnings, @JsonKey(fromJson: _safeStringList)  List<String> tips,  int recommendedSets,  int recommendedReps,  String? videoUrl,  String? imageUrl,  bool isLocked,  bool isJoker,  int? estimatedDurationSeconds)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ExerciseModel() when $default != null:
 return $default(_that.id,_that.name,_that.targetRegions,_that.phase,_that.description,_that.steps,_that.warnings,_that.tips,_that.recommendedSets,_that.recommendedReps,_that.videoUrl,_that.imageUrl,_that.isLocked,_that.isJoker,_that.estimatedDurationSeconds);case _:
@@ -194,7 +194,7 @@ return $default(_that.id,_that.name,_that.targetRegions,_that.phase,_that.descri
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name, @JsonKey(fromJson: _safePainRegionList)  List<PainRegion> targetRegions,  ExercisePhase phase,  String description, @JsonKey(fromJson: _safeStringList)  List<String> steps, @JsonKey(fromJson: _safeStringList)  List<String> warnings, @JsonKey(fromJson: _safeStringList)  List<String> tips,  int recommendedSets,  int recommendedReps,  String? videoUrl,  String? imageUrl,  bool isLocked,  bool isJoker,  int? estimatedDurationSeconds)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name, @JsonKey(fromJson: _safePainRegionList)  List<PainRegion> targetRegions, @JsonKey(unknownEnumValue: ExercisePhase.rom)  ExercisePhase phase,  String description, @JsonKey(fromJson: _safeStringList)  List<String> steps, @JsonKey(fromJson: _safeStringList)  List<String> warnings, @JsonKey(fromJson: _safeStringList)  List<String> tips,  int recommendedSets,  int recommendedReps,  String? videoUrl,  String? imageUrl,  bool isLocked,  bool isJoker,  int? estimatedDurationSeconds)  $default,) {final _that = this;
 switch (_that) {
 case _ExerciseModel():
 return $default(_that.id,_that.name,_that.targetRegions,_that.phase,_that.description,_that.steps,_that.warnings,_that.tips,_that.recommendedSets,_that.recommendedReps,_that.videoUrl,_that.imageUrl,_that.isLocked,_that.isJoker,_that.estimatedDurationSeconds);case _:
@@ -214,7 +214,7 @@ return $default(_that.id,_that.name,_that.targetRegions,_that.phase,_that.descri
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name, @JsonKey(fromJson: _safePainRegionList)  List<PainRegion> targetRegions,  ExercisePhase phase,  String description, @JsonKey(fromJson: _safeStringList)  List<String> steps, @JsonKey(fromJson: _safeStringList)  List<String> warnings, @JsonKey(fromJson: _safeStringList)  List<String> tips,  int recommendedSets,  int recommendedReps,  String? videoUrl,  String? imageUrl,  bool isLocked,  bool isJoker,  int? estimatedDurationSeconds)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name, @JsonKey(fromJson: _safePainRegionList)  List<PainRegion> targetRegions, @JsonKey(unknownEnumValue: ExercisePhase.rom)  ExercisePhase phase,  String description, @JsonKey(fromJson: _safeStringList)  List<String> steps, @JsonKey(fromJson: _safeStringList)  List<String> warnings, @JsonKey(fromJson: _safeStringList)  List<String> tips,  int recommendedSets,  int recommendedReps,  String? videoUrl,  String? imageUrl,  bool isLocked,  bool isJoker,  int? estimatedDurationSeconds)?  $default,) {final _that = this;
 switch (_that) {
 case _ExerciseModel() when $default != null:
 return $default(_that.id,_that.name,_that.targetRegions,_that.phase,_that.description,_that.steps,_that.warnings,_that.tips,_that.recommendedSets,_that.recommendedReps,_that.videoUrl,_that.imageUrl,_that.isLocked,_that.isJoker,_that.estimatedDurationSeconds);case _:
@@ -229,7 +229,7 @@ return $default(_that.id,_that.name,_that.targetRegions,_that.phase,_that.descri
 @JsonSerializable()
 
 class _ExerciseModel with DiagnosticableTreeMixin implements ExerciseModel {
-  const _ExerciseModel({required this.id, required this.name, @JsonKey(fromJson: _safePainRegionList) final  List<PainRegion> targetRegions = const [], required this.phase, required this.description, @JsonKey(fromJson: _safeStringList) final  List<String> steps = const [], @JsonKey(fromJson: _safeStringList) final  List<String> warnings = const [], @JsonKey(fromJson: _safeStringList) final  List<String> tips = const [], this.recommendedSets = 2, this.recommendedReps = 10, this.videoUrl, this.imageUrl, this.isLocked = true, this.isJoker = false, this.estimatedDurationSeconds}): _targetRegions = targetRegions,_steps = steps,_warnings = warnings,_tips = tips;
+  const _ExerciseModel({required this.id, required this.name, @JsonKey(fromJson: _safePainRegionList) final  List<PainRegion> targetRegions = const [], @JsonKey(unknownEnumValue: ExercisePhase.rom) required this.phase, required this.description, @JsonKey(fromJson: _safeStringList) final  List<String> steps = const [], @JsonKey(fromJson: _safeStringList) final  List<String> warnings = const [], @JsonKey(fromJson: _safeStringList) final  List<String> tips = const [], this.recommendedSets = 2, this.recommendedReps = 10, this.videoUrl, this.imageUrl, this.isLocked = true, this.isJoker = false, this.estimatedDurationSeconds}): _targetRegions = targetRegions,_steps = steps,_warnings = warnings,_tips = tips;
   factory _ExerciseModel.fromJson(Map<String, dynamic> json) => _$ExerciseModelFromJson(json);
 
 @override final  String id;
@@ -241,7 +241,7 @@ class _ExerciseModel with DiagnosticableTreeMixin implements ExerciseModel {
   return EqualUnmodifiableListView(_targetRegions);
 }
 
-@override final  ExercisePhase phase;
+@override@JsonKey(unknownEnumValue: ExercisePhase.rom) final  ExercisePhase phase;
 @override final  String description;
  final  List<String> _steps;
 @override@JsonKey(fromJson: _safeStringList) List<String> get steps {
@@ -311,7 +311,7 @@ abstract mixin class _$ExerciseModelCopyWith<$Res> implements $ExerciseModelCopy
   factory _$ExerciseModelCopyWith(_ExerciseModel value, $Res Function(_ExerciseModel) _then) = __$ExerciseModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name,@JsonKey(fromJson: _safePainRegionList) List<PainRegion> targetRegions, ExercisePhase phase, String description,@JsonKey(fromJson: _safeStringList) List<String> steps,@JsonKey(fromJson: _safeStringList) List<String> warnings,@JsonKey(fromJson: _safeStringList) List<String> tips, int recommendedSets, int recommendedReps, String? videoUrl, String? imageUrl, bool isLocked, bool isJoker, int? estimatedDurationSeconds
+ String id, String name,@JsonKey(fromJson: _safePainRegionList) List<PainRegion> targetRegions,@JsonKey(unknownEnumValue: ExercisePhase.rom) ExercisePhase phase, String description,@JsonKey(fromJson: _safeStringList) List<String> steps,@JsonKey(fromJson: _safeStringList) List<String> warnings,@JsonKey(fromJson: _safeStringList) List<String> tips, int recommendedSets, int recommendedReps, String? videoUrl, String? imageUrl, bool isLocked, bool isJoker, int? estimatedDurationSeconds
 });
 
 

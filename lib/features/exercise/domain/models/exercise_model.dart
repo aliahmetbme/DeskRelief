@@ -109,7 +109,7 @@ abstract class ExerciseModel with _$ExerciseModel {
     required String id,
     required String name,
     @Default([]) @JsonKey(fromJson: _safePainRegionList) List<PainRegion> targetRegions,
-    required ExercisePhase phase,
+    @JsonKey(unknownEnumValue: ExercisePhase.rom) required ExercisePhase phase,
     required String description,
     @Default([]) @JsonKey(fromJson: _safeStringList) List<String> steps,
     @Default([]) @JsonKey(fromJson: _safeStringList) List<String> warnings,

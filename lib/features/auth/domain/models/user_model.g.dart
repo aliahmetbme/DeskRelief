@@ -67,7 +67,11 @@ _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
   isSedentary: json['isSedentary'] as bool? ?? true,
   dailySittingHours: (json['dailySittingHours'] as num?)?.toInt(),
   isBanned: json['isBanned'] as bool? ?? false,
-  banReason: $enumDecodeNullable(_$BanReasonEnumMap, json['banReason']),
+  banReason: $enumDecodeNullable(
+    _$BanReasonEnumMap,
+    json['banReason'],
+    unknownValue: BanReason.chronicLimit,
+  ),
   banNote: json['banNote'] as String?,
   flaggedRedFlagIds: json['flaggedRedFlagIds'] == null
       ? const []
