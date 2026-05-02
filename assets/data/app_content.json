@@ -24,6 +24,142 @@
           "en": "You cannot pour from an empty cup. Let your overworked muscles recharge without a trace of guilt.",
           "tr": "Boş bir bardaktan su dolduramazsın. Aşırı çalışan kaslarının zerre kadar suçluluk duymadan yenilenmesine izin ver."
         }
+      },
+      {
+        "id": "SCR-04",
+        "bct_focus": "Tissue Healing",
+        "text": {
+          "en": "Microscopic tears heal only when we pause. Today's intentional stillness builds tomorrow's structural resilience.",
+          "tr": "Mikroskobik yırtıklar sadece biz durakladığımızda iyileşir. Bugünün bilinçli dinginliği yarının yapısal dayanıklılığını inşa eder."
+        }
+      },
+      {
+        "id": "SCR-05",
+        "bct_focus": "System Reset",
+        "text": {
+          "en": "Think of today as a critical physiological system update. Power down your joints to reboot stronger.",
+          "tr": "Bugünü kritik bir fizyolojik sistem güncellemesi olarak düşün. Daha güçlü yeniden başlamak için eklemlerinin gücünü azalt."
+        }
+      },
+      {
+        "id": "SCR-06",
+        "bct_focus": "Biological Autonomy",
+        "text": {
+          "en": "Your spine supports your entire world every day. Today, it’s your turn to actively support your spine.",
+          "tr": "Omurgan her gün tüm dünyanı destekliyor. Bugün, omurganı aktif olarak destekleme sırası sende."
+        }
+      },
+      {
+        "id": "SCR-07",
+        "bct_focus": "Feedback Reframing",
+        "text": {
+          "en": "Pain is just data requesting a change. Today we analyze, passively recover, and gently recalibrate.",
+          "tr": "Ağrı sadece değişim talep eden bir veridir. Bugün analiz ediyoruz, pasif olarak iyileşiyoruz ve nazikçe yeniden kalibre ediyoruz."
+        }
+      },
+      {
+        "id": "SCR-08",
+        "bct_focus": "Mind-Body Connection",
+        "text": {
+          "en": "True, sustainable productivity includes the courage to stop, rest, and allow cellular repair.",
+          "tr": "Gerçek ve sürdürülebilir üretkenlik, durma, dinlenme ve hücresel onarıma izin verme cesaretini de içerir."
+        }
+      },
+      {
+        "id": "SCR-09",
+        "bct_focus": "Somatic Awareness",
+        "text": {
+          "en": "Send gratitude to the joints that carried you through this week's stress. Give them the day off.",
+          "tr": "Bu haftanın stresi boyunca seni taşıyan eklemlerine minnettarlığını gönder. Onlara bugün izin ver."
+        }
+      },
+      {
+        "id": "SCR-10",
+        "bct_focus": "Habit Disruption",
+        "text": {
+          "en": "Stepping away from the desk and doing absolutely nothing is the most productive thing you can do right now.",
+          "tr": "Masadan uzaklaşmak ve kesinlikle hiçbir şey yapmamak şu an yapabileceğin en üretken şeydir."
+        }
+      },
+      {
+        "id": "SCR-11",
+        "bct_focus": "Action Planning",
+        "text": {
+          "en": "A rested nervous system manages stress infinitely better. Prepare your body for a calmer, pain-free week.",
+          "tr": "Dinlenmiş bir sinir sistemi stresi sonsuz derecede daha iyi yönetir. Vücudunu daha sakin, ağrısız bir haftaya hazırla."
+        }
+      },
+      {
+        "id": "SCR-12",
+        "bct_focus": "Positive Reinforcement",
+        "text": {
+          "en": "You’ve worked exceptionally hard. Cellular regeneration and reduced inflammation is your well-deserved reward.",
+          "tr": "Olağanüstü derecede sıkı çalıştın. Hücresel yenilenme ve azalan enflamasyon senin hak ettiğin ödülündür."
+        }
+      },
+      {
+        "id": "SCR-13",
+        "bct_focus": "Empathic Validation",
+        "text": {
+          "en": "It is perfectly okay to be tired. Honoring your physical fatigue is the non-negotiable first step of healing.",
+          "tr": "Yorgun olmak tamamen normaldir. Fiziksel yorgunluğunu onurlandırmak, iyileşmenin tartışılamaz ilk adımıdır."
+        }
+      },
+      {
+        "id": "SCR-14",
+        "bct_focus": "Cognitive Restructuring",
+        "text": {
+          "en": "Doing nothing is actually doing something vital: you are actively engaging your body's recovery systems.",
+          "tr": "Hiçbir şey yapmamak aslında hayati bir şey yapmaktır: Vücudunun iyileşme sistemlerini aktif olarak devreye sokuyorsun."
+        }
+      },
+      {
+        "id": "SCR-15",
+        "bct_focus": "Prevention Focus",
+        "text": {
+          "en": "An ounce of ergonomic prevention is worth a pound of medical cure. Enjoy your structured rest day.",
+          "tr": "Bir dirhem ergonomik önlem, bir okka tıbbi tedaviye bedeldir. Planlı dinlenme gününün tadını çıkar."
+        }
+      },
+      {
+        "id": "SCR-16",
+        "bct_focus": "Structural Integrity",
+        "text": {
+          "en": "Tendons and ligaments take significant time to heal due to low blood flow. Patience is your best medical prescription.",
+          "tr": "Düşük kan akışı nedeniyle tendonların ve bağların iyileşmesi önemli zaman alır. Sabır senin en iyi tıbbi reçetendir."
+        }
+      },
+      {
+        "id": "SCR-17",
+        "bct_focus": "Cellular Autophagy",
+        "text": {
+          "en": "Let the body naturally sweep away accumulated joint inflammation. Sometimes, stillness is the best medicine.",
+          "tr": "Bırak vücut biriken eklem enflamasyonunu doğal olarak temizlesin. Bazen hareketsizlik en iyi ilaçtır."
+        }
+      },
+      {
+        "id": "SCR-18",
+        "bct_focus": "Empathic Cue",
+        "text": {
+          "en": "Breathe in restorative oxygen, breathe out mechanical tension. Your body is safe and supported today.",
+          "tr": "İyileştirici oksijeni içine çek, mekanik gerginliği dışarı ver. Vücudun bugün güvende ve destekleniyor."
+        }
+      },
+      {
+        "id": "SCR-19",
+        "bct_focus": "Cumulative Load",
+        "text": {
+          "en": "You carry a massive amount of invisible psychological and physical weight. Put it down safely for the day.",
+          "tr": "Devasa miktarda görünmez psikolojik ve fiziksel yük taşıyorsun. Onları bugünlük güvenle yere bırak."
+        }
+      },
+      {
+        "id": "SCR-20",
+        "bct_focus": "Longevity Focus",
+        "text": {
+          "en": "Physical recovery is not a delay or a detour; it is the main, scientifically-proven road to career longevity.",
+          "tr": "Fiziksel iyileşme bir gecikme veya sapma değil; kariyer uzun ömürlülüğüne giden bilimsel olarak kanıtlanmış ana yoldur."
+        }
       }
     ],
     "push_notifications": [
@@ -42,15 +178,231 @@
           "en": "Your spinal discs desperately need water to stay plump. Time for a glass of hydration!",
           "tr": "Omurga disklerinin dolgun kalması için acilen suya ihtiyacı var. Bir bardak su içme zamanı!"
         }
+      },
+      {
+        "id": "PSH-03",
+        "bct_focus": "Visual Cue",
+        "text": {
+          "en": "Initiate the 20-20-20 Rule! Look 20 feet away for 20 seconds. Save your eyes from strain.",
+          "tr": "20-20-20 Kuralını başlat! 20 saniye boyunca uzağa bak. Gözlerini yorgunluktan kurtar."
+        }
+      },
+      {
+        "id": "PSH-04",
+        "bct_focus": "Posture Check",
+        "text": {
+          "en": "Quick biomechanics check: Are your ears currently stacked directly over your shoulders?",
+          "tr": "Kısa biyomekanik kontrolü: Kulakların şu anda tam olarak omuzlarının üzerinde mi?"
+        }
+      },
+      {
+        "id": "PSH-05",
+        "bct_focus": "Behavioral Sub",
+        "text": {
+          "en": "Stand up for just 60 seconds. Let your suppressed metabolism say a quick thank you.",
+          "tr": "Sadece 60 saniye ayağa kalk. Baskılanmış metabolizmanın sana hızlıca teşekkür etmesine izin ver."
+        }
+      },
+      {
+        "id": "PSH-06",
+        "bct_focus": "Proprioception",
+        "text": {
+          "en": "Wiggle your toes inside your shoes. Reconnect with your base of support.",
+          "tr": "Ayakkabılarının içinde ayak parmaklarını oynat. Destek tabanınla yeniden bağlantı kur."
+        }
+      },
+      {
+        "id": "PSH-07",
+        "bct_focus": "Self-Compassion",
+        "text": {
+          "en": "Pushing through joint pain scientifically doesn't work. Step back and grant yourself rest.",
+          "tr": "Eklem ağrısına rağmen zorlamak bilimsel olarak işe yaramaz. Geri çekil ve kendine dinlenme izni ver."
+        }
+      },
+      {
+        "id": "PSH-08",
+        "bct_focus": "Micro-break",
+        "text": {
+          "en": "Stretch your wrists gently! Continuous typing takes a severe toll on your median nerve.",
+          "tr": "Bileklerini nazikçe esnet! Sürekli yazı yazmak median sinirine ağır bir bedel ödetir."
+        }
+      },
+      {
+        "id": "PSH-09",
+        "bct_focus": "Deep Breathing",
+        "text": {
+          "en": "Inhale for 4 seconds, exhale for 6. Reset your nervous system's stress response.",
+          "tr": "4 saniye nefes al, 6 saniye ver. Sinir sisteminin stres tepkisini sıfırla."
+        }
+      },
+      {
+        "id": "PSH-10",
+        "bct_focus": "Social Support",
+        "text": {
+          "en": "You're doing a great job managing your health. Don't forget to reward your body with rest.",
+          "tr": "Sağlığını yönetme konusunda harika bir iş çıkarıyorsun. Vücudunu dinlenmekle ödüllendirmeyi unutma."
+        }
+      },
+      {
+        "id": "PSH-11",
+        "bct_focus": "Activity Shift",
+        "text": {
+          "en": "Roll your shoulders backwards 3 times slowly. Feel the accumulated tension melt away.",
+          "tr": "Omuzlarını 3 kez yavaşça geriye doğru yuvarla. Biriken gerginliğin eriyip gittiğini hisset."
+        }
+      },
+      {
+        "id": "PSH-12",
+        "bct_focus": "Ergonomic Nudge",
+        "text": {
+          "en": "Are your feet resting completely flat on the floor? Ground your pelvis properly.",
+          "tr": "Ayakların yere tamamen düz mü basıyor? Pelvisini (leğen kemiğini) düzgünce sabitle."
+        }
+      },
+      {
+        "id": "PSH-13",
+        "bct_focus": "Tissue Repair",
+        "text": {
+          "en": "It's an official rest day! Guilt-free, cellular-level recovery is now in session.",
+          "tr": "Bugün resmi bir dinlenme günü! Suçluluk duymadan, hücresel düzeyde iyileşme seansı devrede."
+        }
+      },
+      {
+        "id": "PSH-14",
+        "bct_focus": "Environmental",
+        "text": {
+          "en": "Ensure your screen isn't glaring from the window. Protect your delicate cervical alignment.",
+          "tr": "Ekranının pencereden parlamadığından emin ol. Hassas boyun hizalamanı koru."
+        }
+      },
+      {
+        "id": "PSH-15",
+        "bct_focus": "Awareness",
+        "text": {
+          "en": "Notice any tight spots? Send a deep, intentional breath to that exact muscle group.",
+          "tr": "Gergin noktalar hissediyor musun? Tam o kas grubuna derin, bilinçli bir nefes gönder."
+        }
+      },
+      {
+        "id": "PSH-16",
+        "bct_focus": "Pain Prevention",
+        "text": {
+          "en": "Change your physical position right now. Static postures are the absolute enemy of healthy joints.",
+          "tr": "Fiziksel pozisyonunu hemen şimdi değiştir. Statik duruşlar sağlıklı eklemlerin kesin düşmanıdır."
+        }
+      },
+      {
+        "id": "PSH-17",
+        "bct_focus": "Emotional Rest",
+        "text": {
+          "en": "Close your eyes completely for 10 seconds. Block out the blue light and let the optic nerve rest.",
+          "tr": "10 saniye boyunca gözlerini tamamen kapat. Mavi ışığı engelle ve optik sinirin dinlenmesine izin ver."
+        }
+      },
+      {
+        "id": "PSH-18",
+        "bct_focus": "Core Reminder",
+        "text": {
+          "en": "Squeeze your glutes for 3 seconds. Wake up the massive muscles that protect your lower back.",
+          "tr": "Kalçalarını 3 saniye sık. Belini koruyan devasa kasları uyandır."
+        }
+      },
+      {
+        "id": "PSH-19",
+        "bct_focus": "Cognitive",
+        "text": {
+          "en": "You don't have to be endlessly productive every single hour. Strategic resting is okay.",
+          "tr": "Her saat durmaksızın üretken olmak zorunda değilsin. Stratejik olarak dinlenmek iyidir."
+        }
+      },
+      {
+        "id": "PSH-20",
+        "bct_focus": "Final Cue",
+        "text": {
+          "en": "Body scan complete. Release any tension in your neck and proceed with a relaxed posture!",
+          "tr": "Vücut taraması tamamlandı. Boynundaki tüm gerginliği serbest bırak ve rahat bir duruşla devam et!"
+        }
       }
     ],
     "exercise_continuity": [
+      {
+        "id": "CON-01",
+        "bct_focus": "Focus on Past Success",
+        "text": {
+          "en": "Think about the relief you felt after your last stretch. Let's recreate that feeling today.",
+          "tr": "Son esnemenden sonra hissettiğin rahatlamayı düşün. Bugün o hissi yeniden yaratalım."
+        }
+      },
       {
         "id": "CON-02",
         "bct_focus": "Consistency over Perfection",
         "text": {
           "en": "Consistency is key. Short, regular movement sessions are clinically far more effective than occasional intense workouts.",
           "tr": "Devamlılık kilit noktadır. Kısa, düzenli hareket seansları klinik olarak nadir yapılan yoğun antrenmanlardan çok daha etkilidir."
+        }
+      },
+      {
+        "id": "CON-03",
+        "bct_focus": "Self-Monitoring",
+        "text": {
+          "en": "Tracking your daily micro-movements builds a powerful habit. You are steadily building a stronger, more resilient spine.",
+          "tr": "Günlük mikro hareketlerini takip etmek güçlü bir alışkanlık oluşturur. Adım adım daha güçlü, daha dirençli bir omurga inşa ediyorsun."
+        }
+      },
+      {
+        "id": "CON-04",
+        "bct_focus": "Graded Tasks",
+        "text": {
+          "en": "Start small today. Even 2 minutes of stretching contributes significantly to your long-term postural health.",
+          "tr": "Bugün küçük başla. Sadece 2 dakikalık bir esneme bile uzun vadeli postür sağlığına önemli ölçüde katkıda bulunur."
+        }
+      },
+      {
+        "id": "CON-05",
+        "bct_focus": "Goal Setting",
+        "text": {
+          "en": "Every time you choose to stretch, you cast a vote for a pain-free future. Keep showing up for yourself.",
+          "tr": "Esnemeyi seçtiğin her an, ağrısız bir gelecek için oy kullanıyorsun. Kendin için orada olmaya devam et."
+        }
+      },
+      {
+        "id": "CON-06",
+        "bct_focus": "Feedback & Monitoring",
+        "text": {
+          "en": "Your body adapts to what you do consistently. Let's make healthy movement your new biological baseline.",
+          "tr": "Vücudun sürekli yaptığın şeylere uyum sağlar. Hadi sağlıklı hareketi yeni biyolojik temelimiz yapalım."
+        }
+      },
+      {
+        "id": "CON-07",
+        "bct_focus": "Cognitive Reframing",
+        "text": {
+          "en": "Consistency matters more than perfection. A moderately executed daily stretch beats a perfect stretch done once a month.",
+          "tr": "Devamlılık mükemmellikten daha önemlidir. Orta halli yapılan günlük bir esneme, ayda bir kez yapılan kusursuz bir esnemeden daha iyidir."
+        }
+      },
+      {
+        "id": "CON-08",
+        "bct_focus": "Social Support",
+        "text": {
+          "en": "You are not alone in this journey. Every regular stretch is a step towards a healthier work-life balance.",
+          "tr": "Bu yolculukta yalnız değilsin. Düzenli yapılan her esneme, daha sağlıklı bir iş-yaşam dengesine atılmış bir adımdır."
+        }
+      },
+      {
+        "id": "CON-09",
+        "bct_focus": "Behavior Substitution",
+        "text": {
+          "en": "Swap 5 minutes of scrolling for 5 minutes of stretching. Small behavioral substitutions lead to massive mechanical relief.",
+          "tr": "5 dakikalık ekran kaydırmayı, 5 dakikalık esnemeyle değiştir. Küçük davranışsal değişiklikler büyük mekanik rahatlamalar sağlar."
+        }
+      },
+      {
+        "id": "CON-10",
+        "bct_focus": "Progress Tracking",
+        "text": {
+          "en": "Your plan will evolve as you get stronger. Every session is a building block for your safe and steady improvement.",
+          "tr": "Sen güçlendikçe planın da gelişecek. Her seans, güvenli ve istikrarlı gelişimin için bir yapı taşıdır."
         }
       }
     ]
@@ -234,7 +586,7 @@
         "rationale": "Dynamic Cat-Cow",
         "content": {
           "en": "Use the 'Cat-Cow' motion on all fours to lubricate the lumbar facet joints gently. Move strictly through a pain-free range to reduce stiffness without structural strain.",
-          "tr": "Lomber faset eklemlerini nazikçe yağlamak için dört ayak üzerinde 'Kedi-İnek' hareketini kullanın. Yapısal bir gerilme yaratmadan sertliği azaltmak için kesinlikle ağrısız bir aralıkta hareket edin."
+          "tr": "Lomber faset eklemelerini nazikçe yağlamak için dört ayak üzerinde 'Kedi-İnek' hareketini kullanın. Yapısal bir gerilme yaratmadan sertliği azaltmak için kesinlikle ağrısız bir aralıkta hareket edin."
         }
       },
       {
@@ -266,7 +618,7 @@
         "rationale": "Pelvic Neutrality",
         "content": {
           "en": "Check your standing posture. Don't let your belly spill forward (anterior tilt) or tuck completely flat (posterior tilt). Find the neutral, load-sharing middle ground.",
-          "tr": "Ayaktaki duruşunuzu kontrol edin. Göbeğinizin öne dökülmesine (anterior tilt) veya tamamen düzleşmesine (posterior tilt) izin vermeyin. Yüku dağıtan nötr orta yolu bulun."
+          "tr": "Ayaktaki duruşunuzu kontrol edin. Göbeğinizin öne dökülmesine (anterior tilt) veya tamamen düzleşmesine (posterior tilt) izin vermeyin. Yükü dağıtan nötr orta yolu bulun."
         }
       },
       {
@@ -368,19 +720,19 @@
         }
       },
       {
-        "id": "REG-4.9",
-        "rationale": "Footwear Mechanics",
-        "content": {
-          "en": "Give your feet a break from rigid, narrow shoes. Walking barefoot indoors today stimulates intrinsic foot muscles, which builds a vastly better foundation for your knees.",
-          "tr": "Ayaklarınızı sert ve dar ayakkabılardan dinlendirin. Bugün iç mekanda çıplak ayakla yürümek, dizleriniz için çok daha iyi bir temel oluşturan içsel ayak kaslarını uyarır."
-        }
-      },
-      {
         "id": "REG-4.10",
         "rationale": "Passive Hip Opening",
         "content": {
           "en": "Lie on your back and let your knees fall outward (butterfly pose) for 2 minutes. This passively decompresses and stretches the inner hip joint capsule.",
           "tr": "Sırtüstü yatın ve dizlerinizin dışa doğru düşmesine izin verin (kelebek pozu) ve 2 dakika bekleyin. Bu, iç kalça eklem kapsülünü pasif olarak rahatlatır ve esnetir."
+        }
+      },
+      {
+        "id": "REG-4.9",
+        "rationale": "Footwear Mechanics",
+        "content": {
+          "en": "Give your feet a break from rigid, narrow shoes. Walking barefoot indoors today stimulates intrinsic foot muscles, which builds a vastly better foundation for your knees.",
+          "tr": "Ayaklarınızı sert ve dar ayakkabılardan dinlendirin. Bugün iç mekanda çıplak ayakla yürümek, dizleriniz için çok daha iyi bir temel oluşturan içsel ayak kaslarını uyarır."
         }
       }
     ],
@@ -422,7 +774,7 @@
         "rationale": "Grip Offloading",
         "content": {
           "en": "Rest your flexor tendons completely. Avoid carrying heavy grocery bags by the handles today; hug them to your chest to bypass the vulnerable wrist and elbow entirely.",
-          "tr": "Fleksör tendonlarınızı tamamen dinlendirin. Bugün ağır market poşetlerini saplarından tutarak taşımaktan kaçının; savunmasız bilek ve dirseği tamamen atlamak için onları göğsünüze sararak taşıyın."
+          "tr": "Fleksör tendonlarınızı tamamen dinlendirin. Bugün ağır market poşetlerini saplarından tutarak taşımaktan kaçının; savunmasız bilek ve dirseği tamamen atlamak için onları göğsüne sararak taşıyın."
         }
       },
       {
