@@ -83,18 +83,37 @@ enum PainRegion {
   @JsonValue('rightAnkle') rightAnkle,
 }
 
+List<String> _safeStringList(dynamic json) {
+  if (json == null || json is! Iterable) return [];
+  return json.map((e) => e.toString()).toList();
+}
+
+List<PainRegion> _safePainRegionList(dynamic json) {
+  if (json == null || json is! Iterable) return [];
+  return json.map((e) {
+    if (e is PainRegion) return e;
+    if (e is String) {
+      return PainRegion.values.firstWhere(
+        (val) => val.name == e,
+        orElse: () => PainRegion.neck,
+      );
+    }
+    return PainRegion.neck;
+  }).toList();
+}
+
 /// Firestore-backed exercise model produced by the CDSS pipeline.
 @freezed
 abstract class ExerciseModel with _$ExerciseModel {
   const factory ExerciseModel({
     required String id,
     required String name,
-    required List<PainRegion> targetRegions,
+    @Default([]) @JsonKey(fromJson: _safePainRegionList) List<PainRegion> targetRegions,
     required ExercisePhase phase,
     required String description,
-    @Default([]) List<String> steps,
-    @Default([]) List<String> warnings,
-    @Default([]) List<String> tips,
+    @Default([]) @JsonKey(fromJson: _safeStringList) List<String> steps,
+    @Default([]) @JsonKey(fromJson: _safeStringList) List<String> warnings,
+    @Default([]) @JsonKey(fromJson: _safeStringList) List<String> tips,
     @Default(2) int recommendedSets,
     @Default(10) int recommendedReps,
     String? videoUrl,

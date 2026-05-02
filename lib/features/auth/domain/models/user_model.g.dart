@@ -69,11 +69,9 @@ _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
   isBanned: json['isBanned'] as bool? ?? false,
   banReason: $enumDecodeNullable(_$BanReasonEnumMap, json['banReason']),
   banNote: json['banNote'] as String?,
-  flaggedRedFlagIds:
-      (json['flaggedRedFlagIds'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList() ??
-      const [],
+  flaggedRedFlagIds: json['flaggedRedFlagIds'] == null
+      ? const []
+      : _safeStringList(json['flaggedRedFlagIds']),
   progress: json['progress'] == null
       ? const RegistrationProgress()
       : RegistrationProgress.fromJson(json['progress'] as Map<String, dynamic>),
@@ -87,11 +85,9 @@ _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
           ?.map((e) => RegionDetail.fromJson(e as Map<String, dynamic>))
           .toList() ??
       const [],
-  completedExerciseIds:
-      (json['completedExerciseIds'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList() ??
-      const [],
+  completedExerciseIds: json['completedExerciseIds'] == null
+      ? const []
+      : _safeStringList(json['completedExerciseIds']),
   currentProgram: json['currentProgram'] as Map<String, dynamic>?,
   currentStreak: (json['currentStreak'] as num?)?.toInt() ?? 0,
   totalWorkouts: (json['totalWorkouts'] as num?)?.toInt() ?? 0,

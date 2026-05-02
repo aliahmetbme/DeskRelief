@@ -76,6 +76,13 @@ class AuthViewModel extends ChangeNotifier {
     Future.delayed(const Duration(seconds: 4), () {
       if (!_isInitialized) {
         debugPrint("⏳ Splash timeout: Forcing initialization...");
+        
+        // YENİ: Eğer auth işlemi var ama db hala gelmediyse isInitialized'i true yapma
+        if (_authService.currentUserId != null && _currentUser == null) {
+          debugPrint("⏳ Ağ yavaş, Firestore bekleniyor. Splash'ta kalmaya devam et...");
+          return; 
+        }
+
         _isInitialized = true;
         notifyListeners();
       }
@@ -439,6 +446,10 @@ class AuthViewModel extends ChangeNotifier {
     );
 
     _isLoading = false;
+    if (error == "CANCELED_BY_USER") {
+      notifyListeners();
+      return false;
+    }
     if (error != null) {
       _errorMessage = error;
       notifyListeners();
@@ -471,6 +482,10 @@ class AuthViewModel extends ChangeNotifier {
     );
 
     _isLoading = false;
+    if (error == "CANCELED_BY_USER") {
+      notifyListeners();
+      return false;
+    }
     if (error != null) {
       _errorMessage = error;
       notifyListeners();

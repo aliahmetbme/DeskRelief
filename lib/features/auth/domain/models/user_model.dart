@@ -64,6 +64,11 @@ abstract class RegionDetail with _$RegionDetail {
   factory RegionDetail.fromJson(Map<String, dynamic> json) => _$RegionDetailFromJson(json);
 }
 
+List<String> _safeStringList(dynamic json) {
+  if (json == null || json is! Iterable) return [];
+  return json.map((e) => e.toString()).toList();
+}
+
 @freezed
 abstract class UserModel with _$UserModel {
   const factory UserModel({
@@ -79,11 +84,11 @@ abstract class UserModel with _$UserModel {
     @Default(false) bool isBanned,
     BanReason? banReason,
     String? banNote,
-    @Default([]) List<String> flaggedRedFlagIds,
+    @Default([]) @JsonKey(fromJson: _safeStringList) List<String> flaggedRedFlagIds,
     @Default(RegistrationProgress()) RegistrationProgress progress,
     @Default([]) List<RegionDetail> painRegions,
     @Default([]) List<RegionDetail> backlogRegions,
-    @Default([]) List<String> completedExerciseIds,
+    @Default([]) @JsonKey(fromJson: _safeStringList) List<String> completedExerciseIds,
     Map<String, dynamic>? currentProgram,
     @Default(0) int currentStreak,
     @Default(0) int totalWorkouts,

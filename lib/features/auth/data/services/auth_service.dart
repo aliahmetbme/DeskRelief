@@ -155,7 +155,7 @@ class AuthService {
           errorStr.contains('1000') ||
           errorStr.contains('1001') ||
           errorStr.contains('sign_in_canceled')) {
-        return null;
+        return "CANCELED_BY_USER";
       }
       debugPrint("❌ FIREBASE GOOGLE ERROR CODE: ${e.code}");
       return _mapErrorCode(e.code, loc);
@@ -166,11 +166,11 @@ class AuthService {
           errorStr.contains('1000') ||
           errorStr.contains('1001') ||
           errorStr.contains('sign_in_canceled')) {
-        return null;
+        return "CANCELED_BY_USER";
       }
       return loc.errorUnknown;
     } catch (e, stackTrace) {
-      if (e is gsi.GoogleSignInException && e.code == gsi.GoogleSignInExceptionCode.canceled) return null;
+      if (e is gsi.GoogleSignInException && e.code == gsi.GoogleSignInExceptionCode.canceled) return "CANCELED_BY_USER";
 
       final errorStr = e.toString().toLowerCase();
       if (errorStr.contains('canceled') ||
@@ -178,7 +178,7 @@ class AuthService {
           errorStr.contains('1000') ||
           errorStr.contains('1001') ||
           errorStr.contains('sign_in_canceled')) {
-        return null;
+        return "CANCELED_BY_USER";
       }
       debugPrint("❌ GOOGLE AUTH ERROR: $e");
       debugPrint("📌 STACKTRACE: $stackTrace");
@@ -245,7 +245,7 @@ class AuthService {
           errorStr.contains('1000') ||
           errorStr.contains('1001') ||
           errorStr.contains('sign_in_canceled')) {
-        return null;
+        return "CANCELED_BY_USER";
       }
       debugPrint("❌ FIREBASE APPLE ERROR CODE: ${e.code}");
       return _mapErrorCode(e.code, loc);
@@ -256,7 +256,7 @@ class AuthService {
           errorStr.contains('1000') ||
           errorStr.contains('1001') ||
           errorStr.contains('sign_in_canceled')) {
-        return null;
+        return "CANCELED_BY_USER";
       }
       return loc.errorUnknown;
     } on PlatformException catch (e) {
@@ -266,7 +266,7 @@ class AuthService {
           errorStr.contains('1000') ||
           errorStr.contains('1001') ||
           errorStr.contains('sign_in_canceled')) {
-        return null;
+        return "CANCELED_BY_USER";
       }
       return loc.errorUnknown;
     } catch (e) {
@@ -276,7 +276,7 @@ class AuthService {
           errorStr.contains('1000') ||
           errorStr.contains('1001') ||
           errorStr.contains('sign_in_canceled')) {
-        return null;
+        return "CANCELED_BY_USER";
       }
       debugPrint("❌ APPLE AUTH ERROR: $e");
       debugPrint("❌ APPLE AUTH ERROR CODE: ${e.toString()}");

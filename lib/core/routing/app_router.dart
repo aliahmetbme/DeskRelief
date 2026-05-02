@@ -130,8 +130,13 @@ class AppRouter {
         GoRoute(
           path: '/assessment/pain-intensity',
           builder: (context, state) {
-            // Önce extra'dan bak, yoksa AuthViewModel'den çek
-            List<String> regions = List<String>.from(state.extra as List? ?? []);
+            List<String> regions = [];
+            if (state.extra is Iterable) {
+              regions = (state.extra as Iterable).map((e) => e.toString()).toList();
+            } else if (state.extra is String) {
+              regions = [state.extra.toString()];
+            }
+
             if (regions.isEmpty) {
               final user = context.read<AuthViewModel>().currentUser;
               regions = user?.painRegions.map((e) => e.regionId).toList() ?? [];
@@ -150,8 +155,13 @@ class AppRouter {
         GoRoute(
           path: '/scheduling',
           builder: (context, state) {
-            // Önce extra'dan bak, yoksa AuthViewModel'den çek
-            List<String> regions = List<String>.from(state.extra as List? ?? []);
+            List<String> regions = [];
+            if (state.extra is Iterable) {
+              regions = (state.extra as Iterable).map((e) => e.toString()).toList();
+            } else if (state.extra is String) {
+              regions = [state.extra.toString()];
+            }
+
             if (regions.isEmpty) {
               final user = context.read<AuthViewModel>().currentUser;
               regions = user?.painRegions.map((e) => e.regionId).toList() ?? [];

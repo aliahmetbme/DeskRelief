@@ -6,33 +6,29 @@ part of 'exercise_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_ExerciseModel _$ExerciseModelFromJson(
-  Map<String, dynamic> json,
-) => _ExerciseModel(
-  id: json['id'] as String,
-  name: json['name'] as String,
-  targetRegions: (json['targetRegions'] as List<dynamic>)
-      .map((e) => $enumDecode(_$PainRegionEnumMap, e))
-      .toList(),
-  phase: $enumDecode(_$ExercisePhaseEnumMap, json['phase']),
-  description: json['description'] as String,
-  steps:
-      (json['steps'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-      const [],
-  warnings:
-      (json['warnings'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-      const [],
-  tips:
-      (json['tips'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-      const [],
-  recommendedSets: (json['recommendedSets'] as num?)?.toInt() ?? 2,
-  recommendedReps: (json['recommendedReps'] as num?)?.toInt() ?? 10,
-  videoUrl: json['videoUrl'] as String?,
-  imageUrl: json['imageUrl'] as String?,
-  isLocked: json['isLocked'] as bool? ?? true,
-  isJoker: json['isJoker'] as bool? ?? false,
-  estimatedDurationSeconds: (json['estimatedDurationSeconds'] as num?)?.toInt(),
-);
+_ExerciseModel _$ExerciseModelFromJson(Map<String, dynamic> json) =>
+    _ExerciseModel(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      targetRegions: json['targetRegions'] == null
+          ? const []
+          : _safePainRegionList(json['targetRegions']),
+      phase: $enumDecode(_$ExercisePhaseEnumMap, json['phase']),
+      description: json['description'] as String,
+      steps: json['steps'] == null ? const [] : _safeStringList(json['steps']),
+      warnings: json['warnings'] == null
+          ? const []
+          : _safeStringList(json['warnings']),
+      tips: json['tips'] == null ? const [] : _safeStringList(json['tips']),
+      recommendedSets: (json['recommendedSets'] as num?)?.toInt() ?? 2,
+      recommendedReps: (json['recommendedReps'] as num?)?.toInt() ?? 10,
+      videoUrl: json['videoUrl'] as String?,
+      imageUrl: json['imageUrl'] as String?,
+      isLocked: json['isLocked'] as bool? ?? true,
+      isJoker: json['isJoker'] as bool? ?? false,
+      estimatedDurationSeconds: (json['estimatedDurationSeconds'] as num?)
+          ?.toInt(),
+    );
 
 Map<String, dynamic> _$ExerciseModelToJson(_ExerciseModel instance) =>
     <String, dynamic>{
@@ -55,6 +51,12 @@ Map<String, dynamic> _$ExerciseModelToJson(_ExerciseModel instance) =>
       'estimatedDurationSeconds': instance.estimatedDurationSeconds,
     };
 
+const _$ExercisePhaseEnumMap = {
+  ExercisePhase.rom: 'rom',
+  ExercisePhase.strength: 'strength',
+  ExercisePhase.stretch: 'stretch',
+};
+
 const _$PainRegionEnumMap = {
   PainRegion.neck: 'neck',
   PainRegion.leftShoulder: 'leftShoulder',
@@ -68,10 +70,4 @@ const _$PainRegionEnumMap = {
   PainRegion.rightKnee: 'rightKnee',
   PainRegion.leftAnkle: 'leftAnkle',
   PainRegion.rightAnkle: 'rightAnkle',
-};
-
-const _$ExercisePhaseEnumMap = {
-  ExercisePhase.rom: 'rom',
-  ExercisePhase.strength: 'strength',
-  ExercisePhase.stretch: 'stretch',
 };

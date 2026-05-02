@@ -37,9 +37,11 @@ class _ExerciseVideoViewState extends State<_ExerciseVideoView> {
   }
 
   void _initializePlayer() {
-    setState(() {
-      _hasError = false;
-    });
+    if (mounted) {
+      setState(() {
+        _hasError = false;
+      });
+    }
 
     final viewModel = context.read<ExerciseVideoViewModel>();
     final proxyUrl = viewModel.cachedVideoUrl;
@@ -126,7 +128,9 @@ class _ExerciseVideoViewState extends State<_ExerciseVideoView> {
         ElevatedButton(
           onPressed: () {
             flickManager.dispose();
-            _initializePlayer();
+            if (mounted) {
+              _initializePlayer();
+            }
           },
           child: Text(loc.videoRetry),
         ),
