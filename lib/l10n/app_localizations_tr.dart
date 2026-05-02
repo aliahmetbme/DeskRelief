@@ -184,6 +184,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get regionLowerBack => 'Alt Sırt';
 
   @override
+  String get regionUpperBack => 'Üst Sırt';
+
+  @override
   String get regionLabel2 => 'BÖLGE 2';
 
   @override

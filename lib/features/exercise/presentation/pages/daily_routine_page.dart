@@ -121,10 +121,10 @@ class DailyRoutinePage extends StatelessWidget {
     final List<Widget> widgets = [];
 
     final phases = [
-      ExercisePhase.mobilization,
-      ExercisePhase.strengthening,
-      ExercisePhase.stretching,
-      ExercisePhase.coolDown,
+      LegacyExercisePhase.mobilization,
+      LegacyExercisePhase.strengthening,
+      LegacyExercisePhase.stretching,
+      LegacyExercisePhase.coolDown,
     ];
 
     for (var phase in phases) {
@@ -145,7 +145,7 @@ class DailyRoutinePage extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
               ),
             ),
-            if (phase == ExercisePhase.mobilization)
+            if (phase == LegacyExercisePhase.mobilization)
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
@@ -174,15 +174,15 @@ class DailyRoutinePage extends StatelessWidget {
     return widgets;
   }
 
-  String _getPhaseTitle(AppLocalizations loc, ExercisePhase phase) {
+  String _getPhaseTitle(AppLocalizations loc, LegacyExercisePhase phase) {
     switch (phase) {
-      case ExercisePhase.mobilization:
+      case LegacyExercisePhase.mobilization:
         return loc.phase1;
-      case ExercisePhase.strengthening:
+      case LegacyExercisePhase.strengthening:
         return loc.phase2;
-      case ExercisePhase.stretching:
+      case LegacyExercisePhase.stretching:
         return loc.phase3;
-      case ExercisePhase.coolDown:
+      case LegacyExercisePhase.coolDown:
         return loc.phase4;
     }
   }
@@ -438,7 +438,7 @@ class _ExerciseCard extends StatelessWidget {
                         ),
                         Text(
                           exercise.isLocked
-                              ? (exercise.phase == ExercisePhase.mobilization ? loc.locked : loc.waitingWarmup)
+                              ? (exercise.phase == LegacyExercisePhase.mobilization ? loc.locked : loc.waitingWarmup)
                               : (exercise.reps != null ? '${exercise.reps} Tekrar' : (exercise.duration ?? '')),
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: theme.colorScheme.onSurfaceVariant,
@@ -463,15 +463,15 @@ class _ExerciseCard extends StatelessWidget {
     );
   }
 
-  IconData _getPhaseIcon(ExercisePhase phase) {
+  IconData _getPhaseIcon(LegacyExercisePhase phase) {
     switch (phase) {
-      case ExercisePhase.mobilization:
+      case LegacyExercisePhase.mobilization:
         return Icons.rebase_edit;
-      case ExercisePhase.strengthening:
+      case LegacyExercisePhase.strengthening:
         return Icons.fitness_center_rounded;
-      case ExercisePhase.stretching:
+      case LegacyExercisePhase.stretching:
         return Icons.accessibility_new_rounded;
-      case ExercisePhase.coolDown:
+      case LegacyExercisePhase.coolDown:
         return Icons.self_improvement_rounded;
     }
   }

@@ -416,6 +416,12 @@ abstract class AppLocalizations {
   /// **'Alt Sırt'**
   String get regionLowerBack;
 
+  /// No description provided for @regionUpperBack.
+  ///
+  /// In tr, this message translates to:
+  /// **'Üst Sırt'**
+  String get regionUpperBack;
+
   /// No description provided for @regionLabel2.
   ///
   /// In tr, this message translates to:

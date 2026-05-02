@@ -184,6 +184,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get regionLowerBack => 'Lower Back';
 
   @override
+  String get regionUpperBack => 'Upper Back';
+
+  @override
   String get regionLabel2 => 'REGION 2';
 
   @override

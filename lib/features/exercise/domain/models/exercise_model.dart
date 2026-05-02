@@ -1,16 +1,29 @@
 import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-enum ExercisePhase {
+part 'exercise_model.freezed.dart';
+part 'exercise_model.g.dart';
+
+// ──────────────────────────────────────────────────────────────────────────────
+// LEGACY ENUMS — kept for backward compatibility with existing UI layers
+// (DailyRoutinePage, ExerciseDetailPage, etc.)
+// ──────────────────────────────────────────────────────────────────────────────
+
+enum LegacyExercisePhase {
   mobilization,
   strengthening,
   stretching,
   coolDown,
 }
 
+// ──────────────────────────────────────────────────────────────────────────────
+// LEGACY MODEL — kept for backward compatibility with existing UI layers
+// ──────────────────────────────────────────────────────────────────────────────
+
 class ExerciseItem {
   final String id;
   final String title;
-  final ExercisePhase phase;
+  final LegacyExercisePhase phase;
   final bool isLocked;
   final String imageUrl;
   final String? duration;
@@ -39,4 +52,54 @@ class ExerciseItem {
     this.focusDescription = '',
     this.videoUrl = '',
   });
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// NEW DOMAIN LAYER — freezed models for the CDSS / Firestore exercise pipeline
+// ──────────────────────────────────────────────────────────────────────────────
+
+/// Clinical exercise phase used in Firestore documents.
+enum ExercisePhase {
+  @JsonValue('rom') rom,
+  @JsonValue('strength') strength,
+  @JsonValue('stretch') stretch,
+}
+
+/// Canonical clinical body regions used as Firestore filter keys.
+/// UI-level region strings (e.g. "Sağ Arka Omuz") are mapped to these
+/// values before any repository query is executed.
+enum PainRegion {
+  @JsonValue('neck') neck,
+  @JsonValue('shoulder') shoulder,
+  @JsonValue('upperBack') upperBack,
+  @JsonValue('lowerBack') lowerBack,
+  @JsonValue('armWrist') armWrist,
+  @JsonValue('hip') hip,
+  @JsonValue('knee') knee,
+  @JsonValue('ankle') ankle,
+}
+
+/// Firestore-backed exercise model produced by the CDSS pipeline.
+@freezed
+abstract class ExerciseModel with _$ExerciseModel {
+  const factory ExerciseModel({
+    required String id,
+    required String name,
+    required List<PainRegion> targetRegions,
+    required ExercisePhase phase,
+    required String description,
+    @Default([]) List<String> steps,
+    @Default([]) List<String> warnings,
+    @Default([]) List<String> tips,
+    @Default(2) int recommendedSets,
+    @Default(10) int recommendedReps,
+    String? videoUrl,
+    String? imageUrl,
+    @Default(true) bool isLocked,
+    @Default(false) bool isJoker,
+    int? estimatedDurationSeconds,
+  }) = _ExerciseModel;
+
+  factory ExerciseModel.fromJson(Map<String, dynamic> json) =>
+      _$ExerciseModelFromJson(json);
 }

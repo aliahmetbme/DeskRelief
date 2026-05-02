@@ -77,6 +77,7 @@
   "regionNeck": "Neck",
   "regionLabel1": "REGION 1",
   "regionLowerBack": "Lower Back",
+  "regionUpperBack": "Upper Back",
   "regionLabel2": "REGION 2",
   "startWorkout": "Start Workout",
   "userAge": "{age} Years Old",

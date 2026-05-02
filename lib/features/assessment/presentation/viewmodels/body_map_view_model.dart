@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../exercise/domain/models/exercise_model.dart';
 
 class BodyMapViewModel extends ChangeNotifier {
   int _currentStep = 2; // 2: Front, 1: Back
@@ -9,21 +10,46 @@ class BodyMapViewModel extends ChangeNotifier {
   bool _isDragging = false;
   bool get isDragging => _isDragging;
 
-  final List<String> _selectedRegions = [];
-  List<String> get selectedRegions => _selectedRegions;
+  // ─── ID-based selection store ──────────────────────────────────────────────
+  // Keys are exact zone IDs from _zoneIdToClinicalRegion (e.g. 'shoulder_r_back').
+  final List<String> _selectedZoneIds = [];
 
+  /// Raw zone-ID list — used by the Flare-Up algorithm and clinical tracking.
+  List<String> get rawSelectedZoneIds => _selectedZoneIds;
+
+  /// Backward-compatible alias consumed by existing UI widgets that reference
+  /// [selectedRegions] (e.g. body_map_page.dart chip list).
+  List<String> get selectedRegions => _selectedZoneIds;
+
+  // ─── All registered zone IDs ───────────────────────────────────────────────
+  // Each entry must be a key in [_zoneIdToClinicalRegion].
   final List<String> _allRegions = [
-    'region_neck',
-    'region_shoulder_right',
-    'region_shoulder_left',
-    'region_lower_back',
-    'region_hip_pelvis',
-    'region_arm_right',
-    'region_arm_left',
-    'region_knee_right',
-    'region_knee_left',
-    'region_ankle_right',
-    'region_ankle_left',
+    // Front view zones
+    'neck_front',
+    'shoulder_r_front',
+    'shoulder_l_front',
+    'hip_r_front',
+    'hip_l_front',
+    'arm_wrist_r_front',
+    'arm_wrist_l_front',
+    'knee_r_front',
+    'knee_l_front',
+    'ankle_r_front',
+    'ankle_l_front',
+    // Back view zones
+    'neck_back',
+    'shoulder_r_back',
+    'shoulder_l_back',
+    'upper_back',
+    'lower_back',
+    'hip_r_back',
+    'hip_l_back',
+    'arm_wrist_r_back',
+    'arm_wrist_l_back',
+    'knee_r_back',
+    'knee_l_back',
+    'ankle_r_back',
+    'ankle_l_back',
   ];
   List<String> get allRegions => _allRegions;
 
@@ -51,78 +77,158 @@ class BodyMapViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Koordinat Sistemleri
+  // ─── Coordinate Systems ────────────────────────────────────────────────────
+  // Keys are exact zone IDs. Each zone has one or more Offset(x%, y%) points
+  // positioned relative to the body image dimensions.
+
   Map<String, List<Offset>> backOffsetsMale = {
-    'region_neck': [const Offset(0.50, 0.12)],
-    'region_shoulder_left': [const Offset(0.41, 0.23)],
-    'region_shoulder_right': [const Offset(0.59, 0.23)],
-    'region_lower_back': [const Offset(0.50, 0.36)],
-    'region_hip_pelvis': [const Offset(0.42, 0.52), const Offset(0.58, 0.52)],
-    'region_arm_right': [const Offset(0.68, 0.44)],
-    'region_arm_left': [const Offset(0.32, 0.44)],
-    'region_knee_right': [const Offset(0.56, 0.72)],
-    'region_knee_left': [const Offset(0.44, 0.72)],
-    'region_ankle_right': [const Offset(0.55, 0.93)],
-    'region_ankle_left': [const Offset(0.45, 0.93)],
+    'neck_back':         [const Offset(0.50, 0.12)],
+    'shoulder_l_back':   [const Offset(0.41, 0.23)],
+    'shoulder_r_back':   [const Offset(0.59, 0.23)],
+    'upper_back':        [const Offset(0.50, 0.27)],
+    'lower_back':        [const Offset(0.50, 0.36)],
+    'hip_r_back':        [const Offset(0.58, 0.52)],
+    'hip_l_back':        [const Offset(0.42, 0.52)],
+    'arm_wrist_r_back':  [const Offset(0.68, 0.44)],
+    'arm_wrist_l_back':  [const Offset(0.32, 0.44)],
+    'knee_r_back':       [const Offset(0.56, 0.72)],
+    'knee_l_back':       [const Offset(0.44, 0.72)],
+    'ankle_r_back':      [const Offset(0.55, 0.93)],
+    'ankle_l_back':      [const Offset(0.45, 0.93)],
   };
 
   Map<String, List<Offset>> frontOffsetsMale = {
-    'region_arm_right': [const Offset(0.31, 0.44)],
-    'region_arm_left': [const Offset(0.69, 0.44)],
-    'region_knee_right': [const Offset(0.44, 0.72)],
-    'region_knee_left': [const Offset(0.56, 0.72)],
-    'region_ankle_right': [const Offset(0.45, 0.93)],
-    'region_ankle_left': [const Offset(0.55, 0.93)],
+    'neck_front':        [const Offset(0.50, 0.12)],
+    'shoulder_r_front':  [const Offset(0.31, 0.23)],
+    'shoulder_l_front':  [const Offset(0.69, 0.23)],
+    'hip_r_front':       [const Offset(0.44, 0.52)],
+    'hip_l_front':       [const Offset(0.56, 0.52)],
+    'arm_wrist_r_front': [const Offset(0.31, 0.44)],
+    'arm_wrist_l_front': [const Offset(0.69, 0.44)],
+    'knee_r_front':      [const Offset(0.44, 0.72)],
+    'knee_l_front':      [const Offset(0.56, 0.72)],
+    'ankle_r_front':     [const Offset(0.45, 0.93)],
+    'ankle_l_front':     [const Offset(0.55, 0.93)],
   };
 
   Map<String, List<Offset>> backOffsetsFemale = {
-    'region_neck': [const Offset(0.50, 0.13)],
-    'region_shoulder_left': [const Offset(0.42, 0.22)],
-    'region_shoulder_right': [const Offset(0.58, 0.22)],
-    'region_lower_back': [const Offset(0.50, 0.37)],
-    'region_hip_pelvis': [const Offset(0.42, 0.51), const Offset(0.58, 0.51)],
-    'region_arm_right': [const Offset(0.67, 0.42)],
-    'region_arm_left': [const Offset(0.33, 0.42)],
-    'region_knee_right': [const Offset(0.56, 0.73)],
-    'region_knee_left': [const Offset(0.44, 0.73)],
-    'region_ankle_right': [const Offset(0.55, 0.93)],
-    'region_ankle_left': [const Offset(0.45, 0.93)],
+    'neck_back':         [const Offset(0.50, 0.13)],
+    'shoulder_l_back':   [const Offset(0.42, 0.22)],
+    'shoulder_r_back':   [const Offset(0.58, 0.22)],
+    'upper_back':        [const Offset(0.50, 0.28)],
+    'lower_back':        [const Offset(0.50, 0.37)],
+    'hip_r_back':        [const Offset(0.58, 0.51)],
+    'hip_l_back':        [const Offset(0.42, 0.51)],
+    'arm_wrist_r_back':  [const Offset(0.67, 0.42)],
+    'arm_wrist_l_back':  [const Offset(0.33, 0.42)],
+    'knee_r_back':       [const Offset(0.56, 0.73)],
+    'knee_l_back':       [const Offset(0.44, 0.73)],
+    'ankle_r_back':      [const Offset(0.55, 0.93)],
+    'ankle_l_back':      [const Offset(0.45, 0.93)],
   };
 
   Map<String, List<Offset>> frontOffsetsFemale = {
-    'region_arm_right': [const Offset(0.32, 0.42)],
-    'region_arm_left': [const Offset(0.68, 0.42)],
-    'region_knee_right': [const Offset(0.44, 0.73)],
-    'region_knee_left': [const Offset(0.56, 0.73)],
-    'region_ankle_right': [const Offset(0.45, 0.93)],
-    'region_ankle_left': [const Offset(0.55, 0.93)],
+    'neck_front':        [const Offset(0.50, 0.13)],
+    'shoulder_r_front':  [const Offset(0.32, 0.22)],
+    'shoulder_l_front':  [const Offset(0.68, 0.22)],
+    'hip_r_front':       [const Offset(0.44, 0.51)],
+    'hip_l_front':       [const Offset(0.56, 0.51)],
+    'arm_wrist_r_front': [const Offset(0.32, 0.42)],
+    'arm_wrist_l_front': [const Offset(0.68, 0.42)],
+    'knee_r_front':      [const Offset(0.44, 0.73)],
+    'knee_l_front':      [const Offset(0.56, 0.73)],
+    'ankle_r_front':     [const Offset(0.45, 0.93)],
+    'ankle_l_front':     [const Offset(0.55, 0.93)],
   };
 
-  void toggleRegion(String region) {
-    if (_selectedRegions.contains(region)) {
-      _selectedRegions.remove(region);
+  void toggleRegion(String zoneId) {
+    if (_selectedZoneIds.contains(zoneId)) {
+      _selectedZoneIds.remove(zoneId);
     } else {
-      _selectedRegions.add(region);
+      _selectedZoneIds.add(zoneId);
     }
     notifyListeners();
   }
 
-  void updateOffset(String region, int index, Offset newOffset, bool isFemale) {
-    Map<String, List<Offset>> currentMap;
+  void updateOffset(String zoneId, int index, Offset newOffset, bool isFemale) {
+    final Map<String, List<Offset>> currentMap;
     if (_currentStep == 1) {
       currentMap = isFemale ? backOffsetsFemale : backOffsetsMale;
     } else {
       currentMap = isFemale ? frontOffsetsFemale : frontOffsetsMale;
     }
 
-    if (currentMap.containsKey(region) && currentMap[region]!.length > index) {
-      currentMap[region]![index] = newOffset;
+    if (currentMap.containsKey(zoneId) && currentMap[zoneId]!.length > index) {
+      currentMap[zoneId]![index] = newOffset;
       notifyListeners();
-      debugPrint('DEBUG: $region[$index] -> ${newOffset.dx.toStringAsFixed(3)}, ${newOffset.dy.toStringAsFixed(3)}');
+      debugPrint(
+        'DEBUG: $zoneId[$index] -> ${newOffset.dx.toStringAsFixed(3)}, ${newOffset.dy.toStringAsFixed(3)}',
+      );
     }
   }
 
   void nextStep(List<String> selection) {
     debugPrint('Ağrı Şiddeti Belirleme Sayfasına Geçiliyor: $selection');
   }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // CLINICAL MAPPING — ID Based Dictionary (O(1) Lookup)
+  // ─────────────────────────────────────────────────────────────────────────
+
+  static const Map<String, PainRegion> _zoneIdToClinicalRegion = {
+    // BOYUN
+    'neck_front': PainRegion.neck,
+    'neck_back': PainRegion.neck,
+
+    // OMUZ
+    'shoulder_r_front': PainRegion.shoulder,
+    'shoulder_l_front': PainRegion.shoulder,
+    'shoulder_r_back': PainRegion.shoulder,
+    'shoulder_l_back': PainRegion.shoulder,
+
+    // SIRT VE BEL
+    'upper_back': PainRegion.upperBack,
+    'lower_back': PainRegion.lowerBack,
+
+    // KALÇA / PELVİS
+    'hip_r_front': PainRegion.hip,
+    'hip_l_front': PainRegion.hip,
+    'hip_r_back': PainRegion.hip,
+    'hip_l_back': PainRegion.hip,
+
+    // KOL VE BİLEK
+    'arm_wrist_r_front': PainRegion.armWrist,
+    'arm_wrist_l_front': PainRegion.armWrist,
+    'arm_wrist_r_back': PainRegion.armWrist,
+    'arm_wrist_l_back': PainRegion.armWrist,
+
+    // DİZ
+    'knee_r_front': PainRegion.knee,
+    'knee_l_front': PainRegion.knee,
+    'knee_r_back': PainRegion.knee,
+    'knee_l_back': PainRegion.knee,
+
+    // AYAK / BİLEK
+    'ankle_r_front': PainRegion.ankle,
+    'ankle_l_front': PainRegion.ankle,
+    'ankle_r_back': PainRegion.ankle,
+    'ankle_l_back': PainRegion.ankle,
+  };
+
+  /// O(1) lookup: maps an exact zone ID to its canonical [PainRegion].
+  /// Falls back to [PainRegion.neck] for any unregistered ID.
+  PainRegion mapUiIdToEnum(String zoneId) {
+    return _zoneIdToClinicalRegion[zoneId] ?? PainRegion.neck;
+  }
+
+  /// Deduplicated clinical enum list — consumed by the Firestore exercise
+  /// repository (arrayContainsAny query).
+  List<PainRegion> get selectedClinicalRegions {
+    final mapped = _selectedZoneIds.map(mapUiIdToEnum).toSet();
+    return mapped.toList();
+  }
+
+  /// Backward-compatible alias used by the CDSS pipeline that still calls
+  /// [selectedPainRegions] from the previous mapping iteration.
+  List<PainRegion> get selectedPainRegions => selectedClinicalRegions;
 }

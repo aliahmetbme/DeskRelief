@@ -177,7 +177,12 @@ class BodyMapPage extends StatelessWidget {
                                     ),
 
                                     // Noktalar
-                                    ...viewModel.allRegions.expand((region) {
+                                    // Only render zones that belong to the current view
+                                    ...viewModel.allRegions
+                                        .where((zoneId) => viewModel.currentStep == 1
+                                            ? zoneId.endsWith('_back')
+                                            : zoneId.endsWith('_front'))
+                                        .expand((region) {
                                       // Cinsiyete göre koordinat seti seçimi
                                       final Map<String, List<Offset>>
                                       currentMap = viewModel.currentStep == 1
@@ -538,30 +543,72 @@ class BodyMapPage extends StatelessWidget {
   String _getRegionDisplayName(BuildContext context, String id) {
     final loc = AppLocalizations.of(context)!;
     switch (id) {
-      case 'region_neck':
+      // Boyun
+      case 'neck_front':
+      case 'neck_back':
         return loc.regionNeck;
-      case 'region_shoulder_right':
+
+      // Sağ Omuz
+      case 'shoulder_r_front':
+      case 'shoulder_r_back':
         return loc.regionShoulderRight;
-      case 'region_shoulder_left':
+
+      // Sol Omuz
+      case 'shoulder_l_front':
+      case 'shoulder_l_back':
         return loc.regionShoulderLeft;
-      case 'region_lower_back':
+
+      // Üst Sırt
+      case 'upper_back':
+        return loc.regionUpperBack;
+
+      // Bel / Alt Sırt
+      case 'lower_back':
         return loc.regionLowerBack;
-      case 'region_hip_pelvis':
+
+      // Sağ Kalca / Pelvis
+      case 'hip_r_front':
+      case 'hip_r_back':
         return loc.regionHipPelvis;
-      case 'region_arm_right':
+
+      // Sol Kalca / Pelvis
+      case 'hip_l_front':
+      case 'hip_l_back':
+        return loc.regionHipPelvis;
+
+      // Sağ Kol / Bilek
+      case 'arm_wrist_r_front':
+      case 'arm_wrist_r_back':
         return loc.regionArmRight;
-      case 'region_arm_left':
+
+      // Sol Kol / Bilek
+      case 'arm_wrist_l_front':
+      case 'arm_wrist_l_back':
         return loc.regionArmLeft;
-      case 'region_knee_right':
+
+      // Sağ Diz
+      case 'knee_r_front':
+      case 'knee_r_back':
         return loc.regionKneeRight;
-      case 'region_knee_left':
+
+      // Sol Diz
+      case 'knee_l_front':
+      case 'knee_l_back':
         return loc.regionKneeLeft;
-      case 'region_ankle_right':
+
+      // Sağ Ayak Bileği
+      case 'ankle_r_front':
+      case 'ankle_r_back':
         return loc.regionAnkleRight;
-      case 'region_ankle_left':
+
+      // Sol Ayak Bileği
+      case 'ankle_l_front':
+      case 'ankle_l_back':
         return loc.regionAnkleLeft;
+
       default:
-        return id;
+        // Fallback: make the raw ID human-readable
+        return id.replaceAll('_', ' ').toUpperCase();
     }
   }
 }
