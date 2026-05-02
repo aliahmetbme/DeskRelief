@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../assessment/data/services/cdss_service.dart';
@@ -47,21 +48,25 @@ class AuthViewModel extends ChangeNotifier {
     _setupAuthListener();
   }
 
+  
+  StreamSubscription<UserModel?>? _userSubscription;
+
   void _setupAuthListener() {
     _authService.authStateChanges.listen((user) async {
+      _userSubscription?.cancel();
+      
       if (user != null) {
-        // DÜZELTME: Kullanıcı dökümanı Firestore'dan inene kadar Splash'te BEKLE
-        try {
-          await refreshCurrentUser();
-        } catch (e) {
-          debugPrint("Refresh error: $e");
-        }
+        _userSubscription = _authService.userStream(user.uid).listen((userData) {
+          _currentUser = userData;
+          _isInitialized = true;
+          notifyListeners();
+        }, onError: (e) {
+          debugPrint("User Stream Error: $e");
+          _isInitialized = true;
+          notifyListeners();
+        });
       } else {
         _currentUser = null;
-      }
-
-      // İlk sinyal geldiğinde ve veri çekme işlemi (yukarıdaki await) bittiğinde başlat
-      if (!_isInitialized) {
         _isInitialized = true;
         notifyListeners();
       }
@@ -75,6 +80,12 @@ class AuthViewModel extends ChangeNotifier {
         notifyListeners();
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _userSubscription?.cancel();
+    super.dispose();
   }
 
   Future<void> setHasSeenOnboarding(bool value) async {
@@ -203,7 +214,11 @@ class AuthViewModel extends ChangeNotifier {
     List<String>? flaggedRedFlagIds,
     RegistrationProgress? progress,
     List<RegionDetail>? painRegions,
-    String? sex,
+    String? gender,
+    String? job,
+    double? height,
+    double? weight,
+    bool? isSedentary,
   }) async {
     if (_currentUser == null) return;
 
@@ -213,7 +228,11 @@ class AuthViewModel extends ChangeNotifier {
       flaggedRedFlagIds: flaggedRedFlagIds ?? _currentUser!.flaggedRedFlagIds,
       progress: progress ?? _currentUser!.progress,
       painRegions: painRegions ?? _currentUser!.painRegions,
-      sex: sex ?? _currentUser!.sex,
+      gender: gender ?? _currentUser!.gender,
+      job: job ?? _currentUser!.job,
+      height: height ?? _currentUser!.height,
+      weight: weight ?? _currentUser!.weight,
+      isSedentary: isSedentary ?? _currentUser!.isSedentary,
     );
 
     await _authService.updateUser(newUser);
@@ -228,7 +247,7 @@ class AuthViewModel extends ChangeNotifier {
     bool? hasCompletedScheduling,
     bool? isClearedForExercise,
     List<RegionDetail>? painRegions,
-    String? sex,
+    String? gender,
   }) async {
     if (_currentUser == null) return;
 
@@ -251,7 +270,7 @@ class AuthViewModel extends ChangeNotifier {
     final newUser = _currentUser!.copyWith(
       progress: newProgress,
       painRegions: painRegions ?? _currentUser!.painRegions,
-      sex: sex ?? _currentUser!.sex,
+      gender: gender ?? _currentUser!.gender,
     );
 
     await _authService.updateUser(newUser);

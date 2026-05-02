@@ -577,7 +577,7 @@ as List<int>,
 /// @nodoc
 mixin _$UserModel {
 
- String get id; String get name; String get email; String? get sex; String? get profession; int? get dailySittingHours; bool get isBanned; BanReason? get banReason; String? get banNote; List<String> get flaggedRedFlagIds; RegistrationProgress get progress; List<RegionDetail> get painRegions; List<RegionDetail> get backlogRegions; List<String> get completedExerciseIds; Map<String, dynamic>? get currentProgram; int get currentStreak; int get totalWorkouts; Map<String, dynamic>? get metadata;@TimestampConverter() DateTime? get createdAt;@TimestampConverter() DateTime? get lastActiveAt;
+ String get id; String get name; String get email; String? get gender; String? get job; double? get height; double? get weight; bool get isSedentary; int? get dailySittingHours; bool get isBanned; BanReason? get banReason; String? get banNote; List<String> get flaggedRedFlagIds; RegistrationProgress get progress; List<RegionDetail> get painRegions; List<RegionDetail> get backlogRegions; List<String> get completedExerciseIds; Map<String, dynamic>? get currentProgram; int get currentStreak; int get totalWorkouts; Map<String, dynamic>? get metadata;@TimestampConverter() DateTime? get createdAt;@TimestampConverter() DateTime? get lastActiveAt;
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -590,16 +590,16 @@ $UserModelCopyWith<UserModel> get copyWith => _$UserModelCopyWithImpl<UserModel>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.sex, sex) || other.sex == sex)&&(identical(other.profession, profession) || other.profession == profession)&&(identical(other.dailySittingHours, dailySittingHours) || other.dailySittingHours == dailySittingHours)&&(identical(other.isBanned, isBanned) || other.isBanned == isBanned)&&(identical(other.banReason, banReason) || other.banReason == banReason)&&(identical(other.banNote, banNote) || other.banNote == banNote)&&const DeepCollectionEquality().equals(other.flaggedRedFlagIds, flaggedRedFlagIds)&&(identical(other.progress, progress) || other.progress == progress)&&const DeepCollectionEquality().equals(other.painRegions, painRegions)&&const DeepCollectionEquality().equals(other.backlogRegions, backlogRegions)&&const DeepCollectionEquality().equals(other.completedExerciseIds, completedExerciseIds)&&const DeepCollectionEquality().equals(other.currentProgram, currentProgram)&&(identical(other.currentStreak, currentStreak) || other.currentStreak == currentStreak)&&(identical(other.totalWorkouts, totalWorkouts) || other.totalWorkouts == totalWorkouts)&&const DeepCollectionEquality().equals(other.metadata, metadata)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.lastActiveAt, lastActiveAt) || other.lastActiveAt == lastActiveAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.job, job) || other.job == job)&&(identical(other.height, height) || other.height == height)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.isSedentary, isSedentary) || other.isSedentary == isSedentary)&&(identical(other.dailySittingHours, dailySittingHours) || other.dailySittingHours == dailySittingHours)&&(identical(other.isBanned, isBanned) || other.isBanned == isBanned)&&(identical(other.banReason, banReason) || other.banReason == banReason)&&(identical(other.banNote, banNote) || other.banNote == banNote)&&const DeepCollectionEquality().equals(other.flaggedRedFlagIds, flaggedRedFlagIds)&&(identical(other.progress, progress) || other.progress == progress)&&const DeepCollectionEquality().equals(other.painRegions, painRegions)&&const DeepCollectionEquality().equals(other.backlogRegions, backlogRegions)&&const DeepCollectionEquality().equals(other.completedExerciseIds, completedExerciseIds)&&const DeepCollectionEquality().equals(other.currentProgram, currentProgram)&&(identical(other.currentStreak, currentStreak) || other.currentStreak == currentStreak)&&(identical(other.totalWorkouts, totalWorkouts) || other.totalWorkouts == totalWorkouts)&&const DeepCollectionEquality().equals(other.metadata, metadata)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.lastActiveAt, lastActiveAt) || other.lastActiveAt == lastActiveAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,id,name,email,sex,profession,dailySittingHours,isBanned,banReason,banNote,const DeepCollectionEquality().hash(flaggedRedFlagIds),progress,const DeepCollectionEquality().hash(painRegions),const DeepCollectionEquality().hash(backlogRegions),const DeepCollectionEquality().hash(completedExerciseIds),const DeepCollectionEquality().hash(currentProgram),currentStreak,totalWorkouts,const DeepCollectionEquality().hash(metadata),createdAt,lastActiveAt]);
+int get hashCode => Object.hashAll([runtimeType,id,name,email,gender,job,height,weight,isSedentary,dailySittingHours,isBanned,banReason,banNote,const DeepCollectionEquality().hash(flaggedRedFlagIds),progress,const DeepCollectionEquality().hash(painRegions),const DeepCollectionEquality().hash(backlogRegions),const DeepCollectionEquality().hash(completedExerciseIds),const DeepCollectionEquality().hash(currentProgram),currentStreak,totalWorkouts,const DeepCollectionEquality().hash(metadata),createdAt,lastActiveAt]);
 
 @override
 String toString() {
-  return 'UserModel(id: $id, name: $name, email: $email, sex: $sex, profession: $profession, dailySittingHours: $dailySittingHours, isBanned: $isBanned, banReason: $banReason, banNote: $banNote, flaggedRedFlagIds: $flaggedRedFlagIds, progress: $progress, painRegions: $painRegions, backlogRegions: $backlogRegions, completedExerciseIds: $completedExerciseIds, currentProgram: $currentProgram, currentStreak: $currentStreak, totalWorkouts: $totalWorkouts, metadata: $metadata, createdAt: $createdAt, lastActiveAt: $lastActiveAt)';
+  return 'UserModel(id: $id, name: $name, email: $email, gender: $gender, job: $job, height: $height, weight: $weight, isSedentary: $isSedentary, dailySittingHours: $dailySittingHours, isBanned: $isBanned, banReason: $banReason, banNote: $banNote, flaggedRedFlagIds: $flaggedRedFlagIds, progress: $progress, painRegions: $painRegions, backlogRegions: $backlogRegions, completedExerciseIds: $completedExerciseIds, currentProgram: $currentProgram, currentStreak: $currentStreak, totalWorkouts: $totalWorkouts, metadata: $metadata, createdAt: $createdAt, lastActiveAt: $lastActiveAt)';
 }
 
 
@@ -610,7 +610,7 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String email, String? sex, String? profession, int? dailySittingHours, bool isBanned, BanReason? banReason, String? banNote, List<String> flaggedRedFlagIds, RegistrationProgress progress, List<RegionDetail> painRegions, List<RegionDetail> backlogRegions, List<String> completedExerciseIds, Map<String, dynamic>? currentProgram, int currentStreak, int totalWorkouts, Map<String, dynamic>? metadata,@TimestampConverter() DateTime? createdAt,@TimestampConverter() DateTime? lastActiveAt
+ String id, String name, String email, String? gender, String? job, double? height, double? weight, bool isSedentary, int? dailySittingHours, bool isBanned, BanReason? banReason, String? banNote, List<String> flaggedRedFlagIds, RegistrationProgress progress, List<RegionDetail> painRegions, List<RegionDetail> backlogRegions, List<String> completedExerciseIds, Map<String, dynamic>? currentProgram, int currentStreak, int totalWorkouts, Map<String, dynamic>? metadata,@TimestampConverter() DateTime? createdAt,@TimestampConverter() DateTime? lastActiveAt
 });
 
 
@@ -627,14 +627,17 @@ class _$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? email = null,Object? sex = freezed,Object? profession = freezed,Object? dailySittingHours = freezed,Object? isBanned = null,Object? banReason = freezed,Object? banNote = freezed,Object? flaggedRedFlagIds = null,Object? progress = null,Object? painRegions = null,Object? backlogRegions = null,Object? completedExerciseIds = null,Object? currentProgram = freezed,Object? currentStreak = null,Object? totalWorkouts = null,Object? metadata = freezed,Object? createdAt = freezed,Object? lastActiveAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? email = null,Object? gender = freezed,Object? job = freezed,Object? height = freezed,Object? weight = freezed,Object? isSedentary = null,Object? dailySittingHours = freezed,Object? isBanned = null,Object? banReason = freezed,Object? banNote = freezed,Object? flaggedRedFlagIds = null,Object? progress = null,Object? painRegions = null,Object? backlogRegions = null,Object? completedExerciseIds = null,Object? currentProgram = freezed,Object? currentStreak = null,Object? totalWorkouts = null,Object? metadata = freezed,Object? createdAt = freezed,Object? lastActiveAt = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,sex: freezed == sex ? _self.sex : sex // ignore: cast_nullable_to_non_nullable
-as String?,profession: freezed == profession ? _self.profession : profession // ignore: cast_nullable_to_non_nullable
-as String?,dailySittingHours: freezed == dailySittingHours ? _self.dailySittingHours : dailySittingHours // ignore: cast_nullable_to_non_nullable
+as String,gender: freezed == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
+as String?,job: freezed == job ? _self.job : job // ignore: cast_nullable_to_non_nullable
+as String?,height: freezed == height ? _self.height : height // ignore: cast_nullable_to_non_nullable
+as double?,weight: freezed == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
+as double?,isSedentary: null == isSedentary ? _self.isSedentary : isSedentary // ignore: cast_nullable_to_non_nullable
+as bool,dailySittingHours: freezed == dailySittingHours ? _self.dailySittingHours : dailySittingHours // ignore: cast_nullable_to_non_nullable
 as int?,isBanned: null == isBanned ? _self.isBanned : isBanned // ignore: cast_nullable_to_non_nullable
 as bool,banReason: freezed == banReason ? _self.banReason : banReason // ignore: cast_nullable_to_non_nullable
 as BanReason?,banNote: freezed == banNote ? _self.banNote : banNote // ignore: cast_nullable_to_non_nullable
@@ -743,10 +746,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String email,  String? sex,  String? profession,  int? dailySittingHours,  bool isBanned,  BanReason? banReason,  String? banNote,  List<String> flaggedRedFlagIds,  RegistrationProgress progress,  List<RegionDetail> painRegions,  List<RegionDetail> backlogRegions,  List<String> completedExerciseIds,  Map<String, dynamic>? currentProgram,  int currentStreak,  int totalWorkouts,  Map<String, dynamic>? metadata, @TimestampConverter()  DateTime? createdAt, @TimestampConverter()  DateTime? lastActiveAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String email,  String? gender,  String? job,  double? height,  double? weight,  bool isSedentary,  int? dailySittingHours,  bool isBanned,  BanReason? banReason,  String? banNote,  List<String> flaggedRedFlagIds,  RegistrationProgress progress,  List<RegionDetail> painRegions,  List<RegionDetail> backlogRegions,  List<String> completedExerciseIds,  Map<String, dynamic>? currentProgram,  int currentStreak,  int totalWorkouts,  Map<String, dynamic>? metadata, @TimestampConverter()  DateTime? createdAt, @TimestampConverter()  DateTime? lastActiveAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.id,_that.name,_that.email,_that.sex,_that.profession,_that.dailySittingHours,_that.isBanned,_that.banReason,_that.banNote,_that.flaggedRedFlagIds,_that.progress,_that.painRegions,_that.backlogRegions,_that.completedExerciseIds,_that.currentProgram,_that.currentStreak,_that.totalWorkouts,_that.metadata,_that.createdAt,_that.lastActiveAt);case _:
+return $default(_that.id,_that.name,_that.email,_that.gender,_that.job,_that.height,_that.weight,_that.isSedentary,_that.dailySittingHours,_that.isBanned,_that.banReason,_that.banNote,_that.flaggedRedFlagIds,_that.progress,_that.painRegions,_that.backlogRegions,_that.completedExerciseIds,_that.currentProgram,_that.currentStreak,_that.totalWorkouts,_that.metadata,_that.createdAt,_that.lastActiveAt);case _:
   return orElse();
 
 }
@@ -764,10 +767,10 @@ return $default(_that.id,_that.name,_that.email,_that.sex,_that.profession,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String email,  String? sex,  String? profession,  int? dailySittingHours,  bool isBanned,  BanReason? banReason,  String? banNote,  List<String> flaggedRedFlagIds,  RegistrationProgress progress,  List<RegionDetail> painRegions,  List<RegionDetail> backlogRegions,  List<String> completedExerciseIds,  Map<String, dynamic>? currentProgram,  int currentStreak,  int totalWorkouts,  Map<String, dynamic>? metadata, @TimestampConverter()  DateTime? createdAt, @TimestampConverter()  DateTime? lastActiveAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String email,  String? gender,  String? job,  double? height,  double? weight,  bool isSedentary,  int? dailySittingHours,  bool isBanned,  BanReason? banReason,  String? banNote,  List<String> flaggedRedFlagIds,  RegistrationProgress progress,  List<RegionDetail> painRegions,  List<RegionDetail> backlogRegions,  List<String> completedExerciseIds,  Map<String, dynamic>? currentProgram,  int currentStreak,  int totalWorkouts,  Map<String, dynamic>? metadata, @TimestampConverter()  DateTime? createdAt, @TimestampConverter()  DateTime? lastActiveAt)  $default,) {final _that = this;
 switch (_that) {
 case _UserModel():
-return $default(_that.id,_that.name,_that.email,_that.sex,_that.profession,_that.dailySittingHours,_that.isBanned,_that.banReason,_that.banNote,_that.flaggedRedFlagIds,_that.progress,_that.painRegions,_that.backlogRegions,_that.completedExerciseIds,_that.currentProgram,_that.currentStreak,_that.totalWorkouts,_that.metadata,_that.createdAt,_that.lastActiveAt);case _:
+return $default(_that.id,_that.name,_that.email,_that.gender,_that.job,_that.height,_that.weight,_that.isSedentary,_that.dailySittingHours,_that.isBanned,_that.banReason,_that.banNote,_that.flaggedRedFlagIds,_that.progress,_that.painRegions,_that.backlogRegions,_that.completedExerciseIds,_that.currentProgram,_that.currentStreak,_that.totalWorkouts,_that.metadata,_that.createdAt,_that.lastActiveAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -784,10 +787,10 @@ return $default(_that.id,_that.name,_that.email,_that.sex,_that.profession,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String email,  String? sex,  String? profession,  int? dailySittingHours,  bool isBanned,  BanReason? banReason,  String? banNote,  List<String> flaggedRedFlagIds,  RegistrationProgress progress,  List<RegionDetail> painRegions,  List<RegionDetail> backlogRegions,  List<String> completedExerciseIds,  Map<String, dynamic>? currentProgram,  int currentStreak,  int totalWorkouts,  Map<String, dynamic>? metadata, @TimestampConverter()  DateTime? createdAt, @TimestampConverter()  DateTime? lastActiveAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String email,  String? gender,  String? job,  double? height,  double? weight,  bool isSedentary,  int? dailySittingHours,  bool isBanned,  BanReason? banReason,  String? banNote,  List<String> flaggedRedFlagIds,  RegistrationProgress progress,  List<RegionDetail> painRegions,  List<RegionDetail> backlogRegions,  List<String> completedExerciseIds,  Map<String, dynamic>? currentProgram,  int currentStreak,  int totalWorkouts,  Map<String, dynamic>? metadata, @TimestampConverter()  DateTime? createdAt, @TimestampConverter()  DateTime? lastActiveAt)?  $default,) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.id,_that.name,_that.email,_that.sex,_that.profession,_that.dailySittingHours,_that.isBanned,_that.banReason,_that.banNote,_that.flaggedRedFlagIds,_that.progress,_that.painRegions,_that.backlogRegions,_that.completedExerciseIds,_that.currentProgram,_that.currentStreak,_that.totalWorkouts,_that.metadata,_that.createdAt,_that.lastActiveAt);case _:
+return $default(_that.id,_that.name,_that.email,_that.gender,_that.job,_that.height,_that.weight,_that.isSedentary,_that.dailySittingHours,_that.isBanned,_that.banReason,_that.banNote,_that.flaggedRedFlagIds,_that.progress,_that.painRegions,_that.backlogRegions,_that.completedExerciseIds,_that.currentProgram,_that.currentStreak,_that.totalWorkouts,_that.metadata,_that.createdAt,_that.lastActiveAt);case _:
   return null;
 
 }
@@ -799,14 +802,17 @@ return $default(_that.id,_that.name,_that.email,_that.sex,_that.profession,_that
 @JsonSerializable()
 
 class _UserModel implements UserModel {
-  const _UserModel({required this.id, required this.name, required this.email, this.sex, this.profession, this.dailySittingHours, this.isBanned = false, this.banReason, this.banNote, final  List<String> flaggedRedFlagIds = const [], this.progress = const RegistrationProgress(), final  List<RegionDetail> painRegions = const [], final  List<RegionDetail> backlogRegions = const [], final  List<String> completedExerciseIds = const [], final  Map<String, dynamic>? currentProgram, this.currentStreak = 0, this.totalWorkouts = 0, final  Map<String, dynamic>? metadata, @TimestampConverter() this.createdAt, @TimestampConverter() this.lastActiveAt}): _flaggedRedFlagIds = flaggedRedFlagIds,_painRegions = painRegions,_backlogRegions = backlogRegions,_completedExerciseIds = completedExerciseIds,_currentProgram = currentProgram,_metadata = metadata;
+  const _UserModel({required this.id, required this.name, required this.email, this.gender, this.job, this.height, this.weight, this.isSedentary = true, this.dailySittingHours, this.isBanned = false, this.banReason, this.banNote, final  List<String> flaggedRedFlagIds = const [], this.progress = const RegistrationProgress(), final  List<RegionDetail> painRegions = const [], final  List<RegionDetail> backlogRegions = const [], final  List<String> completedExerciseIds = const [], final  Map<String, dynamic>? currentProgram, this.currentStreak = 0, this.totalWorkouts = 0, final  Map<String, dynamic>? metadata, @TimestampConverter() this.createdAt, @TimestampConverter() this.lastActiveAt}): _flaggedRedFlagIds = flaggedRedFlagIds,_painRegions = painRegions,_backlogRegions = backlogRegions,_completedExerciseIds = completedExerciseIds,_currentProgram = currentProgram,_metadata = metadata;
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
 @override final  String id;
 @override final  String name;
 @override final  String email;
-@override final  String? sex;
-@override final  String? profession;
+@override final  String? gender;
+@override final  String? job;
+@override final  double? height;
+@override final  double? weight;
+@override@JsonKey() final  bool isSedentary;
 @override final  int? dailySittingHours;
 @override@JsonKey() final  bool isBanned;
 @override final  BanReason? banReason;
@@ -876,16 +882,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.sex, sex) || other.sex == sex)&&(identical(other.profession, profession) || other.profession == profession)&&(identical(other.dailySittingHours, dailySittingHours) || other.dailySittingHours == dailySittingHours)&&(identical(other.isBanned, isBanned) || other.isBanned == isBanned)&&(identical(other.banReason, banReason) || other.banReason == banReason)&&(identical(other.banNote, banNote) || other.banNote == banNote)&&const DeepCollectionEquality().equals(other._flaggedRedFlagIds, _flaggedRedFlagIds)&&(identical(other.progress, progress) || other.progress == progress)&&const DeepCollectionEquality().equals(other._painRegions, _painRegions)&&const DeepCollectionEquality().equals(other._backlogRegions, _backlogRegions)&&const DeepCollectionEquality().equals(other._completedExerciseIds, _completedExerciseIds)&&const DeepCollectionEquality().equals(other._currentProgram, _currentProgram)&&(identical(other.currentStreak, currentStreak) || other.currentStreak == currentStreak)&&(identical(other.totalWorkouts, totalWorkouts) || other.totalWorkouts == totalWorkouts)&&const DeepCollectionEquality().equals(other._metadata, _metadata)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.lastActiveAt, lastActiveAt) || other.lastActiveAt == lastActiveAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.job, job) || other.job == job)&&(identical(other.height, height) || other.height == height)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.isSedentary, isSedentary) || other.isSedentary == isSedentary)&&(identical(other.dailySittingHours, dailySittingHours) || other.dailySittingHours == dailySittingHours)&&(identical(other.isBanned, isBanned) || other.isBanned == isBanned)&&(identical(other.banReason, banReason) || other.banReason == banReason)&&(identical(other.banNote, banNote) || other.banNote == banNote)&&const DeepCollectionEquality().equals(other._flaggedRedFlagIds, _flaggedRedFlagIds)&&(identical(other.progress, progress) || other.progress == progress)&&const DeepCollectionEquality().equals(other._painRegions, _painRegions)&&const DeepCollectionEquality().equals(other._backlogRegions, _backlogRegions)&&const DeepCollectionEquality().equals(other._completedExerciseIds, _completedExerciseIds)&&const DeepCollectionEquality().equals(other._currentProgram, _currentProgram)&&(identical(other.currentStreak, currentStreak) || other.currentStreak == currentStreak)&&(identical(other.totalWorkouts, totalWorkouts) || other.totalWorkouts == totalWorkouts)&&const DeepCollectionEquality().equals(other._metadata, _metadata)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.lastActiveAt, lastActiveAt) || other.lastActiveAt == lastActiveAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,id,name,email,sex,profession,dailySittingHours,isBanned,banReason,banNote,const DeepCollectionEquality().hash(_flaggedRedFlagIds),progress,const DeepCollectionEquality().hash(_painRegions),const DeepCollectionEquality().hash(_backlogRegions),const DeepCollectionEquality().hash(_completedExerciseIds),const DeepCollectionEquality().hash(_currentProgram),currentStreak,totalWorkouts,const DeepCollectionEquality().hash(_metadata),createdAt,lastActiveAt]);
+int get hashCode => Object.hashAll([runtimeType,id,name,email,gender,job,height,weight,isSedentary,dailySittingHours,isBanned,banReason,banNote,const DeepCollectionEquality().hash(_flaggedRedFlagIds),progress,const DeepCollectionEquality().hash(_painRegions),const DeepCollectionEquality().hash(_backlogRegions),const DeepCollectionEquality().hash(_completedExerciseIds),const DeepCollectionEquality().hash(_currentProgram),currentStreak,totalWorkouts,const DeepCollectionEquality().hash(_metadata),createdAt,lastActiveAt]);
 
 @override
 String toString() {
-  return 'UserModel(id: $id, name: $name, email: $email, sex: $sex, profession: $profession, dailySittingHours: $dailySittingHours, isBanned: $isBanned, banReason: $banReason, banNote: $banNote, flaggedRedFlagIds: $flaggedRedFlagIds, progress: $progress, painRegions: $painRegions, backlogRegions: $backlogRegions, completedExerciseIds: $completedExerciseIds, currentProgram: $currentProgram, currentStreak: $currentStreak, totalWorkouts: $totalWorkouts, metadata: $metadata, createdAt: $createdAt, lastActiveAt: $lastActiveAt)';
+  return 'UserModel(id: $id, name: $name, email: $email, gender: $gender, job: $job, height: $height, weight: $weight, isSedentary: $isSedentary, dailySittingHours: $dailySittingHours, isBanned: $isBanned, banReason: $banReason, banNote: $banNote, flaggedRedFlagIds: $flaggedRedFlagIds, progress: $progress, painRegions: $painRegions, backlogRegions: $backlogRegions, completedExerciseIds: $completedExerciseIds, currentProgram: $currentProgram, currentStreak: $currentStreak, totalWorkouts: $totalWorkouts, metadata: $metadata, createdAt: $createdAt, lastActiveAt: $lastActiveAt)';
 }
 
 
@@ -896,7 +902,7 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String email, String? sex, String? profession, int? dailySittingHours, bool isBanned, BanReason? banReason, String? banNote, List<String> flaggedRedFlagIds, RegistrationProgress progress, List<RegionDetail> painRegions, List<RegionDetail> backlogRegions, List<String> completedExerciseIds, Map<String, dynamic>? currentProgram, int currentStreak, int totalWorkouts, Map<String, dynamic>? metadata,@TimestampConverter() DateTime? createdAt,@TimestampConverter() DateTime? lastActiveAt
+ String id, String name, String email, String? gender, String? job, double? height, double? weight, bool isSedentary, int? dailySittingHours, bool isBanned, BanReason? banReason, String? banNote, List<String> flaggedRedFlagIds, RegistrationProgress progress, List<RegionDetail> painRegions, List<RegionDetail> backlogRegions, List<String> completedExerciseIds, Map<String, dynamic>? currentProgram, int currentStreak, int totalWorkouts, Map<String, dynamic>? metadata,@TimestampConverter() DateTime? createdAt,@TimestampConverter() DateTime? lastActiveAt
 });
 
 
@@ -913,14 +919,17 @@ class __$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? email = null,Object? sex = freezed,Object? profession = freezed,Object? dailySittingHours = freezed,Object? isBanned = null,Object? banReason = freezed,Object? banNote = freezed,Object? flaggedRedFlagIds = null,Object? progress = null,Object? painRegions = null,Object? backlogRegions = null,Object? completedExerciseIds = null,Object? currentProgram = freezed,Object? currentStreak = null,Object? totalWorkouts = null,Object? metadata = freezed,Object? createdAt = freezed,Object? lastActiveAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? email = null,Object? gender = freezed,Object? job = freezed,Object? height = freezed,Object? weight = freezed,Object? isSedentary = null,Object? dailySittingHours = freezed,Object? isBanned = null,Object? banReason = freezed,Object? banNote = freezed,Object? flaggedRedFlagIds = null,Object? progress = null,Object? painRegions = null,Object? backlogRegions = null,Object? completedExerciseIds = null,Object? currentProgram = freezed,Object? currentStreak = null,Object? totalWorkouts = null,Object? metadata = freezed,Object? createdAt = freezed,Object? lastActiveAt = freezed,}) {
   return _then(_UserModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,sex: freezed == sex ? _self.sex : sex // ignore: cast_nullable_to_non_nullable
-as String?,profession: freezed == profession ? _self.profession : profession // ignore: cast_nullable_to_non_nullable
-as String?,dailySittingHours: freezed == dailySittingHours ? _self.dailySittingHours : dailySittingHours // ignore: cast_nullable_to_non_nullable
+as String,gender: freezed == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
+as String?,job: freezed == job ? _self.job : job // ignore: cast_nullable_to_non_nullable
+as String?,height: freezed == height ? _self.height : height // ignore: cast_nullable_to_non_nullable
+as double?,weight: freezed == weight ? _self.weight : weight // ignore: cast_nullable_to_non_nullable
+as double?,isSedentary: null == isSedentary ? _self.isSedentary : isSedentary // ignore: cast_nullable_to_non_nullable
+as bool,dailySittingHours: freezed == dailySittingHours ? _self.dailySittingHours : dailySittingHours // ignore: cast_nullable_to_non_nullable
 as int?,isBanned: null == isBanned ? _self.isBanned : isBanned // ignore: cast_nullable_to_non_nullable
 as bool,banReason: freezed == banReason ? _self.banReason : banReason // ignore: cast_nullable_to_non_nullable
 as BanReason?,banNote: freezed == banNote ? _self.banNote : banNote // ignore: cast_nullable_to_non_nullable

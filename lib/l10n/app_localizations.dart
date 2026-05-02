@@ -641,14 +641,14 @@ abstract class AppLocalizations {
   /// No description provided for @lightTheme.
   ///
   /// In tr, this message translates to:
-  /// **'Açık'**
+  /// **'Aydınlık'**
   String get lightTheme;
 
-  /// No description provided for @trueDarkTheme.
+  /// No description provided for @darkTheme.
   ///
   /// In tr, this message translates to:
-  /// **'True Dark'**
-  String get trueDarkTheme;
+  /// **'Koyu'**
+  String get darkTheme;
 
   /// No description provided for @systemTheme.
   ///
@@ -2347,6 +2347,72 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'• {minutes} dk okuma'**
   String readingTime(int minutes);
+
+  /// No description provided for @job.
+  ///
+  /// In tr, this message translates to:
+  /// **'Meslek'**
+  String get job;
+
+  /// No description provided for @gender.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cinsiyet'**
+  String get gender;
+
+  /// No description provided for @height.
+  ///
+  /// In tr, this message translates to:
+  /// **'Boy'**
+  String get height;
+
+  /// No description provided for @weight.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kilo'**
+  String get weight;
+
+  /// No description provided for @sedentaryStatus.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sedanter (Hareketsiz) mi çalışıyorsunuz?'**
+  String get sedentaryStatus;
+
+  /// No description provided for @sedentaryInfo.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu seçenek, egzersiz sıklığınızı ve hatırlatıcılarınızı optimize etmemize yardımcı olur.'**
+  String get sedentaryInfo;
+
+  /// No description provided for @saveChanges.
+  ///
+  /// In tr, this message translates to:
+  /// **'Değişiklikleri Kaydet'**
+  String get saveChanges;
+
+  /// No description provided for @updateSuccess.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kişisel bilgiler başarıyla güncellendi!'**
+  String get updateSuccess;
+
+  /// No description provided for @male.
+  ///
+  /// In tr, this message translates to:
+  /// **'Erkek'**
+  String get male;
+
+  /// No description provided for @female.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kadın'**
+  String get female;
+
+  /// No description provided for @other.
+  ///
+  /// In tr, this message translates to:
+  /// **'Diğer'**
+  String get other;
 }
 
 class _AppLocalizationsDelegate

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:deskrelief/l10n/app_localizations.dart';
 import 'package:deskrelief/core/theme/theme_provider.dart';
+import 'package:deskrelief/core/theme/app_colors.dart';
 import 'package:deskrelief/core/providers/locale_provider.dart';
 import 'package:deskrelief/features/auth/presentation/viewmodels/auth_view_model.dart';
 
@@ -354,6 +355,7 @@ class _SettingsList extends StatelessWidget {
             icon: Icons.person_rounded,
             title: loc.personalInfo,
             color: theme.colorScheme.primary,
+            onTap: () => context.push('/profile/personal-info'),
           ),
           _Separator(),
           _SettingsItem(
@@ -396,7 +398,7 @@ class _ThemeSettingsItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    final themeProvider = context.watch<ThemeProvider>();
     final loc = AppLocalizations.of(context)!;
 
     return Padding(
@@ -436,7 +438,7 @@ class _ThemeSettingsItem extends StatelessWidget {
             children: [
               Expanded(
                 child: _ThemeCard(
-                  label: loc.trueDarkTheme,
+                  label: loc.darkTheme,
                   icon: Icons.dark_mode_rounded,
                   mode: AppThemeMode.dark,
                   isSelected: themeProvider.themeMode == AppThemeMode.dark,
@@ -705,31 +707,34 @@ class _LogoutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colors = theme.extension<DeskReliefColors>();
+    final bgColor =
+        colors?.destructiveButtonBackground ?? const Color(0xFFBA1A1A);
+    final fgColor = colors?.destructiveButtonText ?? Colors.white;
     final loc = AppLocalizations.of(context)!;
+
     return SizedBox(
       width: double.infinity,
-      child: TextButton(
+      child: ElevatedButton(
         onPressed: () => context.read<AuthViewModel>().signOut(),
-        style: TextButton.styleFrom(
+        style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 20),
-          backgroundColor: theme.colorScheme.surface,
+          backgroundColor: bgColor,
+          foregroundColor: fgColor,
+          elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(16),
           ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.logout_rounded,
-              color: theme.colorScheme.error,
-              size: 20,
-            ),
+            Icon(Icons.logout_rounded, color: fgColor, size: 20),
             const SizedBox(width: 12),
             Text(
               loc.logout,
               style: TextStyle(
-                color: theme.colorScheme.error,
+                color: fgColor,
                 fontWeight: FontWeight.w800,
                 fontSize: 16,
               ),

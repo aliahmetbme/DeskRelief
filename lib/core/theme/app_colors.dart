@@ -13,6 +13,8 @@ class DeskReliefColors extends ThemeExtension<DeskReliefColors> {
   final Color? success;
   final Color? warning;
   final Color? error;
+  final Color? destructiveButtonBackground;
+  final Color? destructiveButtonText;
 
   const DeskReliefColors({
     required this.alertBackground,
@@ -26,6 +28,8 @@ class DeskReliefColors extends ThemeExtension<DeskReliefColors> {
     required this.success,
     required this.warning,
     required this.error,
+    required this.destructiveButtonBackground,
+    required this.destructiveButtonText,
   });
 
   @override
@@ -41,6 +45,8 @@ class DeskReliefColors extends ThemeExtension<DeskReliefColors> {
     Color? success,
     Color? warning,
     Color? error,
+    Color? destructiveButtonBackground,
+    Color? destructiveButtonText,
   }) {
     return DeskReliefColors(
       alertBackground: alertBackground ?? this.alertBackground,
@@ -54,6 +60,8 @@ class DeskReliefColors extends ThemeExtension<DeskReliefColors> {
       success: success ?? this.success,
       warning: warning ?? this.warning,
       error: error ?? this.error,
+      destructiveButtonBackground: destructiveButtonBackground ?? this.destructiveButtonBackground,
+      destructiveButtonText: destructiveButtonText ?? this.destructiveButtonText,
     );
   }
 
@@ -72,6 +80,8 @@ class DeskReliefColors extends ThemeExtension<DeskReliefColors> {
       success: Color.lerp(success, other.success, t),
       warning: Color.lerp(warning, other.warning, t),
       error: Color.lerp(error, other.error, t),
+      destructiveButtonBackground: Color.lerp(destructiveButtonBackground, other.destructiveButtonBackground, t),
+      destructiveButtonText: Color.lerp(destructiveButtonText, other.destructiveButtonText, t),
     );
   }
 
@@ -87,7 +97,9 @@ class DeskReliefColors extends ThemeExtension<DeskReliefColors> {
     cardShadowColor: Color(0x1A000000),
     success: Color(0xFF10B981),
     warning: Color(0xFFF59E0B),
-    error: Color(0xFFEF4444),
+    error: Color(0xFFBA1A1A),
+    destructiveButtonBackground: Color(0xFFBA1A1A),
+    destructiveButtonText: Colors.white,
   );
 
   // Preset for Medical Theme (Current Dark - Slate)
@@ -103,6 +115,8 @@ class DeskReliefColors extends ThemeExtension<DeskReliefColors> {
     success: Color(0xFF34D399),
     warning: Color(0xFFFBBF24),
     error: Color(0xFFF87171),
+    destructiveButtonBackground: Color(0xFF991B1B),
+    destructiveButtonText: Colors.white,
   );
 
   // Preset for Dark Theme (True Black)
@@ -118,6 +132,8 @@ class DeskReliefColors extends ThemeExtension<DeskReliefColors> {
     success: Color(0xFF30D158), // iOS Green
     warning: Color(0xFFFFD60A), // iOS Yellow
     error: Color(0xFFFF453A), // iOS Red
+    destructiveButtonBackground: Color(0xFF93000A),
+    destructiveButtonText: Color(0xFFFFB4AB),
   );
 }
 

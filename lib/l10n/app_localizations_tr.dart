@@ -312,10 +312,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get medicalTheme => 'Medikal';
 
   @override
-  String get lightTheme => 'Açık';
+  String get lightTheme => 'Aydınlık';
 
   @override
-  String get trueDarkTheme => 'True Dark';
+  String get darkTheme => 'Koyu';
 
   @override
   String get systemTheme => 'Sistem Teması';
@@ -1235,4 +1235,38 @@ class AppLocalizationsTr extends AppLocalizations {
   String readingTime(int minutes) {
     return '• $minutes dk okuma';
   }
+
+  @override
+  String get job => 'Meslek';
+
+  @override
+  String get gender => 'Cinsiyet';
+
+  @override
+  String get height => 'Boy';
+
+  @override
+  String get weight => 'Kilo';
+
+  @override
+  String get sedentaryStatus => 'Sedanter (Hareketsiz) mi çalışıyorsunuz?';
+
+  @override
+  String get sedentaryInfo =>
+      'Bu seçenek, egzersiz sıklığınızı ve hatırlatıcılarınızı optimize etmemize yardımcı olur.';
+
+  @override
+  String get saveChanges => 'Değişiklikleri Kaydet';
+
+  @override
+  String get updateSuccess => 'Kişisel bilgiler başarıyla güncellendi!';
+
+  @override
+  String get male => 'Erkek';
+
+  @override
+  String get female => 'Kadın';
+
+  @override
+  String get other => 'Diğer';
 }

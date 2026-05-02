@@ -19,7 +19,7 @@ class BodyMapViewModel extends ChangeNotifier {
 
   void updateUser(UserModel? user) {
     if (user != null) {
-      _isFemale = user.sex == 'female';
+      _isFemale = user.gender == 'female';
       if (_currentUid != user.id) {
         _currentUid = user.id;
         // Reset or reload state if needed when user changes

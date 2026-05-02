@@ -59,7 +59,7 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
     // Profil kaydedildi, AuthViewModel üzerinden ilerlemeyi işaretle
     await context.read<AuthViewModel>().updateProgress(
       hasCompletedWelcome: true,
-      sex: _selectedGender == 1 ? 'female' : 'male',
+      gender: _selectedGender == 1 ? 'female' : 'male',
     );
 
     // Tıbbi Tarama modülüne geç

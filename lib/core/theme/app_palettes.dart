@@ -48,7 +48,7 @@ class IndigoPalette implements AppPalette {
   Color get surface => const Color(0xFFFFFFFF);
   
   @override
-  Color get error => const Color(0xFFFF3B30); // iOS Red
+  Color get error => const Color(0xFFBA1A1A);
   
   @override
   Color get textPrimary => const Color(0xFF000000); // iOS Label
@@ -71,7 +71,7 @@ class TealPalette implements AppPalette {
   Color get surface => const Color(0xFFFFFFFF);
   
   @override
-  Color get error => const Color(0xFFFF3B30);
+  Color get error => const Color(0xFFBA1A1A);
   
   @override
   Color get textPrimary => const Color(0xFF000000);

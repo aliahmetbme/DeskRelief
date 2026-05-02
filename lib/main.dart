@@ -23,6 +23,7 @@ import 'features/exercise/data/services/video_cache_service.dart';
 import 'features/assessment/presentation/viewmodels/pain_intensity_view_model.dart';
 import 'features/exercise/presentation/viewmodels/daily_routine_view_model.dart';
 import 'features/scheduling/presentation/viewmodels/scheduling_view_model.dart';
+import 'features/profile/presentation/viewmodels/personal_info_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'core/services/content_service.dart';
 
@@ -111,6 +112,11 @@ void main() async {
           create: (_) => SchedulingViewModel(),
           update: (_, auth, previous) => (previous ?? SchedulingViewModel())
             ..updateUser(auth.currentUser),
+        ),
+        ChangeNotifierProxyProvider<AuthViewModel, PersonalInfoViewModel>(
+          create: (context) => PersonalInfoViewModel(),
+          update: (context, auth, previous) =>
+              (previous ?? PersonalInfoViewModel())..updateUserData(auth.currentUser),
         ),
       ],
       child: const DeskReliefApp(),

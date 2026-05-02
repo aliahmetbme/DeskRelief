@@ -276,9 +276,10 @@ class _ProgressSection extends StatelessWidget {
     final remainingSessions = viewModel.remainingSessions;
 
     final drColors = theme.extension<DeskReliefColors>()!;
-    
+
     final cobaltBlue = theme.colorScheme.primary;
-    final softGreen = drColors.successBackground ?? Colors.green.withValues(alpha: 0.1);
+    final softGreen =
+        drColors.successBackground ?? Colors.green.withValues(alpha: 0.1);
     final darkGreen = drColors.successText ?? Colors.green;
 
     return Column(
@@ -433,8 +434,11 @@ class _ClinicalWarningSection extends StatelessWidget {
     final drColors = theme.extension<DeskReliefColors>()!;
 
     final warningColor = drColors.warningText ?? Colors.orange;
-    final warningBg = drColors.warningBackground ?? Colors.orange.withValues(alpha: 0.1);
-    final warningBorder = (drColors.warningText ?? Colors.orange).withValues(alpha: 0.2);
+    final warningBg =
+        drColors.warningBackground ?? Colors.orange.withValues(alpha: 0.1);
+    final warningBorder = (drColors.warningText ?? Colors.orange).withValues(
+      alpha: 0.2,
+    );
 
     return Container(
       padding: const EdgeInsets.all(16),

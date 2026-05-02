@@ -306,6 +306,10 @@ class AuthService {
   User? get currentUser => _auth.currentUser;
   String? get currentUserId => _auth.currentUser?.uid;
 
+  Stream<UserModel?> userStream(String uid) {
+    return _usersRef.doc(uid).snapshots().map((snapshot) => snapshot.data());
+  }
+
   Future<UserModel?> getUserModel(String uid) async {
     final doc = await _usersRef.doc(uid).get();
     return doc.data();

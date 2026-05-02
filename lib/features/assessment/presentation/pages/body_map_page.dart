@@ -14,7 +14,7 @@ class BodyMapPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final authVM = context.watch<AuthViewModel>();
-    final bool isFemale = authVM.currentUser?.sex == 'female';
+    final bool isFemale = authVM.currentUser?.gender == 'female';
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,

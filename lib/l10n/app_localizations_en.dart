@@ -314,7 +314,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lightTheme => 'Light';
 
   @override
-  String get trueDarkTheme => 'True Dark';
+  String get darkTheme => 'Dark';
 
   @override
   String get systemTheme => 'System Theme';
@@ -1233,4 +1233,38 @@ class AppLocalizationsEn extends AppLocalizations {
   String readingTime(int minutes) {
     return '• $minutes min read';
   }
+
+  @override
+  String get job => 'Job / Profession';
+
+  @override
+  String get gender => 'Gender';
+
+  @override
+  String get height => 'Height';
+
+  @override
+  String get weight => 'Weight';
+
+  @override
+  String get sedentaryStatus => 'Sedentary (Inactive) Work?';
+
+  @override
+  String get sedentaryInfo =>
+      'This helps us optimize your exercise frequency and reminders.';
+
+  @override
+  String get saveChanges => 'Save Changes';
+
+  @override
+  String get updateSuccess => 'Personal information updated successfully!';
+
+  @override
+  String get male => 'Male';
+
+  @override
+  String get female => 'Female';
+
+  @override
+  String get other => 'Other';
 }

@@ -23,6 +23,7 @@ import '../../features/exercise/presentation/pages/daily_routine_page.dart';
 import '../../features/exercise/presentation/pages/exercise_detail_page.dart';
 import '../../features/exercise/presentation/pages/exercise_video_page.dart';
 import '../../features/exercise/domain/models/exercise_model.dart';
+import '../../features/profile/presentation/pages/personal_info_page.dart';
 
 class AppRouter {
   static GoRouter createRouter({required AuthViewModel authViewModel}) {
@@ -141,6 +142,10 @@ class AppRouter {
         GoRoute(
           path: '/profile/exclusion-criteria',
           builder: (context, state) => const ExclusionCriteriaSettingsPage(),
+        ),
+        GoRoute(
+          path: '/profile/personal-info',
+          builder: (context, state) => const PersonalInfoPage(),
         ),
         GoRoute(
           path: '/scheduling',
