@@ -10,19 +10,10 @@ class BodyMapViewModel extends ChangeNotifier {
   bool _isDragging = false;
   bool get isDragging => _isDragging;
 
-  // ─── ID-based selection store ──────────────────────────────────────────────
-  // Keys are exact zone IDs from _zoneIdToClinicalRegion (e.g. 'shoulder_r_back').
   final List<String> _selectedZoneIds = [];
-
-  /// Raw zone-ID list — used by the Flare-Up algorithm and clinical tracking.
   List<String> get rawSelectedZoneIds => _selectedZoneIds;
-
-  /// Backward-compatible alias consumed by existing UI widgets that reference
-  /// [selectedRegions] (e.g. body_map_page.dart chip list).
   List<String> get selectedRegions => _selectedZoneIds;
 
-  // ─── All registered zone IDs ───────────────────────────────────────────────
-  // Each entry must be a key in [_zoneIdToClinicalRegion].
   final List<String> _allRegions = [
     // Front view zones
     'neck_front',
@@ -76,10 +67,6 @@ class BodyMapViewModel extends ChangeNotifier {
     }
     notifyListeners();
   }
-
-  // ─── Coordinate Systems ────────────────────────────────────────────────────
-  // Keys are exact zone IDs. Each zone has one or more Offset(x%, y%) points
-  // positioned relative to the body image dimensions.
 
   Map<String, List<Offset>> backOffsetsMale = {
     'neck_back':         [const Offset(0.50, 0.12)],
@@ -161,19 +148,10 @@ class BodyMapViewModel extends ChangeNotifier {
     if (currentMap.containsKey(zoneId) && currentMap[zoneId]!.length > index) {
       currentMap[zoneId]![index] = newOffset;
       notifyListeners();
-      debugPrint(
-        'DEBUG: $zoneId[$index] -> ${newOffset.dx.toStringAsFixed(3)}, ${newOffset.dy.toStringAsFixed(3)}',
-      );
     }
   }
 
-  void nextStep(List<String> selection) {
-    debugPrint('Ağrı Şiddeti Belirleme Sayfasına Geçiliyor: $selection');
-  }
-
-  // ─────────────────────────────────────────────────────────────────────────
-  // CLINICAL MAPPING — ID Based Dictionary (O(1) Lookup)
-  // ─────────────────────────────────────────────────────────────────────────
+  void nextStep(List<String> selection) {}
 
   static const Map<String, PainRegion> _zoneIdToClinicalRegion = {
     // BOYUN
@@ -181,10 +159,10 @@ class BodyMapViewModel extends ChangeNotifier {
     'neck_back': PainRegion.neck,
 
     // OMUZ
-    'shoulder_r_front': PainRegion.shoulder,
-    'shoulder_l_front': PainRegion.shoulder,
-    'shoulder_r_back': PainRegion.shoulder,
-    'shoulder_l_back': PainRegion.shoulder,
+    'shoulder_r_front': PainRegion.rightShoulder,
+    'shoulder_l_front': PainRegion.leftShoulder,
+    'shoulder_r_back': PainRegion.rightShoulder,
+    'shoulder_l_back': PainRegion.leftShoulder,
 
     // SIRT VE BEL
     'upper_back': PainRegion.upperBack,
@@ -197,38 +175,32 @@ class BodyMapViewModel extends ChangeNotifier {
     'hip_l_back': PainRegion.hip,
 
     // KOL VE BİLEK
-    'arm_wrist_r_front': PainRegion.armWrist,
-    'arm_wrist_l_front': PainRegion.armWrist,
-    'arm_wrist_r_back': PainRegion.armWrist,
-    'arm_wrist_l_back': PainRegion.armWrist,
+    'arm_wrist_r_front': PainRegion.rightArm,
+    'arm_wrist_l_front': PainRegion.leftArm,
+    'arm_wrist_r_back': PainRegion.rightArm,
+    'arm_wrist_l_back': PainRegion.leftArm,
 
     // DİZ
-    'knee_r_front': PainRegion.knee,
-    'knee_l_front': PainRegion.knee,
-    'knee_r_back': PainRegion.knee,
-    'knee_l_back': PainRegion.knee,
+    'knee_r_front': PainRegion.rightKnee,
+    'knee_l_front': PainRegion.leftKnee,
+    'knee_r_back': PainRegion.rightKnee,
+    'knee_l_back': PainRegion.leftKnee,
 
     // AYAK / BİLEK
-    'ankle_r_front': PainRegion.ankle,
-    'ankle_l_front': PainRegion.ankle,
-    'ankle_r_back': PainRegion.ankle,
-    'ankle_l_back': PainRegion.ankle,
+    'ankle_r_front': PainRegion.rightAnkle,
+    'ankle_l_front': PainRegion.leftAnkle,
+    'ankle_r_back': PainRegion.rightAnkle,
+    'ankle_l_back': PainRegion.leftAnkle,
   };
 
-  /// O(1) lookup: maps an exact zone ID to its canonical [PainRegion].
-  /// Falls back to [PainRegion.neck] for any unregistered ID.
   PainRegion mapUiIdToEnum(String zoneId) {
     return _zoneIdToClinicalRegion[zoneId] ?? PainRegion.neck;
   }
 
-  /// Deduplicated clinical enum list — consumed by the Firestore exercise
-  /// repository (arrayContainsAny query).
   List<PainRegion> get selectedClinicalRegions {
     final mapped = _selectedZoneIds.map(mapUiIdToEnum).toSet();
     return mapped.toList();
   }
 
-  /// Backward-compatible alias used by the CDSS pipeline that still calls
-  /// [selectedPainRegions] from the previous mapping iteration.
   List<PainRegion> get selectedPainRegions => selectedClinicalRegions;
 }

@@ -29,7 +29,7 @@ import '../../features/exercise/domain/models/exercise_model.dart';
 class AppRouter {
   static GoRouter createRouter({required AuthViewModel authViewModel}) {
     return GoRouter(
-      initialLocation: '/body-map',
+      initialLocation: '/splash',
       refreshListenable: authViewModel,
       redirect: (context, state) {
         final location = state.matchedLocation;

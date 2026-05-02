@@ -55,42 +55,25 @@ class _PainIntensityView extends StatelessWidget {
       backgroundColor: theme.scaffoldBackgroundColor,
       body: Stack(
         children: [
-          // Ana İçerik
           SingleChildScrollView(
             child: Column(
               children: [
-                // Top Navigation Bar
                 _buildAppBar(context, theme, viewModel),
-
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    16, // 20'den 16'ya düşürülerek daha da kenarlara yaklaştırıldı
-                    0,
-                    16,
-                    140,
-                  ),
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 140),
                   child: Column(
                     children: [
-                      const SizedBox(
-                        height: 36,
-                      ), // Deneyimi ferahlatmak için boşluk artırıldı
-                      // Dairesel Gösterge
+                      const SizedBox(height: 36),
                       CircularPainIndicator(
                         value: viewModel.currentPainValue,
                         label: viewModel.getPainLevelDescription(AppLocalizations.of(context)!),
                         activeColor: activeColor,
                       ),
                       const SizedBox(height: 56),
-
-                      // Slider Bölümü
                       _buildSlider(theme, viewModel, activeColor),
                       const SizedBox(height: 48),
-
-                      // Analiz Kartı
                       _buildAnalysisCard(context, theme, viewModel, activeColor),
                       const SizedBox(height: 16),
-
-                      // Bilgilendirme (Sticky Info)
                       _buildStickyInfo(context, theme, activeColor),
                     ],
                   ),
@@ -98,8 +81,6 @@ class _PainIntensityView extends StatelessWidget {
               ],
             ),
           ),
-
-          // Alt Buton Alanı (Glassmorphism)
           Positioned(
             bottom: 0,
             left: 0,
@@ -121,12 +102,10 @@ class _PainIntensityView extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // 1. Üst Navigasyon Satırı
           SizedBox(
             height: 56,
             child: Row(
               children: [
-                // Sol: Geri Butonu
                 SizedBox(
                   width: 56,
                   child: AppBackButton(
@@ -139,8 +118,6 @@ class _PainIntensityView extends StatelessWidget {
                     },
                   ),
                 ),
-
-                // Orta: Ana Başlık (White, Bold, Centered)
                 Expanded(
                   child: Text(
                     AppLocalizations.of(context)!.regionLabel(_getRegionDisplayName(context, viewModel.currentRegion)),
@@ -155,15 +132,11 @@ class _PainIntensityView extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-
-                // Sağ: Dengeleyici Boşluk
                 const SizedBox(width: 56),
               ],
             ),
           ),
-
           const SizedBox(height: 16),
-          // 2. Pill + Dot progress indicator (iOS tarzı)
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(viewModel.totalRegions, (i) {
@@ -179,17 +152,6 @@ class _PainIntensityView extends StatelessWidget {
                       ? theme.colorScheme.primary
                       : theme.colorScheme.onSurface.withValues(alpha: 0.18),
                   borderRadius: BorderRadius.circular(4),
-                  boxShadow: isActive
-                      ? [
-                          BoxShadow(
-                            color: theme.colorScheme.primary.withValues(
-                              alpha: 0.35,
-                            ),
-                            blurRadius: 6,
-                            offset: const Offset(0, 2),
-                          ),
-                        ]
-                      : null,
                 ),
               );
             }),
@@ -201,54 +163,26 @@ class _PainIntensityView extends StatelessWidget {
   }
 
   Widget _buildStickyInfo(BuildContext context, ThemeData theme, Color activeColor) {
+    final loc = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: theme.cardColor,
         borderRadius: BorderRadius.circular(28),
         border: Border.all(color: theme.dividerColor.withValues(alpha: 0.1)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 20,
-            offset: const Offset(0, 5),
-          ),
-        ],
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: theme.colorScheme.primary.withValues(alpha: 0.05),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(
-              Icons.help_outline,
-              color: theme.colorScheme.primary,
-              size: 20,
-            ),
-          ),
+          Icon(Icons.help_outline, color: theme.colorScheme.primary, size: 20),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  AppLocalizations.of(context)!.assessmentPurposeTitle,
-                  style: theme.textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                Text(loc.assessmentPurposeTitle, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 4),
-                Text(
-                  AppLocalizations.of(context)!.assessmentPurposeDesc,
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: theme.colorScheme.onSurfaceVariant,
-                    height: 1.5,
-                  ),
-                ),
+                Text(loc.assessmentPurposeDesc, style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant, height: 1.5)),
               ],
             ),
           ),
@@ -257,23 +191,14 @@ class _PainIntensityView extends StatelessWidget {
     );
   }
 
-  Widget _buildSlider(
-    ThemeData theme,
-    PainIntensityViewModel viewModel,
-    Color activeColor,
-  ) {
+  Widget _buildSlider(ThemeData theme, PainIntensityViewModel viewModel, Color activeColor) {
     return Column(
       children: [
         SliderTheme(
           data: SliderThemeData(
             trackShape: GradientSliderTrackShape(),
-            trackHeight: 15, // Biraz daha belirgin bir bar için artırıldı
+            trackHeight: 15,
             thumbColor: Colors.white,
-            overlayColor: activeColor.withValues(alpha: 0.1),
-            thumbShape: _CustomSliderThumb(
-              thumbRadius: 18,
-              borderColor: activeColor,
-            ),
           ),
           child: Slider(
             value: viewModel.currentPainValue,
@@ -283,8 +208,6 @@ class _PainIntensityView extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 12),
-        // Sayıları bar ile tam hizalamak için Slider'ın thumb radius'u olan 18px kadar padding verildi
-        // Artık track full-width olduğu için sayılar doğrudan thumb merkezleriyle hizalıdır.
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18),
           child: Row(
@@ -296,11 +219,7 @@ class _PainIntensityView extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w800,
-                  color: isCurrent
-                      ? activeColor
-                      : theme.colorScheme.onSurfaceVariant.withValues(
-                          alpha: 0.6,
-                        ),
+                  color: isCurrent ? activeColor : theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
                 ),
               );
             }),
@@ -310,56 +229,26 @@ class _PainIntensityView extends StatelessWidget {
     );
   }
 
-  Widget _buildAnalysisCard(
-    BuildContext context,
-    ThemeData theme,
-    PainIntensityViewModel viewModel,
-    Color activeColor,
-  ) {
+  Widget _buildAnalysisCard(BuildContext context, ThemeData theme, PainIntensityViewModel viewModel, Color activeColor) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: theme.cardColor,
         borderRadius: BorderRadius.circular(28),
         border: Border.all(color: theme.dividerColor.withValues(alpha: 0.1)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 20,
-            offset: const Offset(0, 5),
-          ),
-        ],
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: activeColor.withValues(alpha: 0.05),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(Icons.info_outline, color: activeColor, size: 20),
-          ),
+          Icon(Icons.info_outline, color: activeColor, size: 20),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  AppLocalizations.of(context)!.painAnalysisTitle,
-                  style: theme.textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                Text(AppLocalizations.of(context)!.painAnalysisTitle, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 4),
-                Text(
-                  viewModel.getPainLevelAnalysis(AppLocalizations.of(context)!),
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: theme.colorScheme.onSurfaceVariant,
-                    height: 1.5,
-                  ),
-                ),
+                Text(viewModel.getPainLevelAnalysis(AppLocalizations.of(context)!), style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant, height: 1.5)),
               ],
             ),
           ),
@@ -368,220 +257,92 @@ class _PainIntensityView extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomAction(
-    BuildContext context,
-    ThemeData theme,
-    PainIntensityViewModel viewModel,
-  ) {
+  Widget _buildBottomAction(BuildContext context, ThemeData theme, PainIntensityViewModel viewModel) {
     return Container(
       padding: const EdgeInsets.fromLTRB(24, 8, 24, 40),
-      decoration: const BoxDecoration(color: Colors.transparent),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ElevatedButton(
-            onPressed: () {
-              viewModel.nextRegion((List<String> focusRegions) async {
-                // Son bölge tamamlandı — Odak Bölge Dialog'unu göster
-                void showFocusDialog() {
-                  showGeneralDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    barrierColor: Colors.transparent,
-                    transitionDuration: const Duration(milliseconds: 320),
-                    transitionBuilder: (ctx, anim, _, child) {
-                      return FadeTransition(
-                        opacity: anim,
-                        child: ScaleTransition(
-                          scale: Tween<double>(begin: 0.92, end: 1.0).animate(
-                            CurvedAnimation(
-                              parent: anim,
-                              curve: Curves.easeOutCubic,
-                            ),
-                          ),
-                          child: child,
-                        ),
-                      );
-                    },
-                    pageBuilder: (ctx, _, __) => FocusRegionsDialog(
-                      topRegions: focusRegions,
-                      onConfirm: () async {
-                        final authVM = context.read<AuthViewModel>();
-                        // Progress'i güncelle ve bekle
-                        await authVM.updateProgress(hasCompletedPainScore: true);
-                        
-                        if (ctx.mounted) {
-                          Navigator.of(ctx).pop(); // dialog'u kapat
-                        }
-                        
-                        if (context.mounted) {
-                          context.push('/scheduling', extra: focusRegions);
-                        }
-                      },
-                    ),
-                  );
-                }
+      child: ElevatedButton(
+        onPressed: () {
+          viewModel.nextRegion((List<String> focusRegions) async {
+            if (viewModel.hasRedFlag) {
+              _showMedicalDialog(context);
+            } else {
+              _showFocusDialog(context, focusRegions);
+            }
+          });
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: theme.colorScheme.primary,
+          foregroundColor: Colors.white,
+          minimumSize: const Size(double.infinity, 56),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              viewModel.isLastRegion ? AppLocalizations.of(context)!.finishAssessment : AppLocalizations.of(context)!.nextRegion,
+              style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 13, letterSpacing: 0.5),
+            ),
+            const SizedBox(width: 8),
+            const Icon(Icons.arrow_forward, size: 18),
+          ],
+        ),
+      ),
+    );
+  }
 
-                if (viewModel.hasRedFlag) {
-                  showGeneralDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    barrierColor: Colors.transparent,
-                    transitionDuration: const Duration(milliseconds: 320),
-                    transitionBuilder: (ctx, anim, _, child) {
-                      return FadeTransition(
-                        opacity: anim,
-                        child: ScaleTransition(
-                          scale: Tween<double>(begin: 0.92, end: 1.0).animate(
-                            CurvedAnimation(
-                              parent: anim,
-                              curve: Curves.easeOutCubic,
-                            ),
-                          ),
-                          child: child,
-                        ),
-                      );
-                    },
-                    pageBuilder: (ctx, _, __) => MedicalConsultationDialog(
-                      onConfirm: () async {
-                        Navigator.of(ctx).pop(); // uyarıyı kapat
-                        
-                        // Kırmızı bayrak durumunda kullanıcıyı blokla
-                        await context.read<AuthViewModel>().updateProgress(
-                          isClearedForExercise: false,
-                        );
-                        // Not: Firestore'da isBanned=true ve banReason=extremePain olarak işaretlemek daha sağlıklı olur.
-                        // Şimdilik sadece ana sayfaya atıyoruz, router redirect otomatik devreye girecek.
-                        if (context.mounted) {
-                          context.go('/'); 
-                        }
-                      },
-                    ),
-                  );
-                } else {
-                  // Başarılı geçiş - Önce diyaloğu göster
-                  showFocusDialog();
-                }
-              });
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: theme.colorScheme.primary,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(vertical: 18),
-              minimumSize: const Size(double.infinity, 56),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
-              ),
-              elevation: 4,
-              shadowColor: theme.colorScheme.primary.withValues(alpha: 0.3),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  viewModel.isLastRegion
-                      ? AppLocalizations.of(context)!.finishAssessment
-                      : AppLocalizations.of(context)!.nextRegion,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 13,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                const Icon(Icons.arrow_forward, size: 18),
-              ],
-            ),
-          ),
-        ],
+  void _showFocusDialog(BuildContext context, List<String> focusRegions) {
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: false,
+      pageBuilder: (ctx, _, __) => FocusRegionsDialog(
+        topRegions: focusRegions,
+        onConfirm: () async {
+          final authVM = context.read<AuthViewModel>();
+          await authVM.updateProgress(hasCompletedPainScore: true);
+          if (ctx.mounted) Navigator.of(ctx).pop();
+          if (context.mounted) context.push('/scheduling', extra: focusRegions);
+        },
+      ),
+    );
+  }
+
+  void _showMedicalDialog(BuildContext context) {
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: false,
+      pageBuilder: (ctx, _, __) => MedicalConsultationDialog(
+        onConfirm: () async {
+          Navigator.of(ctx).pop();
+          await context.read<AuthViewModel>().updateProgress(isClearedForExercise: false);
+          if (context.mounted) context.go('/');
+        },
       ),
     );
   }
 
   Color _getPainColor(double val) {
-    if (val <= 3) return const Color(0xFF006E28); // Yeşil
-    if (val <= 6) return const Color(0xFFFBC02D); // Sarı
-    return const Color(0xFFBA1A1A); // Kırmızı
+    if (val <= 3) return const Color(0xFF006E28);
+    if (val <= 6) return const Color(0xFFFBC02D);
+    return const Color(0xFFBA1A1A);
   }
 
   String _getRegionDisplayName(BuildContext context, String id) {
     final loc = AppLocalizations.of(context)!;
     switch (id) {
-      case 'region_neck':
-        return loc.regionNeck;
-      case 'region_shoulder_right':
-        return loc.regionShoulderRight;
-      case 'region_shoulder_left':
-        return loc.regionShoulderLeft;
-      case 'region_lower_back':
-        return loc.regionLowerBack;
-      case 'region_hip_pelvis':
-        return loc.regionHipPelvis;
-      case 'region_arm_right':
-        return loc.regionArmRight;
-      case 'region_arm_left':
-        return loc.regionArmLeft;
-      case 'region_knee_right':
-        return loc.regionKneeRight;
-      case 'region_knee_left':
-        return loc.regionKneeLeft;
-      case 'region_ankle_right':
-        return loc.regionAnkleRight;
-      case 'region_ankle_left':
-        return loc.regionAnkleLeft;
-      default:
-        return id;
+      case 'neck': return loc.regionNeck;
+      case 'leftShoulder': return loc.regionShoulderLeft;
+      case 'rightShoulder': return loc.regionShoulderRight;
+      case 'upperBack': return loc.regionUpperBack;
+      case 'lowerBack': return loc.regionLowerBack;
+      case 'hip': return loc.regionHipPelvis;
+      case 'leftArm': return loc.regionArmLeft;
+      case 'rightArm': return loc.regionArmRight;
+      case 'leftKnee': return loc.regionKneeLeft;
+      case 'rightKnee': return loc.regionKneeRight;
+      case 'leftAnkle': return loc.regionAnkleLeft;
+      case 'rightAnkle': return loc.regionAnkleRight;
+      default: return id.replaceAll('_', ' ').toUpperCase();
     }
-  }
-}
-
-class _CustomSliderThumb extends SliderComponentShape {
-  final double thumbRadius;
-  final Color borderColor;
-
-  const _CustomSliderThumb({
-    required this.thumbRadius,
-    required this.borderColor,
-  });
-
-  @override
-  Size getPreferredSize(bool isEnabled, bool isDiscrete) =>
-      Size.fromRadius(thumbRadius);
-
-  @override
-  void paint(
-    PaintingContext context,
-    Offset center, {
-    required Animation<double> activationAnimation,
-    required Animation<double> enableAnimation,
-    required bool isDiscrete,
-    required TextPainter labelPainter,
-    required RenderBox parentBox,
-    required SliderThemeData sliderTheme,
-    required TextDirection textDirection,
-    required double value,
-    required double textScaleFactor,
-    required Size sizeWithOverflow,
-  }) {
-    final Canvas canvas = context.canvas;
-
-    final paint = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.fill;
-
-    final borderPaint = Paint()
-      ..color = borderColor
-      ..strokeWidth = 3
-      ..style = PaintingStyle.stroke;
-
-    canvas.drawCircle(center, thumbRadius, paint);
-    canvas.drawCircle(center, thumbRadius, borderPaint);
-
-    // Küçük iç daire
-    canvas.drawCircle(
-      center,
-      thumbRadius * 0.4,
-      borderPaint..style = PaintingStyle.fill,
-    );
   }
 }

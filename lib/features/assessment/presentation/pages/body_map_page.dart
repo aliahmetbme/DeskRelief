@@ -520,8 +520,8 @@ class BodyMapPage extends StatelessWidget {
                   final authVM = context.read<AuthViewModel>();
                   viewModel.nextStep(viewModel.selectedRegions);
                   final List<RegionDetail> painRegions = viewModel
-                      .selectedRegions
-                      .map((id) => RegionDetail(regionId: id))
+                      .selectedClinicalRegions
+                      .map((r) => RegionDetail(regionId: r.name))
                       .toList();
                   await authVM.updateProgress(
                     hasCompletedBodyMap: true,
@@ -530,7 +530,7 @@ class BodyMapPage extends StatelessWidget {
                   if (context.mounted) {
                     context.push(
                       '/assessment/pain-intensity',
-                      extra: viewModel.selectedRegions,
+                      extra: viewModel.selectedClinicalRegions.map((r) => r.name).toList(),
                     );
                   }
                 }

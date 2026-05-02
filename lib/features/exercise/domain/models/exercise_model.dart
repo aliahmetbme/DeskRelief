@@ -70,13 +70,17 @@ enum ExercisePhase {
 /// values before any repository query is executed.
 enum PainRegion {
   @JsonValue('neck') neck,
-  @JsonValue('shoulder') shoulder,
+  @JsonValue('leftShoulder') leftShoulder,
+  @JsonValue('rightShoulder') rightShoulder,
   @JsonValue('upperBack') upperBack,
   @JsonValue('lowerBack') lowerBack,
-  @JsonValue('armWrist') armWrist,
+  @JsonValue('leftArm') leftArm,
+  @JsonValue('rightArm') rightArm,
   @JsonValue('hip') hip,
-  @JsonValue('knee') knee,
-  @JsonValue('ankle') ankle,
+  @JsonValue('leftKnee') leftKnee,
+  @JsonValue('rightKnee') rightKnee,
+  @JsonValue('leftAnkle') leftAnkle,
+  @JsonValue('rightAnkle') rightAnkle,
 }
 
 /// Firestore-backed exercise model produced by the CDSS pipeline.

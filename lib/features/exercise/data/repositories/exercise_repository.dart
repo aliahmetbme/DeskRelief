@@ -3,26 +3,6 @@ import '../../domain/models/exercise_model.dart';
 
 /// Data-layer repository responsible for fetching exercise documents from
 /// Firestore using the CDSS-aligned [PainRegion] enum as the filter key.
-///
-/// Firestore document schema (exercises collection):
-/// ```
-/// {
-///   "id": "exercise_001",
-///   "name": "Boyun Lateral Fleksiyonu",
-///   "targetRegions": ["neck", "shoulder"],   // PainRegion.name values
-///   "phase": "rom",                           // ExercisePhase JsonValue
-///   "description": "...",
-///   "steps": [...],
-///   "warnings": [...],
-///   "tips": [...],
-///   "recommendedSets": 3,
-///   "recommendedReps": 12,
-///   "videoUrl": "https://...",
-///   "imageUrl": "https://...",
-///   "isLocked": false,
-///   "isJoker": false
-/// }
-/// ```
 class ExerciseRepository {
   final FirebaseFirestore _firestore;
 
@@ -31,20 +11,18 @@ class ExerciseRepository {
 
   /// Fetches all exercises whose [targetRegions] array contains at least one
   /// of the [selectedRegions] values (Firestore arrayContainsAny semantics).
-  ///
-  /// The [selectedRegions] list is produced by [BodyMapViewModel.selectedPainRegions]
-  /// which already deduplicates and canonicalises the UI selections.
-  ///
-  /// Note: Firestore limits arrayContainsAny to 30 values; [PainRegion] has 8
-  /// so this is always within bounds.
   Future<List<ExerciseModel>> getExercisesForRegions(
       List<PainRegion> selectedRegions) async {
     if (selectedRegions.isEmpty) return [];
 
     try {
       // Map enum values to their JsonValue string equivalents stored in Firestore.
-      final List<String> regionStrings =
-          selectedRegions.map((r) => r.name).toList();
+      // We map granular regions (leftShoulder) to general categories (shoulder)
+      // to ensure all relevant exercises are fetched.
+      final List<String> regionStrings = selectedRegions
+          .map((r) => _mapToClinicalCategory(r.name))
+          .toSet()
+          .toList();
 
       final snapshot = await _firestore
           .collection('exercises')
@@ -68,5 +46,14 @@ class ExerciseRepository {
     } catch (e) {
       throw Exception('Egzersiz yüklenirken bir hata oluştu: $e');
     }
+  }
+
+  /// Maps granular lateralized regions to general clinical categories used in Firestore.
+  String _mapToClinicalCategory(String regionName) {
+    if (regionName.contains('Shoulder')) return 'shoulder';
+    if (regionName.contains('Arm')) return 'arm';
+    if (regionName.contains('Knee')) return 'knee';
+    if (regionName.contains('Ankle')) return 'ankle';
+    return regionName; // neck, upperBack, lowerBack, hip remain the same
   }
 }

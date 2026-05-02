@@ -57,13 +57,17 @@ Map<String, dynamic> _$ExerciseModelToJson(_ExerciseModel instance) =>
 
 const _$PainRegionEnumMap = {
   PainRegion.neck: 'neck',
-  PainRegion.shoulder: 'shoulder',
+  PainRegion.leftShoulder: 'leftShoulder',
+  PainRegion.rightShoulder: 'rightShoulder',
   PainRegion.upperBack: 'upperBack',
   PainRegion.lowerBack: 'lowerBack',
-  PainRegion.armWrist: 'armWrist',
+  PainRegion.leftArm: 'leftArm',
+  PainRegion.rightArm: 'rightArm',
   PainRegion.hip: 'hip',
-  PainRegion.knee: 'knee',
-  PainRegion.ankle: 'ankle',
+  PainRegion.leftKnee: 'leftKnee',
+  PainRegion.rightKnee: 'rightKnee',
+  PainRegion.leftAnkle: 'leftAnkle',
+  PainRegion.rightAnkle: 'rightAnkle',
 };
 
 const _$ExercisePhaseEnumMap = {
