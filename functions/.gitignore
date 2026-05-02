@@ -1,0 +1,31 @@
+# 1. Bağımlılıklar (Dependencies)
+# Node.js paketlerini içeren klasör, asla repoya eklenmez.
+node_modules/
+
+# 2. Derleme Çıktıları (Build Output)
+# TypeScript'in JavaScript'e dönüştürülmüş halleri. 
+# Cloud Functions bunları deploy sırasında otomatik oluşturur veya yerelde derler.
+lib/
+
+# 3. Firebase Logları ve Hata Kayıtları
+# Emulator ve debug sırasında oluşan geçici log dosyaları.
+*-debug.log
+firebase-debug.log
+firestore-debug.log
+pubsub-debug.log
+ui-debug.log
+
+# 4. Güvenlik ve Gizli Bilgiler (Secrets)
+# ÖNEMLİ: API anahtarları veya veritabanı şifrelerini asla repoya ekleme!
+.env
+.env.*
+.runtimeconfig.json
+
+# 5. Paket Yöneticisi Logları
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 6. İşletim Sistemi Dosyaları
+.DS_Store
+Thumbs.db
