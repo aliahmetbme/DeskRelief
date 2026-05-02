@@ -305,13 +305,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get clinicalBlockLogoutBtn => 'Log Out';
 
   @override
-  String get darkTheme => 'Dark Theme';
+  String get themeModeTitle => 'Theme';
 
   @override
-  String get medicalTheme => 'Medical Theme';
+  String get medicalTheme => 'Medical';
 
   @override
-  String get lightTheme => 'Light Theme';
+  String get lightTheme => 'Light';
+
+  @override
+  String get trueDarkTheme => 'True Dark';
 
   @override
   String get systemTheme => 'System Theme';
@@ -1151,7 +1154,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Determine 2 or 3 days a week for your focus region.';
 
   @override
-  String schedulingInstructionMulti(Object count) {
+  String schedulingInstructionMulti(int count) {
     return 'Determine exactly 4 days a week for a sustainable program for the $count regions you determined.';
   }
 

@@ -306,13 +306,16 @@ class AppLocalizationsTr extends AppLocalizations {
   String get clinicalBlockLogoutBtn => 'Oturumu Kapat';
 
   @override
-  String get darkTheme => 'Koyu Tema';
+  String get themeModeTitle => 'Görünüm';
 
   @override
-  String get medicalTheme => 'Medikal Tema';
+  String get medicalTheme => 'Medikal';
 
   @override
-  String get lightTheme => 'Açık Tema';
+  String get lightTheme => 'Açık';
+
+  @override
+  String get trueDarkTheme => 'True Dark';
 
   @override
   String get systemTheme => 'Sistem Teması';
@@ -1153,7 +1156,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Odak bölgeniz için haftada 2 veya 3 gün belirleyin.';
 
   @override
-  String schedulingInstructionMulti(Object count) {
+  String schedulingInstructionMulti(int count) {
     return 'Belirlediğiniz $count bölge için sürdürülebilir bir program adına haftada tam 4 gün belirleyin.';
   }
 

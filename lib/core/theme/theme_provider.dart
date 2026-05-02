@@ -11,31 +11,7 @@ class ThemeProvider extends ChangeNotifier {
   AppPalette get palette => _currentPalette;
   AppThemeMode get themeMode => _themeMode;
 
-  ThemeProvider() {
-    _loadThemeMode();
-  }
-
-  void _loadThemeMode() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? modeStr = prefs.getString('themeModeV2'); // New key to avoid conflicts
-    if (modeStr != null) {
-      _themeMode = AppThemeMode.values.firstWhere(
-        (e) => e.name == modeStr,
-        orElse: () => AppThemeMode.system,
-      );
-    } else {
-      // Legacy check
-      String? oldMode = prefs.getString('themeMode');
-      if (oldMode == 'dark') {
-        _themeMode = AppThemeMode.medical;
-      } else if (oldMode == 'light') {
-        _themeMode = AppThemeMode.light;
-      } else {
-        _themeMode = AppThemeMode.system;
-      }
-    }
-    notifyListeners();
-  }
+  ThemeProvider({required AppThemeMode initialMode}) : _themeMode = initialMode;
 
   void setTheme(AppPalette newPalette) {
     if (_currentPalette == newPalette) return;

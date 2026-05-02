@@ -626,23 +626,29 @@ abstract class AppLocalizations {
   /// **'Oturumu Kapat'**
   String get clinicalBlockLogoutBtn;
 
-  /// No description provided for @darkTheme.
+  /// No description provided for @themeModeTitle.
   ///
   /// In tr, this message translates to:
-  /// **'Koyu Tema'**
-  String get darkTheme;
+  /// **'Görünüm'**
+  String get themeModeTitle;
 
   /// No description provided for @medicalTheme.
   ///
   /// In tr, this message translates to:
-  /// **'Medikal Tema'**
+  /// **'Medikal'**
   String get medicalTheme;
 
   /// No description provided for @lightTheme.
   ///
   /// In tr, this message translates to:
-  /// **'Açık Tema'**
+  /// **'Açık'**
   String get lightTheme;
+
+  /// No description provided for @trueDarkTheme.
+  ///
+  /// In tr, this message translates to:
+  /// **'True Dark'**
+  String get trueDarkTheme;
 
   /// No description provided for @systemTheme.
   ///
@@ -2196,7 +2202,7 @@ abstract class AppLocalizations {
   ///
   /// In tr, this message translates to:
   /// **'Belirlediğiniz {count} bölge için sürdürülebilir bir program adına haftada tam 4 gün belirleyin.'**
-  String schedulingInstructionMulti(Object count);
+  String schedulingInstructionMulti(int count);
 
   /// No description provided for @monday.
   ///

@@ -53,10 +53,30 @@ void main() async {
   // İlk kurulum kontrolü
   await checkFirstRun();
 
+  // Load Theme Preference before runApp to prevent flicker
+  final prefs = await SharedPreferences.getInstance();
+  final String? modeStr = prefs.getString('themeModeV2');
+  AppThemeMode initialThemeMode = AppThemeMode.system;
+
+  if (modeStr != null) {
+    initialThemeMode = AppThemeMode.values.firstWhere(
+      (e) => e.name == modeStr,
+      orElse: () => AppThemeMode.system,
+    );
+  } else {
+    // Legacy fallback
+    final String? oldMode = prefs.getString('themeMode');
+    if (oldMode == 'dark') {
+      initialThemeMode = AppThemeMode.medical;
+    } else if (oldMode == 'light') {
+      initialThemeMode = AppThemeMode.light;
+    }
+  }
+
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider(initialMode: initialThemeMode)),
         ChangeNotifierProvider(create: (_) => LocaleProvider()),
         Provider(create: (_) => ContentService()),
         ChangeNotifierProvider(create: (_) => AuthViewModel()),

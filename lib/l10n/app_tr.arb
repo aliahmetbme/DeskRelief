@@ -140,9 +140,10 @@
   "descPersistentFlareUp": "Uzun süreli dinlenme ve modifikasyonlara rağmen bölgedeki akut tablo iyileşmedi. Lütfen tıbbi destek alın.",
   "clinicalBlockContactBtn": "Raporumu Hazırla (PDF)",
   "clinicalBlockLogoutBtn": "Oturumu Kapat",
-  "darkTheme": "Koyu Tema",
-  "medicalTheme": "Medikal Tema",
-  "lightTheme": "Açık Tema",
+  "themeModeTitle": "Görünüm",
+  "medicalTheme": "Medikal",
+  "lightTheme": "Açık",
+  "trueDarkTheme": "True Dark",
   "systemTheme": "Sistem Teması",
   "logout": "Oturumu Kapat",
   "calendarClinicalProgram": "KLİNİK PROGRAM",
@@ -472,6 +473,13 @@
   "schedulingInstructionEmpty": "Lütfen çalışma günlerinizi belirleyin.",
   "schedulingInstructionSingle": "Odak bölgeniz için haftada 2 veya 3 gün belirleyin.",
   "schedulingInstructionMulti": "Belirlediğiniz {count} bölge için sürdürülebilir bir program adına haftada tam 4 gün belirleyin.",
+  "@schedulingInstructionMulti": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "monday": "Pazartesi",
   "tuesday": "Salı",
   "wednesday": "Çarşamba",

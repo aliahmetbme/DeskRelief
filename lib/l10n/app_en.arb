@@ -140,9 +140,10 @@
   "descPersistentFlareUp": "Despite long-term rest and modifications, the acute condition in the area has not improved. Please seek medical support.",
   "clinicalBlockContactBtn": "Prepare My Report (PDF)",
   "clinicalBlockLogoutBtn": "Log Out",
-  "darkTheme": "Dark Theme",
-  "medicalTheme": "Medical Theme",
-  "lightTheme": "Light Theme",
+  "themeModeTitle": "Theme",
+  "medicalTheme": "Medical",
+  "lightTheme": "Light",
+  "trueDarkTheme": "True Dark",
   "systemTheme": "System Theme",
   "logout": "Log Out",
   "calendarClinicalProgram": "CLINICAL PROGRAM",
@@ -472,6 +473,13 @@
   "schedulingInstructionEmpty": "Please determine your working days.",
   "schedulingInstructionSingle": "Determine 2 or 3 days a week for your focus region.",
   "schedulingInstructionMulti": "Determine exactly 4 days a week for a sustainable program for the {count} regions you determined.",
+  "@schedulingInstructionMulti": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "monday": "Monday",
   "tuesday": "Tuesday",
   "wednesday": "Wednesday",

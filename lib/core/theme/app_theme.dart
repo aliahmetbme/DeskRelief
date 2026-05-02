@@ -19,13 +19,17 @@ class AppTheme {
         : (isDark ? const Color(0xFF1E293B) : palette.surface);
         
     final Color textColorPrimary = (isDark || isTrueDark) ? Colors.white : palette.textPrimary;
-    final Color textColorSecondary = (isDark || isTrueDark) ? const Color(0xFF94A3B8) : palette.textSecondary;
+    final Color textColorSecondary = isTrueDark 
+        ? const Color(0xFFA1A1AA) 
+        : ((isDark) ? const Color(0xFF94A3B8) : palette.textSecondary);
 
     return ThemeData(
       brightness: brightness,
       primaryColor: palette.primary,
       scaffoldBackgroundColor: backgroundColor,
-      shadowColor: (isDark || isTrueDark) ? Colors.black.withValues(alpha: 0.5) : Colors.black.withValues(alpha: 0.08),
+      shadowColor: isTrueDark 
+          ? Colors.transparent 
+          : ((isDark) ? Colors.black.withValues(alpha: 0.5) : Colors.black.withValues(alpha: 0.08)),
       
       // Theme Extensions
       extensions: [
@@ -37,11 +41,16 @@ class AppTheme {
       // Card Standardization
       cardTheme: CardThemeData(
         color: surfaceColor,
-        elevation: (isDark || isTrueDark) ? 2 : 1,
+        elevation: isTrueDark ? 0 : ((isDark) ? 2 : 1),
         surfaceTintColor: Colors.transparent,
-        shadowColor: (isDark || isTrueDark) ? Colors.black.withValues(alpha: 0.4) : Colors.black.withValues(alpha: 0.05),
+        shadowColor: isTrueDark 
+            ? Colors.transparent 
+            : ((isDark) ? Colors.black.withValues(alpha: 0.4) : Colors.black.withValues(alpha: 0.05)),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
+          side: isTrueDark 
+              ? const BorderSide(color: Colors.white12, width: 0.5)
+              : BorderSide.none,
         ),
         clipBehavior: Clip.antiAlias,
       ),

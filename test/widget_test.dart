@@ -15,7 +15,7 @@ void main() {
     await tester.pumpWidget(
       MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (_) => ThemeProvider()),
+          ChangeNotifierProvider(create: (_) => ThemeProvider(initialMode: AppThemeMode.system)),
           ChangeNotifierProvider(create: (_) => AuthViewModel()),
           ChangeNotifierProxyProvider<AuthViewModel, RedFlagsViewModel>(
             create: (context) => RedFlagsViewModel(

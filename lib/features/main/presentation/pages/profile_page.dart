@@ -23,7 +23,9 @@ class ProfilePage extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         slivers: [
           // ─── Header Spacing ──────────────────────────────────────────────
-          SliverToBoxAdapter(child: SizedBox(height: MediaQuery.of(context).padding.top + 20)), 
+          SliverToBoxAdapter(
+            child: SizedBox(height: MediaQuery.of(context).padding.top + 20),
+          ),
 
           // ─── Content ──────────────────────────────────────────────────────
           SliverPadding(
@@ -42,11 +44,11 @@ class ProfilePage extends StatelessWidget {
                 const _SettingsHeader(),
                 const SizedBox(height: 16),
                 const _SettingsList(),
-                
+
                 // 4. Logout Button
                 const SizedBox(height: 32),
                 const _LogoutButton(),
-                
+
                 // version
                 const SizedBox(height: 20),
                 const Center(
@@ -60,7 +62,7 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                
+
                 // Footer spacing
                 const SizedBox(height: 140),
               ]),
@@ -96,7 +98,10 @@ class _UserHeroSection extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   gradient: LinearGradient(
-                    colors: [primary, const Color(0xFF10B981).withValues(alpha: 0.8)],
+                    colors: [
+                      primary,
+                      const Color(0xFF10B981).withValues(alpha: 0.8),
+                    ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -107,7 +112,7 @@ class _UserHeroSection extends StatelessWidget {
                     border: Border.all(color: Colors.white, width: 3),
                     image: const DecorationImage(
                       image: NetworkImage(
-                        'https://lh3.googleusercontent.com/aida-public/AB6AXuBHKIY-lZhG0TXhBQfE32FgR2VBOWf59pdUYxsF5cF3Ar2u7EFADR3m1qoGoged9-NPLacRVuQOpEwdJZF6IjvMx_CEWToTGy2G9pOSJKqC8cGr4O3mhcjiigiR7B9vJ-bhm6EYcnlgC_PRWfqHXMO55C2SaxHuwGXPbfuCvVbKL1gNjIT_rYqUYFE6qeDhHQa0W37OFylpkq98vy-64FJ_nSbkRSiDmzoJI1s44qMvdm4NIZpFAOB8XRxvS2ujkEc2jO0TNxTB8zY'
+                        'https://lh3.googleusercontent.com/aida-public/AB6AXuBHKIY-lZhG0TXhBQfE32FgR2VBOWf59pdUYxsF5cF3Ar2u7EFADR3m1qoGoged9-NPLacRVuQOpEwdJZF6IjvMx_CEWToTGy2G9pOSJKqC8cGr4O3mhcjiigiR7B9vJ-bhm6EYcnlgC_PRWfqHXMO55C2SaxHuwGXPbfuCvVbKL1gNjIT_rYqUYFE6qeDhHQa0W37OFylpkq98vy-64FJ_nSbkRSiDmzoJI1s44qMvdm4NIZpFAOB8XRxvS2ujkEc2jO0TNxTB8zY',
                       ),
                       fit: BoxFit.cover,
                     ),
@@ -119,11 +124,21 @@ class _UserHeroSection extends StatelessWidget {
                 right: 4,
                 child: Container(
                   padding: const EdgeInsets.all(4),
-                  decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
                   child: Container(
                     padding: const EdgeInsets.all(4),
-                    decoration: const BoxDecoration(color: Color(0xFF10B981), shape: BoxShape.circle),
-                    child: const Icon(Icons.verified_rounded, color: Colors.white, size: 14),
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF10B981),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.verified_rounded,
+                      color: Colors.white,
+                      size: 14,
+                    ),
                   ),
                 ),
               ),
@@ -143,7 +158,10 @@ class _UserHeroSection extends StatelessWidget {
             children: [
               _UserTag(label: loc.userAge('32')),
               const SizedBox(width: 8),
-              _UserTag(label: loc.sedentaryWorker, icon: Icons.desktop_windows_rounded),
+              _UserTag(
+                label: loc.sedentaryWorker,
+                icon: Icons.desktop_windows_rounded,
+              ),
             ],
           ),
         ],
@@ -271,7 +289,9 @@ class _StatCard extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             value,
-            style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w900),
+            style: theme.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.w900,
+            ),
           ),
           const SizedBox(height: 4),
           Text(
@@ -330,17 +350,33 @@ class _SettingsList extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _SettingsItem(icon: Icons.person_rounded, title: loc.personalInfo, color: theme.colorScheme.primary),
-          _Separator(),
-          _SettingsItem(icon: Icons.gavel_rounded, title: loc.gdprConsent, color: const Color(0xFF10B981)),
-          _Separator(),
-          _SettingsItem(icon: Icons.description_rounded, title: loc.eula, color: Colors.orange),
-          _Separator(),
-          _SettingsItem(icon: Icons.lock_rounded, title: loc.privacyPolicy, color: Colors.grey),
+          _SettingsItem(
+            icon: Icons.person_rounded,
+            title: loc.personalInfo,
+            color: theme.colorScheme.primary,
+          ),
           _Separator(),
           _SettingsItem(
-            icon: Icons.assignment_ind_rounded, 
-            title: loc.exclusionCriteria, 
+            icon: Icons.gavel_rounded,
+            title: loc.gdprConsent,
+            color: const Color(0xFF10B981),
+          ),
+          _Separator(),
+          _SettingsItem(
+            icon: Icons.description_rounded,
+            title: loc.eula,
+            color: Colors.orange,
+          ),
+          _Separator(),
+          _SettingsItem(
+            icon: Icons.lock_rounded,
+            title: loc.privacyPolicy,
+            color: Colors.grey,
+          ),
+          _Separator(),
+          _SettingsItem(
+            icon: Icons.assignment_ind_rounded,
+            title: loc.exclusionCriteria,
             color: theme.colorScheme.primary,
             onTap: () => context.push('/profile/exclusion-criteria'),
           ),
@@ -353,7 +389,6 @@ class _SettingsList extends StatelessWidget {
     );
   }
 }
-
 
 class _ThemeSettingsItem extends StatelessWidget {
   const _ThemeSettingsItem();
@@ -378,15 +413,15 @@ class _ThemeSettingsItem extends StatelessWidget {
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: const Icon(
-                  Icons.palette_rounded, 
-                  color: Colors.purple, 
-                  size: 20
+                  Icons.palette_rounded,
+                  color: Colors.purple,
+                  size: 20,
                 ),
               ),
               const SizedBox(width: 16),
               Expanded(
                 child: Text(
-                  loc.darkTheme, // Keeping generic title or change to "Theme"
+                  loc.themeModeTitle, // Generic header title
                   style: theme.textTheme.bodyLarge?.copyWith(
                     fontWeight: FontWeight.w700,
                     fontSize: 15,
@@ -397,35 +432,35 @@ class _ThemeSettingsItem extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                _ThemeOption(
-                  label: loc.systemTheme,
-                  mode: AppThemeMode.system,
-                  isSelected: themeProvider.themeMode == AppThemeMode.system,
-                ),
-                const SizedBox(width: 8),
-                _ThemeOption(
-                  label: loc.lightTheme,
-                  mode: AppThemeMode.light,
-                  isSelected: themeProvider.themeMode == AppThemeMode.light,
-                ),
-                const SizedBox(width: 8),
-                _ThemeOption(
-                  label: loc.medicalTheme,
-                  mode: AppThemeMode.medical,
-                  isSelected: themeProvider.themeMode == AppThemeMode.medical,
-                ),
-                const SizedBox(width: 8),
-                _ThemeOption(
-                  label: loc.darkTheme,
+          Row(
+            children: [
+              Expanded(
+                child: _ThemeCard(
+                  label: loc.trueDarkTheme,
+                  icon: Icons.dark_mode_rounded,
                   mode: AppThemeMode.dark,
                   isSelected: themeProvider.themeMode == AppThemeMode.dark,
                 ),
-              ],
-            ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: _ThemeCard(
+                  label: loc.medicalTheme,
+                  icon: Icons.health_and_safety_rounded,
+                  mode: AppThemeMode.medical,
+                  isSelected: themeProvider.themeMode == AppThemeMode.medical,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: _ThemeCard(
+                  label: loc.lightTheme,
+                  icon: Icons.light_mode_rounded,
+                  mode: AppThemeMode.light,
+                  isSelected: themeProvider.themeMode == AppThemeMode.light,
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -433,13 +468,15 @@ class _ThemeSettingsItem extends StatelessWidget {
   }
 }
 
-class _ThemeOption extends StatelessWidget {
+class _ThemeCard extends StatelessWidget {
   final String label;
+  final IconData icon;
   final AppThemeMode mode;
   final bool isSelected;
 
-  const _ThemeOption({
+  const _ThemeCard({
     required this.label,
+    required this.icon,
     required this.mode,
     required this.isSelected,
   });
@@ -447,27 +484,43 @@ class _ThemeOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final primary = theme.colorScheme.primary;
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
 
     return GestureDetector(
       onTap: () => themeProvider.setThemeMode(mode),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(vertical: 16),
         decoration: BoxDecoration(
-          color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurface.withValues(alpha: 0.05),
-          borderRadius: BorderRadius.circular(100),
+          color: isSelected
+              ? primary.withValues(alpha: 0.08)
+              : theme.colorScheme.onSurface.withValues(alpha: 0.02),
+          borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isSelected ? theme.colorScheme.primary : Colors.transparent,
-            width: 1,
+            color: isSelected ? primary : Colors.transparent,
+            width: 2,
           ),
         ),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: isSelected ? theme.colorScheme.onPrimary : theme.colorScheme.onSurface,
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-            fontSize: 12,
-          ),
+        child: Column(
+          children: [
+            Icon(
+              icon,
+              color: isSelected
+                  ? primary
+                  : theme.colorScheme.onSurface.withValues(alpha: 0.4),
+              size: 28,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              label,
+              style: TextStyle(
+                color: isSelected ? primary : theme.colorScheme.onSurface,
+                fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
+                fontSize: 12,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -481,7 +534,9 @@ class _LanguageSettingsItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final localeProvider = Provider.of<LocaleProvider>(context);
-    final isTurkish = localeProvider.locale?.languageCode == 'tr' || localeProvider.locale == null;
+    final isTurkish =
+        localeProvider.locale?.languageCode == 'tr' ||
+        localeProvider.locale == null;
 
     return Padding(
       padding: const EdgeInsets.all(20),
@@ -494,9 +549,9 @@ class _LanguageSettingsItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(14),
             ),
             child: const Icon(
-              Icons.language_rounded, 
-              color: Colors.blue, 
-              size: 20
+              Icons.language_rounded,
+              color: Colors.blue,
+              size: 20,
             ),
           ),
           const SizedBox(width: 16),
@@ -522,15 +577,22 @@ class _LanguageSettingsItem extends StatelessWidget {
                 GestureDetector(
                   onTap: () => localeProvider.setLocale(const Locale('tr')),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
                     decoration: BoxDecoration(
-                      color: isTurkish ? theme.colorScheme.primary : Colors.transparent,
+                      color: isTurkish
+                          ? theme.colorScheme.primary
+                          : Colors.transparent,
                       borderRadius: BorderRadius.circular(18),
                     ),
                     child: Text(
                       'TR',
                       style: TextStyle(
-                        color: isTurkish ? theme.colorScheme.onPrimary : theme.colorScheme.onSurface,
+                        color: isTurkish
+                            ? theme.colorScheme.onPrimary
+                            : theme.colorScheme.onSurface,
                         fontWeight: FontWeight.bold,
                         fontSize: 13,
                       ),
@@ -540,15 +602,22 @@ class _LanguageSettingsItem extends StatelessWidget {
                 GestureDetector(
                   onTap: () => localeProvider.setLocale(const Locale('en')),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
                     decoration: BoxDecoration(
-                      color: !isTurkish ? theme.colorScheme.primary : Colors.transparent,
+                      color: !isTurkish
+                          ? theme.colorScheme.primary
+                          : Colors.transparent,
                       borderRadius: BorderRadius.circular(18),
                     ),
                     child: Text(
                       'EN',
                       style: TextStyle(
-                        color: !isTurkish ? theme.colorScheme.onPrimary : theme.colorScheme.onSurface,
+                        color: !isTurkish
+                            ? theme.colorScheme.onPrimary
+                            : theme.colorScheme.onSurface,
                         fontWeight: FontWeight.bold,
                         fontSize: 13,
                       ),
@@ -605,7 +674,10 @@ class _SettingsItem extends StatelessWidget {
                 ),
               ),
             ),
-            Icon(Icons.chevron_right_rounded, color: theme.colorScheme.onSurface.withValues(alpha: 0.2)),
+            Icon(
+              Icons.chevron_right_rounded,
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
+            ),
           ],
         ),
       ),
@@ -618,7 +690,11 @@ class _Separator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Divider(height: 1, thickness: 1, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.03)),
+      child: Divider(
+        height: 1,
+        thickness: 1,
+        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.03),
+      ),
     );
   }
 }
@@ -637,12 +713,18 @@ class _LogoutButton extends StatelessWidget {
         style: TextButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 20),
           backgroundColor: theme.colorScheme.surface,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.logout_rounded, color: theme.colorScheme.error, size: 20),
+            Icon(
+              Icons.logout_rounded,
+              color: theme.colorScheme.error,
+              size: 20,
+            ),
             const SizedBox(width: 12),
             Text(
               loc.logout,
