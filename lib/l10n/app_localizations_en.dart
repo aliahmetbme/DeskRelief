@@ -1213,4 +1213,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get clinicEducation => 'Clinical Education';
+
+  @override
+  String get references => 'References & Further Reading';
+
+  @override
+  String readingTime(int minutes) {
+    return '• $minutes min read';
+  }
 }

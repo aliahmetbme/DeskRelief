@@ -490,5 +490,14 @@
   "errorNetwork": "Network connection failed.",
   "readMore": "Read More",
   "dailyTip": "Daily Tip",
-  "clinicEducation": "Clinical Education"
+  "clinicEducation": "Clinical Education",
+  "references": "References & Further Reading",
+  "readingTime": "• {minutes} min read",
+  "@readingTime": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -1,4 +1,246 @@
 {
+  "ergonomic_micro_interventions": [
+    {
+      "id": "ERG-01",
+      "rationale": "Spinal Compression",
+      "text": {
+        "en": "Research indicates that standing for 2 minutes every 45 minutes reduces spinal disc pressure by up to 30%. Implement a sit-stand cycle to rehydrate your intervertebral discs safely.",
+        "tr": "Araştırmalara göre her 45 dakikada bir 2 dakika ayağa kalkmak omurga disklerindeki baskıyı %30 azaltır. İntervertebral disklerinizi güvenle yeniden nemlendirmek için oturma-kalkma döngüleri uygulayın."
+      }
+    },
+    {
+      "id": "ERG-02",
+      "rationale": "Visual Display Unit",
+      "text": {
+        "en": "The top of your monitor must be positioned at or slightly below eye level at a precise distance of 50–70 cm (arm's length). This prevents excessive cervical flexion and reduces neck tension.",
+        "tr": "Monitörün üst kısmı tam göz hizasında veya biraz altında, tam olarak 50-70 cm (bir kol) uzaklıkta olmalıdır. Bu, aşırı boyun bükülmesini önler ve boyun gerginliğini azaltır."
+      }
+    },
+    {
+      "id": "ERG-03",
+      "rationale": "Visual Ergonomics",
+      "text": {
+        "en": "Adhere to the 20-20-20 rule to combat Computer Vision Syndrome, which affects up to 75% of users. Every 20 minutes, focus on an object 20 feet away for 20 seconds to relax ocular muscles.",
+        "tr": "Kullanıcıların %75'ini etkileyen Bilgisayar Görüş Sendromu ile savaşmak için 20-20-20 kuralına uyun. Göz kaslarınızı rahatlatmak için her 20 dakikada bir, 6 metre (20 feet) uzaklıktaki bir nesneye 20 saniye odaklanın."
+      }
+    },
+    {
+      "id": "ERG-04",
+      "rationale": "Anthropometric Setup",
+      "text": {
+        "en": "Ensure your chair height allows your hips, knees, and elbows to maintain an approximate 90-degree angle. Feet must rest completely flat on the floor to stabilize the lumbar spine.",
+        "tr": "Sandalye yüksekliğinizin kalça, diz ve dirseklerinizin yaklaşık 90 derecelik bir açı korumasını sağladığından emin olun. Bel omurgasını stabilize etmek için ayaklar yere tamamen düz basmalıdır."
+      }
+    },
+    {
+      "id": "ERG-05",
+      "rationale": "Metabolic Equivalent",
+      "text": {
+        "en": "Standing increases energy expenditure to approximately 95 calories per hour compared to 80 calories while sitting. These continuous micro-movements accumulate into significant metabolic and structural benefits.",
+        "tr": "Ayakta durmak, otururken harcanan 80 kaloriye kıyasla enerji harcamasını saatte yaklaşık 95 kaloriye çıkarır. Bu sürekli mikro hareketler zamanla belirgin metabolik ve yapısal faydalara dönüşür."
+      }
+    },
+    {
+      "id": "ERG-06",
+      "rationale": "Lumbar Support",
+      "text": {
+        "en": "Utilizing structured lumbar support decreases reported low back pain incidence. Ensure the backrest maintains the natural S-curve of your lower back, preventing harmful posterior pelvic tilt.",
+        "tr": "Yapısal bel desteği kullanmak, bildirilen bel ağrısı vakalarını azaltır. Sırtlığın, zararlı arka pelvik eğimi önleyerek belinizin doğal S-eğrisini koruduğundan emin olun."
+      }
+    },
+    {
+      "id": "ERG-07",
+      "rationale": "Forearm Alignment",
+      "text": {
+        "en": "Keyboards and mice must reside on the same horizontal plane. Keep wrists perfectly straight to reduce pathological compression on the median nerve within the carpal tunnel.",
+        "tr": "Klavye ve mouse aynı yatay düzlemde bulunmalıdır. Karpal tüneldeki median sinir üzerindeki patolojik baskıyı azaltmak için bileklerinizi tamamen düz tutun."
+      }
+    },
+    {
+      "id": "ERG-08",
+      "rationale": "Environmental Illuminance",
+      "text": {
+        "en": "Optimal ergonomic lighting requires approximately 500 lux on your work surface. Avoid direct screen glare to eliminate unconscious, posture-destroying forward-leaning habits.",
+        "tr": "Optimum ergonomik aydınlatma, çalışma yüzeyinizde yaklaşık 500 lüks gerektirir. Postürü bozan bilinçsizce öne eğilme alışkanlıklarını ortadan kaldırmak için doğrudan ekran parlamasından kaçının."
+      }
+    },
+    {
+      "id": "ERG-09",
+      "rationale": "Movement Ratios",
+      "text": {
+        "en": "Implement the OSHA-recommended 20-8-2 rule daily: 20 minutes of sitting, 8 minutes of standing, and 2 minutes of moving. Postural variety is the ultimate ergonomic tool against stiffness.",
+        "tr": "OSHA tarafından önerilen 20-8-2 kuralını her gün uygulayın: 20 dakika oturma, 8 dakika ayakta durma ve 2 dakika hareket etme. Postüral çeşitlilik, sertliğe karşı en iyi ergonomik araçtır."
+      }
+    },
+    {
+      "id": "ERG-10",
+      "rationale": "Cervical Load",
+      "text": {
+        "en": "Looking down at a smartphone increases the effective weight of the head up to 60 lbs (27 kg) on the cervical spine. Always elevate your devices to chest or eye level.",
+        "tr": "Akıllı telefona bakmak için eğilmek, başın boyun omurgası üzerindeki efektif ağırlığını 27 kg'a (60 lbs) kadar çıkarır. Cihazlarınızı daima göğüs veya göz hizasına kaldırın."
+      }
+    },
+    {
+      "id": "ERG-11",
+      "rationale": "Asymmetrical Loading",
+      "text": {
+        "en": "Avoid crossing your legs for prolonged periods. This habit induces pelvic torsion and creates highly asymmetrical, damaging loading on the lumbar intervertebral discs.",
+        "tr": "Bacak bacak üstüne atmaktan uzun süre kaçının. Bu alışkanlık pelvik torsiyona (dönmeye) neden olur ve lomber intervertebral disklerde oldukça asimetrik, zarar verici bir yüklenme yaratır."
+      }
+    },
+    {
+      "id": "ERG-12",
+      "rationale": "Monitor Tilt",
+      "text": {
+        "en": "Tilt the top of your monitor backwards by precisely 10 to 20 degrees. This optimal angle reduces visual glare and significantly lessens sub-occipital muscle fatigue at the skull base.",
+        "tr": "Monitörünüzün üst kısmını tam olarak 10 ila 20 derece arkaya doğru eğin. Bu optimum açı, görsel parlamayı azaltır ve kafatası tabanındaki sub-oksipital kas yorgunluğunu önemli ölçüde hafifletir."
+      }
+    },
+    {
+      "id": "ERG-13",
+      "rationale": "Remote Workstation",
+      "text": {
+        "en": "Laptop trackpads force prolonged wrist deviation. Utilizing an external mouse and keyboard is clinically proven to maintain healthier upper extremity mechanics and prevent tendonitis.",
+        "tr": "Dizüstü bilgisayar dokunmatik yüzeyleri (trackpad), bileği uzun süreli sapmaya zorlar. Harici bir mouse ve klavye kullanmanın, üst ekstremite mekaniğini koruduğu ve tendiniti önlediği klinik olarak kanıtlanmıştır."
+      }
+    },
+    {
+      "id": "ERG-14",
+      "rationale": "Micro-breaks",
+      "text": {
+        "en": "Frequent, short interruptions of repetitive tasks are highly effective for tendon health. Small micro-breaks are vastly superior to occasional long rest periods for carpal tunnel prevention.",
+        "tr": "Tekrarlayan görevlerin sık ve kısa süreli kesintiye uğratılması tendon sağlığı için oldukça etkilidir. Karpal tüneli önlemek için küçük mikro molalar, nadiren verilen uzun dinlenme sürelerinden çok daha üstündür."
+      }
+    },
+    {
+      "id": "ERG-15",
+      "rationale": "Environmental Thermoregulation",
+      "text": {
+        "en": "Maintain workspace temperature between 18°C and 26°C. Cold environments increase muscle stiffness and exacerbate peripheral nerve compressions like carpal tunnel syndrome.",
+        "tr": "Çalışma alanı sıcaklığını 18°C ile 26°C arasında tutun. Soğuk ortamlar kas sertliğini artırır ve karpal tünel sendromu gibi periferik sinir sıkışmalarını şiddetlendirir."
+      }
+    },
+    {
+      "id": "ERG-16",
+      "rationale": "Kinetic Friction",
+      "text": {
+        "en": "Avoid resting your wrists directly on sharp or hard desk edges while typing. Use a \"floating wrist\" technique or padded rests to prevent micro-trauma to the median nerve.",
+        "tr": "Yazı yazarken bileklerinizi doğrudan keskin veya sert masa kenarlarına dayamaktan kaçının. Median sinirdeki mikro travmaları önlemek için \"havada süzülen bilek\" tekniğini veya yumuşak destekleri kullanın."
+      }
+    },
+    {
+      "id": "ERG-17",
+      "rationale": "Postural Habituation",
+      "text": {
+        "en": "Over 80% of screen users exhibit unconscious shoulder protraction. Perform a daily postural reset by gently squeezing the shoulder blades together and pulling them downward for 5 seconds.",
+        "tr": "Ekran kullanıcılarının %80'inden fazlası bilinçsizce omuzlarını öne yuvarlar. Kürek kemiklerini nazikçe birbirine sıkarak ve aşağı doğru çekerek 5 saniye boyunca günlük postür sıfırlamanızı yapın."
+      }
+    },
+    {
+      "id": "ERG-18",
+      "rationale": "Tissue Hydration",
+      "text": {
+        "en": "Intervertebral discs rely on osmotic pressure, not blood vessels, for nutrition. Gentle movement acts as a pump, pulling vital water and nutrients into the spinal discs.",
+        "tr": "İntervertebral diskler beslenme için kan damarlarına değil, ozmotik basınca güvenir. Nazik hareketler bir pompa görevi görerek hayati suyu ve besinleri omurga disklerine çeker."
+      }
+    },
+    {
+      "id": "ERG-19",
+      "rationale": "Chair Biomechanics",
+      "text": {
+        "en": "Ensure a 2-3 finger gap exists between the back of your knees and the edge of your seat. This space prevents compression of the popliteal artery and maintains lower limb circulation.",
+        "tr": "Dizlerinizin arkası ile koltuğun kenarı arasında 2-3 parmak boşluk olduğundan emin olun. Bu boşluk, popliteal arterin sıkışmasını önler ve alt ekstremite kan dolaşımını korur."
+      }
+    },
+    {
+      "id": "ERG-20",
+      "rationale": "Diurnal Stress",
+      "text": {
+        "en": "Spine discs are fully hydrated and highly pressurized in the morning. Avoid heavy bending or forceful twisting during the first hour of your workday to prevent disc prolapse.",
+        "tr": "Omurga diskleri sabahları tam olarak nemlenmiş ve yüksek basınçlıdır. Disk kaymasını önlemek için mesainizin ilk saatinde ağır eğilmelerden veya ani dönmelerden kaçının."
+      }
+    },
+    {
+      "id": "ERG-21",
+      "rationale": "Desktop Real Estate",
+      "text": {
+        "en": "Keep frequently used items within an easy 30 cm reach radius. Constant overreaching strains the rotator cuff and unilaterally overloads the thoracic and lumbar spine.",
+        "tr": "Sık kullanılan eşyaları 30 cm'lik kolay erişim yarıçapı içinde tutun. Sürekli uzanmak rotator manşeti (omuz) zorlar ve torasik ile lomber omurgaya tek taraflı aşırı yük bindirir."
+      }
+    },
+    {
+      "id": "ERG-22",
+      "rationale": "Armrest Calibration",
+      "text": {
+        "en": "Armrests must lightly support the forearms without elevating the shoulders. If your shoulders are shrugging upward, your armrests are placed too high and causing tension.",
+        "tr": "Kolçaklar, omuzları yukarı kaldırmadan önkolları hafifçe desteklemelidir. Omuzlarınız yukarı doğru kasılıyorsa, kolçaklarınız çok yükseğe yerleştirilmiş ve gerginliğe neden oluyor demektir."
+      }
+    },
+    {
+      "id": "ERG-23",
+      "rationale": "CO2 and Concentration",
+      "text": {
+        "en": "Keep indoor CO2 levels below 1000 ppm through proper ventilation. Elevated carbon dioxide reduces cognitive alertness and inevitably leads to poor, slouched biomechanics.",
+        "tr": "Doğru havalandırma ile iç mekan CO2 seviyelerini 1000 ppm'in altında tutun. Yükselen karbondioksit bilişsel uyanıklığı azaltır ve kaçınılmaz olarak zayıf, çökmüş biyomekaniğe yol açar."
+      }
+    },
+    {
+      "id": "ERG-24",
+      "rationale": "Visual Correction",
+      "text": {
+        "en": "If you wear bifocal or progressive lenses, lower your monitor slightly. This prevents the physiological need to chronically extend the neck backward to read the screen.",
+        "tr": "Bifokal veya progresif gözlük kullanıyorsanız, monitörünüzü biraz alçaltın. Bu, ekranı okumak için boynunuzu sürekli geriye doğru bükme şeklindeki fizyolojik zorunluluğu ortadan kaldırır."
+      }
+    },
+    {
+      "id": "ERG-25",
+      "rationale": "Plantar Pressure",
+      "text": {
+        "en": "Using a dynamic footrest under the desk encourages subtle ankle flexion. This venous pump action reduces lower extremity swelling, pooling, and muscular fatigue.",
+        "tr": "Masanın altında dinamik bir ayak desteği kullanmak, hafif ayak bileği hareketlerini teşvik eder. Bu venöz pompa etkisi, alt ekstremite şişkinliğini, kan göllenmesini ve kas yorgunluğunu azaltır."
+      }
+    },
+    {
+      "id": "ERG-26",
+      "rationale": "Glare Mitigation",
+      "text": {
+        "en": "Position screens at a 90-degree right angle to windows. Fighting screen glare induces eye strain and disrupts natural cervical spine alignment as you squint and lean.",
+        "tr": "Ekranları pencerelere 90 derecelik dik bir açıyla yerleştirin. Ekran parlamasıyla mücadele etmek göz yorgunluğuna neden olur ve gözünüzü kısıp eğildiğinizde doğal boyun omurgası hizalamasını bozar."
+      }
+    },
+    {
+      "id": "ERG-27",
+      "rationale": "Keyboard Impact",
+      "text": {
+        "en": "Type with a light touch. Applying excessive downward force on keys dramatically increases the vibratory and compressive stress transmitted through the finger flexor tendons.",
+        "tr": "Klavyeye hafif dokunuşlarla yazın. Tuşlara aşırı aşağı doğru kuvvet uygulamak, parmak fleksör tendonları üzerinden iletilen titreşimsel ve sıkıştırıcı stresi önemli ölçüde artırır."
+      }
+    },
+    {
+      "id": "ERG-28",
+      "rationale": "Static Loading",
+      "text": {
+        "en": "Muscles fatigue rapidly under static, unmoving loads. Even mathematically perfect posture becomes detrimental to tissue health if held continuously for more than 45 minutes.",
+        "tr": "Kaslar statik, hareketsiz yükler altında hızla yorulur. Matematiksel olarak kusursuz bir postür bile 45 dakikadan fazla sürekli tutulduğunda doku sağlığı için zararlı hale gelir."
+      }
+    },
+    {
+      "id": "ERG-29",
+      "rationale": "Telephone Ergonomics",
+      "text": {
+        "en": "Never cradle a phone between your ear and shoulder. Use a headset or speakerphone to avoid catastrophic unilateral compression on cervical nerve roots and spinal discs.",
+        "tr": "Telefonu asla kulağınız ile omzunuz arasına sıkıştırmayın. Boyun sinir kökleri ve omurga diskleri üzerinde feci tek taraflı baskılardan kaçınmak için kulaklık veya hoparlör kullanın."
+      }
+    },
+    {
+      "id": "ERG-30",
+      "rationale": "Connective Tissue Hydration",
+      "text": {
+        "en": "Mild dehydration directly decreases the viscoelasticity of connective tissues and fascia, making repetitive strain injuries much more likely. Keep water actively on your desk.",
+        "tr": "Hafif dehidrasyon, bağ dokularının ve fasyanın viskoelastisitesini doğrudan azaltarak tekrarlayan gerilim yaralanmalarını çok daha olası hale getirir. Masanızda aktif olarak su bulundurun."
+      }
+    }
+  ],
   "motivations": {
     "screen_greetings": [
       {
@@ -822,7 +1064,10 @@
   "blogs": [
     {
       "id": "blog-01",
-      "category": "Biomechanics",
+      "category": {
+        "en": "Biomechanics",
+        "tr": "Biyomekanik"
+      },
       "image_url": "https://loremflickr.com/800/600/posture,office",
       "title": {
         "en": "Is There Such a Thing as Perfect Posture? (The Importance of Movement)",
@@ -835,11 +1080,24 @@
       "content": {
         "en": "\"Sit up straight and don't slouch!\" We have heard this restrictive command our entire lives. However, modern biomechanical research reveals a surprising clinical truth: the concept of a single \"perfect\" static posture is a complete myth. The human spine is a highly dynamic architectural structure designed for constant variability, not statuesque rigidity. When we lock our bodies into an upright, tense posture for hours, we statically load the exact same muscles, ligaments, and intervertebral discs. This continuous isometric contraction rapidly depletes local vascular blood flow, leading to metabolic waste accumulation, oxygen deprivation, and profound muscular fatigue.\n\nThe clinical reality is that \"your best posture is your next posture.\" Occupational safety guidelines now heavily emphasize Non-Exercise Activity Thermogenesis (NEAT) and postural variability over rigid, mathematical alignment. Shifting your weight, briefly standing to increase caloric expenditure, or merely adjusting your pelvic tilt is far superior to maintaining a rigidly perfect 90-degree seating position all day. For a pain-free work life, abandon the pursuit of perfect stillness. Instead, embrace micro-movements. Ergonomics is not about freezing your body in the correct angles; it is about facilitating constant, fluid changes in mechanical loading to keep tissues hydrated and resilient.",
         "tr": "\"Dik otur ve kambur durma!\" Bu kısıtlayıcı emri hayatımız boyunca duyduk. Ancak modern biyomekanik araştırmalar şaşırtıcı bir klinik gerçeği ortaya koyuyor: Tek bir \"kusursuz\" statik postür kavramı tamamen bir efsanedir. İnsan omurgası, heykel gibi bir sertlik için değil, sürekli değişkenlik için tasarlanmış oldukça dinamik mimari bir yapıdır. Vücudumuzu saatlerce dik, gergin bir duruşa kilitlediğimizde, tam olarak aynı kaslara, bağlara ve omurlararası disklere statik olarak yük bindiririz. Bu sürekli izometrik kasılma, bölgesel damar kan akışını hızla tüketerek metabolik atık birikimine, oksijen yoksunluğuna ve derin bir kas yorgunluğuna yol açar.\n\nKlinik gerçek şudur ki \"en iyi postürünüz, bir sonraki postürünüzdür.\" İş güvenliği yönergeleri artık katı, matematiksel hizalamadan ziyade Egzersiz Dışı Aktivite Termojenezini (NEAT) ve postüral değişkenliği güçlü bir şekilde vurgulamaktadır. Ağırlığınızı değiştirmek, kalori harcamasını artırmak için kısaca ayağa kalkmak veya sadece pelvik eğiminizi ayarlamak, tüm gün kusursuz bir 90 derecelik oturma pozisyonunu sürdürmekten çok daha üstündür. Ağrısız bir çalışma hayatı için kusursuz hareketsizlik arayışından vazgeçin. Bunun yerine mikro hareketleri kucaklayın. Ergonomi, vücudunuzu doğru açılarda dondurmakla ilgili değildir; dokuları nemli ve dirençli tutmak için mekanik yüklemedeki sürekli, akıcı değişiklikleri kolaylaştırmakla ilgilidir."
-      }
+      },
+      "citations": [
+        {
+          "title": "Occupational Safety, Health, and Ergonomics in Smes: A Conceptual Framework for Sustainable Work Performance - RSIS International",
+          "url": "https://rsisinternational.org/journals/ijriss/articles/occupational-safety-health-and-ergonomics-in-smes-a-conceptual-framework-for-sustainable-work-performance/"
+        },
+        {
+          "title": "Standing Desk and Treadmill Desk Calorie Burn Study | iMovR.com",
+          "url": "https://www.imovr.com/pages/increased-calorie-burn-for-standing-desk-and-treadmill-desk-users"
+        }
+      ]
     },
     {
       "id": "blog-02",
-      "category": "Kinetic Chain",
+      "category": {
+        "en": "Kinetic Chain",
+        "tr": "Kinetik Zincir"
+      },
       "image_url": "https://loremflickr.com/800/600/neck,pain",
       "title": {
         "en": "The Kinetic Chain: Why Your Low Back Might Hurt Because of Your Neck",
@@ -852,11 +1110,20 @@
       "content": {
         "en": "The human body does not operate as a disconnected collection of isolated parts; it functions as a highly integrated mechanical system known in biomechanics as the \"kinetic chain.\" When white-collar professionals experience chronic, unrelenting lower back pain, the root cause is frequently found at the exact opposite end of the spine: the cervical region (neck).\n\nWhen staring intently at a screen, many workers exhibit a \"Forward Head Posture.\" Because the adult human head weighs approximately 10 to 12 pounds, shifting it forward out of neutral alignment acts as a mechanical lever, exponentially increasing the torque and load on the cervical spine. To prevent you from physically falling forward, your central nervous system recruits the thick fascial networks and erector spinae muscles traveling all the way down your back to your pelvis. Consequently, your lower back remains under constant, agonizing tension just to counterbalance your forward-leaning head. Attempting to massage the lower back offers only temporary, superficial relief because the mechanical anchor—the displaced neck—remains compromised. True musculoskeletal rehabilitation requires treating the entire spine globally. Restoring cervical alignment instantly offloads the lumbar spine, proving that the victim (the lower back) and the criminal (the neck) are rarely in the same place.",
         "tr": "İnsan vücudu, birbirinden kopuk izole parçaların bir koleksiyonu olarak çalışmaz; biyomekanikte \"kinetik zincir\" olarak bilinen son derece entegre bir mekanik sistem olarak işler. Beyaz yakalı profesyoneller kronik, amansız bir bel ağrısı yaşadıklarında, temel neden genellikle omurganın tam zıt ucunda bulunur: Servikal bölge (boyun).\n\nDikkatle bir ekrana bakarken, birçok çalışan \"Öne Doğru Baş Postürü\" (Forward Head Posture) sergiler. Yetişkin bir insan başı yaklaşık 4.5 ila 5.5 kilo ağırlığında olduğundan, onu nötr hizadan öne doğru kaydırmak mekanik bir kaldıraç görevi görerek boyun omurgası üzerindeki torku ve yükü katlanarak artırır. Fiziksel olarak öne düşmenizi engellemek için merkezi sinir sisteminiz, sırtınızdan pelvisinize kadar inen kalın fasya ağlarını ve erektör spina kaslarını devreye sokar. Sonuç olarak, sırf öne eğilen başınızı dengelemek için beliniz sürekli ve ıstırap verici bir gerilime maruz kalır. Sadece beli masajla rahatlatmaya çalışmak geçici, yüzeysel bir rahatlama sağlar çünkü mekanik çapa olan yerinden kaymış boyun sorunlu kalmaya devam eder. Gerçek kas-iskelet sistemi rehabilitasyonu tüm omurganın bütünsel olarak tedavi edilmesini gerektirir. Boyun hizalamasını eski haline getirmek bel omurgasındaki yükü anında hafifletir; bu da kurbanın (bel) ve suçlunun (boyun) nadiren aynı yerde olduğunu kanıtlar."
-      }
+      },
+      "citations": [
+        {
+          "title": "Impaired trunk muscle function in sub-acute neck pain: Etiologic in the subsequent development of low back pain? - ResearchGate",
+          "url": "https://www.researchgate.net/publication/8462979_Impaired_trunk_muscle_function_in_sub-acute_neck_pain_Etiologic_in_the_subsequent_development_of_low_back_pain"
+        }
+      ]
     },
     {
       "id": "blog-03",
-      "category": "Ergonomics",
+      "category": {
+        "en": "Ergonomics",
+        "tr": "Ergonomi"
+      },
       "image_url": "https://loremflickr.com/800/600/desk,ergonomics",
       "title": {
         "en": "Screen and Keyboard Placement for a Pain-Free Spine",
@@ -869,11 +1136,20 @@
       "content": {
         "en": "Proper ergonomic workstation setup is your absolute first line of defense against musculoskeletal degradation. OSHA guidelines explicitly suggest that improper screen and keyboard placement are the primary anatomical culprits for cervical, upper back, and upper limb repetitive strain injuries in remote and office workers.\n\nFor a pain-free spine, your monitor must be placed approximately an arm's length (50–70 cm) away. The top horizontal bezel of the screen must sit exactly at or slightly below eye level, tilted backwards by 10 to 20 degrees. This specific mathematical angle reduces ocular fatigue, cuts environmental glare, and physically prevents the user from unconsciously craning the neck downward into pathological flexion. Regarding peripheral input devices, the keyboard and mouse must reside on the exact same plane, enabling the elbows to rest comfortably at a 90 to 120-degree angle alongside the torso. Wrists should remain neutral—meaning they do not bend significantly upwards (extension) or downwards (flexion). Placing the keyboard too far away forces the shoulders into protraction (hunching), chronically straining the trapezius and rhomboid muscles. Small geometric adjustments to your workspace architecture profoundly decrease cumulative joint stress, preventing acute flare-ups and long-term joint degeneration.",
         "tr": "Uygun ergonomik iş istasyonu kurulumu, kas-iskelet sistemi bozulmalarına karşı kesinlikle ilk savunma hattınızdır. OSHA yönergeleri, yanlış ekran ve klavye yerleşiminin uzaktan ve ofis çalışanlarında boyun, üst sırt ve üst ekstremite tekrarlayan gerilim yaralanmalarının birincil anatomik suçluları olduğunu açıkça öne sürmektedir.\n\nAğrısız bir omurga için monitörünüz yaklaşık bir kol mesafesi (50-70 cm) uzaklıkta olmalıdır. Ekranın üst yatay çerçevesi tam olarak göz hizasında veya biraz altında bulunmalı ve 10 ila 20 derece geriye doğru eğilmelidir. Bu spesifik matematiksel açı, göz yorgunluğunu azaltır, çevresel parlamayı keser ve kullanıcının bilinçsizce boynunu aşağı doğru patolojik bir bükülmeye zorlamasını fiziksel olarak engeller. Çevresel giriş cihazlarına gelince, klavye ve mouse tam olarak aynı düzlemde bulunmalı ve dirseklerin gövde yanında rahatça 90 ila 120 derecelik bir açıda durmasını sağlamalıdır. Bilekler nötr kalmalıdır; yani belirgin şekilde yukarı (ekstansiyon) veya aşağı (fleksiyon) bükülmemelidir. Klavyeyi çok uzağa yerleştirmek omuzları yuvarlanmaya (kamburlaşmaya) zorlar ve trapezius ile romboid kaslarını kronik olarak gerer. Çalışma alanı mimarinizde yapacağınız küçük geometrik ayarlamalar kümülatif eklem stresini derinden azaltır, akut krizleri ve uzun vadeli eklem dejenerasyonunu önler."
-      }
+      },
+      "citations": [
+        {
+          "title": "OSHA Ergonomics 2025: Safety for Remote & Hybrid Workers ...",
+          "url": "https://learntastic.com/blog/workplace-ergonomics-remote-workers-what-osha-expects-in-2025"
+        }
+      ]
     },
     {
       "id": "blog-04",
-      "category": "Neurology",
+      "category": {
+        "en": "Neurology",
+        "tr": "Nöroloji"
+      },
       "image_url": "https://loremflickr.com/800/600/nervous,system",
       "title": {
         "en": "Central Sensitization: Why Pain Lingers Longer Than Expected",
@@ -886,11 +1162,24 @@
       "content": {
         "en": "When you perfectly correct your posture, invest in an expensive ergonomic chair, and perform regular physiotherapy stretching, yet still experience persistent, agonizing pain, you may be encountering a complex neurological phenomenon called \"Central Sensitization.\"\n\nIn clinical terms, pain is simply a biological alarm system. Under severe chronic postural stress—like years of slouching at a computer—the central nervous system undergoes neuroplastic changes. The alarm system becomes pathologically hyper-reactive. Even long after the physical tissue damage (such as a minor muscle strain or ligament micro-tear) has fully healed, the spinal cord and brain continue to amplify non-painful sensory signals as dangerous, tissue-damaging threats. Light pressure or mild stretches that should feel totally normal are suddenly perceived as sharp, burning pain. Therefore, resolving chronic office pain requires far more than purely mechanical or structural fixes; it requires actively down-regulating a hyperactive nervous system. This is precisely why \"Rest Days\" and Behavioral Change Techniques (BCTs) like mindfulness, deep breathing, and restorative sleep are prescribed alongside physical therapy. By decreasing psychological stress and ensuring a safe, calm somatic environment, you convince your nervous system to lower its alarm threshold, ultimately breaking the vicious cycle of persistent pain.",
         "tr": "Postürünüzü kusursuz bir şekilde düzelttiğiniz, pahalı ergonomik bir sandalyeye yatırım yaptığınız ve düzenli fizyoterapi esneme hareketleri yaptığınız halde hala inatçı, ıstırap verici ağrılar yaşıyorsanız, \"Merkezi Duyarlılaşma\" (Central Sensitization) adı verilen karmaşık nörolojik bir olguyla karşı karşıya olabilirsiniz.\n\nKlinik terimlerle ağrı, basitçe biyolojik bir alarm sistemidir. Bilgisayar başında yıllarca kambur durmak gibi şiddetli kronik postüral stres altında, merkezi sinir sistemi nöroplastik değişikliklere uğrar. Alarm sistemi patolojik olarak aşırı tepkili hale gelir. Fiziksel doku hasarı (örneğin küçük bir kas gerilmesi veya bağdaki mikro yırtık) tamamen iyileştikten çok sonra bile, omurilik ve beyin ağrısız duyusal sinyalleri tehlikeli, dokuya zarar veren tehditler olarak büyüterek algılamaya devam eder. Normal hissedilmesi gereken hafif bir baskı veya esneme aniden keskin, yanıcı bir ağrı olarak algılanır. Bu nedenle, kronik ofis ağrısını çözmek tamamen mekanik veya yapısal düzeltmelerden çok daha fazlasını gerektirir; hiperaktif bir sinir sistemini aktif olarak yatıştırmayı gerektirir. İşte tam da bu yüzden fizik tedavinin yanında \"Dinlenme Günleri\" ve farkındalık, derin nefes alma, onarıcı uyku gibi Davranış Değiştirme Teknikleri (BCT) reçete edilir. Psikolojik stresi azaltarak ve güvenli, sakin bir somatik ortam sağlayarak, sinir sisteminizi alarm eşiğini düşürmeye ikna edebilir ve sonuçta kalıcı ağrının kısır döngüsünü kırabilirsiniz."
-      }
+      },
+      "citations": [
+        {
+          "title": "Efficacy of Ergonomic Interventions on Work-Related ... - MDPI",
+          "url": "https://www.mdpi.com/2077-0383/14/9/3034"
+        },
+        {
+          "title": "Interventions Based on Behavior Change Techniques to Encourage Physical Activity or Decrease Sedentary Behavior in Community-Dwelling Adults Aged 50–70: Systematic Review With Intervention Component Analysis - ResearchGate",
+          "url": "https://www.researchgate.net/publication/380104691_Interventions_Based_on_Behavior_Change_Techniques_to_Encourage_Physical_Activity_or_Decrease_Sedentary_Behavior_in_Community-Dwelling_Adults_Aged_50-70_Systematic_Review_With_Intervention_Component_An"
+        }
+      ]
     },
     {
       "id": "blog-05",
-      "category": "Biomechanics",
+      "category": {
+        "en": "Biomechanics",
+        "tr": "Biyomekanik"
+      },
       "image_url": "https://loremflickr.com/800/600/spine,medical",
       "title": {
         "en": "The Diurnal Rhythm of Spinal Discs and Morning Risks",
@@ -903,11 +1192,20 @@
       "content": {
         "en": "Your intervertebral discs act as the vital shock absorbers of your spine. Uniquely within the human body, they largely lack an independent blood supply, relying entirely on a process of osmotic pressure to absorb nutrients and water from surrounding tissues. This creates a fascinating physiological phenomenon known in biomechanics as diurnal variation.\n\nWhen you sleep horizontally at night, compressive gravity is removed from the spine. The discs pull in surrounding water like a sponge, swelling by up to 20% in volume and slightly increasing your overall physical height by morning. While this overnight rehydration is absolutely vital for long-term tissue health, it temporarily presents a severe mechanical vulnerability. Fully hydrated morning discs are highly pressurized and significantly stiffer in compression and bending. Consequently, early morning is the most dangerous time to perform aggressive spinal flexion, such as bending over to touch your toes or picking up a heavy box. Clinical data shows over 90% of acute disc herniations originate from improper bending forces. To protect your lumbar health, allow your spine an hour to adjust to gravity after waking. Engage in gentle, neutral movements and delay intense stretching until the excess intradiscal fluid has naturally expelled.",
         "tr": "İntervertebral diskleriniz omurganızın hayati şok emicileri olarak görev yapar. İnsan vücudunda eşsiz bir şekilde, büyük ölçüde bağımsız bir kan akışından yoksun olan diskler, çevre dokulardan besin ve su emmek için tamamen bir ozmotik basınç sürecine güvenir. Bu durum, biyomekanikte \"diurnal (günlük) ritim\" olarak bilinen büyüleyici bir fizyolojik olgu yaratır.\n\nGece yatay olarak uyuduğunuzda sıkıştırıcı yerçekimi omurgadan kalkar. Diskler çevredeki suyu bir sünger gibi içine çeker, hacim olarak %20'ye kadar şişer ve sabaha kadar genel fiziksel boyunuzu hafifçe uzatır. Bu gece boyunca yeniden nemlenme, uzun vadeli doku sağlığı için kesinlikle hayati önem taşırken, geçici olarak ciddi bir mekanik savunmasızlık yaratır. Tamamen nemlenmiş sabah diskleri yüksek basınca sahiptir; bükülmeye ve sıkışmaya karşı çok daha serttir. Sonuç olarak, ayak parmaklarınıza dokunmak için eğilmek veya ağır bir kutuyu kaldırmak gibi agresif omurga bükülmeleri için sabahın erken saatleri en tehlikeli zamandır. Klinik veriler, akut disk fıtıklarının %90'ından fazlasının yanlış eğilme kuvvetlerinden kaynaklandığını göstermektedir. Bel sağlığınızı korumak için, uyandıktan sonra omurganızın yerçekimine alışması için bir saat izin verin. Nazik, nötr hareketler yapın ve disk içi fazla sıvı doğal olarak dışarı atılana kadar yoğun esneme hareketlerini erteleyin."
-      }
+      },
+      "citations": [
+        {
+          "title": "Diurnal changes in spinal mechanics and their clinical significance - PubMed",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/2138156/"
+        }
+      ]
     },
     {
       "id": "blog-06",
-      "category": "Visual Health",
+      "category": {
+        "en": "Visual Health",
+        "tr": "Göz Sağlığı"
+      },
       "image_url": "https://loremflickr.com/800/600/eyes,screen",
       "title": {
         "en": "Computer Vision Syndrome (CVS) and the Screen-Neck Link",
@@ -920,11 +1218,24 @@
       "content": {
         "en": "The modern digital workspace has given rise to a global epidemic of Computer Vision Syndrome (CVS), a painful condition characterized by dry eyes, blurred vision, and persistent headaches, currently affecting an astounding 74% to 75% of computer users globally. However, CVS is not strictly an isolated ocular issue—it is intimately, biomechanically linked with cervical spine degradation.\n\nWhen visual clarity drops due to screen glare, poor environmental lighting, or severe ocular muscle fatigue, the user instinctively leans forward to peer closer at the monitor. This involuntary, unconscious movement triggers \"Forward Head Posture,\" massively increasing the mechanical load on the sub-occipital and upper trapezius muscles holding the skull up. Furthermore, the constant straining of the tiny extraocular muscles reflexively tightens the upper cervical spine through neural pathways. Thus, untreated eye strain directly translates into chronic, radiating neck pain. Ergonomic interventions must therefore target visual hygiene as a primary musculoskeletal defense: optimize screen resolution, utilize natural lighting, and strictly practice the 20-20-20 rule to break the vicious cycle of visual-cervical fatigue. Protecting your eyes is an anatomical prerequisite for protecting your neck.",
         "tr": "Modern dijital çalışma alanı, kuru gözler, bulanık görme ve inatçı baş ağrıları ile karakterize edilen ve şu anda küresel olarak bilgisayar kullanıcılarının %74 ila %75'i gibi şaşırtıcı bir oranını etkileyen Bilgisayar Görüş Sendromu (CVS) küresel salgınına yol açmıştır. Ancak CVS sadece izole bir göz sorunu değildir; boyun omurgası dejenerasyonu ile yakından ve biyomekanik olarak bağlantılıdır.\n\nEkran parlaması, yetersiz çevresel aydınlatma veya şiddetli göz kası yorgunluğu nedeniyle görme netliği düştüğünde, kullanıcı monitöre daha yakından bakmak için içgüdüsel olarak öne doğru eğilir. Bu istemsiz, bilinçsiz hareket \"Öne Doğru Baş Postürü\"nü tetikleyerek kafatasını havada tutan sub-oksipital ve üst trapezius kasları üzerindeki mekanik yükü muazzam ölçüde artırır. Dahası, minik ekstraoküler (göz dışı) kasların sürekli gerilmesi, sinir yolları aracılığıyla refleks olarak üst boyun omurgasını sıkılaştırır. Bu nedenle, tedavi edilmeyen göz yorgunluğu doğrudan kronik, yayılan boyun ağrısına dönüşür. Ergonomik müdahaleler bu sebeple birincil kas-iskelet savunması olarak görsel hijyeni hedeflemelidir: Ekran çözünürlüğünü optimize edin, doğal aydınlatma kullanın ve görsel-boyun yorgunluğu kısır döngüsünü kırmak için 20-20-20 kuralını sıkı bir şekilde uygulayın. Gözlerinizi korumak, boynunuzu korumanın anatomik bir ön koşuludur."
-      }
+      },
+      "citations": [
+        {
+          "title": "COMPARATIVE ANALYSIS OF THE COMPUTER VISION SYNDROME BETWEEN THE DEVELOPED EU COUNTRIES AND REPUBLIC OF SERBIA",
+          "url": "https://scindeks-clanci.ceon.rs/data/pdf/2334-735X/2024/2334-735X2403001V.pdf"
+        },
+        {
+          "title": "examining ergonomic practices and computer vision syndrome (cvs) - International Journal of Manufacturing Economics and Management",
+          "url": "https://ijmem.ro/vol4no12024/2_Jabar_Jamaluddin.pdf"
+        }
+      ]
     },
     {
       "id": "blog-07",
-      "category": "Metabolism",
+      "category": {
+        "en": "Metabolism",
+        "tr": "Metabolizma"
+      },
       "image_url": "https://loremflickr.com/800/600/standing,desk",
       "title": {
         "en": "Metabolic Realities: Sitting vs. Standing (The Power of NEAT)",
@@ -937,11 +1248,24 @@
       "content": {
         "en": "A common debate among office workers surrounds the true health value of standing desks. Is standing actually a workout? Ergospyrometry—highly precise metabolic testing used by organizations like NASA—provides the exact numbers. While sitting, a human burns approximately 80 calories per hour. Standing slightly increases this metabolic rate to 88-100 calories per hour, whereas walking on a treadmill desk burns roughly 210 calories per hour.\n\nWhile an extra 15 calories an hour from standing won't lead to rapid weight loss, viewing this solely through the lens of calorie counting misses the profound biomechanical point. This extra energy expenditure is classified as Non-Exercise Activity Thermogenesis (NEAT). The true power of NEAT is not in burning fat, but in biological activation. Standing engages core stabilizers, fires up dormant gluteal muscles, and forces blood to circulate against gravity, fundamentally altering insulin resistance. More importantly, substituting just 2 hours of sitting with standing breaks the continuous compressive load on the lumbar spine. To maximize metabolic and spinal health without causing lower limb fatigue, experts recommend dynamic alternation—frequently shifting between sitting, standing, and brief walking, rather than remaining static in any single position.",
         "tr": "Ofis çalışanları arasındaki yaygın bir tartışma, ayakta çalışma masalarının gerçek sağlık değeri etrafında döner. Ayakta durmak gerçekten bir egzersiz midir? NASA gibi kuruluşlar tarafından kullanılan oldukça hassas metabolik test olan Ergospirometri, kesin rakamları sağlar. Otururken bir insan saatte yaklaşık 80 kalori yakar. Ayakta durmak bu metabolik hızı hafifçe artırarak saatte 88-100 kaloriye çıkarırken, yürüme bandı masasında yürümek saatte kabaca 210 kalori yaktırır.\n\nAyakta durmaktan elde edilen saatte fazladan 15 kalori hızlı kilo kaybına yol açmayacak olsa da, buna sadece kalori sayımı merceğinden bakmak derin biyomekanik gerçeği gözden kaçırmaktır. Bu ekstra enerji harcaması Egzersiz Dışı Aktivite Termojenezi (NEAT) olarak sınıflandırılır. NEAT'in gerçek gücü yağ yakmakta değil, biyolojik aktivasyondadır. Ayakta durmak merkez (core) dengeleyicilerini devreye sokar, uykuda olan kalça kaslarını ateşler ve kanı yerçekimine karşı dolaşmaya zorlayarak insülin direncini temelden değiştirir. Daha da önemlisi, sadece 2 saatlik oturmayı ayakta durmakla değiştirmek, bel omurgası üzerindeki sürekli sıkıştırıcı yükü kırar. Alt ekstremite yorgunluğuna neden olmadan metabolik ve omurga sağlığını en üst düzeye çıkarmak için uzmanlar dinamik değişimi önermektedir—herhangi bir tek pozisyonda statik kalmak yerine, oturma, ayakta durma ve kısa yürüyüşler arasında sık sık geçiş yapmak."
-      }
+      },
+      "citations": [
+        {
+          "title": "The truth behind standing desks - Harvard Health",
+          "url": "https://www.health.harvard.edu/blog/the-truth-behind-standing-desks-2016092310264"
+        },
+        {
+          "title": "Inside Calories Burned Standing Vs Sitting | Power - Clinical Trials",
+          "url": "https://www.withpower.com/guides/inside-calories-burned-standing-vs-sitting"
+        }
+      ]
     },
     {
       "id": "blog-08",
-      "category": "Behavioral Science",
+      "category": {
+        "en": "Behavioral Science",
+        "tr": "Davranış Bilimi"
+      },
       "image_url": "https://loremflickr.com/800/600/rest,recovery",
       "title": {
         "en": "Rest as Recovery: The Behavioral Science of Tissue Repair",
@@ -954,7 +1278,21 @@
       "content": {
         "en": "In modern fitness and corporate hustle cultures, taking a day off from physical activity is frequently, and unfairly, stigmatized as laziness. However, integrating sophisticated Behavioral Change Techniques (BCTs) into physical health management proves clinically that structured rest is not an absence of action, but an active, necessary physiological protocol.\n\nConnective tissues, such as fragile tendons, ligaments, and fascia, heavily require mechanical offloading to repair the cumulative micro-traumas sustained from repetitive occupational stress. Without adequate, scheduled rest, mild acute inflammation compounds into severe chronic conditions like epicondylitis (tennis elbow) and carpal tunnel syndrome. BCT frameworks emphasize \"Action Planning\" and cognitive \"Reframing\" to help sedentary workers view rest days not as a failure of discipline, but as dedicated cellular regeneration sessions. When a user intentionally steps away from stretching or ergonomic exercises for a day, the parasympathetic nervous system deeply engages, rapidly lowering systemic cortisol levels and expediting protein synthesis for tissue repair. By intentionally shedding the psychological guilt associated with rest, workers can foster a sustainable, long-term relationship with their bodies, ultimately preventing severe, irreversible musculoskeletal burnout.",
         "tr": "Modern fitness ve kurumsal koşturmaca kültürlerinde, fiziksel aktiviteye bir gün ara vermek genellikle ve haksız yere tembellik olarak damgalanır. Bununla birlikte, gelişmiş Davranış Değiştirme Tekniklerini (BCT) fiziksel sağlık yönetimine entegre etmek, planlı dinlenmenin bir eylem eksikliği değil, aktif ve gerekli bir fizyolojik protokol olduğunu klinik olarak kanıtlamaktadır.\n\nKırılgan tendonlar, bağlar ve fasyalar gibi bağ dokuları, tekrarlayan mesleki stresten kaynaklanan kümülatif mikro travmaları onarmak için mekanik olarak yükten kurtulmaya şiddetle ihtiyaç duyar. Yeterli ve planlı dinlenme olmadan hafif akut iltihaplanma birikerek epikondilit (tenisçi dirseği) ve karpal tünel sendromu gibi şiddetli kronik rahatsızlıklara dönüşür. BCT çerçeveleri, sedanter çalışanların dinlenme günlerini bir disiplin başarısızlığı olarak değil, özel hücresel yenilenme seansları olarak görmelerine yardımcı olmak için \"Eylem Planlaması\" ve bilişsel \"Yeniden Çerçeveleme\"yi vurgular. Bir kullanıcı bilinçli olarak bir günlüğüne esneme veya ergonomik egzersizlerden uzaklaştığında, parasempatik sinir sistemi derinden devreye girer, sistemik kortizol seviyelerini hızla düşürür ve doku onarımı için protein sentezini hızlandırır. Dinlenmeyle ilişkili psikolojik suçluluk duygusundan bilinçli olarak kurtulan çalışanlar, vücutlarıyla sürdürülebilir, uzun vadeli bir ilişki geliştirebilir ve nihayetinde ciddi, geri döndürülemez kas-iskelet sistemi tükenmişliğini önleyebilir."
-      }
+      },
+      "citations": [
+        {
+          "title": "Behavior change techniques in mobile applications for sedentary behavior - ResearchGate",
+          "url": "https://www.researchgate.net/publication/326299552_Behavior_change_techniques_in_mobile_applications_for_sedentary_behavior"
+        },
+        {
+          "title": "4 essential ergonomic principles for preventing carpal tunnel syndrome - Cardinus",
+          "url": "https://www.cardinus.com/us/4-ergonomics-principles-prevent-carpal-tunnel/"
+        },
+        {
+          "title": "Interventions Based on Behavior Change Techniques to Encourage Physical Activity or Decrease Sedentary Behavior in Community-Dwelling Adults Aged 50–70: Systematic Review With Intervention Component Analysis - ResearchGate",
+          "url": "https://www.researchgate.net/publication/380104691_Interventions_Based_on_Behavior_Change_Techniques_to_Encourage_Physical_Activity_or_Decrease_Sedentary_Behavior_in_Community-Dwelling_Adults_Aged_50-70_Systematic_Review_With_Intervention_Component_An"
+        }
+      ]
     }
   ]
 }

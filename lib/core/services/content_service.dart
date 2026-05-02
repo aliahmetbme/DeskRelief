@@ -10,6 +10,7 @@ class ContentService {
 
   List<MotivationModel> _motivations = [];
   Map<String, List<ErgoTipModel>> _regionalTips = {};
+  List<ErgoTipModel> _ergoInterventions = [];
   List<BlogPostModel> _blogs = [];
 
   bool _isInitialized = false;
@@ -43,6 +44,13 @@ class ContentService {
         );
       });
 
+      // Ergonomic micro-interventions parsing
+      if (data['ergonomic_micro_interventions'] != null) {
+        _ergoInterventions = (data['ergonomic_micro_interventions'] as List)
+            .map((e) => ErgoTipModel.fromJson(e))
+            .toList();
+      }
+
       // Blogs parsing
       _blogs = (data['blogs'] as List)
           .map((b) => BlogPostModel.fromJson(b))
@@ -64,8 +72,16 @@ class ContentService {
 
   List<ErgoTipModel> getTipsForUser(List<String> regionIds) {
     final List<ErgoTipModel> tips = [];
-    // Map old region IDs to new JSON keys if necessary
-    // But for now, assuming regionIds match the JSON keys (neck_cervical, etc.)
+    
+    // Always include some general ergonomic micro-interventions
+    if (_ergoInterventions.isNotEmpty) {
+      // Pick 2 random interventions for variety
+      final random = Random();
+      final indices = List.generate(_ergoInterventions.length, (i) => i)..shuffle(random);
+      tips.addAll(indices.take(2).map((i) => _ergoInterventions[i]));
+    }
+
+    // Map region IDs to JSON keys
     for (final id in regionIds) {
       // Direct match
       if (_regionalTips.containsKey(id)) {
@@ -76,7 +92,7 @@ class ContentService {
       final legacyMapping = {
         'neck': 'neck_cervical',
         'shoulder': 'shoulder_upper_back',
-        'back': 'lumbar_pelvis', // or both?
+        'back': 'lumbar_pelvis',
         'waist': 'lumbar_pelvis',
         'hip': 'knee_hip',
         'knee': 'knee_hip',
@@ -89,10 +105,15 @@ class ContentService {
         tips.addAll(_regionalTips[mappedId]!);
       }
     }
-    return tips.toSet().toList(); // Remove duplicates if multiple regionIds map to same tip list
+    return tips.toSet().toList(); // Remove duplicates
+  }
+
+  List<ErgoTipModel> getAllErgoInterventions() {
+    return _ergoInterventions;
   }
 
   List<BlogPostModel> getFeaturedBlogs() {
     return _blogs;
   }
 }
+

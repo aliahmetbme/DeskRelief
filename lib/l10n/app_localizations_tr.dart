@@ -1215,4 +1215,12 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get clinicEducation => 'Klinik Eğitim';
+
+  @override
+  String get references => 'Referanslar ve İleri Okuma';
+
+  @override
+  String readingTime(int minutes) {
+    return '• $minutes dk okuma';
+  }
 }

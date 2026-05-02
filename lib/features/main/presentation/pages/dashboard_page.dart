@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
@@ -50,8 +49,6 @@ class DashboardPage extends StatelessWidget {
                       const _ClinicalWarningSection(),
                       const SizedBox(height: 24),
                       const _DailyProgramHero(),
-                      const SizedBox(height: 24),
-                      const _ClinicalInfoCard(),
                     ],
 
                     const SizedBox(height: 32),
@@ -106,7 +103,15 @@ class _WelcomeSection extends StatelessWidget {
             Text(
               isRestDay
                   ? loc.restDayTitle
-                  : loc.welcome_user(context.watch<AuthViewModel>().currentUser?.name.split(' ').first ?? 'User'),
+                  : loc.welcome_user(
+                      context
+                              .watch<AuthViewModel>()
+                              .currentUser
+                              ?.name
+                              .split(' ')
+                              .first ??
+                          'User',
+                    ),
               textAlign: TextAlign.center,
               style: GoogleFonts.manrope(
                 fontSize: 34,
@@ -220,9 +225,15 @@ class _ProgressSection extends StatelessWidget {
     final progressValue = viewModel.progressValue;
     final remainingSessions = viewModel.remainingSessions;
 
-    final cobaltBlue = isDark ? const Color(0xFF4D94FF) : const Color(0xFF0052CC);
-    final softGreen = isDark ? const Color(0xFF1B3B2B) : const Color(0xFFDFFFD6);
-    final darkGreen = isDark ? const Color(0xFF4ADE80) : const Color(0xFF1E5631);
+    final cobaltBlue = isDark
+        ? const Color(0xFF4D94FF)
+        : const Color(0xFF0052CC);
+    final softGreen = isDark
+        ? const Color(0xFF1B3B2B)
+        : const Color(0xFFDFFFD6);
+    final darkGreen = isDark
+        ? const Color(0xFF4ADE80)
+        : const Color(0xFF1E5631);
 
     return Column(
       children: [
@@ -249,7 +260,9 @@ class _ProgressSection extends StatelessWidget {
               child: CircularProgressIndicator(
                 value: 1.0,
                 strokeWidth: 16,
-                color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.grey.withValues(alpha: 0.1),
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.05)
+                    : Colors.grey.withValues(alpha: 0.1),
               ),
             ),
             SizedBox(
@@ -316,9 +329,15 @@ class _ProgressSection extends StatelessWidget {
                 Expanded(
                   child: Text(
                     remainingSessions == 0
-                        ? _getTranslatedFeedback(context, viewModel.getFeedbackMessageKey())
+                        ? _getTranslatedFeedback(
+                            context,
+                            viewModel.getFeedbackMessageKey(),
+                          )
                         : loc.feedbackRemainingSessions(
-                            _getTranslatedFeedback(context, viewModel.getFeedbackMessageKey()),
+                            _getTranslatedFeedback(
+                              context,
+                              viewModel.getFeedbackMessageKey(),
+                            ),
                             remainingSessions,
                           ),
                     style: TextStyle(
@@ -338,12 +357,18 @@ class _ProgressSection extends StatelessWidget {
   String _getTranslatedFeedback(BuildContext context, String key) {
     final loc = AppLocalizations.of(context)!;
     switch (key) {
-      case 'feedbackStart': return loc.feedbackStart;
-      case 'feedbackStep': return loc.feedbackStep;
-      case 'feedbackHalfway': return loc.feedbackHalfway;
-      case 'feedbackAlmostDone': return loc.feedbackAlmostDone;
-      case 'feedbackDone': return loc.feedbackDone;
-      default: return key;
+      case 'feedbackStart':
+        return loc.feedbackStart;
+      case 'feedbackStep':
+        return loc.feedbackStep;
+      case 'feedbackHalfway':
+        return loc.feedbackHalfway;
+      case 'feedbackAlmostDone':
+        return loc.feedbackAlmostDone;
+      case 'feedbackDone':
+        return loc.feedbackDone;
+      default:
+        return key;
     }
   }
 }
@@ -357,9 +382,15 @@ class _ClinicalWarningSection extends StatelessWidget {
     final loc = AppLocalizations.of(context)!;
     final isDark = theme.brightness == Brightness.dark;
 
-    final warningColor = isDark ? const Color(0xFFFFCC00) : const Color(0xFF856404);
-    final warningBg = isDark ? const Color(0xFF2D2400) : const Color(0xFFFFF3CD);
-    final warningBorder = isDark ? const Color(0xFF665200) : const Color(0xFFFFEEB3);
+    final warningColor = isDark
+        ? const Color(0xFFFFCC00)
+        : const Color(0xFF856404);
+    final warningBg = isDark
+        ? const Color(0xFF2D2400)
+        : const Color(0xFFFFF3CD);
+    final warningBorder = isDark
+        ? const Color(0xFF665200)
+        : const Color(0xFFFFEEB3);
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -405,97 +436,6 @@ class _ClinicalWarningSection extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ClinicalInfoCard extends StatelessWidget {
-  const _ClinicalInfoCard();
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final primary = theme.colorScheme.primary;
-    final loc = AppLocalizations.of(context)!;
-
-    return Container(
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [primary, primary.withValues(alpha: 0.8)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(28),
-        boxShadow: [
-          BoxShadow(
-            color: primary.withValues(alpha: 0.2),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            right: -20,
-            top: -20,
-            child: Container(
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.05),
-                shape: BoxShape.circle,
-              ),
-            ),
-          ),
-          Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                  child: Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: const Icon(
-                      Icons.medical_services_rounded,
-                      color: Colors.white,
-                      size: 24,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      loc.clinicalReminderTitle,
-                      style: theme.textTheme.titleSmall?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      loc.clinicalReminderDesc,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: Colors.white.withValues(alpha: 0.9),
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
           ),
         ],
       ),
@@ -583,7 +523,10 @@ class _DailyProgramHero extends StatelessWidget {
                   ],
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.green.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(100),
@@ -607,14 +550,16 @@ class _DailyProgramHero extends StatelessWidget {
                 child: _AnatomicalCard(
                   title: 'Boyun',
                   subtitle: 'BÖLGE 1',
-                  imageUrl: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=400&auto=format&fit=crop',
+                  imageUrl:
+                      'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=400&auto=format&fit=crop',
                 ),
               ),
               const Expanded(
                 child: _AnatomicalCard(
                   title: 'Alt Sırt',
                   subtitle: 'BÖLGE 2',
-                  imageUrl: 'https://images.unsplash.com/photo-1512023241041-3c9987a8ad34?q=80&w=400&auto=format&fit=crop',
+                  imageUrl:
+                      'https://images.unsplash.com/photo-1512023241041-3c9987a8ad34?q=80&w=400&auto=format&fit=crop',
                 ),
               ),
             ],
@@ -741,7 +686,11 @@ class _StartWorkoutButtonState extends State<_StartWorkoutButton> {
               ),
             ),
             const SizedBox(width: 12),
-            const Icon(Icons.play_circle_fill_rounded, color: Colors.white, size: 28),
+            const Icon(
+              Icons.play_circle_fill_rounded,
+              color: Colors.white,
+              size: 28,
+            ),
           ],
         ),
       ),
@@ -817,15 +766,21 @@ class _NextSessionCard extends StatelessWidget {
     final theme = Theme.of(context);
     final loc = AppLocalizations.of(context)!;
     final isDark = theme.brightness == Brightness.dark;
-    final softGreen = isDark ? const Color(0xFF1B3B2B) : const Color(0xFFE8F5E9);
-    final darkGreen = isDark ? const Color(0xFF4ADE80) : const Color(0xFF1B5E20);
+    final softGreen = isDark
+        ? const Color(0xFF1B3B2B)
+        : const Color(0xFFE8F5E9);
+    final darkGreen = isDark
+        ? const Color(0xFF4ADE80)
+        : const Color(0xFF1B5E20);
 
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: softGreen,
         borderRadius: BorderRadius.circular(28),
-        border: Border.all(color: darkGreen.withValues(alpha: isDark ? 0.2 : 0.1)),
+        border: Border.all(
+          color: darkGreen.withValues(alpha: isDark ? 0.2 : 0.1),
+        ),
       ),
       child: Row(
         children: [
@@ -843,7 +798,11 @@ class _NextSessionCard extends StatelessWidget {
                   ),
               ],
             ),
-            child: Icon(Icons.calendar_today_rounded, color: darkGreen, size: 24),
+            child: Icon(
+              Icons.calendar_today_rounded,
+              color: darkGreen,
+              size: 24,
+            ),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -871,7 +830,10 @@ class _NextSessionCard extends StatelessWidget {
               ],
             ),
           ),
-          Icon(Icons.chevron_right_rounded, color: theme.colorScheme.onSurface.withValues(alpha: 0.4)),
+          Icon(
+            Icons.chevron_right_rounded,
+            color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
+          ),
         ],
       ),
     );
@@ -887,98 +849,116 @@ class _BentoContentGrid extends StatelessWidget {
     final viewModel = context.watch<DashboardViewModel>();
     final localeCode = Localizations.localeOf(context).languageCode;
     final tips = viewModel.recommendedTips;
-    final blogs = viewModel.featuredBlogs;
+    final blog = viewModel.randomFeaturedBlog;
     final loc = AppLocalizations.of(context)!;
 
     return Column(
       children: [
-        if (blogs.isNotEmpty)
+        if (blog != null)
           GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ContentDetailPage(blog: blogs.first)),
+                MaterialPageRoute(
+                  builder: (context) => ContentDetailPage(blog: blog),
+                ),
               );
             },
-            child: Container(
-              height: 220,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(32),
-                image: DecorationImage(
-                  image: NetworkImage(blogs.first.imageUrl),
-                  fit: BoxFit.cover,
-                ),
-              ),
+            child: AspectRatio(
+              aspectRatio: 16 / 9,
               child: Container(
+                width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(32),
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.transparent,
-                      Colors.black.withValues(alpha: 0.8),
-                    ],
+                  image: DecorationImage(
+                    image: NetworkImage(blog.imageUrl),
+                    fit: BoxFit.cover,
                   ),
                 ),
-                padding: const EdgeInsets.all(24),
-                alignment: Alignment.bottomLeft,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      decoration: BoxDecoration(
-                        color: theme.colorScheme.primary,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        loc.clinicEducation.toUpperCase(),
-                        style: GoogleFonts.inter(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w900,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(32),
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        Colors.black.withValues(alpha: 0.8),
+                      ],
+                    ),
+                  ),
+                  padding: const EdgeInsets.all(24),
+                  alignment: Alignment.bottomLeft,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 5,
+                        ),
+                        decoration: BoxDecoration(
+                          color: theme.colorScheme.primary,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          blog.getLocalizedCategory(localeCode).toUpperCase(),
+                          style: GoogleFonts.inter(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w900,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      blogs.first.getLocalizedTitle(localeCode),
-                      style: GoogleFonts.manrope(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w800,
-                        height: 1.2,
+                      const SizedBox(height: 10),
+                      Text(
+                        blog.getLocalizedTitle(localeCode),
+                        style: GoogleFonts.manrope(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w800,
+                          height: 1.2,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
         const SizedBox(height: 16),
-        Row(
-          children: [
-            Expanded(
-              child: _SmallBentoCard(
-                icon: Icons.lightbulb_outline_rounded,
-                title: loc.dailyTip,
-                subtitle: tips.isNotEmpty ? tips.first.getLocalizedContent(localeCode) : 'Ekranını göz hizasında tut.',
-                iconColor: Colors.amber,
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: _SmallBentoCard(
+                  icon: Icons.lightbulb_outline_rounded,
+                  title: loc.dailyTip,
+                  subtitle: tips.isNotEmpty
+                      ? tips.first.getLocalizedContent(localeCode)
+                      : (localeCode == 'tr'
+                            ? 'Ekranını göz hizasında tut.'
+                            : 'Keep your screen at eye level.'),
+                  iconColor: Colors.amber,
+                ),
               ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: _SmallBentoCard(
-                icon: Icons.auto_graph_rounded,
-                title: 'BCT',
-                subtitle: 'Küçük adımlar, büyük değişimler.',
-                iconColor: Colors.blueAccent,
+              const SizedBox(width: 12),
+              Expanded(
+                child: _SmallBentoCard(
+                  icon: Icons.auto_graph_rounded,
+                  title: viewModel.currentBct?.bctFocus ?? 'BCT',
+                  subtitle:
+                      viewModel.currentBct?.getLocalizedText(localeCode) ??
+                      (localeCode == 'tr'
+                          ? 'Küçük adımlar, büyük değişimler.'
+                          : 'Small steps, big changes.'),
+                  iconColor: Colors.blueAccent,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );
@@ -1001,50 +981,96 @@ class _SmallBentoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
-      height: 160,
-      padding: const EdgeInsets.all(20),
+      constraints: const BoxConstraints(minHeight: 160),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainerHigh,
-        borderRadius: BorderRadius.circular(28),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: iconColor.withValues(alpha: 0.1),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(icon, color: iconColor, size: 24),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: GoogleFonts.manrope(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                subtitle,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: GoogleFonts.inter(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  color: theme.colorScheme.onSurfaceVariant,
-                  height: 1.3,
-                ),
-              ),
-            ],
+        color: isDark
+            ? Color.lerp(theme.colorScheme.surface, iconColor, 0.05)
+            : Color.lerp(Colors.white, iconColor, 0.04),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(
+          color: iconColor.withValues(alpha: isDark ? 0.15 : 0.1),
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: iconColor.withValues(alpha: isDark ? 0.02 : 0.05),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
           ),
         ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {},
+          borderRadius: BorderRadius.circular(24),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Stack(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: iconColor.withValues(alpha: 0.12),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(icon, color: iconColor, size: 20),
+                    ),
+                    const SizedBox(height: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.manrope(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 14,
+                              color: theme.colorScheme.onSurface,
+                              letterSpacing: -0.2,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            subtitle,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.inter(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: theme.colorScheme.onSurfaceVariant,
+                              height: 1.4,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: Icon(
+                    Icons.chevron_right_rounded,
+                    size: 14,
+                    color: theme.colorScheme.onSurfaceVariant.withValues(
+                      alpha: 0.4,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

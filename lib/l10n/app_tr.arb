@@ -490,5 +490,14 @@
   "errorNetwork": "İnternet bağlantısı kurulamadı.",
   "readMore": "Daha Fazla Oku",
   "dailyTip": "Günün Tavsiyesi",
-  "clinicEducation": "Klinik Eğitim"
+  "clinicEducation": "Klinik Eğitim",
+  "references": "Referanslar ve İleri Okuma",
+  "readingTime": "• {minutes} dk okuma",
+  "@readingTime": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  }
 }

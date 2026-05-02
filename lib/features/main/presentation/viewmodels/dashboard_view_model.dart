@@ -45,6 +45,8 @@ class DashboardViewModel extends ChangeNotifier {
 
   // Content Service Data
   MotivationModel? get currentMotivation => _contentService.getRandomMotivation('screen_greetings');
+  MotivationModel? get currentBct => _contentService.getRandomMotivation('exercise_continuity');
+
   
   List<ErgoTipModel> get recommendedTips {
     if (_currentUser == null) return [];
@@ -53,6 +55,15 @@ class DashboardViewModel extends ChangeNotifier {
   }
 
   List<BlogPostModel> get featuredBlogs => _contentService.getFeaturedBlogs();
+
+  BlogPostModel? _featuredBlog;
+  BlogPostModel? get randomFeaturedBlog {
+    if (_featuredBlog == null && featuredBlogs.isNotEmpty) {
+      _featuredBlog = (featuredBlogs..shuffle()).first;
+    }
+    return _featuredBlog;
+  }
+
 
   void setRestDay(bool value) {
     _isRestDay = value;

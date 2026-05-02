@@ -2311,6 +2311,18 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Klinik Eğitim'**
   String get clinicEducation;
+
+  /// No description provided for @references.
+  ///
+  /// In tr, this message translates to:
+  /// **'Referanslar ve İleri Okuma'**
+  String get references;
+
+  /// No description provided for @readingTime.
+  ///
+  /// In tr, this message translates to:
+  /// **'• {minutes} dk okuma'**
+  String readingTime(int minutes);
 }
 
 class _AppLocalizationsDelegate
