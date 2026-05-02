@@ -32,8 +32,8 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
     final screenWidth = MediaQuery.of(context).size.width;
     final bottomPadding = MediaQuery.of(context).padding.bottom;
 
-    // Standard M-Tech Color: Neon/Medical Blue
-    const medicalBlue = Color.fromARGB(255, 73, 220, 253);
+    // Use secondary color for M-Tech accent
+    final accentColor = theme.colorScheme.secondary;
 
     return Container(
       width: screenWidth,
@@ -83,7 +83,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                 isDragging: _isDragging,
                 totalItems: 3,
                 isDark: isDark,
-                accentColor: medicalBlue,
+                accentColor: accentColor,
               ),
 
               // ─── Navigation Items ─────────────────────────────────────────
@@ -130,13 +130,14 @@ class _MainPillBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       height: 70,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.2),
+            color: theme.shadowColor.withValues(alpha: 0.2),
             blurRadius: 20,
             offset: const Offset(0, 5),
           ),
@@ -148,11 +149,11 @@ class _MainPillBackground extends StatelessWidget {
           filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
           child: Container(
             decoration: BoxDecoration(
-              color: (isDark ? Colors.grey.shade900 : Colors.white).withValues(
+              color: theme.colorScheme.surface.withValues(
                 alpha: 0.9,
               ),
               border: Border.all(
-                color: (isDark ? Colors.white : Colors.black).withValues(
+                color: theme.colorScheme.onSurface.withValues(
                   alpha: 0.12,
                 ),
                 width: 0.8,
@@ -184,6 +185,7 @@ class _MTechRectIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final alignmentX = isDragging 
         ? manualAlignmentX 
         : -1.0 + (currentIndex * (2.0 / (totalItems - 1)));
@@ -219,13 +221,13 @@ class _MTechRectIndicator extends StatelessWidget {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        Colors.white.withValues(alpha: 0.35),
-                        Colors.white.withValues(alpha: 0.05),
-                        Colors.black.withValues(alpha: 0.05),
+                        theme.colorScheme.onSurface.withValues(alpha: 0.15),
+                        theme.colorScheme.onSurface.withValues(alpha: 0.05),
+                        theme.shadowColor.withValues(alpha: 0.05),
                       ],
                     ),
                     border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.3),
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
                       width: 1,
                     ),
                   ),
@@ -261,7 +263,6 @@ class _NavItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final isActive = index == currentIndex;
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     return Expanded(
       child: GestureDetector(
@@ -275,12 +276,12 @@ class _NavItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                decoration: isActive && isDark
+                decoration: isActive && theme.brightness == Brightness.dark
                     ? BoxDecoration(
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.white.withValues(alpha: 0.15),
+                            color: theme.colorScheme.onSurface.withValues(alpha: 0.15),
                             blurRadius: 15,
                             spreadRadius: 2,
                           ),
@@ -289,7 +290,7 @@ class _NavItem extends StatelessWidget {
                     : null,
                 child: Icon(
                   isActive ? activeIcon : icon,
-                  color: isDark ? Colors.white : Colors.black,
+                  color: isActive ? theme.colorScheme.primary : theme.colorScheme.onSurface.withValues(alpha: 0.6),
                   size: 22,
                 ),
               ),
@@ -299,7 +300,7 @@ class _NavItem extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.w500,
-                  color: isDark ? Colors.white : Colors.black,
+                  color: isActive ? theme.colorScheme.primary : theme.colorScheme.onSurface.withValues(alpha: 0.6),
                   fontFamily: 'Inter',
                   letterSpacing: -0.2,
                 ),

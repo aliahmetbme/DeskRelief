@@ -146,7 +146,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 borderRadius: BorderRadius.circular(24),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withValues(alpha: 0.05),
+                                    color: theme.shadowColor.withValues(alpha: 0.05),
                                     blurRadius: 20,
                                     offset: const Offset(0, 10),
                                   ),
@@ -490,8 +490,9 @@ class _SignUpPageState extends State<SignUpPage> {
                                             svgAsset: 'assets/Icons/google.svg',
                                             onPressed: () =>
                                                 _handleSocialSignIn(() async {
-                                                  if (authViewModel.isLoading)
+                                                  if (authViewModel.isLoading) {
                                                     return;
+                                                  }
                                                   final loc =
                                                       AppLocalizations.of(
                                                         context,
@@ -502,11 +503,11 @@ class _SignUpPageState extends State<SignUpPage> {
                                                             loc,
                                                             isSignUp: true,
                                                           );
-                                                  if (mounted && success) {
+                                                  if (!context.mounted) return;
+
+                                                  if (success) {
                                                     authViewModel.checkClinicalStatus(context, authViewModel.currentUser!);
-                                                  } else if (mounted &&
-                                                      authViewModel
-                                                              .errorMessage !=
+                                                  } else if (authViewModel.errorMessage !=
                                                           null) {
                                                     CustomToast.show(
                                                       context,
@@ -526,8 +527,9 @@ class _SignUpPageState extends State<SignUpPage> {
                                             iconData: Icons.apple,
                                             onPressed: () =>
                                                 _handleSocialSignIn(() async {
-                                                  if (authViewModel.isLoading)
+                                                  if (authViewModel.isLoading) {
                                                     return;
+                                                  }
                                                   final loc =
                                                       AppLocalizations.of(
                                                         context,
@@ -538,11 +540,11 @@ class _SignUpPageState extends State<SignUpPage> {
                                                             loc,
                                                             isSignUp: true,
                                                           );
-                                                  if (mounted && success) {
+                                                  if (!context.mounted) return;
+
+                                                  if (success) {
                                                     authViewModel.checkClinicalStatus(context, authViewModel.currentUser!);
-                                                  } else if (mounted &&
-                                                      authViewModel
-                                                              .errorMessage !=
+                                                  } else if (authViewModel.errorMessage !=
                                                           null) {
                                                     CustomToast.show(
                                                       context,
@@ -568,8 +570,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                   if (context.canPop()) {
                                     context.pop();
                                   } else {
-                                    context.go('/signin');
-                                  }
+                                    context.go('/sign-in');
+  }
                                 },
                                 child: Text.rich(
                                   TextSpan(

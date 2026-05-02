@@ -1,5 +1,6 @@
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,7 +20,9 @@ import 'features/assessment/presentation/viewmodels/body_map_view_model.dart';
 import 'features/main/presentation/viewmodels/dashboard_view_model.dart';
 import 'features/scheduling/data/services/notification_service.dart';
 import 'features/exercise/data/services/video_cache_service.dart';
-import 'package:flutter/services.dart';
+import 'features/assessment/presentation/viewmodels/pain_intensity_view_model.dart';
+import 'features/exercise/presentation/viewmodels/daily_routine_view_model.dart';
+import 'features/scheduling/presentation/viewmodels/scheduling_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
@@ -59,8 +62,31 @@ void main() async {
           update: (context, auth, previous) =>
               previous ?? RedFlagsViewModel(authViewModel: auth),
         ),
-        ChangeNotifierProvider(create: (_) => BodyMapViewModel()),
-        ChangeNotifierProvider(create: (_) => DashboardViewModel()),
+        ChangeNotifierProxyProvider<AuthViewModel, BodyMapViewModel>(
+          create: (_) => BodyMapViewModel(),
+          update: (_, auth, previous) => (previous ?? BodyMapViewModel())
+            ..updateUser(auth.currentUser),
+        ),
+        ChangeNotifierProxyProvider<AuthViewModel, PainIntensityViewModel>(
+          create: (_) => PainIntensityViewModel(),
+          update: (_, auth, previous) => (previous ?? PainIntensityViewModel())
+            ..updateUser(auth.currentUser),
+        ),
+        ChangeNotifierProxyProvider<AuthViewModel, DashboardViewModel>(
+          create: (_) => DashboardViewModel(),
+          update: (_, auth, previous) => (previous ?? DashboardViewModel())
+            ..updateUser(auth.currentUser),
+        ),
+        ChangeNotifierProxyProvider<AuthViewModel, DailyRoutineViewModel>(
+          create: (_) => DailyRoutineViewModel(),
+          update: (_, auth, previous) => (previous ?? DailyRoutineViewModel())
+            ..updateUser(auth.currentUser),
+        ),
+        ChangeNotifierProxyProvider<AuthViewModel, SchedulingViewModel>(
+          create: (_) => SchedulingViewModel(),
+          update: (_, auth, previous) => (previous ?? SchedulingViewModel())
+            ..updateUser(auth.currentUser),
+        ),
       ],
       child: const DeskReliefApp(),
     ),

@@ -1,8 +1,10 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:deskrelief/l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 import '../../data/models/red_flag_question.dart';
 import 'package:deskrelief/features/auth/presentation/viewmodels/auth_view_model.dart';
 import 'package:deskrelief/features/auth/domain/models/user_model.dart';
+import '../widgets/assessment_result_dialog.dart';
 
 class RedFlagsViewModel extends ChangeNotifier {
   final AuthViewModel _authViewModel;
@@ -43,14 +45,22 @@ class RedFlagsViewModel extends ChangeNotifier {
   List<RedFlagQuestion> get currentStepQuestions =>
       _questions.where((q) => q.step == _currentStep).toList();
 
+  Map<int, List<RedFlagQuestion>> get questionsByCategory {
+    return {
+      1: _questions.where((q) => q.step == 1).toList(),
+      2: _questions.where((q) => q.step == 2).toList(),
+      3: _questions.where((q) => q.step == 3).toList(),
+    };
+  }
+
   bool get hasRedFlags {
     return _answers.values.any((answer) => answer == true);
   }
 
-  String getCurrentCategoryTitle(BuildContext context) {
+  String getCurrentCategoryTitleKey() {
     final questionsInStep = currentStepQuestions;
     if (questionsInStep.isNotEmpty) {
-      return questionsInStep.first.getCategoryTitle(AppLocalizations.of(context)!);
+      return questionsInStep.first.getCategoryTitleKey();
     }
     return '';
   }
@@ -60,12 +70,12 @@ class RedFlagsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void nextStep(VoidCallback onCompleted) {
+  void nextStep(BuildContext context) {
     if (_currentStep < 3) {
       _currentStep++;
       notifyListeners();
     } else {
-      submit(onCompleted);
+      submitRedFlags(context);
     }
   }
 
@@ -76,21 +86,19 @@ class RedFlagsViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> submit(VoidCallback onCompleted) async {
+  Future<void> submitRedFlags(BuildContext context) async {
     final flaggedIds = _answers.entries
         .where((e) => e.value == true)
         .map((e) => e.key.toString())
         .toList();
 
     if (flaggedIds.isNotEmpty) {
-      // Kırmızı bayrak yakalandı: Banla
       await _authViewModel.updateUser(
         isBanned: true,
         banReason: BanReason.redFlag,
         flaggedRedFlagIds: flaggedIds,
       );
     } else {
-      // Risk yok: Temizle ve ilerle
       await _authViewModel.updateUser(
         isBanned: false,
         banReason: null,
@@ -98,6 +106,63 @@ class RedFlagsViewModel extends ChangeNotifier {
       );
     }
 
-    onCompleted();
+    if (context.mounted) {
+      _showResultDialog(context);
+    }
+  }
+
+  void _showResultDialog(BuildContext context) {
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierColor: Colors.black.withValues(alpha: 0.3),
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+          child: AssessmentResultDialog(
+            hasRedFlags: hasRedFlags,
+            onActionPressed: () async {
+              if (hasRedFlags) {
+                context.pop();
+                context.go('/sign-in');
+              } else {
+                context.pop();
+                await _authViewModel.updateProgress(hasCompletedRedFlags: true);
+                if (context.mounted) {
+                  context.go('/body-map');
+                }
+              }
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> submitExclusionCriteria(BuildContext context) async {
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierColor: Colors.black.withValues(alpha: 0.3),
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+          child: AssessmentResultDialog(
+            hasRedFlags: hasRedFlags,
+            onActionPressed: () async {
+              if (hasRedFlags) {
+                await _authViewModel.applyManualBan(BanReason.redFlag);
+                if (context.mounted) {
+                  context.pop();
+                }
+              } else {
+                context.pop();
+                context.pop();
+              }
+            },
+          ),
+        );
+      },
+    );
   }
 }

@@ -23,6 +23,10 @@ class ClinicalAlertDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final drColors = theme.extension<DeskReliefColors>()!;
+
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(24),
@@ -32,15 +36,15 @@ class ClinicalAlertDialog extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
+          color: theme.cardTheme.color ?? theme.cardColor,
           borderRadius: BorderRadius.circular(24),
           border: Border.all(
-            color: isRedFlag ? AppColors.error.withOpacity(0.1) : Colors.transparent,
+            color: isRedFlag ? colorScheme.error.withValues(alpha: 0.1) : theme.dividerColor.withValues(alpha: 0.05),
             width: 1,
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: theme.shadowColor.withValues(alpha: 0.05),
               blurRadius: 20,
               offset: const Offset(0, 10),
             ),
@@ -52,12 +56,12 @@ class ClinicalAlertDialog extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: isRedFlag ? AppColors.alertBackground : AppColors.primary.withOpacity(0.1),
+                color: isRedFlag ? drColors.alertBackground : colorScheme.primary.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 isRedFlag ? Icons.warning_rounded : Icons.info_rounded,
-                color: isRedFlag ? AppColors.error : AppColors.primary,
+                color: isRedFlag ? colorScheme.error : colorScheme.primary,
                 size: 32,
               ),
             ),
@@ -65,19 +69,15 @@ class ClinicalAlertDialog extends StatelessWidget {
             Text(
               title,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 20,
+              style: theme.textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.bold,
-                fontFamily: 'Manrope',
               ),
             ),
             const SizedBox(height: 16),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 15,
-                color: AppColors.textSecondary,
+              style: theme.textTheme.bodyMedium?.copyWith(
                 height: 1.5,
               ),
             ),
@@ -91,13 +91,13 @@ class ClinicalAlertDialog extends StatelessWidget {
                       style: TextButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(16),
                         ),
                       ),
                       child: Text(
                         secondaryButtonText!,
-                        style: const TextStyle(
-                          color: AppColors.textSecondary,
+                        style: TextStyle(
+                          color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -109,12 +109,12 @@ class ClinicalAlertDialog extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: onPrimaryPressed,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: isRedFlag ? AppColors.error : AppColors.primary,
-                      foregroundColor: Colors.white,
+                      backgroundColor: isRedFlag ? colorScheme.error : colorScheme.primary,
+                      foregroundColor: isRedFlag ? colorScheme.onError : colorScheme.onPrimary,
                       elevation: 0,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(16),
                       ),
                     ),
                     child: Text(

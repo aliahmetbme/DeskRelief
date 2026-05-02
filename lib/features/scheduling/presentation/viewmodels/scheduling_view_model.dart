@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:deskrelief/features/auth/domain/models/user_model.dart';
 
 /// Kullanıcının seçebileceği bildirim öncesi süre seçenekleri.
 class NotificationOffset {
@@ -8,30 +9,51 @@ class NotificationOffset {
 }
 
 class SchedulingViewModel extends ChangeNotifier {
-  final List<String> focusRegions;
+  List<String> _focusRegions = [];
+  List<String> get focusRegions => _focusRegions;
 
-  SchedulingViewModel({required this.focusRegions});
+  SchedulingViewModel({List<String>? initialRegions}) : _focusRegions = initialRegions ?? [];
+
+  void setFocusRegions(List<String> regions) {
+    _focusRegions = regions;
+    notifyListeners();
+  }
+
+  void updateUser(UserModel? user) {
+    if (user != null) {
+      if (_focusRegions.isEmpty && user.painRegions.isNotEmpty) {
+        _focusRegions = user.painRegions.map((e) => e.regionId).toList();
+        notifyListeners();
+      }
+    } else {
+      _focusRegions = [];
+      _selectedDays.clear();
+      _workoutTimes.clear();
+      _notificationOffsets.clear();
+      notifyListeners();
+    }
+  }
 
   /// Sabit preset listesi — kullanıcı bunlar dışında değer giremez.
   static const List<NotificationOffset> notificationOffsets = [
-    NotificationOffset(minutes: 15, label: '15 dk önce'),
-    NotificationOffset(minutes: 30, label: '30 dk önce'),
-    NotificationOffset(minutes: 60, label: '1 saat önce'),
-    NotificationOffset(minutes: 90, label: '1.5 saat önce'),
-    NotificationOffset(minutes: 120, label: '2 saat önce'),
+    NotificationOffset(minutes: 15, label: 'offset_15m'),
+    NotificationOffset(minutes: 30, label: 'offset_30m'),
+    NotificationOffset(minutes: 60, label: 'offset_1h'),
+    NotificationOffset(minutes: 90, label: 'offset_1_5h'),
+    NotificationOffset(minutes: 120, label: 'offset_2h'),
   ];
 
   /// Varsayılan offset: 60 dakika (1 saat önce)
   static const int _defaultOffsetMinutes = 60;
 
   final List<String> weekDays = [
-    'Pazartesi',
-    'Salı',
-    'Çarşamba',
-    'Perşembe',
-    'Cuma',
-    'Cumartesi',
-    'Pazar',
+    'monday',
+    'tuesday',
+    'wednesday',
+    'thursday',
+    'friday',
+    'saturday',
+    'sunday',
   ];
 
   final List<String> _selectedDays = [];
@@ -64,15 +86,11 @@ class SchedulingViewModel extends ChangeNotifier {
     }
   }
 
-  /// UI'da gösterilecek dinamik klinik talimat metni
-  String get instructionText {
-    if (focusRegions.isEmpty) return 'Lütfen çalışma günlerinizi belirleyin.';
-    
-    if (focusRegions.length == 1) {
-      return 'Odak bölgeniz için haftada 2 veya 3 gün belirleyin.';
-    } else {
-      return 'Belirlediğiniz ${focusRegions.length} bölge için sürdürülebilir bir program adına haftada tam 4 gün belirleyin.';
-    }
+  /// UI'da gösterilecek dinamik klinik talimat metni anahtarı
+  String get instructionKey {
+    if (focusRegions.isEmpty) return 'schedulingInstructionEmpty';
+    if (focusRegions.length == 1) return 'schedulingInstructionSingle';
+    return 'schedulingInstructionMulti';
   }
 
   TimeOfDay timeForDay(String day) =>
@@ -92,15 +110,15 @@ class SchedulingViewModel extends ChangeNotifier {
     return TimeOfDay(hour: notifMins ~/ 60, minute: notifMins % 60);
   }
 
-  /// Seçilen offset'in label'ını döner (örn. "1 saat önce").
-  String notificationOffsetLabelForDay(String day) {
+  /// Seçilen offset'in label anahtarını döner.
+  String notificationOffsetKeyForDay(String day) {
     final offset = notificationOffsetForDay(day);
     return notificationOffsets
         .firstWhere(
           (o) => o.minutes == offset,
           orElse: () => const NotificationOffset(
             minutes: _defaultOffsetMinutes,
-            label: '1 saat önce',
+            label: 'offset_1h',
           ),
         )
         .label;
@@ -161,7 +179,7 @@ class SchedulingViewModel extends ChangeNotifier {
         'Gün: $day — '
         'Antrenman: ${workout.hour.toString().padLeft(2, '0')}:${workout.minute.toString().padLeft(2, '0')} — '
         'Bildirim: ${notif.hour.toString().padLeft(2, '0')}:${notif.minute.toString().padLeft(2, '0')} '
-        '(${notificationOffsetLabelForDay(day)})',
+        '(${notificationOffsetKeyForDay(day)})',
       );
     }
 

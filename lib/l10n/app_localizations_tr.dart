@@ -26,6 +26,11 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String welcome_user(String name) {
+    return 'Hoş Geldin, $name';
+  }
+
+  @override
   String get feedbackStart =>
       'Güne başlamak için harika bir an! İlk seansını tamamla.';
 
@@ -372,7 +377,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Kas liflerinizin kendini onarması ve postür gelişiminin kalıcı olması için antrenmanlar arasında en az 24 saat dinlenme bırakılması önerilir.';
 
   @override
-  String get daySelectionTitle => 'Day Selection';
+  String get daySelectionTitle => 'Gün Seçimi';
 
   @override
   String maxDaysError(int max) {
@@ -381,6 +386,24 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get timingDetailsTitle => 'Zamanlama Detayları';
+
+  @override
+  String get save => 'Kaydet';
+
+  @override
+  String get confirm => 'Onayla';
+
+  @override
+  String get back => 'Arka';
+
+  @override
+  String get finish => 'Bitir';
+
+  @override
+  String get error_generic => 'Bir hata oluştu';
+
+  @override
+  String get and_conjunction => 've';
 
   @override
   String get cancel => 'İptal';
@@ -462,9 +485,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get front => 'Ön';
 
   @override
-  String get back => 'Arka';
-
-  @override
   String get selectedRegionsTitle => 'Seçilen Bölgeler';
 
   @override
@@ -500,6 +520,30 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get regionAnkleLeft => 'Sol Ayak Bileği';
+
+  @override
+  String get leftShoulder => 'Sol Omuz';
+
+  @override
+  String get rightShoulder => 'Sağ Omuz';
+
+  @override
+  String get leftArm => 'Sol Kol';
+
+  @override
+  String get rightArm => 'Sağ Kol';
+
+  @override
+  String get leftKnee => 'Sol Diz';
+
+  @override
+  String get rightKnee => 'Sağ Diz';
+
+  @override
+  String get leftAnkle => 'Sol Ayak Bileği';
+
+  @override
+  String get rightAnkle => 'Sağ Ayak Bileği';
 
   @override
   String get noRegionSelected => 'Seçili bölge bulunamadı.';
@@ -804,19 +848,18 @@ class AppLocalizationsTr extends AppLocalizations {
       'Modern ofis yaşam tarzı genellikle uzun süreli oturmaya neden olur, bu da boyun, sırt ve omuz ağrılarına yol açabilir.';
 
   @override
-  String get onboardingTitle2 => 'Meet DeskRelief, Dijital Çözümünüz';
+  String get onboardingTitle2 => 'Meet DeskRelief, Your Digital Solution';
 
   @override
   String get onboardingDesc2 =>
-      'DeskRelief, oturma aralarını bölmek ve ağrıyı en aza indirmek için tasarlanmış, uzmanlarca hazırlanmış kişiselleştirilmiş egzersiz protokolleri sunar.';
+      'DeskRelief offers expert-curated, personalized exercise protocols designed to interrupt sitting intervals and minimize pain.';
 
   @override
-  String get onboardingTitle3 =>
-      'Kas-İskelet Sağlığınızın Kontrolünü Elinize Alın';
+  String get onboardingTitle3 => 'Take Control of Your Musculoskeletal Health';
 
   @override
   String get onboardingDesc3 =>
-      'Ağrısız bir hayata doğru kişiselleştirilmiş yolculuğunuza başlayın. Kolay ve klinik tabanlıdır.';
+      'Start your personalized journey towards a pain-free life. It\'s easy and clinically-based.';
 
   @override
   String get next => 'İleri';
@@ -1088,4 +1131,63 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get toastSafetyWarning =>
       'Güvenliğiniz bizim için önemli. Lütfen hekim onayı olmadan egzersiz yapmayınız.';
+
+  @override
+  String get schedulingInstructionEmpty =>
+      'Lütfen çalışma günlerinizi belirleyin.';
+
+  @override
+  String get schedulingInstructionSingle =>
+      'Odak bölgeniz için haftada 2 veya 3 gün belirleyin.';
+
+  @override
+  String schedulingInstructionMulti(Object count) {
+    return 'Belirlediğiniz $count bölge için sürdürülebilir bir program adına haftada tam 4 gün belirleyin.';
+  }
+
+  @override
+  String get monday => 'Pazartesi';
+
+  @override
+  String get tuesday => 'Salı';
+
+  @override
+  String get wednesday => 'Çarşamba';
+
+  @override
+  String get thursday => 'Perşembe';
+
+  @override
+  String get friday => 'Cuma';
+
+  @override
+  String get saturday => 'Cumartesi';
+
+  @override
+  String get sunday => 'Pazar';
+
+  @override
+  String get offset_15m => '15 dk önce';
+
+  @override
+  String get offset_30m => '30 dk önce';
+
+  @override
+  String get offset_1h => '1 saat önce';
+
+  @override
+  String get offset_1_5h => '1.5 saat önce';
+
+  @override
+  String get offset_2h => '2 saat önce';
+
+  @override
+  String get notification => 'Bildirim';
+
+  @override
+  String get notificationTimeTitle => 'Bildirim Zamanı';
+
+  @override
+  String get notificationTimeDesc =>
+      'Antrenman başlamadan kaç dakika önce hatırlatılsın?';
 }

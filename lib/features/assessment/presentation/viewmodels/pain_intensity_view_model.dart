@@ -1,6 +1,9 @@
-import 'package:flutter/foundation.dart';
-import 'package:deskrelief/l10n/app_localizations.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../exercise/domain/models/exercise_model.dart';
+import '../../../auth/presentation/viewmodels/auth_view_model.dart';
+import '../../../auth/domain/models/user_model.dart';
+import '../../../../core/theme/app_colors.dart';
 
 /// Ağrı bölgelerinin özelliklerini ve klinik önceliklerini temsil eden sınıf.
 class PainRegionInfo {
@@ -52,10 +55,49 @@ class PainIntensityViewModel extends ChangeNotifier {
   int _currentIndex = 0;
   final Map<String, double> _painValues = {};
 
-  PainIntensityViewModel({required List<String> selectedRegions})
-    : _selectedRegions = selectedRegions {
+  PainIntensityViewModel({List<String>? selectedRegions})
+      : _selectedRegions = selectedRegions ?? [] {
     for (var regionId in _selectedRegions) {
       _painValues[regionId] = 5.0;
+    }
+  }
+
+  void setRegions(List<String> regions) {
+    if (regions.isNotEmpty) {
+      _selectedRegions.clear();
+      _selectedRegions.addAll(regions);
+      for (var regionId in _selectedRegions) {
+        if (!_painValues.containsKey(regionId)) {
+          _painValues[regionId] = 5.0;
+        }
+      }
+      notifyListeners();
+    }
+  }
+
+  String? _currentUid;
+
+  void updateUser(UserModel? user) {
+    if (user != null) {
+      if (_currentUid != user.id) {
+        _currentUid = user.id;
+        
+        // Eğer seçili bölge yoksa ama user'da varsa otomatik doldur
+        if (_selectedRegions.isEmpty && user.painRegions.isNotEmpty) {
+          _selectedRegions.clear();
+          _selectedRegions.addAll(user.painRegions.map((e) => e.regionId));
+          for (var regionId in _selectedRegions) {
+            _painValues[regionId] = 5.0;
+          }
+        }
+        notifyListeners();
+      }
+    } else {
+      _currentUid = null;
+      _selectedRegions.clear();
+      _painValues.clear();
+      _currentIndex = 0;
+      notifyListeners();
     }
   }
 
@@ -131,27 +173,62 @@ class PainIntensityViewModel extends ChangeNotifier {
 
   void finishAssessment() {}
 
-  String getPainLevelDescription(AppLocalizations loc) {
+  String getPainLevelDescriptionKey() {
     final val = currentPainValue.round();
-    if (val <= 2) return loc.painLevelLight;
-    if (val <= 4) return loc.painLevelMild;
-    if (val <= 6) return loc.painLevelModerate;
-    if (val <= 8) return loc.painLevelSevere;
-    return loc.painLevelVerySevere;
+    if (val <= 2) return 'painLevelLight';
+    if (val <= 4) return 'painLevelMild';
+    if (val <= 6) return 'painLevelModerate';
+    if (val <= 8) return 'painLevelSevere';
+    return 'painLevelVerySevere';
   }
 
-  String getPainLevelAnalysis(AppLocalizations loc) {
+  String getPainLevelAnalysisKey() {
     final val = currentPainValue.round();
-    if (val <= 2) {
-      return loc.painAnalysisLight(val);
-    } else if (val <= 4) {
-      return loc.painAnalysisMild(val);
-    } else if (val <= 6) {
-      return loc.painAnalysisModerate(val);
-    } else if (val <= 8) {
-      return loc.painAnalysisSevere(val);
-    } else {
-      return loc.painAnalysisVerySevere(val);
+    if (val <= 2) return 'painAnalysisLight';
+    if (val <= 4) return 'painAnalysisMild';
+    if (val <= 6) return 'painAnalysisModerate';
+    if (val <= 8) return 'painAnalysisSevere';
+    return 'painAnalysisVerySevere';
+  }
+
+  Color getPainColor(BuildContext context, double val) {
+    final theme = Theme.of(context);
+    final drColors = theme.extension<DeskReliefColors>()!;
+    
+    if (val <= 3) return drColors.success ?? Colors.green;
+    if (val <= 6) return drColors.warning ?? Colors.orange;
+    return drColors.error ?? theme.colorScheme.error;
+  }
+
+  String getRegionLocalizationKey(String id) {
+    switch (id) {
+      case 'neck': return 'regionNeck';
+      case 'leftShoulder': return 'leftShoulder';
+      case 'rightShoulder': return 'rightShoulder';
+      case 'upperBack': return 'regionUpperBack';
+      case 'lowerBack': return 'regionLowerBack';
+      case 'hip': return 'regionHipPelvis';
+      case 'leftArm': return 'leftArm';
+      case 'rightArm': return 'rightArm';
+      case 'leftKnee': return 'leftKnee';
+      case 'rightKnee': return 'rightKnee';
+      case 'leftAnkle': return 'leftAnkle';
+      case 'rightAnkle': return 'rightAnkle';
+      default: return id;
+    }
+  }
+
+  Future<void> submitPainScores(BuildContext context, AuthViewModel authVM, List<String> focusRegions) async {
+    await authVM.updateProgress(hasCompletedPainScore: true);
+    if (context.mounted) {
+      context.push('/scheduling', extra: focusRegions);
+    }
+  }
+
+  Future<void> submitMedicalBlock(BuildContext context, AuthViewModel authVM) async {
+    await authVM.updateProgress(isClearedForExercise: false);
+    if (context.mounted) {
+      context.go('/');
     }
   }
 }

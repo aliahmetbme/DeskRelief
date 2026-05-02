@@ -6,7 +6,6 @@ import '../../domain/models/user_model.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/widgets/clinical_alert_dialog.dart';
 import '../../../../core/widgets/custom_toast.dart';
-import '../../../../core/theme/app_colors.dart';
 import 'package:go_router/go_router.dart';
 
 class AuthViewModel extends ChangeNotifier {
@@ -134,7 +133,7 @@ class AuthViewModel extends ChangeNotifier {
             await signOut();
             if (context.mounted) {
               Navigator.pop(context);
-              GoRouter.of(context).go('/signin');
+              GoRouter.of(context).go('/sign-in');
             }
           },
         ),
@@ -181,7 +180,7 @@ class AuthViewModel extends ChangeNotifier {
             await signOut();
             if (context.mounted) {
               Navigator.pop(context);
-              GoRouter.of(context).go('/signin');
+              GoRouter.of(context).go('/sign-in');
             }
           },
         ),

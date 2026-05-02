@@ -1,7 +1,7 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/widgets/app_back_button.dart';
 import '../viewmodels/daily_routine_view_model.dart';
@@ -15,6 +15,7 @@ class DailyRoutinePage extends StatelessWidget {
     final viewModel = context.watch<DailyRoutineViewModel>();
     final loc = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
+    final drColors = theme.extension<DeskReliefColors>()!;
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -59,7 +60,7 @@ class DailyRoutinePage extends StatelessWidget {
                   _InfoChip(
                     icon: Icons.bolt_rounded,
                     label: loc.intensityMedium,
-                    color: Colors.orange,
+                    color: drColors.warning ?? Colors.orange,
                   ),
                 ],
               ),
@@ -119,6 +120,7 @@ class DailyRoutinePage extends StatelessWidget {
   List<Widget> _buildExerciseList(BuildContext context, DailyRoutineViewModel viewModel) {
     final loc = AppLocalizations.of(context)!;
     final List<Widget> widgets = [];
+    final groupedExercises = viewModel.exercisesByPhase;
 
     final phases = [
       LegacyExercisePhase.mobilization,
@@ -128,7 +130,7 @@ class DailyRoutinePage extends StatelessWidget {
     ];
 
     for (var phase in phases) {
-      final phaseExercises = viewModel.exercises.where((e) => e.phase == phase).toList();
+      final phaseExercises = groupedExercises[phase] ?? [];
       if (phaseExercises.isEmpty) continue;
 
       widgets.add(Padding(
@@ -202,12 +204,11 @@ class _InfoChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.grey.withValues(alpha: 0.05),
+        color: theme.colorScheme.onSurface.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(100),
         border: Border.all(
           color: theme.dividerColor.withValues(alpha: 0.05),
@@ -316,7 +317,6 @@ class _ExerciseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
     final loc = AppLocalizations.of(context)!;
 
     return GestureDetector(
@@ -328,7 +328,7 @@ class _ExerciseCard extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
-          color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.white,
+          color: theme.cardTheme.color,
           borderRadius: BorderRadius.circular(24),
           border: Border.all(
             color: exercise.isLocked
@@ -339,7 +339,7 @@ class _ExerciseCard extends StatelessWidget {
           boxShadow: [
             if (!exercise.isLocked)
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.04),
+                color: theme.shadowColor.withValues(alpha: 0.04),
                 blurRadius: 20,
                 offset: const Offset(0, 4),
               ),
@@ -485,14 +485,13 @@ class _Tag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     Color bgColor = theme.colorScheme.surfaceContainerHigh;
     Color textColor = theme.colorScheme.onSurfaceVariant;
 
     if (label == 'Mobilite' || label == 'Mobility') {
-      bgColor = Colors.blue.withValues(alpha: 0.1);
-      textColor = isDark ? Colors.blue.shade300 : Colors.blue.shade700;
+      bgColor = theme.colorScheme.primary.withValues(alpha: 0.1);
+      textColor = theme.colorScheme.primary;
     }
 
     return Container(

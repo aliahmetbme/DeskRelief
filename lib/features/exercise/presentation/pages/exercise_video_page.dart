@@ -1,21 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:video_player/video_player.dart';
-import '../../data/services/video_cache_service.dart';
+import 'package:provider/provider.dart';
+import '../viewmodels/exercise_video_view_model.dart';
 import '../../../../l10n/app_localizations.dart';
 
-class ExerciseVideoPage extends StatefulWidget {
+class ExerciseVideoPage extends StatelessWidget {
   final String videoUrl;
 
   const ExerciseVideoPage({super.key, required this.videoUrl});
 
   @override
-  State<ExerciseVideoPage> createState() => _ExerciseVideoPageState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => ExerciseVideoViewModel(videoUrl: videoUrl),
+      child: const _ExerciseVideoView(),
+    );
+  }
 }
 
-class _ExerciseVideoPageState extends State<ExerciseVideoPage> {
+class _ExerciseVideoView extends StatefulWidget {
+  const _ExerciseVideoView();
+
+  @override
+  State<_ExerciseVideoView> createState() => _ExerciseVideoViewState();
+}
+
+class _ExerciseVideoViewState extends State<_ExerciseVideoView> {
   late FlickManager flickManager;
-  final VideoCacheService _cacheService = VideoCacheService();
   bool _hasError = false;
 
   @override
@@ -29,7 +41,8 @@ class _ExerciseVideoPageState extends State<ExerciseVideoPage> {
       _hasError = false;
     });
 
-    final proxyUrl = _cacheService.getCachedUrl(widget.videoUrl);
+    final viewModel = context.read<ExerciseVideoViewModel>();
+    final proxyUrl = viewModel.cachedVideoUrl;
     
     flickManager = FlickManager(
       videoPlayerController: VideoPlayerController.networkUrl(

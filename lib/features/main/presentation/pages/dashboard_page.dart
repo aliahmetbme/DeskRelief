@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:deskrelief/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/dashboard_view_model.dart';
+import 'package:deskrelief/features/auth/presentation/viewmodels/auth_view_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -31,7 +32,7 @@ class DashboardPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             sliver: Consumer<DashboardViewModel>(
               builder: (context, viewModel, child) {
-                final isRestDay = false; //viewModel.isRestDay;
+                final isRestDay = viewModel.isRestDay;
 
                 return SliverList(
                   delegate: SliverChildListDelegate([
@@ -124,7 +125,7 @@ class _WelcomeSection extends StatelessWidget {
             Text(
               isRestDay
                   ? loc.restDayTitle
-                  : loc.greetingKeepGoing('Can Yılmaz'),
+                  : loc.welcome_user(context.watch<AuthViewModel>().currentUser?.name.split(' ').first ?? 'User'),
               textAlign: TextAlign.center,
               style: GoogleFonts.manrope(
                 fontSize: 34,
@@ -212,27 +213,15 @@ class _ProgressSection extends StatelessWidget {
   final bool isRestDay;
   const _ProgressSection({required this.isRestDay});
 
-  // Logic to determine feedback message based on progress
-  String _getFeedbackMessage(BuildContext context, double progress) {
-    final loc = AppLocalizations.of(context)!;
-    if (progress == 0) return loc.feedbackStart;
-    if (progress < 0.3) return loc.feedbackStep;
-    if (progress < 0.6) return loc.feedbackHalfway;
-    if (progress < 1.0) return loc.feedbackAlmostDone;
-    return loc.feedbackDone;
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final loc = AppLocalizations.of(context)!;
+    final viewModel = context.watch<DashboardViewModel>();
 
-    // In a real app, these would come from a ViewModel
-    const double progressValue = 0.8;
-    const int totalSessions = 5;
-    final int completedSessions = (progressValue * totalSessions).toInt();
-    final int remainingSessions = totalSessions - completedSessions;
+    final progressValue = viewModel.progressValue;
+    final remainingSessions = viewModel.remainingSessions;
 
     final cobaltBlue = isDark
         ? const Color(0xFF4D94FF)
@@ -343,9 +332,9 @@ class _ProgressSection extends StatelessWidget {
                 Expanded(
                   child: Text(
                     remainingSessions == 0
-                        ? _getFeedbackMessage(context, progressValue)
+                        ? _getTranslatedFeedback(context, viewModel.getFeedbackMessageKey())
                         : loc.feedbackRemainingSessions(
-                            _getFeedbackMessage(context, progressValue),
+                            _getTranslatedFeedback(context, viewModel.getFeedbackMessageKey()),
                             remainingSessions,
                           ),
                     style: TextStyle(
@@ -360,6 +349,18 @@ class _ProgressSection extends StatelessWidget {
           ),
       ],
     );
+  }
+
+  String _getTranslatedFeedback(BuildContext context, String key) {
+    final loc = AppLocalizations.of(context)!;
+    switch (key) {
+      case 'feedbackStart': return loc.feedbackStart;
+      case 'feedbackStep': return loc.feedbackStep;
+      case 'feedbackHalfway': return loc.feedbackHalfway;
+      case 'feedbackAlmostDone': return loc.feedbackAlmostDone;
+      case 'feedbackDone': return loc.feedbackDone;
+      default: return key;
+    }
   }
 }
 

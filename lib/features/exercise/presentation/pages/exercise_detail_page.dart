@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:video_player/video_player.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/app_back_button.dart';
 import '../../../../core/widgets/custom_primary_button.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/models/exercise_model.dart';
 import '../viewmodels/exercise_detail_view_model.dart';
-import '../../data/services/video_cache_service.dart';
 
 class ExerciseDetailPage extends StatelessWidget {
   final ExerciseItem exercise;
@@ -33,7 +33,6 @@ class _ExerciseDetailView extends StatefulWidget {
 
 class _ExerciseDetailViewState extends State<_ExerciseDetailView> {
   FlickManager? _flickManager;
-  final VideoCacheService _cacheService = VideoCacheService();
 
   @override
   void initState() {
@@ -42,9 +41,10 @@ class _ExerciseDetailViewState extends State<_ExerciseDetailView> {
   }
 
   void _initializeVideo() {
-    final exercise = context.read<ExerciseDetailViewModel>().exercise;
+    final viewModel = context.read<ExerciseDetailViewModel>();
+    final exercise = viewModel.exercise;
     if (exercise.videoUrl.isNotEmpty) {
-      final proxyUrl = _cacheService.getCachedUrl(exercise.videoUrl);
+      final proxyUrl = viewModel.cachedVideoUrl;
       _flickManager = FlickManager(
         videoPlayerController: VideoPlayerController.networkUrl(
           Uri.parse(proxyUrl),
@@ -182,7 +182,7 @@ class _ExerciseDetailViewState extends State<_ExerciseDetailView> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: theme.brightness == Brightness.dark ? 0.3 : 0.08),
+            color: theme.shadowColor.withValues(alpha: theme.brightness == Brightness.dark ? 0.3 : 0.08),
             blurRadius: 30,
             offset: const Offset(0, 15),
           ),
@@ -218,10 +218,11 @@ class _ExerciseDetailViewState extends State<_ExerciseDetailView> {
   }
 
   Widget _buildWarningCard(ExerciseItem exercise, ThemeData theme, AppLocalizations loc, bool isDark) {
-    final bgColor = isDark ? const Color(0xFF2C1414) : const Color(0xFFFEF2F2);
-    final borderColor = isDark ? const Color(0xFF4C1D1D) : const Color(0xFFFECACA).withValues(alpha: 0.5);
-    final iconColor = isDark ? const Color(0xFFEF4444) : const Color(0xFFB91C1C);
-    final textColor = isDark ? const Color(0xFFFECACA) : const Color(0xFF7F1D1D);
+    final drColors = theme.extension<DeskReliefColors>()!;
+    final bgColor = drColors.alertBackground;
+    final borderColor = drColors.alertBorder;
+    final iconColor = drColors.error;
+    final textColor = drColors.alertText;
 
     return Container(
       width: double.infinity,
@@ -229,7 +230,7 @@ class _ExerciseDetailViewState extends State<_ExerciseDetailView> {
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: borderColor),
+        border: Border.all(color: borderColor ?? Colors.transparent),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -291,7 +292,7 @@ class _ExerciseDetailViewState extends State<_ExerciseDetailView> {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w800,
-            color: isDark ? Colors.white : const Color(0xFF1E293B),
+            color: theme.colorScheme.onSurface,
             fontFamily: 'Manrope',
           ),
         ),
@@ -301,13 +302,13 @@ class _ExerciseDetailViewState extends State<_ExerciseDetailView> {
             margin: const EdgeInsets.only(bottom: 12),
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: isDark ? theme.colorScheme.surface : Colors.white,
+              color: theme.cardTheme.color,
               borderRadius: BorderRadius.circular(20),
-              border: isDark ? Border.all(color: Colors.white.withValues(alpha: 0.1)) : null,
+              border: Border.all(color: theme.dividerColor.withValues(alpha: 0.1)),
               boxShadow: [
                 if (!isDark)
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.03),
+                    color: theme.shadowColor.withValues(alpha: 0.03),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),
@@ -331,7 +332,7 @@ class _ExerciseDetailViewState extends State<_ExerciseDetailView> {
                   child: Text(
                     exercise.instructions[index],
                     style: TextStyle(
-                      color: isDark ? Colors.white70 : const Color(0xFF475569),
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.8),
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                       height: 1.5,
@@ -348,20 +349,22 @@ class _ExerciseDetailViewState extends State<_ExerciseDetailView> {
   }
 
   Widget _buildBentoSection(ExerciseItem exercise, ThemeData theme, AppLocalizations loc, bool isDark) {
+    final drColors = theme.extension<DeskReliefColors>()!;
+    
     // Green (Tips)
-    final tipsBg = isDark ? const Color(0xFF062016) : const Color(0xFFF0FDF4);
-    final tipsBorder = isDark ? const Color(0xFF064E3B).withValues(alpha: 0.5) : const Color(0xFFBBF7D0).withValues(alpha: 0.5);
-    final tipsIcon = isDark ? const Color(0xFF34D399) : const Color(0xFF15803D);
-    final tipsTitle = isDark ? const Color(0xFF34D399) : const Color(0xFF15803D);
-    final tipsText = isDark ? const Color(0xFFA7F3D0) : const Color(0xFF166534);
+    final tipsBg = isDark ? drColors.success?.withValues(alpha: 0.1) : drColors.success?.withValues(alpha: 0.08);
+    final tipsBorder = drColors.success?.withValues(alpha: 0.2);
+    final tipsIcon = drColors.success;
+    final tipsTitle = drColors.success;
+    final tipsText = isDark ? drColors.success?.withValues(alpha: 0.8) : drColors.success?.withValues(alpha: 0.9);
 
     // Blue (Focus)
-    final focusBg = isDark ? const Color(0xFF172554) : const Color(0xFFEFF6FF);
-    final focusBorder = isDark ? const Color(0xFF1E40AF).withValues(alpha: 0.5) : const Color(0xFFBFDBFE).withValues(alpha: 0.5);
-    final focusIcon = isDark ? const Color(0xFF60A5FA) : const Color(0xFF1D4ED8);
-    final focusTitle = isDark ? const Color(0xFF60A5FA) : const Color(0xFF1D4ED8);
-    final focusText = isDark ? Colors.white : const Color(0xFF1E293B);
-    final focusSubtext = isDark ? Colors.white70 : const Color(0xFF475569);
+    final focusBg = theme.colorScheme.primary.withValues(alpha: 0.08);
+    final focusBorder = theme.colorScheme.primary.withValues(alpha: 0.15);
+    final focusIcon = theme.colorScheme.primary;
+    final focusTitle = theme.colorScheme.primary;
+    final focusText = theme.colorScheme.onSurface;
+    final focusSubtext = theme.colorScheme.onSurface.withValues(alpha: 0.6);
 
     return Column(
       children: [
@@ -371,7 +374,7 @@ class _ExerciseDetailViewState extends State<_ExerciseDetailView> {
           decoration: BoxDecoration(
             color: tipsBg,
             borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: tipsBorder),
+            border: Border.all(color: tipsBorder ?? Colors.transparent),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -433,38 +436,40 @@ class _ExerciseDetailViewState extends State<_ExerciseDetailView> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Odak Bölgesi',
-                    style: TextStyle(
-                      color: focusTitle,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w800,
-                      fontFamily: 'Manrope',
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Odak Bölgesi',
+                      style: TextStyle(
+                        color: focusTitle,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w800,
+                        fontFamily: 'Manrope',
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    exercise.focusArea,
-                    style: TextStyle(
-                      color: focusText,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w800,
-                      fontFamily: 'Manrope',
+                    const SizedBox(height: 8),
+                    Text(
+                      exercise.focusArea,
+                      style: TextStyle(
+                        color: focusText,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800,
+                        fontFamily: 'Manrope',
+                      ),
                     ),
-                  ),
-                  Text(
-                    exercise.focusDescription,
-                    style: TextStyle(
-                      color: focusSubtext,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Inter',
+                    Text(
+                      exercise.focusDescription,
+                      style: TextStyle(
+                        color: focusSubtext,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Inter',
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               Icon(Icons.accessibility_new_rounded, color: focusIcon, size: 40),
             ],
@@ -483,7 +488,6 @@ class _CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     return ClipRRect(
       child: BackdropFilter(
@@ -505,7 +509,7 @@ class _CustomAppBar extends StatelessWidget {
                     fontSize: 22,
                     fontWeight: FontWeight.w800,
                     letterSpacing: -0.5,
-                    color: isDark ? Colors.white : const Color(0xFF1E293B),
+                    color: theme.colorScheme.onSurface,
                   ),
                 ),
               ),
@@ -516,3 +520,4 @@ class _CustomAppBar extends StatelessWidget {
     );
   }
 }
+

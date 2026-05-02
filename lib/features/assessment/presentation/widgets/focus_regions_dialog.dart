@@ -21,7 +21,7 @@ class FocusRegionsDialog extends StatelessWidget {
     final translatedRegions = topRegions.map((id) => _getRegionDisplayName(context, id)).toList();
     final regionText = translatedRegions.length == 1
         ? translatedRegions.first
-        : '${translatedRegions.sublist(0, translatedRegions.length - 1).join(', ')} ${loc.localeName == 'tr' ? 've' : 'and'} ${translatedRegions.last}';
+        : '${translatedRegions.sublist(0, translatedRegions.length - 1).join(', ')} ${loc.and_conjunction} ${translatedRegions.last}';
 
     return Stack(
       children: [
@@ -37,10 +37,14 @@ class FocusRegionsDialog extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.fromLTRB(28, 36, 28, 28),
                 decoration: BoxDecoration(
-                  color: theme.colorScheme.surface,
+                  color: theme.cardTheme.color,
                   borderRadius: BorderRadius.circular(40),
                   boxShadow: [
-                    BoxShadow(color: Colors.black.withValues(alpha: 0.18), blurRadius: 48, offset: const Offset(0, 16)),
+                    BoxShadow(
+                      color: theme.shadowColor.withValues(alpha: 0.18),
+                      blurRadius: 48,
+                      offset: const Offset(0, 16),
+                    ),
                   ],
                 ),
                 child: Column(
@@ -49,11 +53,23 @@ class FocusRegionsDialog extends StatelessWidget {
                     Container(
                       width: 80,
                       height: 80,
-                      decoration: BoxDecoration(color: theme.colorScheme.primary.withValues(alpha: 0.10), borderRadius: BorderRadius.circular(22)),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.primary.withValues(alpha: 0.10),
+                        borderRadius: BorderRadius.circular(22),
+                      ),
                       child: Icon(Icons.track_changes_rounded, color: theme.colorScheme.primary, size: 40),
                     ),
                     const SizedBox(height: 24),
-                    Text(loc.focusRegionsTitle, textAlign: TextAlign.center, style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800, letterSpacing: -0.6, height: 1.2)),
+                    Text(
+                      loc.focusRegionsTitle,
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: -0.6,
+                        height: 1.2,
+                        color: theme.colorScheme.onSurface,
+                      ),
+                    ),
                     const SizedBox(height: 16),
                     RichText(
                       textAlign: TextAlign.center,
@@ -82,18 +98,18 @@ class FocusRegionsDialog extends StatelessWidget {
     final loc = AppLocalizations.of(context)!;
     switch (id) {
       case 'neck': return loc.regionNeck;
-      case 'leftShoulder': return loc.regionShoulderLeft;
-      case 'rightShoulder': return loc.regionShoulderRight;
+      case 'leftShoulder': return loc.leftShoulder;
+      case 'rightShoulder': return loc.rightShoulder;
       case 'upperBack': return loc.regionUpperBack;
       case 'lowerBack': return loc.regionLowerBack;
       case 'hip': return loc.regionHipPelvis;
-      case 'leftArm': return loc.regionArmLeft;
-      case 'rightArm': return loc.regionArmRight;
-      case 'leftKnee': return loc.regionKneeLeft;
-      case 'rightKnee': return loc.regionKneeRight;
-      case 'leftAnkle': return loc.regionAnkleLeft;
-      case 'rightAnkle': return loc.regionAnkleRight;
-      default: return id.replaceAll('_', ' ').toUpperCase();
+      case 'leftArm': return loc.leftArm;
+      case 'rightArm': return loc.rightArm;
+      case 'leftKnee': return loc.leftKnee;
+      case 'rightKnee': return loc.rightKnee;
+      case 'leftAnkle': return loc.leftAnkle;
+      case 'rightAnkle': return loc.rightAnkle;
+      default: return id;
     }
   }
 }

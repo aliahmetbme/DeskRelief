@@ -26,6 +26,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String welcome_user(String name) {
+    return 'Welcome, $name';
+  }
+
+  @override
   String get feedbackStart =>
       'Great time to start the day! Complete your first session.';
 
@@ -149,7 +154,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get waitingForVerification => 'Waiting for Verification';
 
   @override
-  String get verificationEmailSent => 'Verification email has been resent.';
+  String get verificationEmailSent => 'Verification email has been sent.';
 
   @override
   String get forgotPasswordTitle => 'Forgot Password?';
@@ -382,6 +387,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get timingDetailsTitle => 'Timing Details';
 
   @override
+  String get save => 'Save';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get back => 'Back';
+
+  @override
+  String get finish => 'Finish';
+
+  @override
+  String get error_generic => 'An error occurred';
+
+  @override
+  String get and_conjunction => 'and';
+
+  @override
   String get cancel => 'Cancel';
 
   @override
@@ -461,9 +484,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get front => 'Front';
 
   @override
-  String get back => 'Back';
-
-  @override
   String get selectedRegionsTitle => 'Selected Regions';
 
   @override
@@ -499,6 +519,30 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get regionAnkleLeft => 'Left Ankle';
+
+  @override
+  String get leftShoulder => 'Left Shoulder';
+
+  @override
+  String get rightShoulder => 'Right Shoulder';
+
+  @override
+  String get leftArm => 'Left Arm';
+
+  @override
+  String get rightArm => 'Right Arm';
+
+  @override
+  String get leftKnee => 'Left Knee';
+
+  @override
+  String get rightKnee => 'Right Knee';
+
+  @override
+  String get leftAnkle => 'Left Ankle';
+
+  @override
+  String get rightAnkle => 'Right Ankle';
 
   @override
   String get noRegionSelected => 'No selected region found.';
@@ -1085,4 +1129,63 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get toastSafetyWarning =>
       'Your safety is important to us. Please do not exercise without physician approval.';
+
+  @override
+  String get schedulingInstructionEmpty =>
+      'Please determine your working days.';
+
+  @override
+  String get schedulingInstructionSingle =>
+      'Determine 2 or 3 days a week for your focus region.';
+
+  @override
+  String schedulingInstructionMulti(Object count) {
+    return 'Determine exactly 4 days a week for a sustainable program for the $count regions you determined.';
+  }
+
+  @override
+  String get monday => 'Monday';
+
+  @override
+  String get tuesday => 'Tuesday';
+
+  @override
+  String get wednesday => 'Wednesday';
+
+  @override
+  String get thursday => 'Thursday';
+
+  @override
+  String get friday => 'Friday';
+
+  @override
+  String get saturday => 'Saturday';
+
+  @override
+  String get sunday => 'Sunday';
+
+  @override
+  String get offset_15m => '15 mins before';
+
+  @override
+  String get offset_30m => '30 mins before';
+
+  @override
+  String get offset_1h => '1 hour before';
+
+  @override
+  String get offset_1_5h => '1.5 hours before';
+
+  @override
+  String get offset_2h => '2 hours before';
+
+  @override
+  String get notification => 'Notification';
+
+  @override
+  String get notificationTimeTitle => 'Notification Time';
+
+  @override
+  String get notificationTimeDesc =>
+      'How many minutes before the workout starts should you be reminded?';
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../../core/theme/app_colors.dart';
 
 class RegionCard extends StatelessWidget {
   final String title;
@@ -16,6 +15,8 @@ class RegionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    
     return GestureDetector(
       onTap: () {
         HapticFeedback.lightImpact();
@@ -23,19 +24,19 @@ class RegionCard extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.secondary : Colors.white,
-          borderRadius: BorderRadius.circular(20.0),
-          border: isSelected ? null : Border.all(color: Colors.black.withOpacity(0.05)),
+          color: isSelected ? theme.colorScheme.primary : theme.cardTheme.color,
+          borderRadius: BorderRadius.circular(24.0),
+          border: isSelected ? null : Border.all(color: theme.colorScheme.onSurface.withValues(alpha: 0.05)),
           boxShadow: [
             if (isSelected)
               BoxShadow(
-                color: AppColors.secondary.withOpacity(0.4),
+                color: theme.colorScheme.primary.withValues(alpha: 0.3),
                 blurRadius: 15,
                 offset: const Offset(0, 6),
               )
             else
               BoxShadow(
-                color: Colors.black.withOpacity(0.04),
+                color: theme.shadowColor.withValues(alpha: 0.05),
                 blurRadius: 12,
                 offset: const Offset(0, 4),
               ),
@@ -49,12 +50,12 @@ class RegionCard extends StatelessWidget {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: isSelected ? Colors.white.withOpacity(0.2) : Colors.black.withOpacity(0.05),
+                color: isSelected ? theme.colorScheme.onPrimary.withValues(alpha: 0.2) : theme.colorScheme.onSurface.withValues(alpha: 0.05),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 isSelected ? Icons.check_circle : Icons.add_circle,
-                color: isSelected ? Colors.white : AppColors.textPrimaryLight,
+                color: isSelected ? theme.colorScheme.onPrimary : theme.colorScheme.primary,
                 size: 24,
               ),
             ),
@@ -64,10 +65,9 @@ class RegionCard extends StatelessWidget {
               textAlign: TextAlign.center,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
+              style: theme.textTheme.labelLarge?.copyWith(
                 fontWeight: FontWeight.bold,
-                fontSize: 14,
-                color: isSelected ? Colors.white : AppColors.textPrimaryLight,
+                color: isSelected ? theme.colorScheme.onPrimary : theme.colorScheme.onSurface,
               ),
             ),
           ],

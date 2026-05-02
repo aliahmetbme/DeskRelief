@@ -50,7 +50,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     if (!mounted) return;
     await context.read<AuthViewModel>().setHasSeenOnboarding(true);
     if (!mounted) return;
-    context.go('/signin');
+    context.go('/sign-in');
   }
 
   void _onNextPressed(int pageCount) {
@@ -138,11 +138,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         borderRadius: const BorderRadius.vertical(
                           top: Radius.circular(30),
                         ),
-                        boxShadow: const [
+                        boxShadow: [
                           BoxShadow(
-                            color: Color(0x0A000000),
+                            color: theme.shadowColor.withValues(alpha: 0.04),
                             blurRadius: 40,
-                            offset: Offset(0, -10),
+                            offset: const Offset(0, -10),
                           ),
                         ],
                       ),
@@ -197,15 +197,17 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                           borderRadius: BorderRadius.circular(28),
                                         ),
                                         elevation: 0,
+                                        backgroundColor: theme.colorScheme.primary,
+                                        foregroundColor: theme.colorScheme.onPrimary,
                                       ),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           Text(l10n.getStarted),
                                           const SizedBox(width: 8),
-                                          const Icon(
+                                          Icon(
                                             Icons.chevron_right,
-                                            color: Colors.white,
+                                            color: theme.colorScheme.onPrimary,
                                             size: 24,
                                           ),
                                         ],

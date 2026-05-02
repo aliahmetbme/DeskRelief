@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:deskrelief/l10n/app_localizations.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/app_back_button.dart';
 import '../viewmodels/scheduling_view_model.dart';
 import '../widgets/day_chip.dart';
@@ -12,8 +13,24 @@ import 'package:deskrelief/features/auth/presentation/viewmodels/auth_view_model
 // ─────────────────────────────────────────────────────────────────────────────
 // Scheduling Page
 // ─────────────────────────────────────────────────────────────────────────────
-class SchedulingPage extends StatelessWidget {
-  const SchedulingPage({super.key});
+class SchedulingPage extends StatefulWidget {
+  final List<String>? focusRegions;
+  const SchedulingPage({super.key, this.focusRegions});
+
+  @override
+  State<SchedulingPage> createState() => _SchedulingPageState();
+}
+
+class _SchedulingPageState extends State<SchedulingPage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.focusRegions != null && widget.focusRegions!.isNotEmpty) {
+        context.read<SchedulingViewModel>().setFocusRegions(widget.focusRegions!);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +40,7 @@ class SchedulingPage extends StatelessWidget {
     final topPadding = MediaQuery.of(context).padding.top;
 
     return Scaffold(
-      backgroundColor: theme.brightness == Brightness.light
-          ? const Color(0xFFE8E9F0)
-          : theme.scaffoldBackgroundColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
       extendBodyBehindAppBar: true,
       extendBody: true,
 
@@ -137,21 +152,7 @@ class _StartButton extends StatelessWidget {
         height: 56,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          gradient: LinearGradient(
-            colors: [
-              primary,
-              HSLColor.fromColor(primary)
-                  .withLightness(
-                    (HSLColor.fromColor(primary).lightness + 0.08).clamp(
-                      0.0,
-                      1.0,
-                    ),
-                  )
-                  .toColor(),
-            ],
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-          ),
+          color: primary,
           boxShadow: [
             BoxShadow(
               color: primary.withValues(alpha: 0.38),
@@ -163,14 +164,14 @@ class _StartButton extends StatelessWidget {
         ),
         child: Center(
           child: viewModel.isLoading
-              ? const CupertinoActivityIndicator(color: Colors.white)
+              ? CupertinoActivityIndicator(color: theme.colorScheme.onPrimary)
               : AnimatedOpacity(
                   duration: const Duration(milliseconds: 200),
                   opacity: isEnabled ? 1.0 : 0.5,
                   child: Text(
                     AppLocalizations.of(context)!.schedulingStart,
                     style: theme.textTheme.titleMedium?.copyWith(
-                      color: Colors.white,
+                      color: theme.colorScheme.onPrimary,
                       fontWeight: FontWeight.w700,
                       letterSpacing: -0.2,
                     ),
@@ -194,11 +195,11 @@ class _ClinicalAdviceCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
+        color: theme.cardTheme.color,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: theme.shadowColor.withValues(alpha: 0.05),
             blurRadius: 12,
             offset: const Offset(0, 3),
           ),
@@ -240,7 +241,7 @@ class _ClinicalAdviceCard extends StatelessWidget {
                 Text(
                   AppLocalizations.of(context)!.clinicalAdviceDesc,
                   style: theme.textTheme.bodySmall?.copyWith(
-                    color: theme.colorScheme.onSurfaceVariant,
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                     height: 1.6,
                     fontSize: 12.5,
                   ),
@@ -267,6 +268,7 @@ class _DaySelectionSection extends StatelessWidget {
     final selectedCount = viewModel.selectedDays.length;
     final maxDays = viewModel.maxDays;
     final limitReached = viewModel.maxDaysReached;
+    final drColors = theme.extension<DeskReliefColors>()!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -300,7 +302,7 @@ class _DaySelectionSection extends StatelessWidget {
                   fontSize: 11,
                   color: limitReached
                       ? theme.colorScheme.primary
-                      : theme.colorScheme.onSurfaceVariant,
+                      : theme.colorScheme.onSurface.withValues(alpha: 0.6),
                   letterSpacing: 0.5,
                 ),
               ),
@@ -317,7 +319,7 @@ class _DaySelectionSection extends StatelessWidget {
             final isSelected = viewModel.isDaySelected(day);
             final isDisabled = !isSelected && limitReached;
             return DayChip(
-              day: day,
+              day: _getTranslatedDay(context, day),
               isSelected: isSelected,
               isDisabled: isDisabled,
               onTap: () {
@@ -353,16 +355,20 @@ class _DaySelectionSection extends StatelessWidget {
                   : Icons.info_outline_rounded,
               size: 16,
               color: viewModel.canProceed 
-                  ? Colors.green.shade600 
+                  ? (drColors.success ?? Colors.green)
                   : theme.colorScheme.error,
             ),
             const SizedBox(width: 8),
             Flexible(
               child: Text(
-                viewModel.instructionText,
+                _getTranslatedInstruction(
+                  context, 
+                  viewModel.instructionKey, 
+                  viewModel.focusRegions.length
+                ),
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: viewModel.canProceed 
-                      ? Colors.green.shade700 
+                      ? (drColors.success ?? Colors.green)
                       : theme.colorScheme.error,
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
@@ -412,14 +418,10 @@ class _ScheduleDetailsSectionState extends State<_ScheduleDetailsSection> {
       isScrollControlled: true,
       builder: (ctx) {
         final theme = widget.theme;
-        final isDark = theme.brightness == Brightness.dark;
-        final sheetBg = isDark ? const Color(0xFF1C1C1E) : Colors.white;
-        final dividerColor = isDark
-            ? const Color(0xFF38383A)
-            : const Color(0xFFC6C6C8);
-        final handleColor = isDark
-            ? const Color(0xFF48484A)
-            : const Color(0xFFD1D1D6);
+        final colorScheme = theme.colorScheme;
+        final sheetBg = theme.colorScheme.surface;
+        final dividerColor = theme.dividerColor;
+        final handleColor = theme.colorScheme.onSurface.withValues(alpha: 0.2);
 
         return Container(
           decoration: BoxDecoration(
@@ -456,9 +458,7 @@ class _ScheduleDetailsSectionState extends State<_ScheduleDetailsSection> {
                         AppLocalizations.of(context)!.cancel,
                         style: TextStyle(
                           fontSize: 16,
-                          color: isDark
-                              ? CupertinoColors.systemGrey
-                              : CupertinoColors.systemGrey,
+                          color: theme.textTheme.bodySmall?.color,
                         ),
                       ),
                     ),
@@ -469,7 +469,7 @@ class _ScheduleDetailsSectionState extends State<_ScheduleDetailsSection> {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: isDark ? Colors.white : Colors.black,
+                          color: colorScheme.onSurface,
                         ),
                       ),
                     ),
@@ -484,7 +484,7 @@ class _ScheduleDetailsSectionState extends State<_ScheduleDetailsSection> {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: theme.colorScheme.primary,
+                          color: colorScheme.primary,
                         ),
                       ),
                     ),
@@ -538,14 +538,14 @@ class _ScheduleDetailsSectionState extends State<_ScheduleDetailsSection> {
         const SizedBox(height: 14),
         ...viewModel.selectedDays.map((day) {
           final workoutTime = viewModel.timeForDay(day);
-          final notifLabel = viewModel.notificationOffsetLabelForDay(day);
+          final notifLabel = viewModel.notificationOffsetKeyForDay(day);
           final currentOffset = viewModel.notificationOffsetForDay(day);
           return Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: ScheduleDetailCard(
-              day: day,
+              day: _getTranslatedDay(context, day),
               workoutTime: workoutTime,
-              notificationLabel: notifLabel,
+              notificationLabel: _getTranslatedOffset(context, notifLabel),
               onWorkoutTimeTap: () =>
                   _showCupertinoTimePicker(context, day, workoutTime),
               onNotificationTap: () async {
@@ -601,7 +601,7 @@ class _HeroImage extends StatelessWidget {
                   end: Alignment.bottomCenter,
                   colors: [
                     Colors.transparent,
-                    Colors.black.withValues(alpha: 0.55),
+                    theme.shadowColor.withValues(alpha: 0.55),
                   ],
                   stops: const [0.4, 1.0],
                 ),
@@ -612,16 +612,16 @@ class _HeroImage extends StatelessWidget {
               left: 20,
               child: Text(
                 AppLocalizations.of(context)!.readyToStart,
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 16,
                   color: Colors.white,
                   letterSpacing: -0.2,
                   shadows: [
                     Shadow(
-                      color: Colors.black38,
+                      color: theme.shadowColor.withValues(alpha: 0.38),
                       blurRadius: 8,
-                      offset: Offset(0, 2),
+                      offset: const Offset(0, 2),
                     ),
                   ],
                 ),
@@ -633,3 +633,40 @@ class _HeroImage extends StatelessWidget {
     );
   }
 }
+
+String _getTranslatedDay(BuildContext context, String dayKey) {
+  final loc = AppLocalizations.of(context)!;
+  switch (dayKey) {
+    case 'monday': return loc.monday;
+    case 'tuesday': return loc.tuesday;
+    case 'wednesday': return loc.wednesday;
+    case 'thursday': return loc.thursday;
+    case 'friday': return loc.friday;
+    case 'saturday': return loc.saturday;
+    case 'sunday': return loc.sunday;
+    default: return dayKey;
+  }
+}
+
+String _getTranslatedInstruction(BuildContext context, String key, int count) {
+  final loc = AppLocalizations.of(context)!;
+  switch (key) {
+    case 'schedulingInstructionEmpty': return loc.schedulingInstructionEmpty;
+    case 'schedulingInstructionSingle': return loc.schedulingInstructionSingle;
+    case 'schedulingInstructionMulti': return loc.schedulingInstructionMulti(count);
+    default: return key;
+  }
+}
+
+String _getTranslatedOffset(BuildContext context, String key) {
+  final loc = AppLocalizations.of(context)!;
+  switch (key) {
+    case 'offset_15m': return loc.offset_15m;
+    case 'offset_30m': return loc.offset_30m;
+    case 'offset_1h': return loc.offset_1h;
+    case 'offset_1_5h': return loc.offset_1_5h;
+    case 'offset_2h': return loc.offset_2h;
+    default: return key;
+  }
+}
+

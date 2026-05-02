@@ -9,18 +9,33 @@ import '../widgets/gradient_slider_track.dart';
 import '../widgets/focus_regions_dialog.dart';
 import '../widgets/medical_consultation_dialog.dart';
 import 'package:deskrelief/l10n/app_localizations.dart';
+import '../../../../core/theme/app_colors.dart';
 
-class PainIntensityPage extends StatelessWidget {
+class PainIntensityPage extends StatefulWidget {
   final List<String> selectedRegions;
 
   const PainIntensityPage({super.key, required this.selectedRegions});
 
   @override
+  State<PainIntensityPage> createState() => _PainIntensityPageState();
+}
+
+class _PainIntensityPageState extends State<PainIntensityPage> {
+  @override
+  void initState() {
+    super.initState();
+    // Global provider'ı sayfa açıldığında init et
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final viewModel = context.read<PainIntensityViewModel>();
+      if (widget.selectedRegions.isNotEmpty) {
+        viewModel.setRegions(widget.selectedRegions);
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => PainIntensityViewModel(selectedRegions: selectedRegions),
-      child: const _PainIntensityView(),
-    );
+    return const _PainIntensityView();
   }
 }
 
@@ -49,7 +64,7 @@ class _PainIntensityView extends StatelessWidget {
       );
     }
 
-    final activeColor = _getPainColor(viewModel.currentPainValue);
+    final activeColor = viewModel.getPainColor(context, viewModel.currentPainValue);
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -66,7 +81,7 @@ class _PainIntensityView extends StatelessWidget {
                       const SizedBox(height: 36),
                       CircularPainIndicator(
                         value: viewModel.currentPainValue,
-                        label: viewModel.getPainLevelDescription(AppLocalizations.of(context)!),
+                        label: _getTranslatedDescription(context, viewModel.getPainLevelDescriptionKey()),
                         activeColor: activeColor,
                       ),
                       const SizedBox(height: 56),
@@ -120,7 +135,7 @@ class _PainIntensityView extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    AppLocalizations.of(context)!.regionLabel(_getRegionDisplayName(context, viewModel.currentRegion)),
+                    AppLocalizations.of(context)!.regionLabel(_getTranslatedRegion(context, viewModel.getRegionLocalizationKey(viewModel.currentRegion))),
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w700,
                       color: theme.colorScheme.onSurface,
@@ -167,7 +182,7 @@ class _PainIntensityView extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: theme.cardColor,
+        color: theme.cardTheme.color,
         borderRadius: BorderRadius.circular(28),
         border: Border.all(color: theme.dividerColor.withValues(alpha: 0.1)),
       ),
@@ -196,9 +211,15 @@ class _PainIntensityView extends StatelessWidget {
       children: [
         SliderTheme(
           data: SliderThemeData(
-            trackShape: GradientSliderTrackShape(),
+            trackShape: GradientSliderTrackShape(
+              colors: [
+                theme.extension<DeskReliefColors>()?.success ?? Colors.green,
+                theme.extension<DeskReliefColors>()?.warning ?? Colors.orange,
+                theme.extension<DeskReliefColors>()?.error ?? theme.colorScheme.error,
+              ],
+            ),
             trackHeight: 15,
-            thumbColor: Colors.white,
+            thumbColor: theme.colorScheme.onPrimary,
           ),
           child: Slider(
             value: viewModel.currentPainValue,
@@ -233,7 +254,7 @@ class _PainIntensityView extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: theme.cardColor,
+        color: theme.cardTheme.color,
         borderRadius: BorderRadius.circular(28),
         border: Border.all(color: theme.dividerColor.withValues(alpha: 0.1)),
       ),
@@ -248,13 +269,63 @@ class _PainIntensityView extends StatelessWidget {
               children: [
                 Text(AppLocalizations.of(context)!.painAnalysisTitle, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 4),
-                Text(viewModel.getPainLevelAnalysis(AppLocalizations.of(context)!), style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant, height: 1.5)),
+                Text(
+                  _getTranslatedAnalysis(
+                    context, 
+                    viewModel.getPainLevelAnalysisKey(), 
+                    viewModel.currentPainValue.round()
+                  ), 
+                  style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant, height: 1.5)
+                ),
               ],
             ),
           ),
         ],
       ),
     );
+  }
+
+  String _getTranslatedRegion(BuildContext context, String key) {
+    final loc = AppLocalizations.of(context)!;
+    switch (key) {
+      case 'regionNeck': return loc.regionNeck;
+      case 'leftShoulder': return loc.leftShoulder;
+      case 'rightShoulder': return loc.rightShoulder;
+      case 'regionHipPelvis': return loc.regionHipPelvis;
+      case 'regionUpperBack': return loc.regionUpperBack;
+      case 'regionLowerBack': return loc.regionLowerBack;
+      case 'leftArm': return loc.leftArm;
+      case 'rightArm': return loc.rightArm;
+      case 'leftKnee': return loc.leftKnee;
+      case 'rightKnee': return loc.rightKnee;
+      case 'leftAnkle': return loc.leftAnkle;
+      case 'rightAnkle': return loc.rightAnkle;
+      default: return key;
+    }
+  }
+
+  String _getTranslatedDescription(BuildContext context, String key) {
+    final loc = AppLocalizations.of(context)!;
+    switch (key) {
+      case 'painLevelLight': return loc.painLevelLight;
+      case 'painLevelMild': return loc.painLevelMild;
+      case 'painLevelModerate': return loc.painLevelModerate;
+      case 'painLevelSevere': return loc.painLevelSevere;
+      case 'painLevelVerySevere': return loc.painLevelVerySevere;
+      default: return key;
+    }
+  }
+
+  String _getTranslatedAnalysis(BuildContext context, String key, int val) {
+    final loc = AppLocalizations.of(context)!;
+    switch (key) {
+      case 'painAnalysisLight': return loc.painAnalysisLight(val);
+      case 'painAnalysisMild': return loc.painAnalysisMild(val);
+      case 'painAnalysisModerate': return loc.painAnalysisModerate(val);
+      case 'painAnalysisSevere': return loc.painAnalysisSevere(val);
+      case 'painAnalysisVerySevere': return loc.painAnalysisVerySevere(val);
+      default: return key;
+    }
   }
 
   Widget _buildBottomAction(BuildContext context, ThemeData theme, PainIntensityViewModel viewModel) {
@@ -272,7 +343,7 @@ class _PainIntensityView extends StatelessWidget {
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: theme.colorScheme.primary,
-          foregroundColor: Colors.white,
+          foregroundColor: theme.colorScheme.onPrimary,
           minimumSize: const Size(double.infinity, 56),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
         ),
@@ -295,15 +366,17 @@ class _PainIntensityView extends StatelessWidget {
     showGeneralDialog(
       context: context,
       barrierDismissible: false,
-      pageBuilder: (ctx, _, __) => FocusRegionsDialog(
-        topRegions: focusRegions,
-        onConfirm: () async {
-          final authVM = context.read<AuthViewModel>();
-          await authVM.updateProgress(hasCompletedPainScore: true);
-          if (ctx.mounted) Navigator.of(ctx).pop();
-          if (context.mounted) context.push('/scheduling', extra: focusRegions);
-        },
-      ),
+      pageBuilder: (ctx, _, __) {
+        final viewModel = context.read<PainIntensityViewModel>();
+        final authVM = context.read<AuthViewModel>();
+        return FocusRegionsDialog(
+          topRegions: focusRegions,
+          onConfirm: () async {
+            if (ctx.mounted) Navigator.of(ctx).pop();
+            await viewModel.submitPainScores(context, authVM, focusRegions);
+          },
+        );
+      },
     );
   }
 
@@ -311,38 +384,16 @@ class _PainIntensityView extends StatelessWidget {
     showGeneralDialog(
       context: context,
       barrierDismissible: false,
-      pageBuilder: (ctx, _, __) => MedicalConsultationDialog(
-        onConfirm: () async {
-          Navigator.of(ctx).pop();
-          await context.read<AuthViewModel>().updateProgress(isClearedForExercise: false);
-          if (context.mounted) context.go('/');
-        },
-      ),
+      pageBuilder: (ctx, _, __) {
+        final viewModel = context.read<PainIntensityViewModel>();
+        final authVM = context.read<AuthViewModel>();
+        return MedicalConsultationDialog(
+          onConfirm: () async {
+            Navigator.of(ctx).pop();
+            await viewModel.submitMedicalBlock(context, authVM);
+          },
+        );
+      },
     );
-  }
-
-  Color _getPainColor(double val) {
-    if (val <= 3) return const Color(0xFF006E28);
-    if (val <= 6) return const Color(0xFFFBC02D);
-    return const Color(0xFFBA1A1A);
-  }
-
-  String _getRegionDisplayName(BuildContext context, String id) {
-    final loc = AppLocalizations.of(context)!;
-    switch (id) {
-      case 'neck': return loc.regionNeck;
-      case 'leftShoulder': return loc.regionShoulderLeft;
-      case 'rightShoulder': return loc.regionShoulderRight;
-      case 'upperBack': return loc.regionUpperBack;
-      case 'lowerBack': return loc.regionLowerBack;
-      case 'hip': return loc.regionHipPelvis;
-      case 'leftArm': return loc.regionArmLeft;
-      case 'rightArm': return loc.regionArmRight;
-      case 'leftKnee': return loc.regionKneeLeft;
-      case 'rightKnee': return loc.regionKneeRight;
-      case 'leftAnkle': return loc.regionAnkleLeft;
-      case 'rightAnkle': return loc.regionAnkleRight;
-      default: return id.replaceAll('_', ' ').toUpperCase();
-    }
   }
 }

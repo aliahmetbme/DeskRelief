@@ -42,9 +42,7 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
         _selectedGender == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(
-            AppLocalizations.of(context)!.fillAllFieldsError,
-          ),
+          content: Text(AppLocalizations.of(context)!.fillAllFieldsError),
         ),
       );
       return;
@@ -63,7 +61,7 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
       hasCompletedWelcome: true,
       sex: _selectedGender == 1 ? 'female' : 'male',
     );
-    
+
     // Tıbbi Tarama modülüne geç
     if (mounted) {
       context.go('/red-flags');
@@ -120,17 +118,15 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
 
                         // Gender Selection (iOS Style)
                         _buildFieldLabel(
-                            AppLocalizations.of(context)!.genderLabel, theme),
+                          AppLocalizations.of(context)!.genderLabel,
+                          theme,
+                        ),
                         const SizedBox(height: 8),
                         Container(
                           width: double.infinity,
                           height: 54,
                           decoration: BoxDecoration(
-                            color: isDark
-                                ? const Color(0xFF1C1C1E)
-                                : theme.colorScheme.onSurface.withValues(
-                                    alpha: 0.04,
-                                  ),
+                            color: theme.colorScheme.surfaceContainerHigh,
                             borderRadius: BorderRadius.circular(30),
                             border: Border.all(
                               color: theme.dividerColor.withValues(alpha: 0.05),
@@ -155,14 +151,9 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
                                       padding: const EdgeInsets.all(4.0),
                                       child: Container(
                                         decoration: BoxDecoration(
-                                          color: isDark
-                                              ? const Color.fromARGB(
-                                                  255,
-                                                  47,
-                                                  47,
-                                                  49,
-                                                )
-                                              : theme.colorScheme.surface,
+                                          color: theme
+                                              .colorScheme
+                                              .surfaceContainerHighest,
                                           borderRadius: BorderRadius.circular(
                                             26,
                                           ),
@@ -170,7 +161,7 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
                                               ? []
                                               : [
                                                   BoxShadow(
-                                                    color: Colors.black
+                                                    color: theme.shadowColor
                                                         .withValues(
                                                           alpha: 0.08,
                                                         ),
@@ -196,8 +187,9 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
                                       },
                                       child: Center(
                                         child: Text(
-                                          AppLocalizations.of(context)!
-                                              .genderMale,
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.genderMale,
                                           style: TextStyle(
                                             fontWeight: _selectedGender == 0
                                                 ? FontWeight.bold
@@ -223,8 +215,9 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
                                       },
                                       child: Center(
                                         child: Text(
-                                          AppLocalizations.of(context)!
-                                              .genderFemale,
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.genderFemale,
                                           style: TextStyle(
                                             fontWeight: _selectedGender == 1
                                                 ? FontWeight.bold
@@ -250,8 +243,9 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
 
                         // Profession Field
                         _buildFieldLabel(
-                            AppLocalizations.of(context)!.professionLabel,
-                            theme),
+                          AppLocalizations.of(context)!.professionLabel,
+                          theme,
+                        ),
                         const SizedBox(height: 8),
                         TextFormField(
                           controller: _professionController,
@@ -262,8 +256,9 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
                             fontWeight: FontWeight.w500,
                           ),
                           decoration: InputDecoration(
-                            hintText:
-                                AppLocalizations.of(context)!.professionHint,
+                            hintText: AppLocalizations.of(
+                              context,
+                            )!.professionHint,
                             hintStyle: TextStyle(
                               fontSize: 15,
                               color: theme.colorScheme.onSurface.withValues(
@@ -291,8 +286,9 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   _buildFieldLabel(
-                                      AppLocalizations.of(context)!.heightLabel,
-                                      theme),
+                                    AppLocalizations.of(context)!.heightLabel,
+                                    theme,
+                                  ),
                                   const SizedBox(height: 8),
                                   TextFormField(
                                     controller: _heightController,
@@ -304,8 +300,9 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
                                       fontWeight: FontWeight.w500,
                                     ),
                                     decoration: InputDecoration(
-                                      hintText: AppLocalizations.of(context)!
-                                          .heightHint,
+                                      hintText: AppLocalizations.of(
+                                        context,
+                                      )!.heightHint,
                                       hintStyle: TextStyle(
                                         fontSize: 15,
                                         color: theme.colorScheme.onSurface
@@ -330,8 +327,9 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   _buildFieldLabel(
-                                      AppLocalizations.of(context)!.weightLabel,
-                                      theme),
+                                    AppLocalizations.of(context)!.weightLabel,
+                                    theme,
+                                  ),
                                   const SizedBox(height: 8),
                                   TextFormField(
                                     controller: _weightController,
@@ -343,8 +341,9 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
                                       fontWeight: FontWeight.w500,
                                     ),
                                     decoration: InputDecoration(
-                                      hintText: AppLocalizations.of(context)!
-                                          .weightHint,
+                                      hintText: AppLocalizations.of(
+                                        context,
+                                      )!.weightHint,
                                       hintStyle: TextStyle(
                                         fontSize: 15,
                                         color: theme.colorScheme.onSurface
@@ -402,8 +401,9 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        AppLocalizations.of(context)!
-                                            .sedentaryWorker,
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.sedentaryWorker,
                                         style: theme.textTheme.titleMedium
                                             ?.copyWith(
                                               fontWeight: FontWeight.bold,
@@ -411,13 +411,12 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
                                       ),
                                       const SizedBox(height: 4),
                                       Text(
-                                        AppLocalizations.of(context)!
-                                            .sedentaryWorkerDesc,
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.sedentaryWorkerDesc,
                                         style: theme.textTheme.bodyMedium
                                             ?.copyWith(
-                                              color: theme
-                                                  .colorScheme
-                                                  .onSurface
+                                              color: theme.colorScheme.onSurface
                                                   .withValues(alpha: 0.7),
                                             ),
                                       ),
@@ -464,8 +463,9 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      AppLocalizations.of(context)!
-                                          .medicalDisclaimerTitle,
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.medicalDisclaimerTitle,
                                       style: theme.textTheme.titleMedium
                                           ?.copyWith(
                                             fontWeight: FontWeight.bold,
@@ -474,13 +474,12 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
                                     ),
                                     const SizedBox(height: 6),
                                     Text(
-                                      AppLocalizations.of(context)!
-                                          .medicalDisclaimerDesc,
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.medicalDisclaimerDesc,
                                       style: theme.textTheme.bodySmall
                                           ?.copyWith(
-                                            color: theme
-                                                .colorScheme
-                                                .onSurface
+                                            color: theme.colorScheme.onSurface
                                                 .withValues(alpha: 0.8),
                                             height: 1.4,
                                             fontSize: 13,
@@ -501,8 +500,9 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
                           onChanged: (val) =>
                               setState(() => _privacyConsent = val),
                           textSpan: TextSpan(
-                            text: AppLocalizations.of(context)!
-                                .agreePrivacyPolicyP1,
+                            text: AppLocalizations.of(
+                              context,
+                            )!.agreePrivacyPolicyP1,
                             style: theme.textTheme.bodyMedium?.copyWith(
                               color: theme.colorScheme.onSurface.withValues(
                                 alpha: 0.8,
@@ -511,8 +511,9 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
                             ),
                             children: [
                               TextSpan(
-                                text: AppLocalizations.of(context)!
-                                    .privacyPolicy,
+                                text: AppLocalizations.of(
+                                  context,
+                                )!.privacyPolicy,
                                 style: TextStyle(
                                   color: theme.colorScheme.primary,
                                   fontWeight: FontWeight.bold,
@@ -520,8 +521,9 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
                                 ),
                               ),
                               TextSpan(
-                                text: AppLocalizations.of(context)!
-                                    .agreePrivacyPolicyP2,
+                                text: AppLocalizations.of(
+                                  context,
+                                )!.agreePrivacyPolicyP2,
                               ),
                             ],
                           ),
@@ -533,8 +535,9 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
                           onChanged: (val) =>
                               setState(() => _medicalDisclaimer = val),
                           textSpan: TextSpan(
-                            text: AppLocalizations.of(context)!
-                                .confirmMedicalDisclaimer,
+                            text: AppLocalizations.of(
+                              context,
+                            )!.confirmMedicalDisclaimer,
                             style: theme.textTheme.bodyMedium?.copyWith(
                               color: theme.colorScheme.onSurface.withValues(
                                 alpha: 0.8,

@@ -44,9 +44,9 @@ class TimestampConverter implements JsonConverter<DateTime?, dynamic> {
 }
 
 /// Kayıt Süreci Takibi (Senin istediğin 4 durak + Klinik onay)
+@JsonSerializable(explicitToJson: true)
 @freezed
 abstract class RegistrationProgress with _$RegistrationProgress {
-  @JsonSerializable(explicitToJson: true)
   const factory RegistrationProgress({
     @Default(false) bool hasCompletedWelcome,     // 1. Tik: İsim, meslek vb.
     @Default(false) bool hasCompletedRedFlags,    // 1.5 Tik: Tıbbi tarama
@@ -60,9 +60,9 @@ abstract class RegistrationProgress with _$RegistrationProgress {
 }
 
 /// Bölge Bazlı Klinik Detay (ID bazlı)
+@JsonSerializable(explicitToJson: true)
 @freezed
 abstract class RegionDetail with _$RegionDetail {
-  @JsonSerializable(explicitToJson: true)
   const factory RegionDetail({
     required String regionId,       // "neck", "lower_back" vb.
     @Default(0) int nprsScore,
@@ -76,9 +76,9 @@ abstract class RegionDetail with _$RegionDetail {
 }
 
 /// DeskRelief Ana Kullanıcı Modeli
+@JsonSerializable(explicitToJson: true)
 @freezed
 abstract class UserModel with _$UserModel {
-  @JsonSerializable(explicitToJson: true)
   const factory UserModel({
     required String id,             // Firebase UID
     required String name,

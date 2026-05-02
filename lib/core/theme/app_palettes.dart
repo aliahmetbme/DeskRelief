@@ -54,7 +54,7 @@ class IndigoPalette implements AppPalette {
   Color get textPrimary => const Color(0xFF000000); // iOS Label
   
   @override
-  Color get textSecondary => const Color(0xFF3C3C43).withOpacity(0.6); // iOS Secondary Label
+  Color get textSecondary => const Color(0xFF3C3C43).withValues(alpha: 0.6); // iOS Secondary Label
 }
 
 class TealPalette implements AppPalette {
@@ -77,5 +77,5 @@ class TealPalette implements AppPalette {
   Color get textPrimary => const Color(0xFF000000);
   
   @override
-  Color get textSecondary => const Color(0xFF3C3C43).withOpacity(0.6);
+  Color get textSecondary => const Color(0xFF3C3C43).withValues(alpha: 0.6);
 }

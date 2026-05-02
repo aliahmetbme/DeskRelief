@@ -16,7 +16,6 @@ class CircularPainIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     return SizedBox(
       width: 260,
@@ -46,9 +45,7 @@ class CircularPainIndicator extends StatelessWidget {
             painter: _GaugePainter(
               progress: value / 10,
               activeColor: activeColor,
-              backgroundColor: isDark
-                  ? Colors.white.withValues(alpha: 0.05)
-                  : Colors.black.withValues(alpha: 0.05),
+              backgroundColor: theme.colorScheme.onSurface.withValues(alpha: 0.05),
             ),
           ),
 

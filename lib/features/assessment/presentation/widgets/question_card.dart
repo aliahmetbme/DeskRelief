@@ -18,17 +18,16 @@ class QuestionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: isDark ? theme.colorScheme.surface : Colors.white,
+        color: theme.cardTheme.color,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.2 : 0.04),
+            color: theme.shadowColor.withValues(alpha: theme.brightness == Brightness.dark ? 0.2 : 0.04),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -43,7 +42,7 @@ class QuestionCard extends StatelessWidget {
               Text(
                 number,
                 style: TextStyle(
-                  color: theme.colorScheme.primary.withOpacity(0.15),
+                  color: theme.colorScheme.primary.withValues(alpha: 0.15),
                   fontSize: 44,
                   fontWeight: FontWeight.w800,
                   height: 1.0,
@@ -58,6 +57,7 @@ class QuestionCard extends StatelessWidget {
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                       height: 1.4,
+                      color: theme.colorScheme.onSurface,
                     ),
                   ),
                 ),
@@ -97,7 +97,6 @@ class QuestionCard extends StatelessWidget {
     final isSelected = selectedAnswer == isTargetValue;
     final theme = Theme.of(context);
     final primary = theme.colorScheme.primary;
-    final isDark = theme.brightness == Brightness.dark;
 
     return GestureDetector(
       onTap: () => onAnswered(isTargetValue),
@@ -107,14 +106,14 @@ class QuestionCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: isSelected 
               ? primary 
-              : (isDark ? theme.colorScheme.onSurface.withOpacity(0.05) : theme.colorScheme.onSurface.withOpacity(0.05)),
+              : theme.colorScheme.onSurface.withValues(alpha: 0.05),
           borderRadius: BorderRadius.circular(24),
         ),
         alignment: Alignment.center,
         child: Text(
           text,
           style: TextStyle(
-            color: isSelected ? Colors.white : theme.colorScheme.onSurface.withOpacity(0.7),
+            color: isSelected ? theme.colorScheme.onPrimary : theme.colorScheme.onSurface.withValues(alpha: 0.7),
             fontWeight: FontWeight.bold,
             fontSize: 15,
           ),

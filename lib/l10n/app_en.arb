@@ -12,6 +12,14 @@
       }
     }
   },
+  "welcome_user": "Welcome, {name}",
+  "@welcome_user": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "feedbackStart": "Great time to start the day! Complete your first session.",
   "feedbackStep": "Good step for a start! Keep going.",
   "feedbackHalfway": "You're halfway there, doing great!",
@@ -66,7 +74,7 @@
   "verificationLinkSent": "Verification Link Sent!",
   "verificationBody": "we've sent a link to the address above. Please check your inbox and click the link. This screen will close automatically once verified.",
   "waitingForVerification": "Waiting for Verification",
-  "verificationEmailSent": "Verification email has been resent.",
+  "verificationEmailSent": "Verification email has been sent.",
   "forgotPasswordTitle": "Forgot Password?",
   "forgotPasswordSubtitle": "Don't worry! Enter your registered email address and we'll send you a link to reset your password.",
   "sendResetLink": "Send Reset Link",
@@ -171,6 +179,12 @@
     }
   },
   "timingDetailsTitle": "Timing Details",
+  "save": "Save",
+  "confirm": "Confirm",
+  "back": "Back",
+  "finish": "Finish",
+  "error_generic": "An error occurred",
+  "and_conjunction": "and",
   "cancel": "Cancel",
   "workoutTimeTitle": "Workout Time",
   "done": "Done",
@@ -210,6 +224,14 @@
   "regionKneeLeft": "Left Knee",
   "regionAnkleRight": "Right Ankle",
   "regionAnkleLeft": "Left Ankle",
+  "leftShoulder": "Left Shoulder",
+  "rightShoulder": "Right Shoulder",
+  "leftArm": "Left Arm",
+  "rightArm": "Right Arm",
+  "leftKnee": "Left Knee",
+  "rightKnee": "Right Knee",
+  "leftAnkle": "Left Ankle",
+  "rightAnkle": "Right Ankle",
   "noRegionSelected": "No selected region found.",
   "goBack": "Go Back",
   "regionLabel": "{region} Region",
@@ -444,5 +466,23 @@
   "btnDoctorApproved": "Doctor Approved",
   "btnCancel": "Cancel",
   "btnReevaluate": "Re-evaluate My Status",
-  "toastSafetyWarning": "Your safety is important to us. Please do not exercise without physician approval."
+  "toastSafetyWarning": "Your safety is important to us. Please do not exercise without physician approval.",
+  "schedulingInstructionEmpty": "Please determine your working days.",
+  "schedulingInstructionSingle": "Determine 2 or 3 days a week for your focus region.",
+  "schedulingInstructionMulti": "Determine exactly 4 days a week for a sustainable program for the {count} regions you determined.",
+  "monday": "Monday",
+  "tuesday": "Tuesday",
+  "wednesday": "Wednesday",
+  "thursday": "Thursday",
+  "friday": "Friday",
+  "saturday": "Saturday",
+  "sunday": "Sunday",
+  "offset_15m": "15 mins before",
+  "offset_30m": "30 mins before",
+  "offset_1h": "1 hour before",
+  "offset_1_5h": "1.5 hours before",
+  "offset_2h": "2 hours before",
+  "notification": "Notification",
+  "notificationTimeTitle": "Notification Time",
+  "notificationTimeDesc": "How many minutes before the workout starts should you be reminded?"
 }

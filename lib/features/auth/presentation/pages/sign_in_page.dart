@@ -129,7 +129,7 @@ class _SignInPageState extends State<SignInPage> {
                                 borderRadius: BorderRadius.circular(24),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withValues(alpha: 0.05),
+                                    color: theme.shadowColor.withValues(alpha: 0.05),
                                     blurRadius: 20,
                                     offset: const Offset(0, 10),
                                   ),
@@ -294,23 +294,25 @@ class _SignInPageState extends State<SignInPage> {
                                             )!.google,
                                             svgAsset: 'assets/Icons/google.svg',
                                             onPressed: () async {
-                                              if (authViewModel.isLoading)
+                                              if (authViewModel.isLoading) {
                                                 return;
+                                              }
                                               final loc = AppLocalizations.of(
                                                 context,
                                               )!;
                                               final success =
                                                   await authViewModel
                                                       .signInWithGoogle(loc);
-                                              if (mounted && success) {
+                                              if (!context.mounted) return;
+                                              
+                                              if (success) {
                                                 CustomToast.show(
                                                   context,
                                                   loc.signInSuccess,
                                                   isError: false,
                                                 );
                                                 authViewModel.checkClinicalStatus(context, authViewModel.currentUser!);
-                                              } else if (mounted &&
-                                                  authViewModel.errorMessage !=
+                                              } else if (authViewModel.errorMessage !=
                                                       null) {
                                                 CustomToast.show(
                                                   context,
@@ -328,23 +330,25 @@ class _SignInPageState extends State<SignInPage> {
                                             )!.apple,
                                             iconData: Icons.apple,
                                             onPressed: () async {
-                                              if (authViewModel.isLoading)
+                                              if (authViewModel.isLoading) {
                                                 return;
+                                              }
                                               final loc = AppLocalizations.of(
                                                 context,
                                               )!;
                                               final success =
                                                   await authViewModel
                                                       .signInWithApple(loc);
-                                              if (mounted && success) {
+                                              if (!context.mounted) return;
+
+                                              if (success) {
                                                 CustomToast.show(
                                                   context,
                                                   loc.signInSuccess,
                                                   isError: false,
                                                 );
                                                 authViewModel.checkClinicalStatus(context, authViewModel.currentUser!);
-                                              } else if (mounted &&
-                                                  authViewModel.errorMessage !=
+                                              } else if (authViewModel.errorMessage !=
                                                       null) {
                                                 CustomToast.show(
                                                   context,
@@ -365,7 +369,7 @@ class _SignInPageState extends State<SignInPage> {
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 24),
                               child: GestureDetector(
-                                onTap: () => context.push('/signup'),
+                                onTap: () => context.push('/sign-up'),
                                 child: Text.rich(
                                   TextSpan(
                                     text: AppLocalizations.of(

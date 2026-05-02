@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:deskrelief/l10n/app_localizations.dart';
 import '../viewmodels/scheduling_view_model.dart';
 
 class ScheduleDetailCard extends StatelessWidget {
@@ -37,7 +38,7 @@ class ScheduleDetailCard extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
+            color: theme.shadowColor.withValues(alpha: 0.04),
             blurRadius: 12,
             offset: const Offset(0, 3),
           ),
@@ -89,7 +90,7 @@ class ScheduleDetailCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 5),
                   Text(
-                    'Bildirim',
+                    AppLocalizations.of(context)!.notification,
                     style: theme.textTheme.bodySmall?.copyWith(
                       fontWeight: FontWeight.w600,
                       color: theme.colorScheme.onSurfaceVariant,
@@ -202,7 +203,7 @@ Future<int?> showNotificationOffsetPicker(
             ),
             const SizedBox(height: 20),
             Text(
-              'Bildirim Zamanı',
+              AppLocalizations.of(context)!.notificationTimeTitle,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w800,
                 color: theme.colorScheme.onSurface,
@@ -211,7 +212,7 @@ Future<int?> showNotificationOffsetPicker(
             ),
             const SizedBox(height: 6),
             Text(
-              'Antrenman başlamadan kaç dakika önce\nhatırlatılsın?',
+              AppLocalizations.of(context)!.notificationTimeDesc,
               style: theme.textTheme.bodySmall?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
                 height: 1.5,
@@ -271,7 +272,7 @@ class _OffsetTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              option.label,
+              _getTranslatedOffset(context, option.label),
               style: theme.textTheme.bodyMedium?.copyWith(
                 fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
                 color: isSelected
@@ -289,5 +290,17 @@ class _OffsetTile extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getTranslatedOffset(BuildContext context, String key) {
+    final loc = AppLocalizations.of(context)!;
+    switch (key) {
+      case 'offset_15m': return loc.offset_15m;
+      case 'offset_30m': return loc.offset_30m;
+      case 'offset_1h': return loc.offset_1h;
+      case 'offset_1_5h': return loc.offset_1_5h;
+      case 'offset_2h': return loc.offset_2h;
+      default: return key;
+    }
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import '../theme/app_colors.dart';
 
 class CustomToast {
   static void show(BuildContext context, String message, {bool isError = true}) {
@@ -86,7 +87,13 @@ class _ToastWidgetState extends State<_ToastWidget> with SingleTickerProviderSta
   Widget build(BuildContext context) {
     // Determine status bar padding
     final topPadding = MediaQuery.of(context).padding.top;
+    final theme = Theme.of(context);
+    final drColors = theme.extension<DeskReliefColors>()!;
     
+    final statusColor = widget.isError 
+        ? (drColors.error ?? theme.colorScheme.error)
+        : (drColors.success ?? Colors.green);
+
     return Positioned(
       top: topPadding + 10,
       left: 16,
@@ -104,18 +111,14 @@ class _ToastWidgetState extends State<_ToastWidget> with SingleTickerProviderSta
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                   decoration: BoxDecoration(
-                    color: widget.isDark 
-                        ? Colors.black.withOpacity(0.75) 
-                        : Colors.white.withOpacity(0.8),
+                    color: theme.colorScheme.surface.withValues(alpha: widget.isDark ? 0.75 : 0.8),
                     borderRadius: BorderRadius.circular(24),
                     border: Border.all(
-                      color: widget.isDark 
-                          ? Colors.white.withOpacity(0.15) 
-                          : Colors.black.withOpacity(0.08),
+                      color: theme.dividerColor.withValues(alpha: widget.isDark ? 0.15 : 0.08),
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.12),
+                        color: theme.shadowColor.withValues(alpha: 0.12),
                         blurRadius: 25,
                         offset: const Offset(0, 12),
                       ),
@@ -129,12 +132,12 @@ class _ToastWidgetState extends State<_ToastWidget> with SingleTickerProviderSta
                         Container(
                           padding: const EdgeInsets.all(6),
                           decoration: BoxDecoration(
-                            color: (widget.isError ? const Color(0xFFFF453A) : const Color(0xFF32D74B)).withOpacity(0.15),
+                            color: statusColor.withValues(alpha: 0.15),
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
                             widget.isError ? Icons.error_outline : Icons.check_circle_outline,
-                            color: widget.isError ? const Color(0xFFFF453A) : const Color(0xFF32D74B),
+                            color: statusColor,
                             size: 20,
                           ),
                         ),
@@ -143,7 +146,7 @@ class _ToastWidgetState extends State<_ToastWidget> with SingleTickerProviderSta
                           child: Text(
                             widget.message,
                             style: TextStyle(
-                              color: widget.isDark ? Colors.white : Colors.black87,
+                              color: theme.colorScheme.onSurface,
                               fontWeight: FontWeight.w600,
                               fontSize: 15,
                               letterSpacing: -0.3,

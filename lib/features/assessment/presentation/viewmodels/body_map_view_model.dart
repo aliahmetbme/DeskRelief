@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../exercise/domain/models/exercise_model.dart';
+import '../../../auth/domain/models/user_model.dart';
+import '../../../auth/presentation/viewmodels/auth_view_model.dart';
 
 class BodyMapViewModel extends ChangeNotifier {
   int _currentStep = 2; // 2: Front, 1: Back
@@ -9,10 +12,88 @@ class BodyMapViewModel extends ChangeNotifier {
   double get dragPosition => _dragPosition;
   bool _isDragging = false;
   bool get isDragging => _isDragging;
+  
+  String? _currentUid;
+
+  void updateUser(UserModel? user) {
+    if (user != null) {
+      if (_currentUid != user.id) {
+        _currentUid = user.id;
+        // Reset or reload state if needed when user changes
+        notifyListeners();
+      }
+    } else {
+      _currentUid = null;
+      _selectedZoneIds.clear();
+      _dragPosition = 0.0;
+      _currentStep = 2;
+      notifyListeners();
+    }
+  }
 
   final List<String> _selectedZoneIds = [];
   List<String> get rawSelectedZoneIds => _selectedZoneIds;
   List<String> get selectedRegions => _selectedZoneIds;
+
+  List<String> get frontRegions => _allRegions.where((id) => id.endsWith('_front')).toList();
+  List<String> get backRegions => _allRegions.where((id) => id.endsWith('_back')).toList();
+
+  String getRegionLocalizationKey(String id) {
+    switch (id) {
+      case 'neck_front':
+      case 'neck_back':
+        return 'regionNeck';
+      case 'shoulder_r_front':
+      case 'shoulder_r_back':
+        return 'rightShoulder';
+      case 'shoulder_l_front':
+      case 'shoulder_l_back':
+        return 'leftShoulder';
+      case 'hip_r_front':
+      case 'hip_r_back':
+      case 'hip_l_front':
+      case 'hip_l_back':
+        return 'regionHipPelvis';
+      case 'upper_back':
+        return 'regionUpperBack';
+      case 'lower_back':
+        return 'regionLowerBack';
+      case 'arm_wrist_r_front':
+      case 'arm_wrist_r_back':
+        return 'rightArm';
+      case 'arm_wrist_l_front':
+      case 'arm_wrist_l_back':
+        return 'leftArm';
+      case 'knee_r_front':
+      case 'knee_r_back':
+        return 'rightKnee';
+      case 'knee_l_front':
+      case 'knee_l_back':
+        return 'leftKnee';
+      case 'ankle_r_front':
+      case 'ankle_r_back':
+        return 'rightAnkle';
+      case 'ankle_l_front':
+      case 'ankle_l_back':
+        return 'leftAnkle';
+      default:
+        return id;
+    }
+  }
+
+  Future<void> submitSelection(BuildContext context, AuthViewModel authVM) async {
+    if (_selectedZoneIds.isEmpty) return;
+
+    final clinicalRegions = selectedClinicalRegions.map((e) => e.name).toList();
+    
+    // AuthViewModel üzerinden ilerlemeyi güncelle
+    await authVM.updateProgress(hasCompletedBodyMap: true);
+    
+    if (context.mounted) {
+      // Bir sonraki adıma yönlendir
+      GoRouter.of(context).push('/assessment/pain-intensity', extra: clinicalRegions);
+    }
+  }
 
   final List<String> _allRegions = [
     // Front view zones

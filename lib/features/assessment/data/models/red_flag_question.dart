@@ -1,5 +1,3 @@
-import 'package:deskrelief/l10n/app_localizations.dart';
-
 class RedFlagQuestion {
   final int id;
   final int step;
@@ -9,34 +7,14 @@ class RedFlagQuestion {
     required this.step,
   });
 
-  String getCategoryTitle(AppLocalizations loc) {
-    if (step == 1) return loc.qCat1;
-    if (step == 2) return loc.qCat2;
-    return loc.qCat3;
+  String getCategoryTitleKey() {
+    if (step == 1) return 'qCat1';
+    if (step == 2) return 'qCat2';
+    return 'qCat3';
   }
 
-  String getQuestionText(AppLocalizations loc) {
-    switch (id) {
-      case 1: return loc.q1;
-      case 2: return loc.q2;
-      case 3: return loc.q3;
-      case 4: return loc.q4;
-      case 5: return loc.q5;
-      case 6: return loc.q6;
-      case 7: return loc.q7;
-      case 8: return loc.q8;
-      case 9: return loc.q9;
-      case 10: return loc.q10;
-      case 11: return loc.q11;
-      case 12: return loc.q12;
-      case 13: return loc.q13;
-      case 14: return loc.q14;
-      case 15: return loc.q15;
-      case 16: return loc.q16;
-      case 17: return loc.q17;
-      case 18: return loc.q18;
-      default: return '';
-    }
+  String getQuestionTextKey() {
+    return 'q$id';
   }
 }
 

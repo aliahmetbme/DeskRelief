@@ -12,6 +12,14 @@
       }
     }
   },
+  "welcome_user": "Hoş Geldin, {name}",
+  "@welcome_user": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "feedbackStart": "Güne başlamak için harika bir an! İlk seansını tamamla.",
   "feedbackStep": "Başlangıç için güzel bir adım! Devam et.",
   "feedbackHalfway": "Yolun yarısına geldin, harika gidiyorsun!",
@@ -161,7 +169,7 @@
   "schedulingStart": "Programımı Başlat",
   "clinicalAdviceTitle": "Klinik Tavsiye",
   "clinicalAdviceDesc": "Kas liflerinizin kendini onarması ve postür gelişiminin kalıcı olması için antrenmanlar arasında en az 24 saat dinlenme bırakılması önerilir.",
-  "daySelectionTitle": "Day Selection",
+  "daySelectionTitle": "Gün Seçimi",
   "maxDaysError": "En fazla {max} gün seçebilirsiniz.",
   "@maxDaysError": {
     "placeholders": {
@@ -171,6 +179,12 @@
     }
   },
   "timingDetailsTitle": "Zamanlama Detayları",
+  "save": "Kaydet",
+  "confirm": "Onayla",
+  "back": "Geri",
+  "finish": "Bitir",
+  "error_generic": "Bir hata oluştu",
+  "and_conjunction": "ve",
   "cancel": "İptal",
   "workoutTimeTitle": "Antrenman Saati",
   "done": "Bitti",
@@ -210,6 +224,14 @@
   "regionKneeLeft": "Sol Diz",
   "regionAnkleRight": "Sağ Ayak Bileği",
   "regionAnkleLeft": "Sol Ayak Bileği",
+  "leftShoulder": "Sol Omuz",
+  "rightShoulder": "Sağ Omuz",
+  "leftArm": "Sol Kol",
+  "rightArm": "Sağ Kol",
+  "leftKnee": "Sol Diz",
+  "rightKnee": "Sağ Diz",
+  "leftAnkle": "Sol Ayak Bileği",
+  "rightAnkle": "Sağ Ayak Bileği",
   "noRegionSelected": "Seçili bölge bulunamadı.",
   "goBack": "Geri Dön",
   "regionLabel": "{region} Bölgesi",
@@ -346,10 +368,10 @@
   "acceptAgreementsError": "Devam etmek için lütfen tüm sözleşmeleri kabul edin.",
   "onboardingTitle1": "Oturmak Size Ağrı mı Veriyor?",
   "onboardingDesc1": "Modern ofis yaşam tarzı genellikle uzun süreli oturmaya neden olur, bu da boyun, sırt ve omuz ağrılarına yol açabilir.",
-  "onboardingTitle2": "Meet DeskRelief, Dijital Çözümünüz",
-  "onboardingDesc2": "DeskRelief, oturma aralarını bölmek ve ağrıyı en aza indirmek için tasarlanmış, uzmanlarca hazırlanmış kişiselleştirilmiş egzersiz protokolleri sunar.",
-  "onboardingTitle3": "Kas-İskelet Sağlığınızın Kontrolünü Elinize Alın",
-  "onboardingDesc3": "Ağrısız bir hayata doğru kişiselleştirilmiş yolculuğunuza başlayın. Kolay ve klinik tabanlıdır.",
+  "onboardingTitle2": "Meet DeskRelief, Your Digital Solution",
+  "onboardingDesc2": "DeskRelief offers expert-curated, personalized exercise protocols designed to interrupt sitting intervals and minimize pain.",
+  "onboardingTitle3": "Take Control of Your Musculoskeletal Health",
+  "onboardingDesc3": "Start your personalized journey towards a pain-free life. It's easy and clinically-based.",
   "next": "İleri",
   "skip": "Atla",
   "signInTitle": "Hoş Geldiniz",
@@ -444,5 +466,23 @@
   "btnDoctorApproved": "Doktor Onaylı",
   "btnCancel": "İptal",
   "btnReevaluate": "Durumumu Tekrar Değerlendir",
-  "toastSafetyWarning": "Güvenliğiniz bizim için önemli. Lütfen hekim onayı olmadan egzersiz yapmayınız."
+  "toastSafetyWarning": "Güvenliğiniz bizim için önemli. Lütfen hekim onayı olmadan egzersiz yapmayınız.",
+  "schedulingInstructionEmpty": "Lütfen çalışma günlerinizi belirleyin.",
+  "schedulingInstructionSingle": "Odak bölgeniz için haftada 2 veya 3 gün belirleyin.",
+  "schedulingInstructionMulti": "Belirlediğiniz {count} bölge için sürdürülebilir bir program adına haftada tam 4 gün belirleyin.",
+  "monday": "Pazartesi",
+  "tuesday": "Salı",
+  "wednesday": "Çarşamba",
+  "thursday": "Perşembe",
+  "friday": "Cuma",
+  "saturday": "Cumartesi",
+  "sunday": "Pazar",
+  "offset_15m": "15 dk önce",
+  "offset_30m": "30 dk önce",
+  "offset_1h": "1 saat önce",
+  "offset_1_5h": "1.5 saat önce",
+  "offset_2h": "2 saat önce",
+  "notification": "Bildirim",
+  "notificationTimeTitle": "Bildirim Zamanı",
+  "notificationTimeDesc": "Antrenman başlamadan kaç dakika önce hatırlatılsın?"
 }

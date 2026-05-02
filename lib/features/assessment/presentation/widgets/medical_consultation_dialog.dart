@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../../../../core/widgets/custom_primary_button.dart';
 import 'package:deskrelief/l10n/app_localizations.dart';
+import '../../../../core/theme/app_colors.dart';
 
 class MedicalConsultationDialog extends StatelessWidget {
   final VoidCallback onConfirm;
@@ -14,6 +15,7 @@ class MedicalConsultationDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final drColors = theme.extension<DeskReliefColors>()!;
 
     return Stack(
       children: [
@@ -32,11 +34,11 @@ class MedicalConsultationDialog extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.fromLTRB(28, 36, 28, 28),
                 decoration: BoxDecoration(
-                  color: theme.colorScheme.surface,
+                  color: theme.cardTheme.color,
                   borderRadius: BorderRadius.circular(40),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.18),
+                      color: theme.shadowColor.withValues(alpha: 0.18),
                       blurRadius: 48,
                       offset: const Offset(0, 16),
                     ),
@@ -50,13 +52,13 @@ class MedicalConsultationDialog extends StatelessWidget {
                       width: 80,
                       height: 80,
                       decoration: BoxDecoration(
-                        color: Colors.orange.shade50,
+                        color: (drColors.warning ?? Colors.orange).withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
                       child: Center(
                         child: Icon(
                           Icons.warning_amber_rounded,
-                          color: Colors.orange.shade700,
+                          color: drColors.warning ?? Colors.orange,
                           size: 40,
                         ),
                       ),

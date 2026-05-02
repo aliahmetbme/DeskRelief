@@ -1,16 +1,9 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:deskrelief/l10n/app_localizations.dart';
-import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/app_back_button.dart';
-import '../../../../core/widgets/custom_primary_button.dart';
 import '../viewmodels/red_flags_view_model.dart';
 import '../widgets/question_card.dart';
-import '../widgets/assessment_result_dialog.dart';
-import '../../../auth/presentation/viewmodels/auth_view_model.dart';
-import '../../../auth/domain/models/user_model.dart';
 
 class ExclusionCriteriaSettingsPage extends StatelessWidget {
   const ExclusionCriteriaSettingsPage({super.key});
@@ -22,18 +15,17 @@ class ExclusionCriteriaSettingsPage extends StatelessWidget {
     final loc = AppLocalizations.of(context)!;
 
     return Scaffold(
-      backgroundColor: isDark ? theme.scaffoldBackgroundColor : AppColors.backgroundLight,
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: Stack(
         children: [
           // Scrollable List
           Consumer<RedFlagsViewModel>(
             builder: (context, viewModel, child) {
-              final allQuestions = viewModel.allQuestions;
+              final grouped = viewModel.questionsByCategory;
               
-              // Group by category
-              final systemic = allQuestions.where((q) => q.step == 1).toList();
-              final musculoskeletal = allQuestions.where((q) => q.step == 2).toList();
-              final redFlags = allQuestions.where((q) => q.step == 3).toList();
+              final systemic = grouped[1] ?? [];
+              final musculoskeletal = grouped[2] ?? [];
+              final redFlags = grouped[3] ?? [];
 
               return ListView(
                 padding: EdgeInsets.only(
@@ -71,11 +63,11 @@ class ExclusionCriteriaSettingsPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 32),
 
-                  _CategorySection(title: loc.qCat1, questions: systemic, viewModel: viewModel),
+                  _CategorySection(title: _getTranslatedCategory(context, 'qCat1'), questions: systemic, viewModel: viewModel),
                   const SizedBox(height: 32),
-                  _CategorySection(title: loc.qCat2, questions: musculoskeletal, viewModel: viewModel),
+                  _CategorySection(title: _getTranslatedCategory(context, 'qCat2'), questions: musculoskeletal, viewModel: viewModel),
                   const SizedBox(height: 32),
-                  _CategorySection(title: loc.qCat3, questions: redFlags, viewModel: viewModel),
+                  _CategorySection(title: _getTranslatedCategory(context, 'qCat3'), questions: redFlags, viewModel: viewModel),
                 ],
               );
             },
@@ -88,11 +80,19 @@ class ExclusionCriteriaSettingsPage extends StatelessWidget {
             right: 0,
             child: _Header(isDark: isDark),
           ),
-
-
         ],
       ),
     );
+  }
+
+  String _getTranslatedCategory(BuildContext context, String key) {
+    final loc = AppLocalizations.of(context)!;
+    switch (key) {
+      case 'qCat1': return loc.qCat1;
+      case 'qCat2': return loc.qCat2;
+      case 'qCat3': return loc.qCat3;
+      default: return key;
+    }
   }
 }
 
@@ -110,7 +110,6 @@ class _CategorySection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final loc = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,12 +127,37 @@ class _CategorySection extends StatelessWidget {
         ),
         ...questions.map((q) => QuestionCard(
           number: '${q.id}',
-          questionText: q.getQuestionText(loc),
+          questionText: _getTranslatedText(context, q.getQuestionTextKey()),
           selectedAnswer: viewModel.answers[q.id],
           onAnswered: (value) => viewModel.setAnswer(q.id, value),
         )),
       ],
     );
+  }
+
+  String _getTranslatedText(BuildContext context, String key) {
+    final loc = AppLocalizations.of(context)!;
+    switch (key) {
+      case 'q1': return loc.q1;
+      case 'q2': return loc.q2;
+      case 'q3': return loc.q3;
+      case 'q4': return loc.q4;
+      case 'q5': return loc.q5;
+      case 'q6': return loc.q6;
+      case 'q7': return loc.q7;
+      case 'q8': return loc.q8;
+      case 'q9': return loc.q9;
+      case 'q10': return loc.q10;
+      case 'q11': return loc.q11;
+      case 'q12': return loc.q12;
+      case 'q13': return loc.q13;
+      case 'q14': return loc.q14;
+      case 'q15': return loc.q15;
+      case 'q16': return loc.q16;
+      case 'q17': return loc.q17;
+      case 'q18': return loc.q18;
+      default: return key;
+    }
   }
 }
 
@@ -153,7 +177,7 @@ class _Header extends StatelessWidget {
         left: 20,
         right: 20,
       ),
-      color: isDark ? theme.scaffoldBackgroundColor : AppColors.backgroundLight,
+      color: theme.scaffoldBackgroundColor,
       child: Row(
         children: [
           const AppBackButton(),
@@ -167,34 +191,7 @@ class _Header extends StatelessWidget {
           Consumer<RedFlagsViewModel>(
             builder: (context, viewModel, child) {
               return TextButton(
-                onPressed: () {
-                  showGeneralDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    barrierColor: Colors.black.withValues(alpha: 0.3),
-                    pageBuilder: (context, animation, secondaryAnimation) {
-                      return BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
-                        child: AssessmentResultDialog(
-                          hasRedFlags: viewModel.hasRedFlags,
-                          onActionPressed: () async {
-                            if (viewModel.hasRedFlags) {
-                              // DB'den banla
-                              await context.read<AuthViewModel>().applyManualBan(BanReason.redFlag);
-                              if (context.mounted) {
-                                context.pop(); // Pop Dialog
-                                // Router zaten isBanned'i görünce otomatik /clinical-block'a atacak
-                              }
-                            } else {
-                              context.pop(); // Pop Dialog
-                              context.pop(); // Pop Page back to Profile
-                            }
-                          },
-                        ),
-                      );
-                    },
-                  );
-                },
+                onPressed: () => viewModel.submitExclusionCriteria(context),
                 child: Text(
                   loc.done,
                   style: TextStyle(

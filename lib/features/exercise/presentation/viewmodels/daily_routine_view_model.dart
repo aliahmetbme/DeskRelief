@@ -1,7 +1,23 @@
 import 'package:flutter/foundation.dart';
 import '../../domain/models/exercise_model.dart';
+import 'package:deskrelief/features/auth/domain/models/user_model.dart';
 
 class DailyRoutineViewModel extends ChangeNotifier {
+  String? _currentUid;
+
+  void updateUser(UserModel? user) {
+    if (user != null) {
+      if (_currentUid != user.id) {
+        _currentUid = user.id;
+        // Kullanıcı bazlı rutin verilerini burada güncelleyebiliriz
+        notifyListeners();
+      }
+    } else {
+      _currentUid = null;
+      notifyListeners();
+    }
+  }
+
   final List<ExerciseItem> _exercises = [
     ExerciseItem(
       id: '1',
@@ -67,6 +83,17 @@ class DailyRoutineViewModel extends ChangeNotifier {
   List<ExerciseItem> get exercises => _exercises;
 
   int get remainingExercisesCount => _exercises.where((e) => e.isLocked).length;
+
+  Map<LegacyExercisePhase, List<ExerciseItem>> get exercisesByPhase {
+    final Map<LegacyExercisePhase, List<ExerciseItem>> grouped = {};
+    for (var phase in LegacyExercisePhase.values) {
+      final phaseExercises = _exercises.where((e) => e.phase == phase).toList();
+      if (phaseExercises.isNotEmpty) {
+        grouped[phase] = phaseExercises;
+      }
+    }
+    return grouped;
+  }
 
   void onExerciseTap(ExerciseItem exercise) {
     if (exercise.isLocked) return;

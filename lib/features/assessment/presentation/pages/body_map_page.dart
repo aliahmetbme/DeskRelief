@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:go_router/go_router.dart';
 import '../../../../core/widgets/custom_primary_button.dart';
 import '../viewmodels/body_map_view_model.dart';
 import 'package:deskrelief/l10n/app_localizations.dart';
 import 'package:deskrelief/features/auth/presentation/viewmodels/auth_view_model.dart';
-import 'package:deskrelief/features/auth/domain/models/user_model.dart';
 
 class BodyMapPage extends StatelessWidget {
   const BodyMapPage({super.key});
@@ -108,18 +106,18 @@ class BodyMapPage extends StatelessWidget {
                           child: Container(
                             width: double.infinity,
                             decoration: BoxDecoration(
-                              color: theme.cardColor,
+                              color: theme.cardTheme.color,
                               borderRadius: BorderRadius.circular(24.0),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.04),
+                                  color: theme.shadowColor.withValues(alpha: 0.04),
                                   blurRadius: 20,
                                   offset: const Offset(0, 10),
                                 ),
                               ],
                               border: Border.all(
                                 color: theme.dividerColor.withValues(
-                                  alpha: 0.2,
+                                  alpha: 0.1,
                                 ),
                               ),
                             ),
@@ -178,10 +176,9 @@ class BodyMapPage extends StatelessWidget {
 
                                     // Noktalar
                                     // Only render zones that belong to the current view
-                                    ...viewModel.allRegions
-                                        .where((zoneId) => viewModel.currentStep == 1
-                                            ? zoneId.endsWith('_back')
-                                            : zoneId.endsWith('_front'))
+                                    ... (viewModel.currentStep == 1
+                                            ? viewModel.backRegions
+                                            : viewModel.frontRegions)
                                         .expand((region) {
                                       // Cinsiyete göre koordinat seti seçimi
                                       final Map<String, List<Offset>>
@@ -330,7 +327,7 @@ class BodyMapPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(26),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.08),
+                              color: theme.shadowColor.withValues(alpha: 0.08),
                               blurRadius: 4,
                               offset: const Offset(0, 2),
                             ),
@@ -359,7 +356,7 @@ class BodyMapPage extends StatelessWidget {
                                   ? FontWeight.bold
                                   : FontWeight.w500,
                               color: viewModel.currentStep == 2
-                                  ? theme.primaryColor
+                                  ? theme.colorScheme.primary
                                   : theme.colorScheme.onSurfaceVariant.withValues(
                                       alpha: 0.7,
                                     ),
@@ -385,7 +382,7 @@ class BodyMapPage extends StatelessWidget {
                                   ? FontWeight.bold
                                   : FontWeight.w500,
                               color: viewModel.currentStep == 1
-                                  ? theme.primaryColor
+                                  ? theme.colorScheme.primary
                                   : theme.colorScheme.onSurfaceVariant.withValues(
                                       alpha: 0.7,
                                     ),
@@ -447,7 +444,7 @@ class BodyMapPage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            _getRegionDisplayName(context, region),
+                            _getTranslatedRegion(context, viewModel.getRegionLocalizationKey(region)),
                             style: TextStyle(
                               fontSize: 13.5,
                               fontWeight: FontWeight.w600,
@@ -516,99 +513,29 @@ class BodyMapPage extends StatelessWidget {
           text: AppLocalizations.of(context)!.determinePainIntensity,
           icon: Icons.chevron_right,
           onPressed: hasSelection
-              ? () async {
-                  final authVM = context.read<AuthViewModel>();
-                  viewModel.nextStep(viewModel.selectedRegions);
-                  final List<RegionDetail> painRegions = viewModel
-                      .selectedClinicalRegions
-                      .map((r) => RegionDetail(regionId: r.name))
-                      .toList();
-                  await authVM.updateProgress(
-                    hasCompletedBodyMap: true,
-                    painRegions: painRegions,
-                  );
-                  if (context.mounted) {
-                    context.push(
-                      '/assessment/pain-intensity',
-                      extra: viewModel.selectedClinicalRegions.map((r) => r.name).toList(),
-                    );
-                  }
-                }
+              ? () => viewModel.submitSelection(context, context.read<AuthViewModel>())
               : null,
         ),
       ),
     );
   }
 
-  String _getRegionDisplayName(BuildContext context, String id) {
+  String _getTranslatedRegion(BuildContext context, String key) {
     final loc = AppLocalizations.of(context)!;
-    switch (id) {
-      // Boyun
-      case 'neck_front':
-      case 'neck_back':
-        return loc.regionNeck;
-
-      // Sağ Omuz
-      case 'shoulder_r_front':
-      case 'shoulder_r_back':
-        return loc.regionShoulderRight;
-
-      // Sol Omuz
-      case 'shoulder_l_front':
-      case 'shoulder_l_back':
-        return loc.regionShoulderLeft;
-
-      // Üst Sırt
-      case 'upper_back':
-        return loc.regionUpperBack;
-
-      // Bel / Alt Sırt
-      case 'lower_back':
-        return loc.regionLowerBack;
-
-      // Sağ Kalca / Pelvis
-      case 'hip_r_front':
-      case 'hip_r_back':
-        return loc.regionHipPelvis;
-
-      // Sol Kalca / Pelvis
-      case 'hip_l_front':
-      case 'hip_l_back':
-        return loc.regionHipPelvis;
-
-      // Sağ Kol / Bilek
-      case 'arm_wrist_r_front':
-      case 'arm_wrist_r_back':
-        return loc.regionArmRight;
-
-      // Sol Kol / Bilek
-      case 'arm_wrist_l_front':
-      case 'arm_wrist_l_back':
-        return loc.regionArmLeft;
-
-      // Sağ Diz
-      case 'knee_r_front':
-      case 'knee_r_back':
-        return loc.regionKneeRight;
-
-      // Sol Diz
-      case 'knee_l_front':
-      case 'knee_l_back':
-        return loc.regionKneeLeft;
-
-      // Sağ Ayak Bileği
-      case 'ankle_r_front':
-      case 'ankle_r_back':
-        return loc.regionAnkleRight;
-
-      // Sol Ayak Bileği
-      case 'ankle_l_front':
-      case 'ankle_l_back':
-        return loc.regionAnkleLeft;
-
-      default:
-        // Fallback: make the raw ID human-readable
-        return id.replaceAll('_', ' ').toUpperCase();
+    switch (key) {
+      case 'regionNeck': return loc.regionNeck;
+      case 'leftShoulder': return loc.leftShoulder;
+      case 'rightShoulder': return loc.rightShoulder;
+      case 'regionHipPelvis': return loc.regionHipPelvis;
+      case 'regionUpperBack': return loc.regionUpperBack;
+      case 'regionLowerBack': return loc.regionLowerBack;
+      case 'leftArm': return loc.leftArm;
+      case 'rightArm': return loc.rightArm;
+      case 'leftKnee': return loc.leftKnee;
+      case 'rightKnee': return loc.rightKnee;
+      case 'leftAnkle': return loc.leftAnkle;
+      case 'rightAnkle': return loc.rightAnkle;
+      default: return key;
     }
   }
 }
@@ -690,7 +617,7 @@ class _PulseMarkerState extends State<_PulseMarker>
                     ]
                   : [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.08),
+                        color: theme.shadowColor.withValues(alpha: 0.08),
                         blurRadius: 6,
                         offset: const Offset(0, 2),
                       ),

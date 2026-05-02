@@ -36,7 +36,6 @@ class _CustomPrimaryButtonState extends State<CustomPrimaryButton> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final primary = theme.colorScheme.primary;
 
     // Yüksekliği h-14 (56px) ve tam yuvarlak köşeler
     return Container(
@@ -44,17 +43,10 @@ class _CustomPrimaryButtonState extends State<CustomPrimaryButton> {
       height: 56,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(28), // rounded-full (h/2)
-        gradient: const LinearGradient(
-          colors: [
-            Color(0xFF1D4ED8), // blue-700
-            Color(0xFF3B82F6), // blue-500
-          ],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-        ),
+        color: theme.colorScheme.primary,
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF3B82F6).withValues(alpha: 0.3),
+            color: theme.colorScheme.primary.withValues(alpha: 0.3),
             blurRadius: 20,
             offset: const Offset(0, 10),
             spreadRadius: -2,
@@ -68,20 +60,20 @@ class _CustomPrimaryButtonState extends State<CustomPrimaryButton> {
           onTap: (widget.isLoading || _isNavigating) ? null : _handlePress,
           child: Center(
             child: (widget.isLoading || _isNavigating)
-                ? const CupertinoActivityIndicator(color: Colors.white)
+                ? CupertinoActivityIndicator(color: theme.colorScheme.onPrimary)
                 : Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
                         widget.text,
                         style: theme.textTheme.titleMedium?.copyWith(
-                          color: Colors.white,
+                          color: theme.colorScheme.onPrimary,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       if (widget.icon != null) ...[
                         const SizedBox(width: 8),
-                        Icon(widget.icon, color: Colors.white, size: 22),
+                        Icon(widget.icon, color: theme.colorScheme.onPrimary, size: 22),
                       ],
                     ],
                   ),

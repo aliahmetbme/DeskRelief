@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/widgets/custom_primary_button.dart';
 import 'package:deskrelief/l10n/app_localizations.dart';
+import '../../../../core/theme/app_colors.dart';
 
 class AssessmentResultDialog extends StatelessWidget {
   final bool hasRedFlags;
@@ -15,17 +16,17 @@ class AssessmentResultDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
+    final drColors = theme.extension<DeskReliefColors>()!;
 
     final iconData = hasRedFlags
         ? Icons.warning_amber_rounded
         : Icons.check_circle_outline_rounded;
+        
     final iconColor = hasRedFlags
-        ? Colors.orange.shade700
-        : Colors.green.shade600;
-    final iconBgColor = hasRedFlags
-        ? Colors.orange.shade100
-        : Colors.green.shade100;
+        ? (drColors.warning ?? Colors.orange)
+        : (drColors.success ?? Colors.green);
+        
+    final iconBgColor = iconColor.withValues(alpha: 0.1);
 
     final loc = AppLocalizations.of(context)!;
     final title = hasRedFlags
@@ -42,11 +43,11 @@ class AssessmentResultDialog extends StatelessWidget {
             maxHeight: MediaQuery.of(context).size.height * 0.85,
           ),
           decoration: BoxDecoration(
-            color: isDark ? theme.colorScheme.surface : Colors.white,
+            color: theme.cardTheme.color,
             borderRadius: BorderRadius.circular(24),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(isDark ? 0.3 : 0.08),
+                color: theme.shadowColor.withValues(alpha: theme.brightness == Brightness.dark ? 0.3 : 0.08),
                 blurRadius: 30,
                 offset: const Offset(0, 10),
               ),
@@ -64,7 +65,7 @@ class AssessmentResultDialog extends StatelessWidget {
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
-                      color: theme.colorScheme.onSurface.withOpacity(0.05),
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.05),
                     ),
                   ),
                 ),
@@ -75,9 +76,7 @@ class AssessmentResultDialog extends StatelessWidget {
                       title,
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: theme
-                            .colorScheme
-                            .primary, // Matches top header in HTML
+                        color: theme.colorScheme.primary,
                       ),
                     ),
                   ],
@@ -120,9 +119,7 @@ class AssessmentResultDialog extends StatelessWidget {
                             textAlign: TextAlign.center,
                             text: TextSpan(
                               style: theme.textTheme.bodyMedium?.copyWith(
-                                color: theme.colorScheme.onSurface.withOpacity(
-                                  0.7,
-                                ),
+                                color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                                 height: 1.6,
                               ),
                               children: [
@@ -142,9 +139,7 @@ class AssessmentResultDialog extends StatelessWidget {
                             loc.screeningSuccessDesc,
                             textAlign: TextAlign.center,
                             style: theme.textTheme.bodyMedium?.copyWith(
-                              color: theme.colorScheme.onSurface.withOpacity(
-                                0.7,
-                              ),
+                              color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                               height: 1.6,
                             ),
                           ),

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class GradientSliderTrackShape extends SliderTrackShape with BaseSliderTrackShape {
+  final List<Color>? colors;
+
+  GradientSliderTrackShape({this.colors});
+
   @override
   Rect getPreferredRect({
     required RenderBox parentBox,
@@ -38,13 +42,15 @@ class GradientSliderTrackShape extends SliderTrackShape with BaseSliderTrackShap
       isDiscrete: isDiscrete,
     );
 
+    final List<Color> gradientColors = colors ?? [
+      const Color(0xFF006E28), // Koyu Yeşil
+      const Color(0xFFFBC02D), // Sarı/Altın
+      const Color(0xFFBA1A1A), // Kırmızı
+    ];
+
     final Paint fillPaint = Paint()
-      ..shader = const LinearGradient(
-        colors: [
-          Color(0xFF006E28), // Koyu Yeşil
-          Color(0xFFFBC02D), // Sarı/Altın
-          Color(0xFFBA1A1A), // Kırmızı
-        ],
+      ..shader = LinearGradient(
+        colors: gradientColors,
       ).createShader(trackRect);
 
     final Radius trackRadius = Radius.circular(trackRect.height / 2);

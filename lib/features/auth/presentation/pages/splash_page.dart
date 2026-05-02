@@ -88,7 +88,7 @@ class _SplashPageState extends State<SplashPage> {
                     shadows: [
                       Shadow(
                         blurRadius: 15.0,
-                        color: Colors.black.withValues(alpha: 0.5),
+                        color: theme.shadowColor.withValues(alpha: 0.5),
                         offset: const Offset(0, 4),
                       ),
                     ],

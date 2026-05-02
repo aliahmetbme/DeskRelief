@@ -14,7 +14,6 @@ import '../../features/assessment/presentation/pages/red_flags_page.dart';
 import '../../features/assessment/presentation/pages/body_map_page.dart';
 import '../../features/assessment/presentation/pages/pain_intensity_page.dart';
 import '../../features/scheduling/presentation/pages/scheduling_page.dart';
-import '../../features/scheduling/presentation/viewmodels/scheduling_view_model.dart';
 import '../../features/main/presentation/pages/main_layout_page.dart';
 import '../../features/main/presentation/pages/dashboard_page.dart';
 import '../../features/main/presentation/pages/calendar_page.dart';
@@ -23,7 +22,6 @@ import '../../features/assessment/presentation/pages/exclusion_criteria_settings
 import '../../features/exercise/presentation/pages/daily_routine_page.dart';
 import '../../features/exercise/presentation/pages/exercise_detail_page.dart';
 import '../../features/exercise/presentation/pages/exercise_video_page.dart';
-import '../../features/exercise/presentation/viewmodels/daily_routine_view_model.dart';
 import '../../features/exercise/domain/models/exercise_model.dart';
 
 class AppRouter {
@@ -32,66 +30,52 @@ class AppRouter {
       initialLocation: '/splash',
       refreshListenable: authViewModel,
       redirect: (context, state) {
-        final location = state.matchedLocation;
-
+        final location = state.uri.toString();
         // DURUM 1: Başlatma Kontrolü (Splash State)
         if (!authViewModel.isInitialized) {
           return '/splash';
         }
 
-        // DURUM 2: Kullanıcı Giriş Yapmamışsa
+        // DURUM 2: Oturum Kontrolü (Kullanıcı Giriş Yapmamışsa)
         final user = authViewModel.currentUser;
         if (user == null) {
-          // 2.1. Onboarding Kontrolü (Sadece bir kez gösterilmesi için)
-          if (!authViewModel.hasSeenOnboarding) {
-            if (location == '/onboarding') return null;
-            return '/onboarding';
-          }
-
-          // 2.2. Onboarding'i görmüş ama giriş yapmamışsa
-          if (location == '/onboarding') {
-            return '/signin';
-          }
-
-          // 2.3. Giriş yapmamış kullanıcının gidebileceği sayfalar (Whitelist)
-          if (location == '/signin' ||
-              location == '/signup' ||
-              location == '/forgot-password') {
+          if (location == '/sign-in' || location == '/sign-up' || location == '/forgot-password') {
             return null;
           }
-
-          return '/signin';
+          return '/sign-in';
         }
 
-        // DURUM 2.5: E-posta Doğrulama Kontrolü (Verification Gate)
-        // Eğer kullanıcı e-posta ile kayıt olduysa ve henüz doğrulamadıysa
-        if (!authViewModel.isEmailVerified) {
-          if (location == '/verification') return null;
-          return '/verification';
+        // DURUM 3: Onboarding Kontrolü (Giriş Yapılmışsa)
+        final progress = user.progress;
+        
+        if (!progress.hasCompletedWelcome) {
+          if (location == '/welcome-profile') return null;
+          return '/welcome-profile';
+        }
+        
+        if (!progress.hasCompletedRedFlags) {
+          if (location == '/red-flags') return null;
+          return '/red-flags';
+        }
+        
+        if (!progress.hasCompletedBodyMap) {
+          if (location == '/body-map') return null;
+          return '/body-map';
         }
 
-        // DURUM 3: Giriş Yapılmışsa ve Doğrulanmışsa (Progress Kontrolü)
-        final target = authViewModel.checkUserProgress(user);
-
-        if (target == '/home') {
-          final bool isOnRestrictedPages =
-              location == '/signin' ||
-              location == '/signup' ||
-              location == '/onboarding' ||
-              location == '/splash' ||
-              location == '/verification' ||
-              location == '/welcome-profile' ||
-              location == '/red-flags' ||
-              location == '/body-map' ||
-              location == '/assessment/pain-intensity' ||
-              location == '/scheduling';
-
-          if (isOnRestrictedPages) return '/home';
-          return null;
+        if (!progress.hasCompletedPainScore) {
+          if (location == '/assessment/pain-intensity') return null;
+          return '/assessment/pain-intensity';
         }
 
-        if (location != target) {
-          return target;
+        if (!progress.hasCompletedScheduling) {
+          if (location == '/scheduling') return null;
+          return '/scheduling';
+        }
+
+        // Tüm aşamalar tamamlanmışsa ve kullanıcı hala login/splash sayfalarındaysa Dashboard'a yönlendir
+        if (location == '/splash' || location == '/sign-in' || location == '/sign-up') {
+          return '/home';
         }
 
         return null;
@@ -115,11 +99,11 @@ class AppRouter {
           builder: (context, state) => const OnboardingPage(),
         ),
         GoRoute(
-          path: '/signin',
+          path: '/sign-in',
           builder: (context, state) => const SignInPage(),
         ),
         GoRoute(
-          path: '/signup',
+          path: '/sign-up',
           builder: (context, state) => const SignUpPage(),
         ),
         GoRoute(
@@ -167,19 +151,13 @@ class AppRouter {
               final user = context.read<AuthViewModel>().currentUser;
               regions = user?.painRegions.map((e) => e.regionId).toList() ?? [];
             }
-            return ChangeNotifierProvider(
-              create: (_) => SchedulingViewModel(focusRegions: regions),
-              child: const SchedulingPage(),
-            );
+            return SchedulingPage(focusRegions: regions);
           },
         ),
 
         GoRoute(
           path: '/exercise/daily-routine',
-          builder: (context, state) => ChangeNotifierProvider(
-            create: (_) => DailyRoutineViewModel(),
-            child: const DailyRoutinePage(),
-          ),
+          builder: (context, state) => const DailyRoutinePage(),
         ),
         GoRoute(
           path: '/exercise/detail',

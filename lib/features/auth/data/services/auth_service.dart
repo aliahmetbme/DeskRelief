@@ -170,7 +170,7 @@ class AuthService {
       }
       return loc.errorUnknown;
     } catch (e, stackTrace) {
-      if (e is gsi.GoogleSignInException && e.code == 'canceled') return null;
+      if (e is gsi.GoogleSignInException && e.code == gsi.GoogleSignInExceptionCode.canceled) return null;
 
       final errorStr = e.toString().toLowerCase();
       if (errorStr.contains('canceled') ||

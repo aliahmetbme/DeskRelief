@@ -128,6 +128,12 @@ abstract class AppLocalizations {
   /// **'Devam Et, {name}'**
   String greetingKeepGoing(String name);
 
+  /// No description provided for @welcome_user.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hoş Geldin, {name}'**
+  String welcome_user(String name);
+
   /// No description provided for @feedbackStart.
   ///
   /// In tr, this message translates to:
@@ -755,7 +761,7 @@ abstract class AppLocalizations {
   /// No description provided for @daySelectionTitle.
   ///
   /// In tr, this message translates to:
-  /// **'Day Selection'**
+  /// **'Gün Seçimi'**
   String get daySelectionTitle;
 
   /// No description provided for @maxDaysError.
@@ -769,6 +775,42 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Zamanlama Detayları'**
   String get timingDetailsTitle;
+
+  /// No description provided for @save.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydet'**
+  String get save;
+
+  /// No description provided for @confirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'Onayla'**
+  String get confirm;
+
+  /// No description provided for @back.
+  ///
+  /// In tr, this message translates to:
+  /// **'Arka'**
+  String get back;
+
+  /// No description provided for @finish.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bitir'**
+  String get finish;
+
+  /// No description provided for @error_generic.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bir hata oluştu'**
+  String get error_generic;
+
+  /// No description provided for @and_conjunction.
+  ///
+  /// In tr, this message translates to:
+  /// **'ve'**
+  String get and_conjunction;
 
   /// No description provided for @cancel.
   ///
@@ -926,12 +968,6 @@ abstract class AppLocalizations {
   /// **'Ön'**
   String get front;
 
-  /// No description provided for @back.
-  ///
-  /// In tr, this message translates to:
-  /// **'Arka'**
-  String get back;
-
   /// No description provided for @selectedRegionsTitle.
   ///
   /// In tr, this message translates to:
@@ -1003,6 +1039,54 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Sol Ayak Bileği'**
   String get regionAnkleLeft;
+
+  /// No description provided for @leftShoulder.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sol Omuz'**
+  String get leftShoulder;
+
+  /// No description provided for @rightShoulder.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sağ Omuz'**
+  String get rightShoulder;
+
+  /// No description provided for @leftArm.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sol Kol'**
+  String get leftArm;
+
+  /// No description provided for @rightArm.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sağ Kol'**
+  String get rightArm;
+
+  /// No description provided for @leftKnee.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sol Diz'**
+  String get leftKnee;
+
+  /// No description provided for @rightKnee.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sağ Diz'**
+  String get rightKnee;
+
+  /// No description provided for @leftAnkle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sol Ayak Bileği'**
+  String get leftAnkle;
+
+  /// No description provided for @rightAnkle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sağ Ayak Bileği'**
+  String get rightAnkle;
 
   /// No description provided for @noRegionSelected.
   ///
@@ -1529,25 +1613,25 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingTitle2.
   ///
   /// In tr, this message translates to:
-  /// **'Meet DeskRelief, Dijital Çözümünüz'**
+  /// **'Meet DeskRelief, Your Digital Solution'**
   String get onboardingTitle2;
 
   /// No description provided for @onboardingDesc2.
   ///
   /// In tr, this message translates to:
-  /// **'DeskRelief, oturma aralarını bölmek ve ağrıyı en aza indirmek için tasarlanmış, uzmanlarca hazırlanmış kişiselleştirilmiş egzersiz protokolleri sunar.'**
+  /// **'DeskRelief offers expert-curated, personalized exercise protocols designed to interrupt sitting intervals and minimize pain.'**
   String get onboardingDesc2;
 
   /// No description provided for @onboardingTitle3.
   ///
   /// In tr, this message translates to:
-  /// **'Kas-İskelet Sağlığınızın Kontrolünü Elinize Alın'**
+  /// **'Take Control of Your Musculoskeletal Health'**
   String get onboardingTitle3;
 
   /// No description provided for @onboardingDesc3.
   ///
   /// In tr, this message translates to:
-  /// **'Ağrısız bir hayata doğru kişiselleştirilmiş yolculuğunuza başlayın. Kolay ve klinik tabanlıdır.'**
+  /// **'Start your personalized journey towards a pain-free life. It\'s easy and clinically-based.'**
   String get onboardingDesc3;
 
   /// No description provided for @next.
@@ -2071,6 +2155,114 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Güvenliğiniz bizim için önemli. Lütfen hekim onayı olmadan egzersiz yapmayınız.'**
   String get toastSafetyWarning;
+
+  /// No description provided for @schedulingInstructionEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Lütfen çalışma günlerinizi belirleyin.'**
+  String get schedulingInstructionEmpty;
+
+  /// No description provided for @schedulingInstructionSingle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Odak bölgeniz için haftada 2 veya 3 gün belirleyin.'**
+  String get schedulingInstructionSingle;
+
+  /// No description provided for @schedulingInstructionMulti.
+  ///
+  /// In tr, this message translates to:
+  /// **'Belirlediğiniz {count} bölge için sürdürülebilir bir program adına haftada tam 4 gün belirleyin.'**
+  String schedulingInstructionMulti(Object count);
+
+  /// No description provided for @monday.
+  ///
+  /// In tr, this message translates to:
+  /// **'Pazartesi'**
+  String get monday;
+
+  /// No description provided for @tuesday.
+  ///
+  /// In tr, this message translates to:
+  /// **'Salı'**
+  String get tuesday;
+
+  /// No description provided for @wednesday.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çarşamba'**
+  String get wednesday;
+
+  /// No description provided for @thursday.
+  ///
+  /// In tr, this message translates to:
+  /// **'Perşembe'**
+  String get thursday;
+
+  /// No description provided for @friday.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cuma'**
+  String get friday;
+
+  /// No description provided for @saturday.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cumartesi'**
+  String get saturday;
+
+  /// No description provided for @sunday.
+  ///
+  /// In tr, this message translates to:
+  /// **'Pazar'**
+  String get sunday;
+
+  /// No description provided for @offset_15m.
+  ///
+  /// In tr, this message translates to:
+  /// **'15 dk önce'**
+  String get offset_15m;
+
+  /// No description provided for @offset_30m.
+  ///
+  /// In tr, this message translates to:
+  /// **'30 dk önce'**
+  String get offset_30m;
+
+  /// No description provided for @offset_1h.
+  ///
+  /// In tr, this message translates to:
+  /// **'1 saat önce'**
+  String get offset_1h;
+
+  /// No description provided for @offset_1_5h.
+  ///
+  /// In tr, this message translates to:
+  /// **'1.5 saat önce'**
+  String get offset_1_5h;
+
+  /// No description provided for @offset_2h.
+  ///
+  /// In tr, this message translates to:
+  /// **'2 saat önce'**
+  String get offset_2h;
+
+  /// No description provided for @notification.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bildirim'**
+  String get notification;
+
+  /// No description provided for @notificationTimeTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bildirim Zamanı'**
+  String get notificationTimeTitle;
+
+  /// No description provided for @notificationTimeDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Antrenman başlamadan kaç dakika önce hatırlatılsın?'**
+  String get notificationTimeDesc;
 }
 
 class _AppLocalizationsDelegate

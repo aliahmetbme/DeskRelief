@@ -2,14 +2,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/app_back_button.dart';
 import '../../../../core/widgets/custom_primary_button.dart';
 import '../viewmodels/red_flags_view_model.dart';
 import '../widgets/question_card.dart';
-import '../widgets/assessment_result_dialog.dart';
 import 'package:deskrelief/l10n/app_localizations.dart';
-import 'package:deskrelief/features/auth/presentation/viewmodels/auth_view_model.dart';
 
 class RedFlagsPage extends StatefulWidget {
   const RedFlagsPage({super.key});
@@ -36,9 +33,7 @@ class _RedFlagsPageState extends State<RedFlagsPage> {
     final isDark = theme.brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark
-          ? theme.scaffoldBackgroundColor
-          : AppColors.backgroundLight,
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: Stack(
         children: [
           // Scrollable Body
@@ -75,11 +70,11 @@ class _RedFlagsPageState extends State<RedFlagsPage> {
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(
-                              AppLocalizations.of(context)!.medicalScreeningExclusionCriteria,
+                              AppLocalizations.of(
+                                context,
+                              )!.medicalScreeningExclusionCriteria,
                               style: theme.textTheme.bodyMedium?.copyWith(
-                                color: isDark
-                                    ? Colors.white
-                                    : theme.colorScheme.onSurface,
+                                color: theme.colorScheme.onSurface,
                                 height: 1.4,
                               ),
                             ),
@@ -91,7 +86,10 @@ class _RedFlagsPageState extends State<RedFlagsPage> {
                     final question = questions[index];
                     return QuestionCard(
                       number: '${question.id}',
-                      questionText: question.getQuestionText(AppLocalizations.of(context)!),
+                      questionText: _getTranslatedText(
+                        context,
+                        question.getQuestionTextKey(),
+                      ),
                       selectedAnswer: viewModel.answers[question.id],
                       onAnswered: (value) {
                         viewModel.setAnswer(question.id, value);
@@ -119,12 +117,12 @@ class _RedFlagsPageState extends State<RedFlagsPage> {
                     right: 20,
                   ),
                   decoration: BoxDecoration(
-                    color:
-                        (isDark ? theme.scaffoldBackgroundColor : Colors.white)
-                            .withValues(alpha: 0.7),
+                    color: theme.colorScheme.surface.withValues(alpha: 0.7),
                     border: Border(
                       bottom: BorderSide(
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.05),
+                        color: theme.dividerColor.withValues(
+                          alpha: 0.05,
+                        ),
                       ),
                     ),
                   ),
@@ -151,7 +149,9 @@ class _RedFlagsPageState extends State<RedFlagsPage> {
                                 },
                               ),
                               Text(
-                                AppLocalizations.of(context)!.medicalScreeningTitle,
+                                AppLocalizations.of(
+                                  context,
+                                )!.medicalScreeningTitle,
                                 style: theme.textTheme.titleLarge?.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -166,11 +166,14 @@ class _RedFlagsPageState extends State<RedFlagsPage> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Text(
-                                AppLocalizations.of(context)!.stepTracker(viewModel.currentStep),
+                                AppLocalizations.of(
+                                  context,
+                                )!.stepTracker(viewModel.currentStep),
                                 style: theme.textTheme.labelMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
-                                  color: theme.colorScheme.onSurface
-                                      .withValues(alpha: 0.5),
+                                  color: theme.colorScheme.onSurface.withValues(
+                                    alpha: 0.5,
+                                  ),
                                 ),
                               ),
                             ],
@@ -183,7 +186,7 @@ class _RedFlagsPageState extends State<RedFlagsPage> {
                               backgroundColor: theme.colorScheme.onSurface
                                   .withValues(alpha: 0.1),
                               valueColor: AlwaysStoppedAnimation<Color>(
-                                AppColors.primary,
+                                theme.colorScheme.primary,
                               ),
                               minHeight: 6,
                             ),
@@ -216,11 +219,12 @@ class _RedFlagsPageState extends State<RedFlagsPage> {
                     bottom: MediaQuery.of(context).padding.bottom + 20,
                   ),
                   decoration: BoxDecoration(
-                    color: (isDark ? theme.colorScheme.surface : Colors.white)
-                        .withValues(alpha: 0.8),
+                    color: theme.colorScheme.surface.withValues(alpha: 0.8),
                     border: Border(
                       top: BorderSide(
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.05),
+                        color: theme.dividerColor.withValues(
+                          alpha: 0.05,
+                        ),
                       ),
                     ),
                   ),
@@ -234,7 +238,9 @@ class _RedFlagsPageState extends State<RedFlagsPage> {
                             onPressed: () {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text(AppLocalizations.of(context)!.progressSaved),
+                                  content: Text(
+                                    AppLocalizations.of(context)!.progressSaved,
+                                  ),
                                 ),
                               );
                             },
@@ -252,7 +258,9 @@ class _RedFlagsPageState extends State<RedFlagsPage> {
                           const SizedBox(width: 16),
                           Expanded(
                             child: CustomPrimaryButton(
-                              text: isLastStep ? AppLocalizations.of(context)!.completeBtn : AppLocalizations.of(context)!.continueBtn,
+                              text: isLastStep
+                                  ? AppLocalizations.of(context)!.completeBtn
+                                  : AppLocalizations.of(context)!.continueBtn,
                               icon: isLastStep
                                   ? Icons.check
                                   : Icons.arrow_forward,
@@ -272,54 +280,16 @@ class _RedFlagsPageState extends State<RedFlagsPage> {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text(
-                                        AppLocalizations.of(context)!.pleaseAnswerAllQuestions,
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.pleaseAnswerAllQuestions,
                                       ),
                                     ),
                                   );
                                   return;
                                 }
 
-                                viewModel.nextStep(() {
-                                  showGeneralDialog(
-                                    context: context,
-                                    barrierDismissible: false,
-                                    barrierColor: Colors.black.withValues(alpha: 0.3),
-                                    pageBuilder:
-                                        (
-                                          context,
-                                          animation,
-                                          secondaryAnimation,
-                                        ) {
-                                          return BackdropFilter(
-                                            filter: ImageFilter.blur(
-                                              sigmaX: 8,
-                                              sigmaY: 8,
-                                            ),
-                                            child: AssessmentResultDialog(
-                                              hasRedFlags:
-                                                  viewModel.hasRedFlags,
-                                              onActionPressed: () async {
-                                                if (viewModel.hasRedFlags) {
-                                                  context.pop();
-                                                  // Force sign out/back if red flags are present
-                                                  context.go('/signin');
-                                                } else {
-                                                  context.pop();
-                                                  
-                                                  // Progress'i güncelle ve bekle
-                                                  await context.read<AuthViewModel>().updateProgress(hasCompletedRedFlags: true);
-                                                  
-                                                  // Proceed to Body Map assessment
-                                                  if (context.mounted) {
-                                                    context.go('/body-map');
-                                                  }
-                                                }
-                                              },
-                                            ),
-                                          );
-                                        },
-                                  );
-                                });
+                                viewModel.nextStep(context);
                               },
                             ),
                           ),
@@ -334,5 +304,55 @@ class _RedFlagsPageState extends State<RedFlagsPage> {
         ],
       ),
     );
+  }
+
+  String _getTranslatedText(BuildContext context, String key) {
+    final loc = AppLocalizations.of(context)!;
+    switch (key) {
+      case 'q1':
+        return loc.q1;
+      case 'q2':
+        return loc.q2;
+      case 'q3':
+        return loc.q3;
+      case 'q4':
+        return loc.q4;
+      case 'q5':
+        return loc.q5;
+      case 'q6':
+        return loc.q6;
+      case 'q7':
+        return loc.q7;
+      case 'q8':
+        return loc.q8;
+      case 'q9':
+        return loc.q9;
+      case 'q10':
+        return loc.q10;
+      case 'q11':
+        return loc.q11;
+      case 'q12':
+        return loc.q12;
+      case 'q13':
+        return loc.q13;
+      case 'q14':
+        return loc.q14;
+      case 'q15':
+        return loc.q15;
+      case 'q16':
+        return loc.q16;
+      case 'q17':
+        return loc.q17;
+      case 'q18':
+        return loc.q18;
+      case 'qCat1':
+        return loc.qCat1;
+      case 'qCat2':
+        return loc.qCat2;
+      case 'qCat3':
+        return loc.qCat3;
+      default:
+        return key;
+    }
   }
 }
