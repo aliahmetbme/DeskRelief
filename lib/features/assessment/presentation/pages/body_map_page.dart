@@ -350,7 +350,7 @@ class BodyMapPage extends StatelessWidget {
                         },
                         child: Center(
                           child: Text(
-                            AppLocalizations.of(context)!.front,
+                            AppLocalizations.of(context)!.bodyFront,
                             style: TextStyle(
                               fontWeight: viewModel.currentStep == 2
                                   ? FontWeight.bold
@@ -376,7 +376,7 @@ class BodyMapPage extends StatelessWidget {
                         },
                         child: Center(
                           child: Text(
-                            AppLocalizations.of(context)!.back,
+                            AppLocalizations.of(context)!.bodyBack,
                             style: TextStyle(
                               fontWeight: viewModel.currentStep == 1
                                   ? FontWeight.bold

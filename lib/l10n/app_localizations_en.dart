@@ -231,7 +231,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gdprConsent => 'GDPR Consent';
 
   @override
-  String get eula => 'EULA';
+  String get eula => 'EULA (End User License Agreement)';
 
   @override
   String get privacyPolicy => 'Privacy Policy';
@@ -474,14 +474,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get day7 => 'SU';
 
   @override
-  String get bodyMapTitle => 'Pain Map';
+  String get bodyMapTitle => 'Body map';
 
   @override
   String get bodyMapDesc =>
       'Identify the regions where you have experienced chronic pain for the last three months on the map.';
 
   @override
-  String get front => 'Front';
+  String get bodyFront => 'Front';
+
+  @override
+  String get bodyBack => 'Back';
 
   @override
   String get selectedRegionsTitle => 'Selected Regions';
@@ -1165,19 +1168,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sunday => 'Sunday';
 
   @override
-  String get offset_15m => '15 mins before';
+  String get offset15m => '15 mins before';
 
   @override
-  String get offset_30m => '30 mins before';
+  String get offset30m => '30 mins before';
 
   @override
-  String get offset_1h => '1 hour before';
+  String get offset1h => '1 hour before';
 
   @override
-  String get offset_1_5h => '1.5 hours before';
+  String get offset1_5h => '1.5 hours before';
 
   @override
-  String get offset_2h => '2 hours before';
+  String get offset2h => '2 hours before';
 
   @override
   String get notification => 'Notification';
@@ -1188,4 +1191,26 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get notificationTimeDesc =>
       'How many minutes before the workout starts should you be reminded?';
+
+  @override
+  String get retryButton => 'Retry';
+
+  @override
+  String get emptyExercisesTitle => 'No Exercises for Today';
+
+  @override
+  String get emptyExercisesSubtitle =>
+      'Your body earned a rest day. Check out our tips.';
+
+  @override
+  String get errorNetwork => 'Network connection failed.';
+
+  @override
+  String get readMore => 'Read More';
+
+  @override
+  String get dailyTip => 'Daily Tip';
+
+  @override
+  String get clinicEducation => 'Clinical Education';
 }

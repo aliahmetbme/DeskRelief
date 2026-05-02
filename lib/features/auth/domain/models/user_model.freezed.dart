@@ -15,12 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$RegistrationProgress {
 
- bool get hasCompletedWelcome;// 1. Tik: İsim, meslek vb.
- bool get hasCompletedRedFlags;// 1.5 Tik: Tıbbi tarama
- bool get hasCompletedBodyMap;// 2. Tik: Bölge seçimi
- bool get hasCompletedPainScore;// 3. Tik: NPRS girişleri
- bool get hasCompletedScheduling;// 4. Tik: Takvim kurulumu
- bool get isClearedForExercise;
+ bool get hasCompletedWelcome; bool get hasCompletedRedFlags; bool get hasCompletedBodyMap; bool get hasCompletedPainScore; bool get hasCompletedScheduling; bool get isClearedForExercise;
 /// Create a copy of RegistrationProgress
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -216,22 +211,17 @@ return $default(_that.hasCompletedWelcome,_that.hasCompletedRedFlags,_that.hasCo
 }
 
 /// @nodoc
+@JsonSerializable()
 
-@JsonSerializable(explicitToJson: true)
 class _RegistrationProgress implements RegistrationProgress {
   const _RegistrationProgress({this.hasCompletedWelcome = false, this.hasCompletedRedFlags = false, this.hasCompletedBodyMap = false, this.hasCompletedPainScore = false, this.hasCompletedScheduling = false, this.isClearedForExercise = false});
   factory _RegistrationProgress.fromJson(Map<String, dynamic> json) => _$RegistrationProgressFromJson(json);
 
 @override@JsonKey() final  bool hasCompletedWelcome;
-// 1. Tik: İsim, meslek vb.
 @override@JsonKey() final  bool hasCompletedRedFlags;
-// 1.5 Tik: Tıbbi tarama
 @override@JsonKey() final  bool hasCompletedBodyMap;
-// 2. Tik: Bölge seçimi
 @override@JsonKey() final  bool hasCompletedPainScore;
-// 3. Tik: NPRS girişleri
 @override@JsonKey() final  bool hasCompletedScheduling;
-// 4. Tik: Takvim kurulumu
 @override@JsonKey() final  bool isClearedForExercise;
 
 /// Create a copy of RegistrationProgress
@@ -303,8 +293,7 @@ as bool,
 /// @nodoc
 mixin _$RegionDetail {
 
- String get regionId;// "neck", "lower_back" vb.
- int get nprsScore; int get flareUpCount;@TimestampConverter() DateTime? get lastFlareUpDate; bool get isAkut; List<int> get scoreHistory;
+ String get regionId; int get nprsScore; int get flareUpCount;@TimestampConverter() DateTime? get lastFlareUpDate; bool get isAkut; List<int> get scoreHistory;
 /// Create a copy of RegionDetail
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -500,14 +489,13 @@ return $default(_that.regionId,_that.nprsScore,_that.flareUpCount,_that.lastFlar
 }
 
 /// @nodoc
+@JsonSerializable()
 
-@JsonSerializable(explicitToJson: true)
 class _RegionDetail implements RegionDetail {
   const _RegionDetail({required this.regionId, this.nprsScore = 0, this.flareUpCount = 0, @TimestampConverter() this.lastFlareUpDate, this.isAkut = false, final  List<int> scoreHistory = const []}): _scoreHistory = scoreHistory;
   factory _RegionDetail.fromJson(Map<String, dynamic> json) => _$RegionDetailFromJson(json);
 
 @override final  String regionId;
-// "neck", "lower_back" vb.
 @override@JsonKey() final  int nprsScore;
 @override@JsonKey() final  int flareUpCount;
 @override@TimestampConverter() final  DateTime? lastFlareUpDate;
@@ -589,12 +577,7 @@ as List<int>,
 /// @nodoc
 mixin _$UserModel {
 
- String get id;// Firebase UID
- String get name; String get email; String? get sex; String? get profession; int? get dailySittingHours;// Ban Durumu ve Hafızası
- bool get isBanned; BanReason? get banReason; String? get banNote; List<String> get flaggedRedFlagIds;// Red yediği soruların ID'leri
-// Progresyon ve Bölgeler
- RegistrationProgress get progress; List<RegionDetail> get painRegions; List<RegionDetail> get backlogRegions;// İstatistikler
- List<String> get completedExerciseIds; Map<String, dynamic>? get currentProgram; int get currentStreak; int get totalWorkouts; Map<String, dynamic>? get metadata;@TimestampConverter() DateTime? get createdAt;@TimestampConverter() DateTime? get lastActiveAt;
+ String get id; String get name; String get email; String? get sex; String? get profession; int? get dailySittingHours; bool get isBanned; BanReason? get banReason; String? get banNote; List<String> get flaggedRedFlagIds; RegistrationProgress get progress; List<RegionDetail> get painRegions; List<RegionDetail> get backlogRegions; List<String> get completedExerciseIds; Map<String, dynamic>? get currentProgram; int get currentStreak; int get totalWorkouts; Map<String, dynamic>? get metadata;@TimestampConverter() DateTime? get createdAt;@TimestampConverter() DateTime? get lastActiveAt;
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -813,20 +796,18 @@ return $default(_that.id,_that.name,_that.email,_that.sex,_that.profession,_that
 }
 
 /// @nodoc
+@JsonSerializable()
 
-@JsonSerializable(explicitToJson: true)
 class _UserModel implements UserModel {
   const _UserModel({required this.id, required this.name, required this.email, this.sex, this.profession, this.dailySittingHours, this.isBanned = false, this.banReason, this.banNote, final  List<String> flaggedRedFlagIds = const [], this.progress = const RegistrationProgress(), final  List<RegionDetail> painRegions = const [], final  List<RegionDetail> backlogRegions = const [], final  List<String> completedExerciseIds = const [], final  Map<String, dynamic>? currentProgram, this.currentStreak = 0, this.totalWorkouts = 0, final  Map<String, dynamic>? metadata, @TimestampConverter() this.createdAt, @TimestampConverter() this.lastActiveAt}): _flaggedRedFlagIds = flaggedRedFlagIds,_painRegions = painRegions,_backlogRegions = backlogRegions,_completedExerciseIds = completedExerciseIds,_currentProgram = currentProgram,_metadata = metadata;
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
 @override final  String id;
-// Firebase UID
 @override final  String name;
 @override final  String email;
 @override final  String? sex;
 @override final  String? profession;
 @override final  int? dailySittingHours;
-// Ban Durumu ve Hafızası
 @override@JsonKey() final  bool isBanned;
 @override final  BanReason? banReason;
 @override final  String? banNote;
@@ -837,8 +818,6 @@ class _UserModel implements UserModel {
   return EqualUnmodifiableListView(_flaggedRedFlagIds);
 }
 
-// Red yediği soruların ID'leri
-// Progresyon ve Bölgeler
 @override@JsonKey() final  RegistrationProgress progress;
  final  List<RegionDetail> _painRegions;
 @override@JsonKey() List<RegionDetail> get painRegions {
@@ -854,9 +833,7 @@ class _UserModel implements UserModel {
   return EqualUnmodifiableListView(_backlogRegions);
 }
 
-// İstatistikler
  final  List<String> _completedExerciseIds;
-// İstatistikler
 @override@JsonKey() List<String> get completedExerciseIds {
   if (_completedExerciseIds is EqualUnmodifiableListView) return _completedExerciseIds;
   // ignore: implicit_dynamic_type

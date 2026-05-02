@@ -6,6 +6,8 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../../core/widgets/app_back_button.dart';
 import '../viewmodels/daily_routine_view_model.dart';
 import '../../domain/models/exercise_model.dart';
+import '../../../../core/widgets/shimmer_loading.dart';
+import '../../../../core/widgets/empty_state_widget.dart';
 
 class DailyRoutinePage extends StatelessWidget {
   const DailyRoutinePage({super.key});
@@ -43,64 +45,85 @@ class DailyRoutinePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
               
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: [
-                  _InfoChip(
-                    icon: Icons.schedule_rounded,
-                    label: loc.duration15Min,
-                    color: theme.colorScheme.primary,
-                  ),
-                  _InfoChip(
-                    icon: Icons.rebase_edit,
-                    label: loc.exercises10,
-                    color: theme.colorScheme.primary,
-                  ),
-                  _InfoChip(
-                    icon: Icons.bolt_rounded,
-                    label: loc.intensityMedium,
-                    color: drColors.warning ?? Colors.orange,
-                  ),
-                ],
-              ),
-              
-              const SizedBox(height: 24),
-              
-              // Motivation Card
-              _MotivationCard(
-                tagline: loc.motivationTagline,
-                quote: loc.motivationQuote,
-              ),
-              
-              const SizedBox(height: 32),
-              
-              // Exercise List Header
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    loc.workoutFlow,
-                    style: theme.textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.w800,
+                  if (viewModel.isLoading) ...[
+                    const ShimmerList(itemCount: 5, cardHeight: 120),
+                  ] else if (viewModel.errorMessage != null) ...[
+                    EmptyStateWidget(
+                      icon: Icons.error_outline_rounded,
+                      title: loc.errorUnknown,
+                      description: viewModel.errorMessage!,
+                      buttonText: loc.retryButton,
+                      onButtonPressed: () => viewModel.loadExercises(),
+                      isError: true,
                     ),
-                  ),
-                  Text(
-                    loc.remainingExercises(viewModel.remainingExercisesCount),
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
-                      fontWeight: FontWeight.w600,
+                  ] else if (viewModel.exercises.isEmpty) ...[
+                    EmptyStateWidget(
+                      icon: Icons.assignment_late_outlined,
+                      title: loc.emptyExercisesTitle,
+                      description: loc.emptyExercisesSubtitle,
+                      buttonText: loc.goBack,
+                      onButtonPressed: () => context.push('/body-map'),
                     ),
-                  ),
-                ],
-              ),
-              
-              const SizedBox(height: 16),
-              
-              // Phases and Exercises
-              ..._buildExerciseList(context, viewModel),
-              
-              const SizedBox(height: 48),
+                  ] else ...[
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        _InfoChip(
+                          icon: Icons.schedule_rounded,
+                          label: loc.duration15Min,
+                          color: theme.colorScheme.primary,
+                        ),
+                        _InfoChip(
+                          icon: Icons.rebase_edit,
+                          label: loc.exerciseCount(viewModel.exercises.length),
+                          color: theme.colorScheme.primary,
+                        ),
+                        _InfoChip(
+                          icon: Icons.bolt_rounded,
+                          label: loc.intensityMedium,
+                          color: drColors.warning ?? Colors.orange,
+                        ),
+                      ],
+                    ),
+                    
+                    const SizedBox(height: 24),
+                    
+                    // Motivation Card
+                    _MotivationCard(
+                      tagline: loc.motivationTagline,
+                      quote: loc.motivationQuote,
+                    ),
+                    
+                    const SizedBox(height: 32),
+                    
+                    // Exercise List Header
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          loc.workoutFlow,
+                          style: theme.textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                        Text(
+                          loc.remainingExercises(viewModel.remainingExercisesCount),
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                    
+                    const SizedBox(height: 16),
+                    
+                    // Phases and Exercises
+                    ..._buildExerciseList(context, viewModel),
+                  ],
+                  
+                  const SizedBox(height: 48),
             ],
           ),
         ),

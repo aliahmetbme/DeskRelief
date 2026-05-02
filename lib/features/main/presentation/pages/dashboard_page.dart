@@ -7,10 +7,9 @@ import 'package:provider/provider.dart';
 import '../viewmodels/dashboard_view_model.dart';
 import 'package:deskrelief/features/auth/presentation/viewmodels/auth_view_model.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:deskrelief/features/content/domain/models/content_models.dart';
+import 'package:deskrelief/features/content/presentation/pages/content_detail_page.dart';
 
-// ─────────────────────────────────────────────────────────────────────────────
-// DashboardPage — High-fidelity Dashboard based on premium mockup
-// ─────────────────────────────────────────────────────────────────────────────
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
 
@@ -23,11 +22,9 @@ class DashboardPage extends StatelessWidget {
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
-          // ─── Header Spacing ──────────────────────────────────────────────
           SliverToBoxAdapter(
             child: SizedBox(height: MediaQuery.of(context).padding.top + 16),
           ),
-          // ─── Content ──────────────────────────────────────────────────────
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             sliver: Consumer<DashboardViewModel>(
@@ -36,42 +33,28 @@ class DashboardPage extends StatelessWidget {
 
                 return SliverList(
                   delegate: SliverChildListDelegate([
-                    // 1. Welcome Section
-                    _WelcomeSection(isRestDay: isRestDay),
+                    const _WelcomeSection(),
                     const SizedBox(height: 28),
-
-                    // 2. Progress Section
                     _ProgressSection(isRestDay: isRestDay),
                     const SizedBox(height: 24),
 
                     if (isRestDay) ...[
-                      // 3. Rest Day Clinical Card
                       const _RestDayClinicalCard(),
                       const SizedBox(height: 20),
-
-                      // 4. Next Session Card
                       const _NextSessionCard(),
                       const SizedBox(height: 32),
-
-                      // 5. Spinal Health Tips (Bento Grid)
                       const _SpinalHealthTipsHeader(),
                       const SizedBox(height: 16),
-                      const _BentoTipsGrid(),
+                      const _BentoContentGrid(),
                     ] else ...[
-                      // 3. Clinical Warning
                       const _ClinicalWarningSection(),
                       const SizedBox(height: 24),
-
                       const _DailyProgramHero(),
                       const SizedBox(height: 24),
-
-                      // 4. Clinical Info Card
                       const _ClinicalInfoCard(),
                     ],
 
                     const SizedBox(height: 32),
-
-                    // Footer spacing for Bottom Nav Bar
                     const SizedBox(height: 120),
                   ]),
                 );
@@ -84,26 +67,24 @@ class DashboardPage extends StatelessWidget {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Sub-widgets for Dashboard
-// ─────────────────────────────────────────────────────────────────────────────
-
 class _WelcomeSection extends StatelessWidget {
-  final bool isRestDay;
-  const _WelcomeSection({required this.isRestDay});
+  const _WelcomeSection();
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final loc = AppLocalizations.of(context)!;
+    final viewModel = context.watch<DashboardViewModel>();
+    final isRestDay = viewModel.isRestDay;
+    final localeCode = Localizations.localeOf(context).languageCode;
 
-    // Dynamically format today's date based on current locale
-    final localeCode = Localizations.localeOf(context).toString();
     final String today = DateFormat(
       'EEEE, d MMMM',
-      localeCode,
+      Localizations.localeOf(context).toString(),
     ).format(DateTime.now()).toUpperCase();
+
+    final motivation = viewModel.currentMotivation;
 
     return Stack(
       alignment: Alignment.topCenter,
@@ -135,6 +116,22 @@ class _WelcomeSection extends StatelessWidget {
                 height: 1.1,
               ),
             ),
+            if (motivation != null) ...[
+              const SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  motivation.getLocalizedText(localeCode),
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.manrope(
+                    fontSize: 14,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.w500,
+                    color: theme.colorScheme.primary.withValues(alpha: 0.8),
+                  ),
+                ),
+              ),
+            ],
           ],
         ),
         if (!isRestDay)
@@ -223,19 +220,12 @@ class _ProgressSection extends StatelessWidget {
     final progressValue = viewModel.progressValue;
     final remainingSessions = viewModel.remainingSessions;
 
-    final cobaltBlue = isDark
-        ? const Color(0xFF4D94FF)
-        : const Color(0xFF0052CC);
-    final softGreen = isDark
-        ? const Color(0xFF1B3B2B)
-        : const Color(0xFFDFFFD6);
-    final darkGreen = isDark
-        ? const Color(0xFF4ADE80)
-        : const Color(0xFF1E5631);
+    final cobaltBlue = isDark ? const Color(0xFF4D94FF) : const Color(0xFF0052CC);
+    final softGreen = isDark ? const Color(0xFF1B3B2B) : const Color(0xFFDFFFD6);
+    final darkGreen = isDark ? const Color(0xFF4ADE80) : const Color(0xFF1E5631);
 
     return Column(
       children: [
-        // 1. Circular Progress Module
         Stack(
           alignment: Alignment.center,
           children: [
@@ -259,9 +249,7 @@ class _ProgressSection extends StatelessWidget {
               child: CircularProgressIndicator(
                 value: 1.0,
                 strokeWidth: 16,
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.05)
-                    : Colors.grey.withValues(alpha: 0.1),
+                color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.grey.withValues(alpha: 0.1),
               ),
             ),
             SizedBox(
@@ -295,15 +283,11 @@ class _ProgressSection extends StatelessWidget {
                     color: isDark ? Colors.white70 : Colors.grey.shade700,
                   ),
                 ),
-                const SizedBox(height: 8),
-                /* Seans mesajı kullanıcı isteği üzerine kaldırıldı */
               ],
             ),
           ],
         ),
         const SizedBox(height: 20),
-
-        // 2. Status Banner (Adaptive Dynamic Pill) - Hidden in Rest Day mode
         if (!isRestDay)
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
@@ -373,16 +357,9 @@ class _ClinicalWarningSection extends StatelessWidget {
     final loc = AppLocalizations.of(context)!;
     final isDark = theme.brightness == Brightness.dark;
 
-    // Modern, accessible warning colors
-    final warningColor = isDark
-        ? const Color(0xFFFFCC00)
-        : const Color(0xFF856404);
-    final warningBg = isDark
-        ? const Color(0xFF2D2400)
-        : const Color(0xFFFFF3CD);
-    final warningBorder = isDark
-        ? const Color(0xFF665200)
-        : const Color(0xFFFFEEB3);
+    final warningColor = isDark ? const Color(0xFFFFCC00) : const Color(0xFF856404);
+    final warningBg = isDark ? const Color(0xFF2D2400) : const Color(0xFFFFF3CD);
+    final warningBorder = isDark ? const Color(0xFF665200) : const Color(0xFFFFEEB3);
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -606,10 +583,7 @@ class _DailyProgramHero extends StatelessWidget {
                   ],
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 6,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
                     color: Colors.green.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(100),
@@ -629,28 +603,26 @@ class _DailyProgramHero extends StatelessWidget {
           ),
           Row(
             children: [
-              Expanded(
+              const Expanded(
                 child: _AnatomicalCard(
-                  title: loc.regionNeck,
-                  subtitle: loc.regionLabel1,
-                  imageUrl:
-                      'https://lh3.googleusercontent.com/aida-public/AB6AXuB1H5ulPZUOi4hQ4_vfCMwI1kSBkbdD39gmsI_0imvZvY9ajZ6pUNMwGTzu6JGoyvXnbJHcIlixXUD-w6kNVG9rvzz9f5MNk0HXgm_F9EdY1FKL8Uni_9hFrLy6Q5dnhA6xQifDqRNnoC0OxIDJPjGoyr--QiqUHd47Z0gNBY0UHXqY-4diDjhTuZwBB7GvXXRdx0a96ERxqMgJNyocMfhsTwgG9tobS78S8FVouzcOR4NSdMFvqRJ_8zUmh9r3nJAbZIvCzNPAN1s',
+                  title: 'Boyun',
+                  subtitle: 'BÖLGE 1',
+                  imageUrl: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=400&auto=format&fit=crop',
                 ),
               ),
-              Expanded(
+              const Expanded(
                 child: _AnatomicalCard(
-                  title: loc.regionLowerBack,
-                  subtitle: loc.regionLabel2,
-                  imageUrl:
-                      'https://lh3.googleusercontent.com/aida-public/AB6AXuBOOU-gX3r8f79tFTQ_nRO2sIAK2OIyApWXfUssnfslDBA_eQLfKhUCGY6_3IXkCTysVC2BfcXO1LkleLz6RlthsO0OBvQjMcglmxeAfZvw68EKVhX1EkVKCvZmVE7sUpHEWiIiYjDjt_nCMuTZQ_tYvqBXUSJU-m_d59uRqPXE-8alqsaNWF9H1uU2RW3O98_zLPVftwwS7AGLzcHJ7fkFLoEI55kpv-L2V-XUn-jaFEB4V1d1FysX67VESLLYMXXHU-lwSH3dC1o',
+                  title: 'Alt Sırt',
+                  subtitle: 'BÖLGE 2',
+                  imageUrl: 'https://images.unsplash.com/photo-1512023241041-3c9987a8ad34?q=80&w=400&auto=format&fit=crop',
                 ),
               ),
             ],
           ),
           const SizedBox(height: 16),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: const _StartWorkoutButton(),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: _StartWorkoutButton(),
           ),
           const SizedBox(height: 16),
         ],
@@ -769,11 +741,7 @@ class _StartWorkoutButtonState extends State<_StartWorkoutButton> {
               ),
             ),
             const SizedBox(width: 12),
-            const Icon(
-              Icons.play_circle_fill_rounded,
-              color: Colors.white,
-              size: 28,
-            ),
+            const Icon(Icons.play_circle_fill_rounded, color: Colors.white, size: 28),
           ],
         ),
       ),
@@ -793,7 +761,7 @@ class _RestDayClinicalCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: primary.withValues(alpha: 0.12), // Even stronger blue
+        color: primary.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(28),
         border: Border.all(color: primary.withValues(alpha: 0.2)),
       ),
@@ -816,7 +784,7 @@ class _RestDayClinicalCard extends StatelessWidget {
                 Text(
                   loc.restDayClinicalLabel,
                   style: GoogleFonts.manrope(
-                    fontWeight: FontWeight.w900, // Extra bold
+                    fontWeight: FontWeight.w900,
                     fontSize: 12,
                     letterSpacing: 1.2,
                     color: primary,
@@ -826,9 +794,9 @@ class _RestDayClinicalCard extends StatelessWidget {
                 Text(
                   loc.restDayClinicalNote,
                   style: GoogleFonts.inter(
-                    fontSize: 15, // Slightly larger
+                    fontSize: 15,
                     height: 1.5,
-                    fontWeight: FontWeight.w700, // Bolder
+                    fontWeight: FontWeight.w700,
                     color: theme.colorScheme.onSurface,
                   ),
                 ),
@@ -841,7 +809,6 @@ class _RestDayClinicalCard extends StatelessWidget {
   }
 }
 
-// ─── 4. Sıradaki Seans Kartı ──────────────────────────────────────────
 class _NextSessionCard extends StatelessWidget {
   const _NextSessionCard();
 
@@ -850,21 +817,15 @@ class _NextSessionCard extends StatelessWidget {
     final theme = Theme.of(context);
     final loc = AppLocalizations.of(context)!;
     final isDark = theme.brightness == Brightness.dark;
-    final softGreen = isDark
-        ? const Color(0xFF1B3B2B)
-        : const Color(0xFFE8F5E9);
-    final darkGreen = isDark
-        ? const Color(0xFF4ADE80)
-        : const Color(0xFF1B5E20);
+    final softGreen = isDark ? const Color(0xFF1B3B2B) : const Color(0xFFE8F5E9);
+    final darkGreen = isDark ? const Color(0xFF4ADE80) : const Color(0xFF1B5E20);
 
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: softGreen,
         borderRadius: BorderRadius.circular(28),
-        border: Border.all(
-          color: darkGreen.withValues(alpha: isDark ? 0.2 : 0.1),
-        ),
+        border: Border.all(color: darkGreen.withValues(alpha: isDark ? 0.2 : 0.1)),
       ),
       child: Row(
         children: [
@@ -882,11 +843,7 @@ class _NextSessionCard extends StatelessWidget {
                   ),
               ],
             ),
-            child: Icon(
-              Icons.calendar_today_rounded,
-              color: darkGreen,
-              size: 24,
-            ),
+            child: Icon(Icons.calendar_today_rounded, color: darkGreen, size: 24),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -899,16 +856,14 @@ class _NextSessionCard extends StatelessWidget {
                     fontWeight: FontWeight.w900,
                     fontSize: 11,
                     letterSpacing: 1.0,
-                    color: theme.colorScheme.onSurface.withValues(
-                      alpha: 0.8,
-                    ), // Darker label
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.8),
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   '${loc.tomorrow} 19:00',
                   style: GoogleFonts.manrope(
-                    fontSize: 22, // Larger
+                    fontSize: 22,
                     fontWeight: FontWeight.w800,
                     color: theme.colorScheme.onSurface,
                   ),
@@ -916,108 +871,111 @@ class _NextSessionCard extends StatelessWidget {
               ],
             ),
           ),
-          Icon(
-            Icons.chevron_right_rounded,
-            color: theme.colorScheme.onSurface.withValues(
-              alpha: 0.4,
-            ), // More prominent chevron
-          ),
+          Icon(Icons.chevron_right_rounded, color: theme.colorScheme.onSurface.withValues(alpha: 0.4)),
         ],
       ),
     );
   }
 }
 
-class _BentoTipsGrid extends StatelessWidget {
-  const _BentoTipsGrid();
+class _BentoContentGrid extends StatelessWidget {
+  const _BentoContentGrid();
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final viewModel = context.watch<DashboardViewModel>();
+    final localeCode = Localizations.localeOf(context).languageCode;
+    final tips = viewModel.recommendedTips;
+    final blogs = viewModel.featuredBlogs;
     final loc = AppLocalizations.of(context)!;
 
     return Column(
       children: [
-        // 1. Büyük Resimli Kart (Ergonomics)
-        Container(
-          height: 190,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(32),
-            image: const DecorationImage(
-              image: NetworkImage(
-                'https://lh3.googleusercontent.com/aida-public/AB6AXuCzQWxMFfUgW9SVEuKg7PIsCbHl7u93Ov_mc69txVnFaw45MIKcJO_Czpg3-iFKP1Z8C4R5c8pSNTvBWXHSekRTZLv46COa25eaj3kGBD1vGpdLNPYAQng0vXc3rMxzaXJ_dYQiBsnhh5i_6N5-NGNMtzhIZn0kE5UxFq9qr6ojuf5fLFpTcWqy44UWW8flzVTtofLYtEvHVnWVlRDutVPiueTuIkKGRSAqrcxTT5xc6ErQoBePiw6QqHxLrC8DuCkRFmA_DusTPrs',
+        if (blogs.isNotEmpty)
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ContentDetailPage(blog: blogs.first)),
+              );
+            },
+            child: Container(
+              height: 220,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(32),
+                image: DecorationImage(
+                  image: NetworkImage(blogs.first.imageUrl),
+                  fit: BoxFit.cover,
+                ),
               ),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(32),
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.transparent,
-                  Colors.black.withValues(alpha: 0.85),
-                ],
-              ),
-            ),
-            padding: const EdgeInsets.all(24),
-            alignment: Alignment.bottomLeft,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(32),
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.transparent,
+                      Colors.black.withValues(alpha: 0.8),
+                    ],
                   ),
-                  decoration: BoxDecoration(
-                    color: Colors.white24,
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: Text(
-                    'REHBER',
-                    style: GoogleFonts.inter(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontWeight: FontWeight.w900,
+                ),
+                padding: const EdgeInsets.all(24),
+                alignment: Alignment.bottomLeft,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.primary,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        loc.clinicEducation.toUpperCase(),
+                        style: GoogleFonts.inter(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 10),
+                    Text(
+                      blogs.first.getLocalizedTitle(localeCode),
+                      style: GoogleFonts.manrope(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w800,
+                        height: 1.2,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  loc.tipErgonomicsTitle,
-                  style: GoogleFonts.manrope(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
-        ),
         const SizedBox(height: 16),
-        // 2. Yan Yana Küçük Kartlar
         Row(
           children: [
             Expanded(
               child: _SmallBentoCard(
-                icon: Icons.accessibility_new_rounded,
-                title: loc.tipMobilityTitle,
-                subtitle: loc.tipMobilityDesc,
-                iconColor: Colors.blue,
+                icon: Icons.lightbulb_outline_rounded,
+                title: loc.dailyTip,
+                subtitle: tips.isNotEmpty ? tips.first.getLocalizedContent(localeCode) : 'Ekranını göz hizasında tut.',
+                iconColor: Colors.amber,
               ),
             ),
             const SizedBox(width: 16),
             Expanded(
               child: _SmallBentoCard(
-                icon: Icons.healing_rounded,
-                title: loc.tipLowerBackTitle,
-                subtitle: loc.tipLowerBackDesc,
-                iconColor: Colors.orange,
+                icon: Icons.auto_graph_rounded,
+                title: 'BCT',
+                subtitle: 'Küçük adımlar, büyük değişimler.',
+                iconColor: Colors.blueAccent,
               ),
             ),
           ],
@@ -1044,7 +1002,7 @@ class _SmallBentoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
-      height: 140, // Biraz daha yükseltildi
+      height: 160,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: theme.colorScheme.surfaceContainerHigh,
@@ -1055,12 +1013,12 @@ class _SmallBentoCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            padding: const EdgeInsets.all(8),
-            decoration: const BoxDecoration(
-              color: Colors.white,
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: iconColor.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, color: iconColor, size: 22),
+            child: Icon(icon, color: iconColor, size: 24),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1068,17 +1026,20 @@ class _SmallBentoCard extends StatelessWidget {
               Text(
                 title,
                 style: GoogleFonts.manrope(
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w800,
                   fontSize: 16,
                 ),
               ),
+              const SizedBox(height: 4),
               Text(
                 subtitle,
-                maxLines: 1,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.inter(
-                  fontSize: 11,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
                   color: theme.colorScheme.onSurfaceVariant,
+                  height: 1.3,
                 ),
               ),
             ],

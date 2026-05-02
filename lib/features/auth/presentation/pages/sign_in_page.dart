@@ -151,9 +151,13 @@ class _SignInPageState extends State<SignInPage> {
                                       controller: _emailController,
                                       focusNode: _emailFocus,
                                       keyboardType: TextInputType.emailAddress,
+                                      autofillHints: const [AutofillHints.email],
                                       textInputAction: TextInputAction.next,
                                       decoration: InputDecoration(
                                         hintText: 'jondoe@mail.com',
+                                        errorText: authViewModel.errorMessage?.toLowerCase().contains('email') == true || authViewModel.errorMessage?.toLowerCase().contains('user') == true 
+                                            ? authViewModel.errorMessage 
+                                            : null,
                                         prefixIcon: const Icon(
                                           Icons.person_outline,
                                         ),
@@ -190,10 +194,14 @@ class _SignInPageState extends State<SignInPage> {
                                       controller: _passwordController,
                                       focusNode: _passwordFocus,
                                       obscureText: _obscurePassword,
+                                      autofillHints: const [AutofillHints.password],
                                       textInputAction: TextInputAction.done,
                                       onFieldSubmitted: (_) => _onSignIn(),
                                       decoration: InputDecoration(
                                         hintText: '••••••••',
+                                        errorText: authViewModel.errorMessage?.toLowerCase().contains('password') == true 
+                                            ? authViewModel.errorMessage 
+                                            : null,
                                         prefixIcon: const Icon(
                                           Icons.lock_outline,
                                         ),

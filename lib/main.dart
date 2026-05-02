@@ -24,6 +24,7 @@ import 'features/assessment/presentation/viewmodels/pain_intensity_view_model.da
 import 'features/exercise/presentation/viewmodels/daily_routine_view_model.dart';
 import 'features/scheduling/presentation/viewmodels/scheduling_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'core/services/content_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,6 +47,9 @@ void main() async {
   // Initialize Video Caching
   await VideoCacheService().init();
 
+  // Initialize Content Service
+  await ContentService().init();
+
   // İlk kurulum kontrolü
   await checkFirstRun();
 
@@ -54,6 +58,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => LocaleProvider()),
+        Provider(create: (_) => ContentService()),
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
         ChangeNotifierProxyProvider<AuthViewModel, RedFlagsViewModel>(
           create: (context) => RedFlagsViewModel(

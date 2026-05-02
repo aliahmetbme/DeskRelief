@@ -231,7 +231,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get gdprConsent => 'KVKK / GDPR Onayı';
 
   @override
-  String get eula => 'EULA';
+  String get eula => 'EULA (Kullanım Sözleşmesi)';
 
   @override
   String get privacyPolicy => 'Gizlilik Politikası';
@@ -394,7 +394,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get confirm => 'Onayla';
 
   @override
-  String get back => 'Arka';
+  String get back => 'Geri';
 
   @override
   String get finish => 'Bitir';
@@ -475,14 +475,17 @@ class AppLocalizationsTr extends AppLocalizations {
   String get day7 => 'PA';
 
   @override
-  String get bodyMapTitle => 'Ağrı Haritası';
+  String get bodyMapTitle => 'Vücut haritası';
 
   @override
   String get bodyMapDesc =>
       'Son üç aydır kronik ağrı yaşadığınız bölgeleri haritadan belirleyin.';
 
   @override
-  String get front => 'Ön';
+  String get bodyFront => 'Ön';
+
+  @override
+  String get bodyBack => 'Arka';
 
   @override
   String get selectedRegionsTitle => 'Seçilen Bölgeler';
@@ -1167,19 +1170,19 @@ class AppLocalizationsTr extends AppLocalizations {
   String get sunday => 'Pazar';
 
   @override
-  String get offset_15m => '15 dk önce';
+  String get offset15m => '15 dk önce';
 
   @override
-  String get offset_30m => '30 dk önce';
+  String get offset30m => '30 dk önce';
 
   @override
-  String get offset_1h => '1 saat önce';
+  String get offset1h => '1 saat önce';
 
   @override
-  String get offset_1_5h => '1.5 saat önce';
+  String get offset1_5h => '1.5 saat önce';
 
   @override
-  String get offset_2h => '2 saat önce';
+  String get offset2h => '2 saat önce';
 
   @override
   String get notification => 'Bildirim';
@@ -1190,4 +1193,26 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get notificationTimeDesc =>
       'Antrenman başlamadan kaç dakika önce hatırlatılsın?';
+
+  @override
+  String get retryButton => 'Yeniden Dene';
+
+  @override
+  String get emptyExercisesTitle => 'Bugünlük Egzersiz Yok';
+
+  @override
+  String get emptyExercisesSubtitle =>
+      'Vücudun bugün dinlenmeyi hak etti. Tavsiyelerimize göz atabilirsin.';
+
+  @override
+  String get errorNetwork => 'İnternet bağlantısı kurulamadı.';
+
+  @override
+  String get readMore => 'Daha Fazla Oku';
+
+  @override
+  String get dailyTip => 'Günün Tavsiyesi';
+
+  @override
+  String get clinicEducation => 'Klinik Eğitim';
 }

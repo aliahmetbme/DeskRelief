@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:deskrelief/features/auth/domain/models/user_model.dart';
+import '../../data/services/notification_service.dart';
 
 /// Kullanıcının seçebileceği bildirim öncesi süre seçenekleri.
 class NotificationOffset {
@@ -9,6 +10,8 @@ class NotificationOffset {
 }
 
 class SchedulingViewModel extends ChangeNotifier {
+  final NotificationService _notificationService = NotificationService();
+  
   List<String> _focusRegions = [];
   List<String> get focusRegions => _focusRegions;
 
@@ -36,11 +39,11 @@ class SchedulingViewModel extends ChangeNotifier {
 
   /// Sabit preset listesi — kullanıcı bunlar dışında değer giremez.
   static const List<NotificationOffset> notificationOffsets = [
-    NotificationOffset(minutes: 15, label: 'offset_15m'),
-    NotificationOffset(minutes: 30, label: 'offset_30m'),
-    NotificationOffset(minutes: 60, label: 'offset_1h'),
-    NotificationOffset(minutes: 90, label: 'offset_1_5h'),
-    NotificationOffset(minutes: 120, label: 'offset_2h'),
+    NotificationOffset(minutes: 15, label: 'offset15m'),
+    NotificationOffset(minutes: 30, label: 'offset30m'),
+    NotificationOffset(minutes: 60, label: 'offset1h'),
+    NotificationOffset(minutes: 90, label: 'offset1_5h'),
+    NotificationOffset(minutes: 120, label: 'offset2h'),
   ];
 
   /// Varsayılan offset: 60 dakika (1 saat önce)
@@ -118,7 +121,7 @@ class SchedulingViewModel extends ChangeNotifier {
           (o) => o.minutes == offset,
           orElse: () => const NotificationOffset(
             minutes: _defaultOffsetMinutes,
-            label: 'offset_1h',
+            label: 'offset1h',
           ),
         )
         .label;
@@ -170,20 +173,31 @@ class SchedulingViewModel extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    await Future.delayed(const Duration(seconds: 1));
+    try {
+      // 1. Eski bildirimleri temizle
+      await _notificationService.cancelAllNotifications();
 
-    for (final day in _selectedDays) {
-      final workout = timeForDay(day);
-      final notif = notificationTimeForDay(day);
-      debugPrint(
-        'Gün: $day — '
-        'Antrenman: ${workout.hour.toString().padLeft(2, '0')}:${workout.minute.toString().padLeft(2, '0')} — '
-        'Bildirim: ${notif.hour.toString().padLeft(2, '0')}:${notif.minute.toString().padLeft(2, '0')} '
-        '(${notificationOffsetKeyForDay(day)})',
-      );
+      // 2. Her gün için yeni bildirimleri planla
+      for (int i = 0; i < _selectedDays.length; i++) {
+        final day = _selectedDays[i];
+        final notifTime = notificationTimeForDay(day);
+        
+        await _notificationService.scheduleWeeklyNotification(
+          id: i, // Benzersiz ID
+          title: 'Egzersiz Vakti Yaklaşıyor!',
+          body: 'Bugünkü DeskRelief seansına hazırlanmak için harika bir zaman.',
+          dayName: day,
+          time: notifTime,
+        );
+      }
+      
+      // Simüle edilen gecikme (UI için)
+      await Future.delayed(const Duration(milliseconds: 500));
+    } catch (e) {
+      debugPrint('❌ NOTIFICATION SCHEDULING ERROR: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
-
-    _isLoading = false;
-    notifyListeners();
   }
 }

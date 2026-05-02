@@ -250,6 +250,7 @@ class _WelcomeProfilePageState extends State<WelcomeProfilePage> {
                         TextFormField(
                           controller: _professionController,
                           textInputAction: TextInputAction.next,
+                          textCapitalization: TextCapitalization.words,
                           style: TextStyle(
                             fontSize: 15,
                             color: theme.colorScheme.onSurface,

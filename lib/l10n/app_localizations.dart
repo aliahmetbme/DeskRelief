@@ -497,7 +497,7 @@ abstract class AppLocalizations {
   /// No description provided for @eula.
   ///
   /// In tr, this message translates to:
-  /// **'EULA'**
+  /// **'EULA (Kullanım Sözleşmesi)'**
   String get eula;
 
   /// No description provided for @privacyPolicy.
@@ -791,7 +791,7 @@ abstract class AppLocalizations {
   /// No description provided for @back.
   ///
   /// In tr, this message translates to:
-  /// **'Arka'**
+  /// **'Geri'**
   String get back;
 
   /// No description provided for @finish.
@@ -953,7 +953,7 @@ abstract class AppLocalizations {
   /// No description provided for @bodyMapTitle.
   ///
   /// In tr, this message translates to:
-  /// **'Ağrı Haritası'**
+  /// **'Vücut haritası'**
   String get bodyMapTitle;
 
   /// No description provided for @bodyMapDesc.
@@ -962,11 +962,17 @@ abstract class AppLocalizations {
   /// **'Son üç aydır kronik ağrı yaşadığınız bölgeleri haritadan belirleyin.'**
   String get bodyMapDesc;
 
-  /// No description provided for @front.
+  /// No description provided for @bodyFront.
   ///
   /// In tr, this message translates to:
   /// **'Ön'**
-  String get front;
+  String get bodyFront;
+
+  /// No description provided for @bodyBack.
+  ///
+  /// In tr, this message translates to:
+  /// **'Arka'**
+  String get bodyBack;
 
   /// No description provided for @selectedRegionsTitle.
   ///
@@ -2216,35 +2222,35 @@ abstract class AppLocalizations {
   /// **'Pazar'**
   String get sunday;
 
-  /// No description provided for @offset_15m.
+  /// No description provided for @offset15m.
   ///
   /// In tr, this message translates to:
   /// **'15 dk önce'**
-  String get offset_15m;
+  String get offset15m;
 
-  /// No description provided for @offset_30m.
+  /// No description provided for @offset30m.
   ///
   /// In tr, this message translates to:
   /// **'30 dk önce'**
-  String get offset_30m;
+  String get offset30m;
 
-  /// No description provided for @offset_1h.
+  /// No description provided for @offset1h.
   ///
   /// In tr, this message translates to:
   /// **'1 saat önce'**
-  String get offset_1h;
+  String get offset1h;
 
-  /// No description provided for @offset_1_5h.
+  /// No description provided for @offset1_5h.
   ///
   /// In tr, this message translates to:
   /// **'1.5 saat önce'**
-  String get offset_1_5h;
+  String get offset1_5h;
 
-  /// No description provided for @offset_2h.
+  /// No description provided for @offset2h.
   ///
   /// In tr, this message translates to:
   /// **'2 saat önce'**
-  String get offset_2h;
+  String get offset2h;
 
   /// No description provided for @notification.
   ///
@@ -2263,6 +2269,48 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Antrenman başlamadan kaç dakika önce hatırlatılsın?'**
   String get notificationTimeDesc;
+
+  /// No description provided for @retryButton.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeniden Dene'**
+  String get retryButton;
+
+  /// No description provided for @emptyExercisesTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugünlük Egzersiz Yok'**
+  String get emptyExercisesTitle;
+
+  /// No description provided for @emptyExercisesSubtitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Vücudun bugün dinlenmeyi hak etti. Tavsiyelerimize göz atabilirsin.'**
+  String get emptyExercisesSubtitle;
+
+  /// No description provided for @errorNetwork.
+  ///
+  /// In tr, this message translates to:
+  /// **'İnternet bağlantısı kurulamadı.'**
+  String get errorNetwork;
+
+  /// No description provided for @readMore.
+  ///
+  /// In tr, this message translates to:
+  /// **'Daha Fazla Oku'**
+  String get readMore;
+
+  /// No description provided for @dailyTip.
+  ///
+  /// In tr, this message translates to:
+  /// **'Günün Tavsiyesi'**
+  String get dailyTip;
+
+  /// No description provided for @clinicEducation.
+  ///
+  /// In tr, this message translates to:
+  /// **'Klinik Eğitim'**
+  String get clinicEducation;
 }
 
 class _AppLocalizationsDelegate

@@ -28,6 +28,7 @@ class AppTheme {
       cardTheme: CardThemeData(
         color: surfaceColor,
         elevation: isDark ? 2 : 1,
+        surfaceTintColor: Colors.transparent,
         shadowColor: isDark ? Colors.black.withValues(alpha: 0.4) : Colors.black.withValues(alpha: 0.05),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
@@ -47,7 +48,7 @@ class AppTheme {
         secondary: palette.secondary,
         surface: surfaceColor,
         surfaceContainer: isDark ? const Color(0xFF1E293B) : Colors.white,
-        surfaceContainerHigh: isDark ? const Color(0xFF334155) : const Color(0xFFF8FAFC),
+        surfaceContainerHigh: isDark ? const Color(0xFF1E293B) : const Color(0xFFF8FAFC),
         error: palette.error,
         onSurface: textColorPrimary,
       ),

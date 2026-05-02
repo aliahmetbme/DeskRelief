@@ -11,6 +11,20 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  /// Type-safe Firestore collection referansı.
+  late final CollectionReference<UserModel> _usersRef;
+
+  AuthService() {
+    _usersRef = _firestore.collection('users').withConverter<UserModel>(
+      fromFirestore: (snapshot, _) {
+        final data = snapshot.data();
+        if (data == null) throw Exception('User data is null');
+        return UserModel.fromJson({...data, 'id': snapshot.id});
+      },
+      toFirestore: (model, _) => model.toJson(),
+    );
+  }
+
   Future<String?> signIn({
     required String email,
     required String password,
@@ -23,10 +37,7 @@ class AuthService {
       );
 
       // Firestore doküman kontrolü
-      final userDoc = await _firestore
-          .collection('users')
-          .doc(userCredential.user!.uid)
-          .get();
+      final userDoc = await _usersRef.doc(userCredential.user!.uid).get();
       if (!userDoc.exists) {
         await _auth.signOut();
         return loc.errorUserNotFound;
@@ -53,24 +64,23 @@ class AuthService {
           .createUserWithEmailAndPassword(email: email, password: password);
 
       if (userCredential.user != null) {
-        // UserModel üzerinden JSON oluştur (default değerler için)
         final newUser = UserModel(
           id: userCredential.user!.uid,
           name: name,
           email: email,
         );
 
-        final userMap = newUser.toJson();
-        // Firestore nested object serializasyon hatasını önlemek için manuel dönüşüm
-        userMap['progress'] = newUser.progress.toJson();
-
-        userMap['createdAt'] = FieldValue.serverTimestamp();
-        userMap['lastActiveAt'] = FieldValue.serverTimestamp();
-
-        await _firestore
-            .collection('users')
-            .doc(userCredential.user!.uid)
-            .set(userMap);
+        // withConverter sayesinde direkt model set edilebilir.
+        // Ancak createdAt gibi server side değerler için .update veya .set(merge: true) ile Map gerekebilir.
+        // Burada basitlik adına Map kullanmaya devam edebiliriz veya server timestamp'i modele ekleyebiliriz.
+        // Mevcut kod Map kullanıyor, withConverter ile de .set(newUser) diyebiliriz.
+        await _usersRef.doc(userCredential.user!.uid).set(newUser);
+        
+        // Metadata güncellemeleri
+        await _usersRef.doc(userCredential.user!.uid).update({
+          'createdAt': FieldValue.serverTimestamp(),
+          'lastActiveAt': FieldValue.serverTimestamp(),
+        });
       }
 
       return null; // Başarılı
@@ -109,10 +119,7 @@ class AuthService {
       );
 
       // Firestore doküman kontrolü
-      final userDoc = await _firestore
-          .collection('users')
-          .doc(userCredential.user!.uid)
-          .get();
+      final userDoc = await _usersRef.doc(userCredential.user!.uid).get();
 
       if (!userDoc.exists) {
         if (isSignUp) {
@@ -123,17 +130,11 @@ class AuthService {
             email: userCredential.user!.email ?? '',
           );
 
-          final userMap = newUser.toJson();
-          // Firestore nested object serializasyon hatasını önlemek için manuel dönüşüm
-          userMap['progress'] = newUser.progress.toJson();
-
-          userMap['createdAt'] = FieldValue.serverTimestamp();
-          userMap['lastActiveAt'] = FieldValue.serverTimestamp();
-
-          await _firestore
-              .collection('users')
-              .doc(userCredential.user!.uid)
-              .set(userMap);
+          await _usersRef.doc(userCredential.user!.uid).set(newUser);
+          await _usersRef.doc(userCredential.user!.uid).update({
+            'createdAt': FieldValue.serverTimestamp(),
+            'lastActiveAt': FieldValue.serverTimestamp(),
+          });
         } else {
           // Giriş başarısız (Sign In akışında kayıtlı kullanıcı yok)
           await signOut();
@@ -141,10 +142,9 @@ class AuthService {
         }
       } else {
         // Mevcut kullanıcı - son görülme güncelle
-        await _firestore
-            .collection('users')
-            .doc(userCredential.user!.uid)
-            .update({'lastActiveAt': FieldValue.serverTimestamp()});
+        await _usersRef.doc(userCredential.user!.uid).update({
+          'lastActiveAt': FieldValue.serverTimestamp(),
+        });
       }
 
       return null;
@@ -209,10 +209,7 @@ class AuthService {
       );
 
       // Firestore doküman kontrolü
-      final userDoc = await _firestore
-          .collection('users')
-          .doc(userCredential.user!.uid)
-          .get();
+      final userDoc = await _usersRef.doc(userCredential.user!.uid).get();
 
       if (!userDoc.exists) {
         if (isSignUp) {
@@ -223,17 +220,11 @@ class AuthService {
             email: userCredential.user!.email ?? '',
           );
 
-          final userMap = newUser.toJson();
-          // Firestore nested object serializasyon hatasını önlemek için manuel dönüşüm
-          userMap['progress'] = newUser.progress.toJson();
-
-          userMap['createdAt'] = FieldValue.serverTimestamp();
-          userMap['lastActiveAt'] = FieldValue.serverTimestamp();
-
-          await _firestore
-              .collection('users')
-              .doc(userCredential.user!.uid)
-              .set(userMap);
+          await _usersRef.doc(userCredential.user!.uid).set(newUser);
+          await _usersRef.doc(userCredential.user!.uid).update({
+            'createdAt': FieldValue.serverTimestamp(),
+            'lastActiveAt': FieldValue.serverTimestamp(),
+          });
         } else {
           // Giriş başarısız (Sign In akışında kayıtlı kullanıcı yok)
           await signOut();
@@ -241,10 +232,9 @@ class AuthService {
         }
       } else {
         // Mevcut kullanıcı - son görülme güncelle
-        await _firestore
-            .collection('users')
-            .doc(userCredential.user!.uid)
-            .update({'lastActiveAt': FieldValue.serverTimestamp()});
+        await _usersRef.doc(userCredential.user!.uid).update({
+          'lastActiveAt': FieldValue.serverTimestamp(),
+        });
       }
 
       return null;
@@ -317,29 +307,19 @@ class AuthService {
   String? get currentUserId => _auth.currentUser?.uid;
 
   Future<UserModel?> getUserModel(String uid) async {
-    final doc = await _firestore.collection('users').doc(uid).get();
-    if (doc.exists && doc.data() != null) {
-      return UserModel.fromJson(doc.data()!);
-    }
-    return null;
+    final doc = await _usersRef.doc(uid).get();
+    return doc.data();
   }
 
   Future<void> updateUser(UserModel user) async {
-    final userMap = user.toJson();
-    // Freezed modellerinin toJson metodu nested objeleri map olarak döndürür
-    // ama FieldValue gibi özel tipleri kaybeder.
-    // Ancak burada FieldValue kullanmıyoruz, sadece verileri güncelliyoruz.
-    await _firestore
-        .collection('users')
-        .doc(user.id)
-        .set(userMap, SetOptions(merge: true));
+    await _usersRef.doc(user.id).set(user, SetOptions(merge: true));
   }
 
   Future<void> updateRegistrationProgress(
     String uid,
     Map<String, dynamic> progressUpdate,
   ) async {
-    await _firestore.collection('users').doc(uid).update({
+    await _usersRef.doc(uid).update({
       'progress': progressUpdate,
     });
   }

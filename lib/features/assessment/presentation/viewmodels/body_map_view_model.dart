@@ -14,9 +14,12 @@ class BodyMapViewModel extends ChangeNotifier {
   bool get isDragging => _isDragging;
   
   String? _currentUid;
+  bool _isFemale = false;
+  bool get isFemale => _isFemale;
 
   void updateUser(UserModel? user) {
     if (user != null) {
+      _isFemale = user.sex == 'female';
       if (_currentUid != user.id) {
         _currentUid = user.id;
         // Reset or reload state if needed when user changes
@@ -24,6 +27,7 @@ class BodyMapViewModel extends ChangeNotifier {
       }
     } else {
       _currentUid = null;
+      _isFemale = false;
       _selectedZoneIds.clear();
       _dragPosition = 0.0;
       _currentStep = 2;
@@ -35,7 +39,18 @@ class BodyMapViewModel extends ChangeNotifier {
   List<String> get rawSelectedZoneIds => _selectedZoneIds;
   List<String> get selectedRegions => _selectedZoneIds;
 
-  List<String> get frontRegions => _allRegions.where((id) => id.endsWith('_front')).toList();
+  List<String> get frontRegions {
+    final regions = _allRegions.where((id) => id.endsWith('_front')).toList();
+    if (_isFemale) {
+      // Kadın bedeninde ön tarafta boyun, omuz ve kalçaları gizle
+      regions.remove('neck_front');
+      regions.remove('shoulder_r_front');
+      regions.remove('shoulder_l_front');
+      regions.remove('hip_r_front');
+      regions.remove('hip_l_front');
+    }
+    return regions;
+  }
   List<String> get backRegions => _allRegions.where((id) => id.endsWith('_back')).toList();
 
   String getRegionLocalizationKey(String id) {

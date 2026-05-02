@@ -166,38 +166,43 @@ class _SignUpPageState extends State<SignUpPage> {
                                       theme,
                                     ),
                                     const SizedBox(height: 8),
-                                    TextFormField(
-                                      controller: _nameController,
-                                      focusNode: _nameFocus,
-                                      textInputAction: TextInputAction.next,
-                                      decoration: InputDecoration(
-                                        hintText: AppLocalizations.of(
-                                          context,
-                                        )!.fullNameHint,
-                                        prefixIcon: const Icon(
-                                          Icons.badge_outlined,
-                                        ),
-                                        filled: true,
-                                        fillColor: theme.colorScheme.onSurface
-                                            .withValues(alpha: 0.04),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            16,
+                                      TextFormField(
+                                        controller: _nameController,
+                                        focusNode: _nameFocus,
+                                        textCapitalization: TextCapitalization.words,
+                                        autofillHints: const [AutofillHints.name],
+                                        textInputAction: TextInputAction.next,
+                                        decoration: InputDecoration(
+                                          hintText: AppLocalizations.of(
+                                            context,
+                                          )!.fullNameHint,
+                                          errorText: authViewModel.errorMessage?.toLowerCase().contains('name') == true 
+                                              ? authViewModel.errorMessage 
+                                              : null,
+                                          prefixIcon: const Icon(
+                                            Icons.badge_outlined,
                                           ),
-                                          borderSide: BorderSide.none,
+                                          filled: true,
+                                          fillColor: theme.colorScheme.onSurface
+                                              .withValues(alpha: 0.04),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              16,
+                                            ),
+                                            borderSide: BorderSide.none,
+                                          ),
                                         ),
+                                        onFieldSubmitted: (_) => FocusScope.of(
+                                          context,
+                                        ).requestFocus(_emailFocus),
+                                        validator: (value) =>
+                                            value != null &&
+                                                value.trim().isNotEmpty
+                                            ? null
+                                            : AppLocalizations.of(
+                                                context,
+                                              )!.enterNameError,
                                       ),
-                                      onFieldSubmitted: (_) => FocusScope.of(
-                                        context,
-                                      ).requestFocus(_emailFocus),
-                                      validator: (value) =>
-                                          value != null &&
-                                              value.trim().isNotEmpty
-                                          ? null
-                                          : AppLocalizations.of(
-                                              context,
-                                            )!.enterNameError,
-                                    ),
                                     const SizedBox(height: 16),
 
                                     _buildFieldLabel(
@@ -205,36 +210,40 @@ class _SignUpPageState extends State<SignUpPage> {
                                       theme,
                                     ),
                                     const SizedBox(height: 8),
-                                    TextFormField(
-                                      controller: _emailController,
-                                      focusNode: _emailFocus,
-                                      keyboardType: TextInputType.emailAddress,
-                                      textInputAction: TextInputAction.next,
-                                      decoration: InputDecoration(
-                                        hintText: 'jondoe@mail.com',
-                                        prefixIcon: const Icon(
-                                          Icons.person_outline,
-                                        ),
-                                        filled: true,
-                                        fillColor: theme.colorScheme.onSurface
-                                            .withValues(alpha: 0.04),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            16,
+                                      TextFormField(
+                                        controller: _emailController,
+                                        focusNode: _emailFocus,
+                                        keyboardType: TextInputType.emailAddress,
+                                        autofillHints: const [AutofillHints.email],
+                                        textInputAction: TextInputAction.next,
+                                        decoration: InputDecoration(
+                                          hintText: 'jondoe@mail.com',
+                                          errorText: authViewModel.errorMessage?.toLowerCase().contains('email') == true || authViewModel.errorMessage?.toLowerCase().contains('user') == true 
+                                              ? authViewModel.errorMessage 
+                                              : null,
+                                          prefixIcon: const Icon(
+                                            Icons.person_outline,
                                           ),
-                                          borderSide: BorderSide.none,
+                                          filled: true,
+                                          fillColor: theme.colorScheme.onSurface
+                                              .withValues(alpha: 0.04),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              16,
+                                            ),
+                                            borderSide: BorderSide.none,
+                                          ),
                                         ),
+                                        onFieldSubmitted: (_) => FocusScope.of(
+                                          context,
+                                        ).requestFocus(_passwordFocus),
+                                        validator: (value) =>
+                                            value != null && value.contains('@')
+                                            ? null
+                                            : AppLocalizations.of(
+                                                context,
+                                              )!.invalidEmailError,
                                       ),
-                                      onFieldSubmitted: (_) => FocusScope.of(
-                                        context,
-                                      ).requestFocus(_passwordFocus),
-                                      validator: (value) =>
-                                          value != null && value.contains('@')
-                                          ? null
-                                          : AppLocalizations.of(
-                                              context,
-                                            )!.invalidEmailError,
-                                    ),
                                     const SizedBox(height: 16),
 
                                     _buildFieldLabel(
@@ -244,48 +253,51 @@ class _SignUpPageState extends State<SignUpPage> {
                                       theme,
                                     ),
                                     const SizedBox(height: 8),
-                                    TextFormField(
-                                      controller: _passwordController,
-                                      focusNode: _passwordFocus,
-                                      obscureText: _obscurePassword,
-                                      textInputAction: TextInputAction.next,
-                                      decoration: InputDecoration(
-                                        hintText: '••••••••',
-                                        prefixIcon: const Icon(
-                                          Icons.lock_outline,
-                                        ),
-                                        suffixIcon: IconButton(
-                                          icon: Icon(
-                                            _obscurePassword
-                                                ? Icons.visibility_off
-                                                : Icons.visibility,
+                                      TextFormField(
+                                        controller: _passwordController,
+                                        focusNode: _passwordFocus,
+                                        obscureText: _obscurePassword,
+                                        autofillHints: const [AutofillHints.newPassword],
+                                        textInputAction: TextInputAction.next,
+                                        decoration: InputDecoration(
+                                          hintText: '••••••••',
+                                          errorText: authViewModel.errorMessage?.toLowerCase().contains('password') == true 
+                                              ? authViewModel.errorMessage 
+                                              : null,
+                                          prefixIcon: const Icon(
+                                            Icons.lock_outline,
                                           ),
-                                          onPressed: () => setState(
-                                            () => _obscurePassword =
-                                                !_obscurePassword,
+                                          suffixIcon: IconButton(
+                                            icon: Icon(
+                                              _obscurePassword
+                                                  ? Icons.visibility_off
+                                                  : Icons.visibility,
+                                            ),
+                                            onPressed: () => setState(
+                                              () => _obscurePassword =
+                                                  !_obscurePassword,
+                                            ),
+                                          ),
+                                          filled: true,
+                                          fillColor: theme.colorScheme.onSurface
+                                              .withValues(alpha: 0.04),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              16,
+                                            ),
+                                            borderSide: BorderSide.none,
                                           ),
                                         ),
-                                        filled: true,
-                                        fillColor: theme.colorScheme.onSurface
-                                            .withValues(alpha: 0.04),
-
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            16,
-                                          ),
-                                          borderSide: BorderSide.none,
-                                        ),
+                                        onFieldSubmitted: (_) => FocusScope.of(
+                                          context,
+                                        ).requestFocus(_confirmPasswordFocus),
+                                        validator: (value) =>
+                                            value != null && value.length >= 6
+                                            ? null
+                                            : AppLocalizations.of(
+                                                context,
+                                              )!.invalidPasswordError,
                                       ),
-                                      onFieldSubmitted: (_) => FocusScope.of(
-                                        context,
-                                      ).requestFocus(_confirmPasswordFocus),
-                                      validator: (value) =>
-                                          value != null && value.length >= 6
-                                          ? null
-                                          : AppLocalizations.of(
-                                              context,
-                                            )!.invalidPasswordError,
-                                    ),
                                     const SizedBox(height: 16),
 
                                     _buildFieldLabel(

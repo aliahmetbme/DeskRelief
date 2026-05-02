@@ -295,11 +295,11 @@ class _OffsetTile extends StatelessWidget {
   String _getTranslatedOffset(BuildContext context, String key) {
     final loc = AppLocalizations.of(context)!;
     switch (key) {
-      case 'offset_15m': return loc.offset_15m;
-      case 'offset_30m': return loc.offset_30m;
-      case 'offset_1h': return loc.offset_1h;
-      case 'offset_1_5h': return loc.offset_1_5h;
-      case 'offset_2h': return loc.offset_2h;
+      case 'offset15m': return loc.offset15m;
+      case 'offset30m': return loc.offset30m;
+      case 'offset1h': return loc.offset1h;
+      case 'offset1_5h': return loc.offset1_5h;
+      case 'offset2h': return loc.offset2h;
       default: return key;
     }
   }

@@ -130,7 +130,7 @@ class AppRouter {
           path: '/assessment/pain-intensity',
           builder: (context, state) {
             // Önce extra'dan bak, yoksa AuthViewModel'den çek
-            List<String> regions = state.extra as List<String>? ?? [];
+            List<String> regions = List<String>.from(state.extra as List? ?? []);
             if (regions.isEmpty) {
               final user = context.read<AuthViewModel>().currentUser;
               regions = user?.painRegions.map((e) => e.regionId).toList() ?? [];
@@ -146,7 +146,7 @@ class AppRouter {
           path: '/scheduling',
           builder: (context, state) {
             // Önce extra'dan bak, yoksa AuthViewModel'den çek
-            List<String> regions = state.extra as List<String>? ?? [];
+            List<String> regions = List<String>.from(state.extra as List? ?? []);
             if (regions.isEmpty) {
               final user = context.read<AuthViewModel>().currentUser;
               regions = user?.painRegions.map((e) => e.regionId).toList() ?? [];

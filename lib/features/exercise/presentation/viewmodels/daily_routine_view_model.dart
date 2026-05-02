@@ -1,86 +1,116 @@
 import 'package:flutter/foundation.dart';
 import '../../domain/models/exercise_model.dart';
 import 'package:deskrelief/features/auth/domain/models/user_model.dart';
+import '../../data/repositories/exercise_repository.dart';
+import '../../../../core/error/result.dart';
+import '../../../../core/services/content_service.dart';
+import '../../../content/domain/models/content_models.dart';
 
 class DailyRoutineViewModel extends ChangeNotifier {
+  final ExerciseRepository _repository = ExerciseRepository();
+  final ContentService _contentService = ContentService();
+  
   String? _currentUid;
+  UserModel? _currentUser;
+  
+  bool _isLoading = false;
+  String? _errorMessage;
+  List<ExerciseItem> _exercises = [];
+
+  bool get isLoading => _isLoading;
+  String? get errorMessage => _errorMessage;
+  List<ExerciseItem> get exercises => _exercises;
 
   void updateUser(UserModel? user) {
     if (user != null) {
       if (_currentUid != user.id) {
         _currentUid = user.id;
-        // Kullanıcı bazlı rutin verilerini burada güncelleyebiliriz
-        notifyListeners();
+        _currentUser = user;
+        loadExercises();
       }
     } else {
       _currentUid = null;
+      _currentUser = null;
+      _exercises = [];
       notifyListeners();
     }
   }
 
-  final List<ExerciseItem> _exercises = [
-    ExerciseItem(
-      id: '1',
-      title: 'Boyun ROM',
-      phase: LegacyExercisePhase.mobilization,
-      isLocked: false,
-      imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAyngluBd2P0xYIDidwesUiOTB4fsGMzyDAzYPbrdomQdOi96vP-oCOQeeVmo0-lAIa8ZTnRptrRXPjI69EQRCLbLFUV-7YTWCihdEsBU1pbsoDbxmKOAH2n6_3Z6HFpiwU_pA4JEoStEKV8SfKDFnCsmwi-dBr_UInJeelESEGVrQdkejz9hqq50BpjiJIsO7EQ09tFXM9ZfzNfjzPqkK7kNxgirE2V4yvHAlQSB2Z0tfWaDdXPcxwCzunHJd3HLcOGPpLXZugMoE',
-      reps: 12,
-      tags: ['Mobilite', 'Isınma'],
-      videoUrl: 'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
-    ),
-    ExerciseItem(
-      id: '5',
-      title: 'Kedi-İnek Esnetmesi',
-      phase: LegacyExercisePhase.mobilization,
-      isLocked: false,
-      imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDd1FO4P4g5lzGGhw0dA9c8_b69ZrDW31SRffg8ZWfuiuzQLrCfNpEmnKcWiaRMTnSs7Dj-E7rI6MWzSSwPFkDuiuenG71KxUF7fV8zBn3tMgc2pAA_hF9U4teQhTv6mq_Z8tpCB4uznz6YQw_VomqA4WFUlUqiX4iZgScS2f_Q-q2osFpfNXx2GENgdQYD4q7HwQSy1VTKqodV1t7PC4795i14Nd1Nrfvx7hlbWG8HduabD53UWvCxqMA-Vqv657A8ozpFVo_bF0o',
-      duration: '5 Dakika',
-      tags: ['ROM'],
-      instructions: [
-        'Ellerinizi ve dizlerinizi yere koyun.',
-        'Nefes alırken sırtınızı çukurlaştırın ve yukarı bakın.',
-        'Nefes verirken sırtınızı kamburlaştırın.',
-      ],
-      warnings: [
-        'Hareketi nefesle uyumlu, yavaş ve tam kontrollü bir şekilde gerçekleştirin.',
-        'Keskin bir ağrı hissettiğiniz an durun ve asla eklemlerinizi zorlamayın.',
-      ],
-      tips: [
-        'Hareketi yavaş ve kontrollü yapın.',
-        'Nefesinizi tutmayın.',
-      ],
-      focusArea: 'Omurga & Sırt',
-      focusDescription: 'Esneklik ve Duruş Düzeltme',
-    ),
-    ExerciseItem(
-      id: '2',
-      title: 'Skapular Retraksiyon',
-      phase: LegacyExercisePhase.strengthening,
-      isLocked: true,
-      imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDabggjlM8ZpffCZ2rkDDSQgMEZVLg0LzGUIX4XrFei1R6CmQHpmlpMWQB4ZiGuupG2OkD9UscegBM4ECpsy6tFDi3RgF4PmnTIuZilIULS0QSLdCZh7xIt91TIBupoUKpLJtM0k8CIaygNRQfxYQA2pOoygXAFE4Cc9ImIiiZAZqvwLxMmw-CNRcNxlbFECBEKQOm6sUxGCn5J0n3iu5b3-Cc3giU6Iwfai-S5S8F-EP_KirlIiEfpfL1IoLWAErCAFL4iZ3efAT4',
-      tags: ['Güç'],
-    ),
-    ExerciseItem(
-      id: '3',
-      title: 'Trapez Germe',
-      phase: LegacyExercisePhase.stretching,
-      isLocked: true,
-      imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDF1gfqK5m7SF7NBFj2x7Gig6lnKvtEf6bcfLC6Rc2KwaK1OJBI1frB75ZHQXJenQEqs63ZBBQ2duSSoS7fLv_3MTDfUeClc7UqcGfoTj9IY42UyZZBlxdD3zYXrnRLZamML98I6qBk8C8ikg1PDCR74XN2S_XWRUO490Vj1rkmbmQ8C5LWofituCTqnSMANE5usN0GeeF5rPqhhPWYErZZ9CN8GANbRnWx4xlZXMJOgnP1OB19ZjUEZsPKyl2XvP09zH_6EBShJno',
-      tags: ['Esneme'],
-    ),
-    ExerciseItem(
-      id: '4',
-      title: 'Derin Nefes ve Gevşeme',
-      phase: LegacyExercisePhase.coolDown,
-      isLocked: true,
-      imageUrl: '', // Will use icon in UI
-      duration: '2 Dakika',
-      tags: ['Soğuma'],
-    ),
-  ];
+  Future<void> loadExercises() async {
+    if (_currentUser == null) return;
 
-  List<ExerciseItem> get exercises => _exercises;
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    final acuteRegionIds = _currentUser!.painRegions
+        .where((r) => r.isAkut)
+        .map((r) => r.regionId)
+        .toList();
+
+    final selectedRegions = _currentUser!.painRegions
+        .map((r) => _mapStringToPainRegion(r.regionId))
+        .whereType<PainRegion>()
+        .toList();
+
+    final result = await _repository.getExercisesForRegions(
+      selectedRegions,
+      acuteRegionIds: acuteRegionIds,
+    );
+
+    _isLoading = false;
+
+    switch (result) {
+      case Success(:final data):
+        _exercises = data.map((model) => _mapToLegacyItem(model)).toList();
+        break;
+      case Failure(:final failure):
+        _errorMessage = failure.message;
+        break;
+    }
+
+    notifyListeners();
+  }
+
+  PainRegion? _mapStringToPainRegion(String id) {
+    try {
+      return PainRegion.values.firstWhere((e) => e.name == id);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  ExerciseItem _mapToLegacyItem(ExerciseModel model) {
+    return ExerciseItem(
+      id: model.id,
+      title: model.name,
+      phase: _mapToLegacyPhase(model.phase),
+      isLocked: model.isLocked,
+      imageUrl: model.imageUrl ?? '',
+      duration: model.estimatedDurationSeconds != null 
+          ? '${(model.estimatedDurationSeconds! / 60).round()} Dakika' 
+          : null,
+      reps: model.recommendedReps,
+      tags: model.isJoker ? ['Ortak Bölge', 'Joker'] : [],
+      instructions: model.steps,
+      warnings: model.warnings,
+      tips: model.tips,
+      focusArea: model.targetRegions.map((e) => e.name).join(', '),
+      focusDescription: model.description,
+      videoUrl: model.videoUrl ?? '',
+    );
+  }
+
+  LegacyExercisePhase _mapToLegacyPhase(ExercisePhase phase) {
+    switch (phase) {
+      case ExercisePhase.rom:
+        return LegacyExercisePhase.mobilization;
+      case ExercisePhase.strength:
+        return LegacyExercisePhase.strengthening;
+      case ExercisePhase.stretch:
+        return LegacyExercisePhase.stretching;
+    }
+  }
 
   int get remainingExercisesCount => _exercises.where((e) => e.isLocked).length;
 
@@ -97,8 +127,9 @@ class DailyRoutineViewModel extends ChangeNotifier {
 
   void onExerciseTap(ExerciseItem exercise) {
     if (exercise.isLocked) return;
-    // Navigation will be handled in the UI layer using a callback or similar if needed,
-    // but typically we can navigate directly if we have context.
-    // For MVVM, we might just expose an event.
+  }
+
+  MotivationModel? getCompletionMotivation() {
+    return _contentService.getRandomMotivation('exercise_continuity');
   }
 }

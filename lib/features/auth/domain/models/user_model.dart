@@ -5,28 +5,21 @@ part 'user_model.freezed.dart';
 part 'user_model.g.dart';
 
 /// Klinik Güvenlik Blokaj Nedenleri
-/// Klinik Güvenlik: CDSS (Klinik Karar Destek Sistemi) tarafından atılan blokaj nedenleri.
 enum BanReason {
   @JsonValue('redFlag')
-  redFlag, // 1. Kırmızı Bayrak (Tıbbi kontrendikasyon)
-
+  redFlag,
   @JsonValue('centralSensitization')
-  centralSensitization, // 2. Yaygın Ağrı Şüphesi (N>=4 bölgenin 3'ü 8+ skorlu)
-
+  centralSensitization,
   @JsonValue('extremePain')
-  extremePain, // 3. Dayanılmaz Ağrı (NPRS skoru 10 girildi)
-
+  extremePain,
   @JsonValue('maxFlareUpStrike')
-  maxFlareUpStrike, // 4. Kronik Kriz (Aynı bölgede 3 kez Flare-Up yaşandı)
-
+  maxFlareUpStrike,
   @JsonValue('persistentFlareUp')
-  persistentFlareUp, // 5. İnatçı Akutluk (14+14 gün veya rötar sonrası iyileşmeme)
-
+  persistentFlareUp,
   @JsonValue('therapeuticResistance')
-  therapeuticResistance, // 6. Tedaviye Direnç (28. veya 56. makro değerlendirmede skor arttı)
-
+  therapeuticResistance,
   @JsonValue('chronicLimit')
-  chronicLimit // 7. Mekanik Yetersizlik (56. gün sonunda iyileşme olmadı)
+  chronicLimit
 }
 
 class TimestampConverter implements JsonConverter<DateTime?, dynamic> {
@@ -43,28 +36,24 @@ class TimestampConverter implements JsonConverter<DateTime?, dynamic> {
   dynamic toJson(DateTime? date) => date;
 }
 
-/// Kayıt Süreci Takibi (Senin istediğin 4 durak + Klinik onay)
-@JsonSerializable(explicitToJson: true)
 @freezed
 abstract class RegistrationProgress with _$RegistrationProgress {
   const factory RegistrationProgress({
-    @Default(false) bool hasCompletedWelcome,     // 1. Tik: İsim, meslek vb.
-    @Default(false) bool hasCompletedRedFlags,    // 1.5 Tik: Tıbbi tarama
-    @Default(false) bool hasCompletedBodyMap,     // 2. Tik: Bölge seçimi
-    @Default(false) bool hasCompletedPainScore,   // 3. Tik: NPRS girişleri
-    @Default(false) bool hasCompletedScheduling,  // 4. Tik: Takvim kurulumu
-    @Default(false) bool isClearedForExercise,    // CDSS Güvenlik Filtresi
+    @Default(false) bool hasCompletedWelcome,
+    @Default(false) bool hasCompletedRedFlags,
+    @Default(false) bool hasCompletedBodyMap,
+    @Default(false) bool hasCompletedPainScore,
+    @Default(false) bool hasCompletedScheduling,
+    @Default(false) bool isClearedForExercise,
   }) = _RegistrationProgress;
 
   factory RegistrationProgress.fromJson(Map<String, dynamic> json) => _$RegistrationProgressFromJson(json);
 }
 
-/// Bölge Bazlı Klinik Detay (ID bazlı)
-@JsonSerializable(explicitToJson: true)
 @freezed
 abstract class RegionDetail with _$RegionDetail {
   const factory RegionDetail({
-    required String regionId,       // "neck", "lower_back" vb.
+    required String regionId,
     @Default(0) int nprsScore,
     @Default(0) int flareUpCount,
     @TimestampConverter() DateTime? lastFlareUpDate,
@@ -75,35 +64,26 @@ abstract class RegionDetail with _$RegionDetail {
   factory RegionDetail.fromJson(Map<String, dynamic> json) => _$RegionDetailFromJson(json);
 }
 
-/// DeskRelief Ana Kullanıcı Modeli
-@JsonSerializable(explicitToJson: true)
 @freezed
 abstract class UserModel with _$UserModel {
   const factory UserModel({
-    required String id,             // Firebase UID
+    required String id,
     required String name,
     required String email,
     String? sex,
     String? profession,
     int? dailySittingHours,
-
-    // Ban Durumu ve Hafızası
     @Default(false) bool isBanned,
     BanReason? banReason,
     String? banNote,
-    @Default([]) List<String> flaggedRedFlagIds, // Red yediği soruların ID'leri
-
-    // Progresyon ve Bölgeler
+    @Default([]) List<String> flaggedRedFlagIds,
     @Default(RegistrationProgress()) RegistrationProgress progress,
     @Default([]) List<RegionDetail> painRegions,
     @Default([]) List<RegionDetail> backlogRegions,
-    
-    // İstatistikler
     @Default([]) List<String> completedExerciseIds,
     Map<String, dynamic>? currentProgram,
     @Default(0) int currentStreak,
     @Default(0) int totalWorkouts,
-    
     Map<String, dynamic>? metadata, 
     @TimestampConverter() DateTime? createdAt,
     @TimestampConverter() DateTime? lastActiveAt,
